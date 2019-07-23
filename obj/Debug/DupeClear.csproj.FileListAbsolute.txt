@@ -1,0 +1,147 @@
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.config
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.manifest
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.application
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.pdb
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\ChreneLib.dll
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\GrabFolderIcon.dll
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Validator.dll
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\GrabFolderIcon.pdb
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\GrabFolderIcon.xml
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmMain.resources
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAbout.resources
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAction.resources
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmActivate.resources
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmErrors.resources
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFileReplaceSkip.resources
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFromSpecificFolder.resources
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmSearch.resources
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.Properties.Resources.resources
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.GenerateResource.Cache
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.CoreCompileInputs.cache
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe.manifest
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.application
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.pdb
+C:\Users\Antik\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csprojResolveAssemblyReference.cache
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmMain.resources
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAbout.resources
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAction.resources
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmActivate.resources
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmErrors.resources
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFileReplaceSkip.resources
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFromSpecificFolder.resources
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmSearch.resources
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.Properties.Resources.resources
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.GenerateResource.Cache
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.pdb
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.config
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.manifest
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.application
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.pdb
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\ChreneLib.dll
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\GrabFolderIcon.dll
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\Validator.dll
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\GrabFolderIcon.pdb
+D:\Google Drive\VS Projects\Dupe Clear C#\bin\Debug\GrabFolderIcon.xml
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.CoreCompileInputs.cache
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe.manifest
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.application
+D:\Google Drive\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.CopyComplete
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmMain.resources
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAbout.resources
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAction.resources
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmErrors.resources
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFileReplaceSkip.resources
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFromSpecificFolder.resources
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.Properties.Resources.resources
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.GenerateResource.cache
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.pdb
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.config
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.manifest
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.application
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.pdb
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\bin\Debug\ChreneLib.dll
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\bin\Debug\GrabFolderIcon.dll
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\bin\Debug\Validator.dll
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.CoreCompileInputs.cache
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe.manifest
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.application
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.CopyComplete
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\bin\Debug\ProgressBarEx.dll
+D:\Google Drive Cache\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csprojAssemblyReference.cache
+D:\Google Drive Cache\Development\Dupe Clear C#\bin\Debug\Dupe Clear.exe.config
+D:\Google Drive Cache\Development\Dupe Clear C#\bin\Debug\Dupe Clear.exe.manifest
+D:\Google Drive Cache\Development\Dupe Clear C#\bin\Debug\Dupe Clear.application
+D:\Google Drive Cache\Development\Dupe Clear C#\bin\Debug\Dupe Clear.exe
+D:\Google Drive Cache\Development\Dupe Clear C#\bin\Debug\Dupe Clear.pdb
+D:\Google Drive Cache\Development\Dupe Clear C#\bin\Debug\ChreneLib.dll
+D:\Google Drive Cache\Development\Dupe Clear C#\bin\Debug\GrabFolderIcon.dll
+D:\Google Drive Cache\Development\Dupe Clear C#\bin\Debug\ProgressBarEx.dll
+D:\Google Drive Cache\Development\Dupe Clear C#\bin\Debug\Validator.dll
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.csprojAssemblyReference.cache
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.frmMain.resources
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.frmAbout.resources
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.frmAction.resources
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.frmErrors.resources
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.frmFileReplaceSkip.resources
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.frmFromSpecificFolder.resources
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.Properties.Resources.resources
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.csproj.GenerateResource.cache
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.csproj.CoreCompileInputs.cache
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\Dupe Clear.exe.manifest
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\Dupe Clear.application
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\DupeClear.csproj.CopyComplete
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\Dupe Clear.exe
+D:\Google Drive Cache\Development\Dupe Clear C#\obj\Debug\Dupe Clear.pdb
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.config
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.manifest
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.application
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.pdb
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\bin\Debug\ChreneLib.dll
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\bin\Debug\GrabFolderIcon.dll
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\bin\Debug\ProgressBarEx.dll
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\bin\Debug\Validator.dll
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmMain.resources
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAbout.resources
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAction.resources
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmErrors.resources
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFileReplaceSkip.resources
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFromSpecificFolder.resources
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.Properties.Resources.resources
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.GenerateResource.cache
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.CoreCompileInputs.cache
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe.manifest
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.application
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.CopyComplete
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe
+D:\Google Drive Cache\Development\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.pdb
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.config
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe.manifest
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.application
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.exe
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\bin\Debug\Dupe Clear.pdb
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\bin\Debug\ChreneLib.dll
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\bin\Debug\GrabFolderIcon.dll
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\bin\Debug\ProgressBarEx.dll
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\bin\Debug\Validator.dll
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmMain.resources
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAbout.resources
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmAction.resources
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmErrors.resources
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFileReplaceSkip.resources
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.frmFromSpecificFolder.resources
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.Properties.Resources.resources
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.GenerateResource.cache
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.CoreCompileInputs.cache
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe.manifest
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.application
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csproj.CopyComplete
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.exe
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\Dupe Clear.pdb
+D:\Google Drive\Development\VS Projects\Dupe Clear C#\obj\Debug\DupeClear.csprojAssemblyReference.cache

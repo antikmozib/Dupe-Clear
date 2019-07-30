@@ -4,7 +4,7 @@
   <description asmv2:iconFile="main.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="Dupe Clear" version="1.85.7143.36314" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="Dupe Clear" version="1.85.7151.1898" language="neutral" processorArchitecture="msil" />
     <commandLine file="Dupe Clear.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -56,13 +56,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Dupe Clear.exe" size="247808">
-      <assemblyIdentity name="Dupe Clear" version="1.85.7143.36314" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="Dupe Clear" version="1.85.7151.1898" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>RcyKwhBVqSVBWboSiFol3Wfm25KlXUKYyDTYGrLXjYk=</dsig:DigestValue>
+        <dsig:DigestValue>NDecXshZf8nJwcv9kqWI4zC4O9TMmA7HZrruKWzKr/Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

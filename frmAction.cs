@@ -111,13 +111,9 @@ namespace DupeClear
                 secondsRemaining = (remainingReference / SpaceSearched) * remainingSize;
 
                 //Format remaining time:
-                if (secondsRemaining < (60 * 5) && secondsRemaining > 60) // less than 5 mins
+                if (secondsRemaining > 0 && secondsRemaining < 60)
                 {
-                    TimeRemaining = "Less than 5 minutes";
-                }
-                else if (secondsRemaining > 0 && secondsRemaining < 60)
-                {
-                    TimeRemaining = "Less than 1 minute";
+                    TimeRemaining = "Less than a minute";
                 }
                 else
                 {
@@ -125,20 +121,21 @@ namespace DupeClear
 
                     if (totalMins < 60)
                     {
-                        TimeRemaining = "About " + totalMins.ToString() + " mins";
+                        TimeRemaining = "About " + totalMins.ToString() + " m";
                     }
                     else
                     {
                         int remainingMins = totalMins % 60;
-                        TimeRemaining = "About " + (totalMins / 60).ToString() + " hour(s) " + (totalMins % 60).ToString() + " mins";
+                        TimeRemaining = "About " + (totalMins / 60).ToString() + " h " + (totalMins % 60).ToString() + " m";
                     }
                 }
             }
 
             if (TimeElapsed.Length > 6 && TimeElapsed.Substring(0, 2) == "0:")
                 TimeElapsed = TimeElapsed.Substring(2);
-            
+
             // dont show the remaining time until the search has actually commenced
+
             if (SpaceSearched > 0)
             {
                 lblStatus3.Text = "Time remaining: " + TimeRemaining;

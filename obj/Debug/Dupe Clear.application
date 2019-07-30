@@ -7,14 +7,14 @@
     <framework targetVersion="4.5.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Dupe Clear.exe.manifest" size="6586">
+    <dependentAssembly dependencyType="install" codebase="Dupe Clear.exe.manifest" size="6584">
       <assemblyIdentity name="Dupe Clear.exe" version="1.0.0.2" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>FSevqJBt517boBpCxk1aP9LrQ8A0DVhK2mTCGU/X0Ec=</dsig:DigestValue>
+        <dsig:DigestValue>aQ+co2elskXI/JkFCfpcbAti2ALOzdSYEaeVSCk7wJA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

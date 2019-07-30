@@ -2,3 +2,4 @@
 .*
 !*.cs
 !/.gitignore
+.vs/DupeClearCSharp/v16/.suo

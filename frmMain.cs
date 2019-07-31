@@ -39,6 +39,8 @@ namespace DupeClear
         const int NAME_LONGEST = 5;
         const int PATH_SHORTEST = 6;
         const int PATH_LONGEST = 7;
+        const int MORE_LETTERS = 8;
+        const int MORE_NUMBERS = 9;
 
         public frmMain()
         {
@@ -192,12 +194,12 @@ namespace DupeClear
                 if (item.Checked && !item.Font.Strikeout)
                 {
                     // check if the selected file is open in preview
-                    if (PreviewPane.ImageLocation == general.ParseFileName(item,clmLocation.Index))
+                    if (PreviewPane.ImageLocation == general.ParseFileName(item, clmLocation.Index))
                     {
                         PreviewPane.Image.Dispose();
                         ResetPreviewPane();
                     }
-                    action.ActionList.Add(general.ParseFileName(item,clmLocation.Index));
+                    action.ActionList.Add(general.ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -249,7 +251,7 @@ namespace DupeClear
             {
                 if (!item.Font.Strikeout)
                 {
-                    ActionForm.ActionList.Add(general.ParseFileName(item,clmLocation.Index));
+                    ActionForm.ActionList.Add(general.ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -787,6 +789,8 @@ namespace DupeClear
             keepShortestPathToolStripMenuItem.Checked = false;
             keepLongestPathToolStripMenuItem.Checked = false;
             keepToolStripMenuItem.Checked = false;
+            keepNamesWithLessLettersToolStripMenuItem.Checked = false;
+            keepNamesWithMoreLettersToolStripMenuItem.Checked = false;
         }
 
         private void lvResults_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -1008,12 +1012,12 @@ namespace DupeClear
                             continue;
                         }
                     }
-                    else if (art == NAME_LONGEST || art == NAME_SHORTEST || art == PATH_LONGEST || art == PATH_SHORTEST)
+                    else if (art == NAME_LONGEST || art == NAME_SHORTEST || art == PATH_LONGEST || art == PATH_SHORTEST || art == MORE_LETTERS || art == MORE_NUMBERS)
                     {
                         string path1 = "";
                         string path2 = "";
 
-                        if (art == NAME_LONGEST || art == NAME_SHORTEST)
+                        if (art == NAME_LONGEST || art == NAME_SHORTEST || art == MORE_LETTERS || art == MORE_NUMBERS)
                         {
                             path1 = item.Text;
                             path2 = TheUnmarkedItem.Text;
@@ -1024,14 +1028,10 @@ namespace DupeClear
                             path2 = general.ParseFileName(TheUnmarkedItem, clmLocation.Index);
                         }
 
-                        if ((art == NAME_LONGEST || art == PATH_LONGEST) && (path1.Length > path2.Length || path1.Length == path2.Length))
-                        {
-                            TheUnmarkedItem.Checked = true;
-                            item.Checked = false;
-                            TheUnmarkedItem = item;
-                            continue;
-                        }
-                        else if ((art == NAME_SHORTEST || art == PATH_SHORTEST) && (path1.Length < path2.Length || path1.Length == path2.Length))
+                        if (((art == NAME_LONGEST || art == PATH_LONGEST) && (path1.Length >= path2.Length)) ||
+                            ((art == NAME_SHORTEST || art == PATH_SHORTEST) && (path1.Length <= path2.Length)) ||
+                            (art == MORE_LETTERS && path1.Count(char.IsLetter) >= path2.Count(char.IsLetter)) ||
+                            (art == MORE_NUMBERS && path1.Count(char.IsNumber) >= path2.Count(char.IsNumber)))
                         {
                             TheUnmarkedItem.Checked = true;
                             item.Checked = false;
@@ -1899,6 +1899,24 @@ namespace DupeClear
             lblResultsListStatus.Text = general.ExtractDataFromResults(lvResults, clmLocation.Index);
             general.StyleDeletedItems(ref lvResults, clmLocation.Index);
             this.Cursor = Cursors.Default;
+        }
+
+        private void KeepNamesWithMoreLettersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MarkFiles(MORE_LETTERS);
+            UncheckAllMenus();
+
+            markByNameToolStripMenuItem.Checked = true;
+            keepNamesWithMoreLettersToolStripMenuItem.Checked = true;
+        }
+
+        private void KeepNamesWithLessLettersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MarkFiles(MORE_NUMBERS);
+            UncheckAllMenus();
+
+            markByNameToolStripMenuItem.Checked = true;
+            keepNamesWithLessLettersToolStripMenuItem.Checked = true;
         }
     }
 }

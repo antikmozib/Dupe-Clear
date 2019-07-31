@@ -110,7 +110,8 @@ namespace DupeClear
                 remainingReference = DateTime.Now.Subtract(BeganTime).TotalSeconds;
                 secondsRemaining = (remainingReference / SpaceSearched) * remainingSize;
 
-                //Format remaining time:
+                // Format remaining time
+
                 if (secondsRemaining > 0 && secondsRemaining < 60)
                 {
                     TimeRemaining = "Less than a minute";

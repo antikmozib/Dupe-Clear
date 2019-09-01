@@ -34,7 +34,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabpageLocation = new System.Windows.Forms.TabPage();
             this.lvLocations = new System.Windows.Forms.ListView();
-            this.lblTrialStatus = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbSameType = new System.Windows.Forms.CheckBox();
@@ -47,6 +46,7 @@
             this.btnRemoveFolder = new System.Windows.Forms.Button();
             this.btnAddFolder = new System.Windows.Forms.Button();
             this.tabpageAddOptions = new System.Windows.Forms.TabPage();
+            this.cbIgnoreEmptyFiles = new System.Windows.Forms.CheckBox();
             this.cboExtensions = new System.Windows.Forms.ComboBox();
             this.btnResetSearchCriteria = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
@@ -139,8 +139,6 @@
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.keepPaneFixedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.onlineHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopy = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.markedFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,15 +172,14 @@
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.keepShortestPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keepLongestPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.keepNamesWithMoreLettersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.keepNamesWithLessLettersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fromSpecificFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.markBySpecificTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenXML = new System.Windows.Forms.OpenFileDialog();
             this.SaveXML = new System.Windows.Forms.SaveFileDialog();
             this.SearchOptionsTips = new System.Windows.Forms.ToolTip(this.components);
-            this.label13 = new System.Windows.Forms.Label();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.keepNamesWithMoreLettersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.keepNamesWithLessLettersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabpageLocation.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -221,7 +218,6 @@
             // tabpageLocation
             // 
             this.tabpageLocation.Controls.Add(this.lvLocations);
-            this.tabpageLocation.Controls.Add(this.lblTrialStatus);
             this.tabpageLocation.Controls.Add(this.btnStart);
             this.tabpageLocation.Controls.Add(this.panel1);
             this.tabpageLocation.Controls.Add(this.cbIncludeSubFolders);
@@ -251,15 +247,6 @@
             this.lvLocations.View = System.Windows.Forms.View.List;
             this.lvLocations.DragDrop += new System.Windows.Forms.DragEventHandler(this.lvLocations_DragDrop);
             this.lvLocations.DragEnter += new System.Windows.Forms.DragEventHandler(this.lvLocations_DragEnter);
-            // 
-            // lblTrialStatus
-            // 
-            this.lblTrialStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTrialStatus.Location = new System.Drawing.Point(556, 244);
-            this.lblTrialStatus.Name = "lblTrialStatus";
-            this.lblTrialStatus.Size = new System.Drawing.Size(148, 20);
-            this.lblTrialStatus.TabIndex = 10;
-            this.lblTrialStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnStart
             // 
@@ -396,6 +383,7 @@
             // 
             // tabpageAddOptions
             // 
+            this.tabpageAddOptions.Controls.Add(this.cbIgnoreEmptyFiles);
             this.tabpageAddOptions.Controls.Add(this.cboExtensions);
             this.tabpageAddOptions.Controls.Add(this.btnResetSearchCriteria);
             this.tabpageAddOptions.Controls.Add(this.label10);
@@ -420,6 +408,18 @@
             this.tabpageAddOptions.Text = "Additional Options";
             this.tabpageAddOptions.UseVisualStyleBackColor = true;
             // 
+            // cbIgnoreEmptyFiles
+            // 
+            this.cbIgnoreEmptyFiles.AutoSize = true;
+            this.cbIgnoreEmptyFiles.Checked = true;
+            this.cbIgnoreEmptyFiles.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbIgnoreEmptyFiles.Location = new System.Drawing.Point(113, 61);
+            this.cbIgnoreEmptyFiles.Name = "cbIgnoreEmptyFiles";
+            this.cbIgnoreEmptyFiles.Size = new System.Drawing.Size(121, 19);
+            this.cbIgnoreEmptyFiles.TabIndex = 19;
+            this.cbIgnoreEmptyFiles.Text = "&Ignore empty files";
+            this.cbIgnoreEmptyFiles.UseVisualStyleBackColor = true;
+            // 
             // cboExtensions
             // 
             this.cboExtensions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -431,15 +431,15 @@
                 "c;*.fpx;*.pcd;*.png;*.pdf;*.psd;*.ico;*.svg;*.ai)",
             "Documents (*.doc;*.docx;*.odt;*.pdf;*.rtf;*.tex;*.txt;*.wks;*.wps;*.wpd)",
             resources.GetString("cboExtensions.Items")});
-            this.cboExtensions.Location = new System.Drawing.Point(122, 9);
+            this.cboExtensions.Location = new System.Drawing.Point(113, 3);
             this.cboExtensions.Name = "cboExtensions";
-            this.cboExtensions.Size = new System.Drawing.Size(456, 23);
+            this.cboExtensions.Size = new System.Drawing.Size(473, 23);
             this.cboExtensions.TabIndex = 1;
             // 
             // btnResetSearchCriteria
             // 
             this.btnResetSearchCriteria.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnResetSearchCriteria.Location = new System.Drawing.Point(12, 235);
+            this.btnResetSearchCriteria.Location = new System.Drawing.Point(3, 241);
             this.btnResetSearchCriteria.Name = "btnResetSearchCriteria";
             this.btnResetSearchCriteria.Size = new System.Drawing.Size(106, 28);
             this.btnResetSearchCriteria.TabIndex = 12;
@@ -451,7 +451,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(584, 12);
+            this.label10.Location = new System.Drawing.Point(592, 9);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(115, 15);
             this.label10.TabIndex = 18;
@@ -461,7 +461,7 @@
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(584, 49);
+            this.label9.Location = new System.Drawing.Point(592, 35);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(21, 15);
             this.label9.TabIndex = 17;
@@ -471,16 +471,16 @@
             // 
             this.txtMinFileSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMinFileSize.Location = new System.Drawing.Point(122, 46);
+            this.txtMinFileSize.Location = new System.Drawing.Point(113, 32);
             this.txtMinFileSize.Name = "txtMinFileSize";
-            this.txtMinFileSize.Size = new System.Drawing.Size(456, 23);
+            this.txtMinFileSize.Size = new System.Drawing.Size(473, 23);
             this.txtMinFileSize.TabIndex = 3;
             this.txtMinFileSize.Text = "0";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 46);
+            this.label8.Location = new System.Drawing.Point(3, 35);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(104, 15);
             this.label8.TabIndex = 2;
@@ -490,7 +490,7 @@
             // 
             this.dtpDateModifiedTo.Checked = false;
             this.dtpDateModifiedTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDateModifiedTo.Location = new System.Drawing.Point(365, 127);
+            this.dtpDateModifiedTo.Location = new System.Drawing.Point(355, 115);
             this.dtpDateModifiedTo.Name = "dtpDateModifiedTo";
             this.dtpDateModifiedTo.ShowCheckBox = true;
             this.dtpDateModifiedTo.Size = new System.Drawing.Size(167, 23);
@@ -499,7 +499,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(336, 133);
+            this.label5.Location = new System.Drawing.Point(327, 121);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(22, 15);
             this.label5.TabIndex = 10;
@@ -509,7 +509,7 @@
             // 
             this.dtpDateModifiedFrom.Checked = false;
             this.dtpDateModifiedFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDateModifiedFrom.Location = new System.Drawing.Point(163, 127);
+            this.dtpDateModifiedFrom.Location = new System.Drawing.Point(154, 115);
             this.dtpDateModifiedFrom.Name = "dtpDateModifiedFrom";
             this.dtpDateModifiedFrom.ShowCheckBox = true;
             this.dtpDateModifiedFrom.Size = new System.Drawing.Size(167, 23);
@@ -518,7 +518,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(119, 133);
+            this.label6.Location = new System.Drawing.Point(110, 121);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(38, 15);
             this.label6.TabIndex = 8;
@@ -527,7 +527,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(34, 133);
+            this.label7.Location = new System.Drawing.Point(25, 121);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(82, 15);
             this.label7.TabIndex = 7;
@@ -537,7 +537,7 @@
             // 
             this.dtpDateCreatedTo.Checked = false;
             this.dtpDateCreatedTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDateCreatedTo.Location = new System.Drawing.Point(365, 87);
+            this.dtpDateCreatedTo.Location = new System.Drawing.Point(355, 86);
             this.dtpDateCreatedTo.Name = "dtpDateCreatedTo";
             this.dtpDateCreatedTo.ShowCheckBox = true;
             this.dtpDateCreatedTo.Size = new System.Drawing.Size(167, 23);
@@ -546,7 +546,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(336, 93);
+            this.label4.Location = new System.Drawing.Point(327, 92);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(22, 15);
             this.label4.TabIndex = 6;
@@ -556,7 +556,7 @@
             // 
             this.dtpDateCreatedFrom.Checked = false;
             this.dtpDateCreatedFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDateCreatedFrom.Location = new System.Drawing.Point(163, 87);
+            this.dtpDateCreatedFrom.Location = new System.Drawing.Point(154, 86);
             this.dtpDateCreatedFrom.Name = "dtpDateCreatedFrom";
             this.dtpDateCreatedFrom.ShowCheckBox = true;
             this.dtpDateCreatedFrom.Size = new System.Drawing.Size(167, 23);
@@ -565,7 +565,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(119, 93);
+            this.label3.Location = new System.Drawing.Point(110, 92);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(38, 15);
             this.label3.TabIndex = 4;
@@ -574,7 +574,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(41, 93);
+            this.label2.Location = new System.Drawing.Point(34, 92);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 15);
             this.label2.TabIndex = 2;
@@ -583,7 +583,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 12);
+            this.label1.Location = new System.Drawing.Point(3, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(104, 15);
             this.label1.TabIndex = 0;
@@ -616,15 +616,15 @@
                 "c;*.fpx;*.pcd;*.png;*.pdf;*.psd;*.ico;*.svg;*.ai)",
             "Documents (*.doc;*.docx;*.odt;*.pdf;*.rtf;*.tex;*.txt;*.wks;*.wps;*.wpd)",
             resources.GetString("cboExcludedExts.Items")});
-            this.cboExcludedExts.Location = new System.Drawing.Point(124, 62);
+            this.cboExcludedExts.Location = new System.Drawing.Point(119, 53);
             this.cboExcludedExts.Name = "cboExcludedExts";
-            this.cboExcludedExts.Size = new System.Drawing.Size(454, 23);
+            this.cboExcludedExts.Size = new System.Drawing.Size(467, 23);
             this.cboExcludedExts.TabIndex = 3;
             // 
             // btnResetExclusions
             // 
             this.btnResetExclusions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnResetExclusions.Location = new System.Drawing.Point(13, 235);
+            this.btnResetExclusions.Location = new System.Drawing.Point(3, 241);
             this.btnResetExclusions.Name = "btnResetExclusions";
             this.btnResetExclusions.Size = new System.Drawing.Size(106, 28);
             this.btnResetExclusions.TabIndex = 8;
@@ -636,7 +636,7 @@
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(584, 65);
+            this.label12.Location = new System.Drawing.Point(592, 56);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(115, 15);
             this.label12.TabIndex = 19;
@@ -645,7 +645,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(10, 65);
+            this.label11.Location = new System.Drawing.Point(3, 56);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(110, 15);
             this.label11.TabIndex = 2;
@@ -660,9 +660,9 @@
             this.gbExcludedLocations.Controls.Add(this.cbIncludeExcludedFolderSubFolders);
             this.gbExcludedLocations.Controls.Add(this.btnRemoveExcludedFolder);
             this.gbExcludedLocations.Controls.Add(this.btnAddExcludedFolder);
-            this.gbExcludedLocations.Location = new System.Drawing.Point(13, 91);
+            this.gbExcludedLocations.Location = new System.Drawing.Point(3, 82);
             this.gbExcludedLocations.Name = "gbExcludedLocations";
-            this.gbExcludedLocations.Size = new System.Drawing.Size(686, 120);
+            this.gbExcludedLocations.Size = new System.Drawing.Size(704, 120);
             this.gbExcludedLocations.TabIndex = 15;
             this.gbExcludedLocations.TabStop = false;
             this.gbExcludedLocations.Text = "Exclude Locations:";
@@ -677,7 +677,7 @@
             this.lvExcludedLocations.HideSelection = false;
             this.lvExcludedLocations.Location = new System.Drawing.Point(6, 22);
             this.lvExcludedLocations.Name = "lvExcludedLocations";
-            this.lvExcludedLocations.Size = new System.Drawing.Size(521, 92);
+            this.lvExcludedLocations.Size = new System.Drawing.Size(539, 92);
             this.lvExcludedLocations.TabIndex = 4;
             this.lvExcludedLocations.UseCompatibleStateImageBehavior = false;
             this.lvExcludedLocations.View = System.Windows.Forms.View.List;
@@ -690,7 +690,7 @@
             this.cbIncludeExcludedFolderSubFolders.AutoSize = true;
             this.cbIncludeExcludedFolderSubFolders.Checked = true;
             this.cbIncludeExcludedFolderSubFolders.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbIncludeExcludedFolderSubFolders.Location = new System.Drawing.Point(536, 90);
+            this.cbIncludeExcludedFolderSubFolders.Location = new System.Drawing.Point(554, 90);
             this.cbIncludeExcludedFolderSubFolders.Name = "cbIncludeExcludedFolderSubFolders";
             this.cbIncludeExcludedFolderSubFolders.Size = new System.Drawing.Size(128, 19);
             this.cbIncludeExcludedFolderSubFolders.TabIndex = 7;
@@ -700,7 +700,7 @@
             // btnRemoveExcludedFolder
             // 
             this.btnRemoveExcludedFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemoveExcludedFolder.Location = new System.Drawing.Point(533, 56);
+            this.btnRemoveExcludedFolder.Location = new System.Drawing.Point(551, 56);
             this.btnRemoveExcludedFolder.Name = "btnRemoveExcludedFolder";
             this.btnRemoveExcludedFolder.Size = new System.Drawing.Size(147, 28);
             this.btnRemoveExcludedFolder.TabIndex = 6;
@@ -711,7 +711,7 @@
             // btnAddExcludedFolder
             // 
             this.btnAddExcludedFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddExcludedFolder.Location = new System.Drawing.Point(533, 22);
+            this.btnAddExcludedFolder.Location = new System.Drawing.Point(551, 22);
             this.btnAddExcludedFolder.Name = "btnAddExcludedFolder";
             this.btnAddExcludedFolder.Size = new System.Drawing.Size(147, 28);
             this.btnAddExcludedFolder.TabIndex = 5;
@@ -724,7 +724,7 @@
             this.cbExcludeSystemFiles.AutoSize = true;
             this.cbExcludeSystemFiles.Checked = true;
             this.cbExcludeSystemFiles.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbExcludeSystemFiles.Location = new System.Drawing.Point(13, 37);
+            this.cbExcludeSystemFiles.Location = new System.Drawing.Point(3, 28);
             this.cbExcludeSystemFiles.Name = "cbExcludeSystemFiles";
             this.cbExcludeSystemFiles.Size = new System.Drawing.Size(282, 19);
             this.cbExcludeSystemFiles.TabIndex = 1;
@@ -734,7 +734,7 @@
             // cbExcludeHiddenFiles
             // 
             this.cbExcludeHiddenFiles.AutoSize = true;
-            this.cbExcludeHiddenFiles.Location = new System.Drawing.Point(13, 12);
+            this.cbExcludeHiddenFiles.Location = new System.Drawing.Point(3, 3);
             this.cbExcludeHiddenFiles.Name = "cbExcludeHiddenFiles";
             this.cbExcludeHiddenFiles.Size = new System.Drawing.Size(131, 19);
             this.cbExcludeHiddenFiles.TabIndex = 0;
@@ -1354,25 +1354,10 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.onlineHelpToolStripMenuItem,
-            this.toolStripMenuItem1,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
-            // 
-            // onlineHelpToolStripMenuItem
-            // 
-            this.onlineHelpToolStripMenuItem.Name = "onlineHelpToolStripMenuItem";
-            this.onlineHelpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.onlineHelpToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.onlineHelpToolStripMenuItem.Text = "&Online Help";
-            this.onlineHelpToolStripMenuItem.Click += new System.EventHandler(this.onlineHelpToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(153, 6);
             // 
             // aboutToolStripMenuItem
             // 
@@ -1578,7 +1563,7 @@
             this.markAllToolStripMenuItem,
             this.unmarkAllToolStripMenuItem});
             this.menuFileMarker.Name = "menuFileMarker";
-            this.menuFileMarker.Size = new System.Drawing.Size(222, 214);
+            this.menuFileMarker.Size = new System.Drawing.Size(222, 192);
             // 
             // markByNameToolStripMenuItem
             // 
@@ -1598,35 +1583,54 @@
             // keepToolStripMenuItem
             // 
             this.keepToolStripMenuItem.Name = "keepToolStripMenuItem";
-            this.keepToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.keepToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.keepToolStripMenuItem.Text = "Keep Shortest Named";
             this.keepToolStripMenuItem.Click += new System.EventHandler(this.keepToolStripMenuItem_Click);
             // 
             // keepLongestNamedToolStripMenuItem
             // 
             this.keepLongestNamedToolStripMenuItem.Name = "keepLongestNamedToolStripMenuItem";
-            this.keepLongestNamedToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.keepLongestNamedToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.keepLongestNamedToolStripMenuItem.Text = "Keep Longest Named";
             this.keepLongestNamedToolStripMenuItem.Click += new System.EventHandler(this.keepLongestNamedToolStripMenuItem_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(232, 6);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(246, 6);
             // 
             // keepShortestPathToolStripMenuItem
             // 
             this.keepShortestPathToolStripMenuItem.Name = "keepShortestPathToolStripMenuItem";
-            this.keepShortestPathToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.keepShortestPathToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.keepShortestPathToolStripMenuItem.Text = "Keep Shortest Path";
             this.keepShortestPathToolStripMenuItem.Click += new System.EventHandler(this.keepShortestPathToolStripMenuItem_Click);
             // 
             // keepLongestPathToolStripMenuItem
             // 
             this.keepLongestPathToolStripMenuItem.Name = "keepLongestPathToolStripMenuItem";
-            this.keepLongestPathToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.keepLongestPathToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.keepLongestPathToolStripMenuItem.Text = "Keep Longest Path";
             this.keepLongestPathToolStripMenuItem.Click += new System.EventHandler(this.keepLongestPathToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(246, 6);
+            // 
+            // keepNamesWithMoreLettersToolStripMenuItem
+            // 
+            this.keepNamesWithMoreLettersToolStripMenuItem.Name = "keepNamesWithMoreLettersToolStripMenuItem";
+            this.keepNamesWithMoreLettersToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.keepNamesWithMoreLettersToolStripMenuItem.Text = "Keep Names with More Letters";
+            this.keepNamesWithMoreLettersToolStripMenuItem.Click += new System.EventHandler(this.KeepNamesWithMoreLettersToolStripMenuItem_Click);
+            // 
+            // keepNamesWithLessLettersToolStripMenuItem
+            // 
+            this.keepNamesWithLessLettersToolStripMenuItem.Name = "keepNamesWithLessLettersToolStripMenuItem";
+            this.keepNamesWithLessLettersToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.keepNamesWithLessLettersToolStripMenuItem.Text = "Keep Names with More Numbers";
+            this.keepNamesWithLessLettersToolStripMenuItem.Click += new System.EventHandler(this.KeepNamesWithLessLettersToolStripMenuItem_Click);
             // 
             // fromSpecificFolderToolStripMenuItem
             // 
@@ -1645,11 +1649,13 @@
             // OpenXML
             // 
             this.OpenXML.Filter = "XML Files|*.xml|All Files|*.*";
+            this.OpenXML.Title = "Import XML";
             this.OpenXML.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenXML_FileOk);
             // 
             // SaveXML
             // 
             this.SaveXML.Filter = "XML Files|*.xml";
+            this.SaveXML.Title = "Export as XML";
             this.SaveXML.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveXML_FileOk);
             // 
             // SearchOptionsTips
@@ -1658,44 +1664,11 @@
             this.SearchOptionsTips.InitialDelay = 250;
             this.SearchOptionsTips.ReshowDelay = 100;
             // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.SystemColors.Window;
-            this.label13.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label13.Location = new System.Drawing.Point(619, 9);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(101, 15);
-            this.label13.TabIndex = 13;
-            this.label13.Text = "For help, press F1.";
-            this.label13.Click += new System.EventHandler(this.label13_Click);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(232, 6);
-            // 
-            // keepNamesWithMoreLettersToolStripMenuItem
-            // 
-            this.keepNamesWithMoreLettersToolStripMenuItem.Name = "keepNamesWithMoreLettersToolStripMenuItem";
-            this.keepNamesWithMoreLettersToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
-            this.keepNamesWithMoreLettersToolStripMenuItem.Text = "Keep Names with More Letters";
-            this.keepNamesWithMoreLettersToolStripMenuItem.Click += new System.EventHandler(this.KeepNamesWithMoreLettersToolStripMenuItem_Click);
-            // 
-            // keepNamesWithLessLettersToolStripMenuItem
-            // 
-            this.keepNamesWithLessLettersToolStripMenuItem.Name = "keepNamesWithLessLettersToolStripMenuItem";
-            this.keepNamesWithLessLettersToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
-            this.keepNamesWithLessLettersToolStripMenuItem.Text = "Keep Names with More Numbers";
-            this.keepNamesWithLessLettersToolStripMenuItem.Click += new System.EventHandler(this.KeepNamesWithLessLettersToolStripMenuItem_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(732, 333);
-            this.Controls.Add(this.label13);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1824,8 +1797,6 @@
         private System.Windows.Forms.ToolStripMenuItem importXMLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportAsXMLToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
-        private System.Windows.Forms.ToolStripMenuItem onlineHelpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.OpenFileDialog OpenXML;
         private System.Windows.Forms.ToolStripMenuItem markByNameToolStripMenuItem;
@@ -1872,7 +1843,6 @@
         private System.Windows.Forms.ToolStripMenuItem markToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem unmarkToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.Label lblTrialStatus;
         private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem12;
         private System.Windows.Forms.Label lblFind;
@@ -1884,13 +1854,13 @@
         private System.Windows.Forms.ToolStripMenuItem markBySpecificTypesToolStripMenuItem;
         private System.Windows.Forms.ComboBox cboExtensions;
         private System.Windows.Forms.ComboBox cboExcludedExts;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnAutoMark;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem keepNamesWithMoreLettersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem keepNamesWithLessLettersToolStripMenuItem;
+        private System.Windows.Forms.CheckBox cbIgnoreEmptyFiles;
     }
 }
 

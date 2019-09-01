@@ -14,7 +14,7 @@ namespace DupeClear
     {
         public int typeOfAction = -1; // 0 = folders, 1 = extensions
 
-        public delegate void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList);
+        public delegate void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList, bool skipSameFolder);
         public FromSpecificFolder ProcessSpecificFolders;
 
         public delegate void SpecificTypes(List<string> extensions, bool isMarked, bool removeFromList);
@@ -64,7 +64,10 @@ namespace DupeClear
                     return;
                 }
 
-                ProcessSpecificFolders(textBox1.Text, checkBox2.Checked, radioButton1.Checked, cbRemoveFromList.Checked);
+                // ensure there is a trailing slash in the path
+                if (textBox1.Text.Substring(textBox1.Text.Length - 1) != "\\") textBox1.Text = textBox1.Text + "\\";
+
+                ProcessSpecificFolders(textBox1.Text, checkBox2.Checked, radioButton1.Checked, cbRemoveFromList.Checked, cbSkipSamePath.Checked);
                 this.Close();
             }
             else if (typeOfAction == 1) // extensions

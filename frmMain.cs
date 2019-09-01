@@ -203,21 +203,10 @@ namespace DupeClear
                 }
             }
 
-            DialogResult confirm = MessageBox.Show(this, "Proceed with deleting " + action.ActionList.Count.ToString() +
+            DialogResult confirm = MessageBox.Show(this, "Proceed with deleting " + action.ActionList.Count.ToString("###,###,##0") +
                 " files to the Recycle Bin?", "Delete Marked Files", MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-
-            if (confirm == DialogResult.OK)
-            {
-                //if (action.ActionList.Count > 500)
-                //{
-                //    DialogResult confirm2 = general.MsgBox("Are you SURE? You'll be deleting a huge number of files. If you later need some of your files back, trying looking into the Recycle Bin.", "Delete Marked Files", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
-                //    if (confirm2 == DialogResult.Cancel)
-                //        return;
-                //}
-
-                action.ShowDialog(this);
-            }
+            if (confirm == DialogResult.OK) action.ShowDialog(this);
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -496,8 +485,6 @@ namespace DupeClear
                 }
             }
 
-            //general.PrintList(ActionForm.ExcludeExtList.ToArray());
-
             this.Cursor = Cursors.WaitCursor;
 
             //build search locations.
@@ -571,6 +558,7 @@ namespace DupeClear
                 ActionForm.soCheckModificationTime = false;
             ActionForm.soHideHiddenFiles = cbExcludeHiddenFiles.Checked;
             ActionForm.soHideSystemFiles = cbExcludeSystemFiles.Checked;
+            ActionForm.soIgnoreEmptyFiles = cbIgnoreEmptyFiles.Checked;
 
             ActionForm.ShowDialog(this);
         }
@@ -797,8 +785,6 @@ namespace DupeClear
         {
             UncheckAllMenus();
             customToolStripMenuItem.Checked = true;
-
-            //ExtractDataFromResults();
         }
 
         private void onlineHelpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -976,73 +962,44 @@ namespace DupeClear
                 if (item.BackColor == backcolour)
                 {
                     //child
-                    if (art == MODIFIED_NEWEST || art == MODIFIED_OLDEST || art == CREATED_NEWEST || art == CREATED_OLDEST)
+
+                    DateTime Date1 = DateTime.Parse(item.SubItems[clmDateModified.Index].Text);
+                    DateTime Date2 = DateTime.Parse(TheUnmarkedItem.SubItems[clmDateModified.Index].Text);
+                    string path1 = "";
+                    string path2 = "";
+
+                    if (art == CREATED_NEWEST || art == CREATED_OLDEST)
                     {
-                        DateTime Date1 = DateTime.Now;
-                        DateTime Date2 = DateTime.Now;
-
-                        if (art == MODIFIED_NEWEST || art == MODIFIED_OLDEST)
-                        {
-                            Date1 = DateTime.Parse(item.SubItems[clmDateModified.Index].Text);
-                            Date2 = DateTime.Parse(TheUnmarkedItem.SubItems[clmDateModified.Index].Text);
-                        }
-                        else if (art == CREATED_NEWEST || art == CREATED_OLDEST)
-                        {
-                            Date1 = DateTime.Parse(item.SubItems[clmDateCreated.Index].Text);
-                            Date2 = DateTime.Parse(TheUnmarkedItem.SubItems[clmDateCreated.Index].Text);
-                        }
-
-                        if ((art == MODIFIED_OLDEST || art == CREATED_OLDEST) && Date1 <= Date2)
-                        {
-                            TheUnmarkedItem.Checked = true;
-                            item.Checked = false;
-                            TheUnmarkedItem = item;
-                            continue;
-                        }
-                        else if ((art == MODIFIED_NEWEST || art == CREATED_NEWEST) && (Date1 > Date2 || Date1.Subtract(Date2).TotalSeconds == 0))
-                        {
-                            TheUnmarkedItem.Checked = true;
-                            item.Checked = false;
-                            TheUnmarkedItem = item;
-                            continue;
-                        }
-                        else
-                        {
-                            item.Checked = true;
-                            continue;
-                        }
+                        Date1 = DateTime.Parse(item.SubItems[clmDateCreated.Index].Text);
+                        Date2 = DateTime.Parse(TheUnmarkedItem.SubItems[clmDateCreated.Index].Text);
                     }
-                    else if (art == NAME_LONGEST || art == NAME_SHORTEST || art == PATH_LONGEST || art == PATH_SHORTEST || art == MORE_LETTERS || art == MORE_NUMBERS)
+                    else if (art == NAME_LONGEST || art == NAME_SHORTEST || art == MORE_LETTERS || art == MORE_NUMBERS)
                     {
-                        string path1 = "";
-                        string path2 = "";
+                        path1 = item.Text;
+                        path2 = TheUnmarkedItem.Text;
+                    }
+                    else if (art == PATH_LONGEST || art == PATH_SHORTEST)
+                    {
+                        path1 = general.ParseFileName(item, clmLocation.Index);
+                        path2 = general.ParseFileName(TheUnmarkedItem, clmLocation.Index);
+                    }
 
-                        if (art == NAME_LONGEST || art == NAME_SHORTEST || art == MORE_LETTERS || art == MORE_NUMBERS)
-                        {
-                            path1 = item.Text;
-                            path2 = TheUnmarkedItem.Text;
-                        }
-                        else if (art == PATH_LONGEST || art == PATH_SHORTEST)
-                        {
-                            path1 = general.ParseFileName(item, clmLocation.Index);
-                            path2 = general.ParseFileName(TheUnmarkedItem, clmLocation.Index);
-                        }
-
-                        if (((art == NAME_LONGEST || art == PATH_LONGEST) && (path1.Length >= path2.Length)) ||
-                            ((art == NAME_SHORTEST || art == PATH_SHORTEST) && (path1.Length <= path2.Length)) ||
-                            (art == MORE_LETTERS && path1.Count(char.IsLetter) >= path2.Count(char.IsLetter)) ||
-                            (art == MORE_NUMBERS && path1.Count(char.IsNumber) >= path2.Count(char.IsNumber)))
-                        {
-                            TheUnmarkedItem.Checked = true;
-                            item.Checked = false;
-                            TheUnmarkedItem = item;
-                            continue;
-                        }
-                        else
-                        {
-                            item.Checked = true;
-                            continue;
-                        }
+                    if (((art == MODIFIED_OLDEST || art == CREATED_OLDEST) && Date1 < Date2) ||
+                        ((art == MODIFIED_NEWEST || art == CREATED_NEWEST) && Date1 > Date2) ||
+                        ((art == NAME_LONGEST || art == PATH_LONGEST) && path1.Length > path2.Length) ||
+                        ((art == NAME_SHORTEST || art == PATH_SHORTEST) && path1.Length < path2.Length) ||
+                        (art == MORE_LETTERS && path1.Count(char.IsLetter) > path2.Count(char.IsLetter)) ||
+                        (art == MORE_NUMBERS && path1.Count(char.IsNumber) > path2.Count(char.IsNumber)))
+                    {
+                        TheUnmarkedItem.Checked = true;
+                        item.Checked = false;
+                        TheUnmarkedItem = item;
+                        continue;
+                    }
+                    else
+                    {
+                        item.Checked = true;
+                        continue;
                     }
                 }
                 else
@@ -1210,11 +1167,12 @@ namespace DupeClear
             general.MsgBox(counter.ToString() + " entries exported successfully.");
         }
 
-        void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList)
+        void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList, bool skipSameFolder)
         {
             ListViewItem head = null;
             List<ListViewItem> itemsToDelete = new List<ListViewItem>();
             int counter = 0;
+            String targetPath = "";
 
             path = path.ToLower();
 
@@ -1225,6 +1183,7 @@ namespace DupeClear
                 if (head == null)
                 {
                     head = item;
+                    targetPath = head.SubItems[clmLocation.Index].Text.ToLower();
                 }
 
                 if (item.BackColor == head.BackColor)
@@ -1234,8 +1193,7 @@ namespace DupeClear
                         if (UnMark)
                         {
                             item.Checked = false;
-                            if (removeFromList)
-                                itemsToDelete.Add(item);
+                            if (removeFromList) itemsToDelete.Add(item);
                         }
                         else
                         {
@@ -1814,8 +1772,6 @@ namespace DupeClear
 
         private void MarkSpecificTypes(List<string> extensions, bool isMarked, bool removeFromList)
         {
-
-
             this.Cursor = Cursors.WaitCursor;
 
             List<ListViewItem> itemsToRemove = new List<ListViewItem>();

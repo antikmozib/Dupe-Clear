@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbSkipSamePath = new System.Windows.Forms.CheckBox();
             this.cbRemoveFromList = new System.Windows.Forms.CheckBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -40,6 +42,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.lblExtHelp = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,6 +74,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbSkipSamePath);
             this.groupBox1.Controls.Add(this.cbRemoveFromList);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
@@ -80,6 +84,20 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Action";
+            // 
+            // cbSkipSamePath
+            // 
+            this.cbSkipSamePath.AutoSize = true;
+            this.cbSkipSamePath.Checked = true;
+            this.cbSkipSamePath.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbSkipSamePath.Location = new System.Drawing.Point(112, 47);
+            this.cbSkipSamePath.Name = "cbSkipSamePath";
+            this.cbSkipSamePath.Size = new System.Drawing.Size(262, 19);
+            this.cbSkipSamePath.TabIndex = 4;
+            this.cbSkipSamePath.Text = "&Ignore duplicate files from the same location";
+            this.toolTip1.SetToolTip(this.cbSkipSamePath, "When a set of duplicate files are all from the same location, do not action. This" +
+        " ensures duplicate files within the same folder are all taken care of.");
+            this.cbSkipSamePath.UseVisualStyleBackColor = true;
             // 
             // cbRemoveFromList
             // 
@@ -151,9 +169,14 @@
             this.lblExtHelp.AutoSize = true;
             this.lblExtHelp.Location = new System.Drawing.Point(239, 55);
             this.lblExtHelp.Name = "lblExtHelp";
-            this.lblExtHelp.Size = new System.Drawing.Size(217, 15);
+            this.lblExtHelp.Size = new System.Drawing.Size(219, 15);
             this.lblExtHelp.TabIndex = 8;
             this.lblExtHelp.Text = "Extension format: *.mp3;*.wma;*.txt etc.";
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTip1.ToolTipTitle = "More Info";
             // 
             // frmFromSpecificFolder
             // 
@@ -200,5 +223,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.CheckBox cbRemoveFromList;
         private System.Windows.Forms.Label lblExtHelp;
+        private System.Windows.Forms.CheckBox cbSkipSamePath;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

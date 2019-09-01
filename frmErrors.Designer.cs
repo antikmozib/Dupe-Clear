@@ -80,6 +80,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(451, 325);
             this.Name = "frmErrors";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

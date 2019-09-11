@@ -293,11 +293,6 @@ namespace DupeClear
             ActionForm.ShowDialog(this);
         }
 
-        private void errorsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void markAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in lvResults.Items)
@@ -1451,14 +1446,6 @@ namespace DupeClear
                         Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
                         Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin,
                         Microsoft.VisualBasic.FileIO.UICancelOption.DoNothing);
-
-                    //if (item.Index == lvResults.SelectedItems.Count - 1) //last selected item
-                    //{
-                    //    if (lvResults.Items.Count - 1 > item.Index) //more items later
-                    //    {
-                    //        lvResults.Items[item.Index + 1].Selected = true;
-                    //    }
-                    //}
                 }
                 catch (Exception ex)
                 {

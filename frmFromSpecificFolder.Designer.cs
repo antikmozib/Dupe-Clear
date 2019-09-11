@@ -88,8 +88,7 @@
             // cbSkipSamePath
             // 
             this.cbSkipSamePath.AutoSize = true;
-            this.cbSkipSamePath.Checked = true;
-            this.cbSkipSamePath.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbSkipSamePath.Enabled = false;
             this.cbSkipSamePath.Location = new System.Drawing.Point(112, 47);
             this.cbSkipSamePath.Name = "cbSkipSamePath";
             this.cbSkipSamePath.Size = new System.Drawing.Size(262, 19);

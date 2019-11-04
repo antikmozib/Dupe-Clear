@@ -91,7 +91,7 @@
             this.label4.ForeColor = System.Drawing.SystemColors.WindowText;
             this.label4.Location = new System.Drawing.Point(106, 68);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(350, 1);
+            this.label4.Size = new System.Drawing.Size(315, 1);
             this.label4.TabIndex = 4;
             // 
             // label5
@@ -99,7 +99,7 @@
             this.label5.ForeColor = System.Drawing.SystemColors.WindowText;
             this.label5.Location = new System.Drawing.Point(106, 86);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(350, 32);
+            this.label5.Size = new System.Drawing.Size(315, 32);
             this.label5.TabIndex = 5;
             this.label5.Text = "AssemblyCopyright";
             // 
@@ -108,7 +108,7 @@
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.button1.Location = new System.Drawing.Point(181, 213);
+            this.button1.Location = new System.Drawing.Point(162, 231);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(107, 28);
             this.button1.TabIndex = 9;
@@ -122,7 +122,7 @@
             this.label8.ForeColor = System.Drawing.SystemColors.WindowText;
             this.label8.Location = new System.Drawing.Point(106, 124);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(350, 32);
+            this.label8.Size = new System.Drawing.Size(315, 32);
             this.label8.TabIndex = 10;
             this.label8.Text = "DISCLAIMER: This software is provided \"as is\", without any explicit or implied wa" +
     "rranty.\r\n";
@@ -133,7 +133,7 @@
             this.label6.ForeColor = System.Drawing.SystemColors.WindowText;
             this.label6.Location = new System.Drawing.Point(106, 171);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(350, 1);
+            this.label6.Size = new System.Drawing.Size(315, 1);
             this.label6.TabIndex = 11;
             // 
             // label7
@@ -149,12 +149,12 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(301, 182);
+            this.linkLabel1.Location = new System.Drawing.Point(106, 197);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(123, 15);
+            this.linkLabel1.Size = new System.Drawing.Size(173, 15);
             this.linkLabel1.TabIndex = 13;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "www.antikmozib.com";
+            this.linkLabel1.Text = "https://github.com/antikmozib";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // frmAbout
@@ -162,7 +162,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(468, 253);
+            this.ClientSize = new System.Drawing.Size(431, 270);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);

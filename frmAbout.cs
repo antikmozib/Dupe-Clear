@@ -15,7 +15,7 @@ namespace DupeClear
             this.label3.Text = "Licence: Free for non-commercial use";
             this.label5.Text = AssemblyCopyright;
             this.label5.Text +=" "+ AssemblyCompany;
-            this.label5.Text += "."+Environment.NewLine+"ALL RIGHTS RESERVED.";
+            this.label5.Text += "."+Environment.NewLine+"All rights reserved.";
             //this.textBoxDescription.Text = AssemblyDescription;
         }
 
@@ -31,7 +31,7 @@ namespace DupeClear
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.antikmozib.com");
+            System.Diagnostics.Process.Start(linkLabel1.Text);
         }
 
         #region Assembly Attribute Accessors

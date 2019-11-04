@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Dupe Clear")]
 [assembly: AssemblyDescription("Dupe Clear - The Ultimate Duplicate File Cleaner")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Antik Mozib Technologies")]
+[assembly: AssemblyCompany("Antik Mozib")]
 [assembly: AssemblyProduct("Dupe Clear")]
 [assembly: AssemblyCopyright("Copyright ©  2017-2019")]
 [assembly: AssemblyTrademark("All Rights Reserved.")]

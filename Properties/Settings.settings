@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DupeClear.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ActivationEmail" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ActivationCode" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DayZero" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">1753-01-01</Value>
+    </Setting>
+    <Setting Name="SearchExtensions" Type="System.String" Scope="User">
+      <Value Profile="(Default)">All files (*.*)</Value>
+    </Setting>
+    <Setting Name="ExcludedExtensions" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DateCreatedFrom" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">1980-01-01</Value>
+    </Setting>
+    <Setting Name="DateCreatedTo" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2020-12-31</Value>
+    </Setting>
+    <Setting Name="DateModifiedFrom" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">1980-01-01</Value>
+    </Setting>
+    <Setting Name="DateModifiedTo" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2020-12-31</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

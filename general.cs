@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (C) 2020 Antik Mozib. Released under GNU GPLv3.
+
+using System;
 using System.IO;
 using System.Drawing;
 using Microsoft.Win32;

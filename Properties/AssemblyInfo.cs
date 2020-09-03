@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿// Copyright (C) 2020 Antik Mozib. Released under GNU GPLv3.
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 

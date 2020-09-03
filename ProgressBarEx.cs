@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualBasic;
+﻿// Copyright (C) 2020 Antik Mozib. Released under GNU GPLv3.
+
+using Microsoft.VisualBasic;
 using System;
 using System.Collections;
 using System.Collections.Generic;

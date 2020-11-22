@@ -1,7 +1,7 @@
 # Dupe Clear
 A duplicate file cleaner for Windows.
 
-# Features
+<h3>Features</h3>
 
 * Find duplicate files in any folder
 * Use search filters such as extension, modification date etc. to find files quickly

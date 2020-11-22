@@ -1,6 +1,8 @@
 # Dupe Clear
 A duplicate file cleaner for Windows.
 
+![Screenshot](https://github.com/antikmozib/Dupe-Clear/blob/master/Screenshot.png?raw=true)
+
 <h3>Features</h3>
 
 * Find duplicate files in any folder

@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Antik Mozib")]
 [assembly: AssemblyProduct("Dupe Clear")]
-[assembly: AssemblyCopyright("Copyright ©  2017-2019")]
+[assembly: AssemblyCopyright("Copyright ©  2017-2020")]
 [assembly: AssemblyTrademark("All Rights Reserved.")]
 [assembly: AssemblyCulture("")]
 

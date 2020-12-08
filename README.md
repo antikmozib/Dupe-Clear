@@ -11,4 +11,4 @@ A duplicate file cleaner for Windows.
 
 <h3>Installing</h3>
 
-Please download the installer from https://mozibsoft.com/dupeclear.
+Download the installer program and follow its instructions.

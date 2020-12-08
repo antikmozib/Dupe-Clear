@@ -14,7 +14,7 @@ namespace DupeClear
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.label1.Text = AssemblyProduct;
             this.label2.Text = String.Format("Version {0}", AssemblyVersion);
-            this.label3.Text = "Licence: Free for non-commercial use";
+            this.label3.Text = "Licence: GPLv3";
             this.label5.Text = AssemblyCopyright;
             this.label5.Text +=" "+ AssemblyCompany;
             this.label5.Text += "."+Environment.NewLine+"All rights reserved.";

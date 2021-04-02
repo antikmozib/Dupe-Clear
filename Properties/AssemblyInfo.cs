@@ -12,8 +12,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Antik Mozib")]
 [assembly: AssemblyProduct("Dupe Clear")]
-[assembly: AssemblyCopyright("Copyright ©  2017-2020")]
-[assembly: AssemblyTrademark("All Rights Reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2017-2020 Antik Mozib.")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

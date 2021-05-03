@@ -11,4 +11,4 @@ A duplicate file cleaner for Windows.
 
 <h3>Installing</h3>
 
-Download the installer program and follow its instructions.
+Download and run the setup program and follow its instructions.

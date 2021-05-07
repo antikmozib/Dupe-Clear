@@ -72,17 +72,11 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChreneLib">
-      <HintPath>third-party\ChreneLib.dll</HintPath>
-    </Reference>
     <Reference Include="GrabFolderIcon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>third-party\GrabFolderIcon.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="ProgressBarEx">
-      <HintPath>third-party\ProgressBarEx.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

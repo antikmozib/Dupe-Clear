@@ -13,6 +13,8 @@ using System.IO;
 using Microsoft.VisualBasic;
 using System.Diagnostics;
 using AntikMozibTechnologies;
+using static DupeClear.general;
+using System.Reflection;
 
 namespace DupeClear
 {
@@ -1862,6 +1864,40 @@ namespace DupeClear
 
             markByNameToolStripMenuItem.Checked = true;
             keepNamesWithLessLettersToolStripMenuItem.Checked = true;
+        }
+
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Task.Run(async () => await TriggerUpdateCheckAsync());
+        }
+
+        private async Task TriggerUpdateCheckAsync(bool silent = false)
+        {
+            string url = await AppUpdateService.GetUpdateUrl(
+                    @"https://mozib.io/downloads/update.php",
+                    Assembly.GetExecutingAssembly().GetName().Name,
+                    Assembly.GetExecutingAssembly().GetName().Version.ToString());
+
+            if (string.IsNullOrEmpty(url))
+            {
+                if (!silent)
+                {
+                    MessageBox.Show(
+                        "No new updates are available.", "Update",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                return;
+            }
+
+            if (MessageBox.Show(
+                "An update is available.\n\nWould you like to download it now?", "Update",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            {
+                Process.Start("explorer.exe", url);
+            }
         }
     }
 }

@@ -38,7 +38,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -58,7 +57,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label1.Location = new System.Drawing.Point(88, 9);
+            this.label1.Location = new System.Drawing.Point(88, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(81, 15);
             this.label1.TabIndex = 1;
@@ -78,7 +77,7 @@
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label4.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label4.Location = new System.Drawing.Point(91, 50);
+            this.label4.Location = new System.Drawing.Point(88, 48);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(315, 1);
             this.label4.TabIndex = 4;
@@ -87,7 +86,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label5.Location = new System.Drawing.Point(88, 65);
+            this.label5.Location = new System.Drawing.Point(88, 64);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(111, 15);
             this.label5.TabIndex = 5;
@@ -98,7 +97,7 @@
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.button1.Location = new System.Drawing.Point(153, 192);
+            this.button1.Location = new System.Drawing.Point(151, 192);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(107, 28);
             this.button1.TabIndex = 9;
@@ -110,41 +109,31 @@
             // 
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label8.Location = new System.Drawing.Point(88, 89);
+            this.label8.Location = new System.Drawing.Point(88, 128);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(315, 32);
+            this.label8.Size = new System.Drawing.Size(312, 48);
             this.label8.TabIndex = 10;
-            this.label8.Text = "DISCLAIMER: This software is provided \"as is\", without any explicit or implied wa" +
-    "rranty.\r\n";
+            this.label8.Text = "DISCLAIMER: This is free software. There is NO warranty; not even for MERCHANTABI" +
+    "LITY or FITNESS FOR A PARTICULAR PURPOSE.";
             // 
             // label6
             // 
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label6.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label6.Location = new System.Drawing.Point(88, 133);
+            this.label6.Location = new System.Drawing.Point(88, 112);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(315, 1);
             this.label6.TabIndex = 11;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label7.Location = new System.Drawing.Point(88, 144);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(199, 15);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "For updates and support, please visit";
-            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(88, 160);
+            this.linkLabel1.Location = new System.Drawing.Point(88, 80);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(184, 15);
+            this.linkLabel1.Size = new System.Drawing.Size(150, 15);
             this.linkLabel1.TabIndex = 13;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "https://mozibsoft.com/dupeclear";
+            this.linkLabel1.Text = "https://mozib.io/dupeclear";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // frmAbout
@@ -152,9 +141,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(413, 231);
+            this.ClientSize = new System.Drawing.Size(409, 231);
             this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.button1);
@@ -189,7 +177,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.ToolTip toolTip1;
     }

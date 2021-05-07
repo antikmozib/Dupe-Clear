@@ -7,6 +7,9 @@ using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net;
 
 namespace DupeClear
 {
@@ -278,6 +281,31 @@ namespace DupeClear
         public static string ParseFileName(ListViewItem item, int PathColumnIndex)
         {
             return item.SubItems[PathColumnIndex].Text + "\\" + item.Text;
+        }
+
+        public static class AppUpdateService
+        {
+            public static async Task<string> GetUpdateUrl(string url, string appName, string appVersion)
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                using (var c = new HttpClient())
+                {
+                    appName = appName.Replace(" ", ""); // replace spaces in url
+                    try
+                    {
+                        var response = await c.GetAsync(url + "?appname=" + appName + "&version=" + appVersion);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return await response.Content.ReadAsStringAsync();
+                        }
+                        return string.Empty;
+                    }
+                    catch (Exception)
+                    {
+                        return string.Empty;
+                    }
+                }
+            }
         }
     }
 }

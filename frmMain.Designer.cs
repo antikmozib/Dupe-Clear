@@ -78,7 +78,6 @@
             this.cbExcludeHiddenFiles = new System.Windows.Forms.CheckBox();
             this.tabpageResults = new System.Windows.Forms.TabPage();
             this.btnAutoMark = new System.Windows.Forms.Button();
-            this.txtFind = new ChreneLib.Controls.TextBoxes.CTextBox();
             this.btnFindAll = new System.Windows.Forms.Button();
             this.btnFindNext = new System.Windows.Forms.Button();
             this.lblFind = new System.Windows.Forms.Label();
@@ -139,6 +138,8 @@
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.keepPaneFixedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopy = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.markedFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -180,6 +181,7 @@
             this.OpenXML = new System.Windows.Forms.OpenFileDialog();
             this.SaveXML = new System.Windows.Forms.SaveFileDialog();
             this.SearchOptionsTips = new System.Windows.Forms.ToolTip(this.components);
+            this.txtFind = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabpageLocation.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -743,8 +745,8 @@
             // 
             // tabpageResults
             // 
-            this.tabpageResults.Controls.Add(this.btnAutoMark);
             this.tabpageResults.Controls.Add(this.txtFind);
+            this.tabpageResults.Controls.Add(this.btnAutoMark);
             this.tabpageResults.Controls.Add(this.btnFindAll);
             this.tabpageResults.Controls.Add(this.btnFindNext);
             this.tabpageResults.Controls.Add(this.lblFind);
@@ -780,20 +782,6 @@
         "le.");
             this.btnAutoMark.UseVisualStyleBackColor = false;
             this.btnAutoMark.Click += new System.EventHandler(this.btnAutoMark_Click);
-            // 
-            // txtFind
-            // 
-            this.txtFind.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFind.Location = new System.Drawing.Point(42, 40);
-            this.txtFind.Name = "txtFind";
-            this.txtFind.Size = new System.Drawing.Size(419, 23);
-            this.txtFind.TabIndex = 9;
-            this.txtFind.WaterMark = "Enter part of the file name, type or location.";
-            this.txtFind.WaterMarkActiveForeColor = System.Drawing.SystemColors.ControlDark;
-            this.txtFind.WaterMarkFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFind.WaterMarkForeColor = System.Drawing.SystemColors.ControlDark;
-            this.txtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFind_KeyDown);
             // 
             // btnFindAll
             // 
@@ -1354,15 +1342,29 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkForUpdatesToolStripMenuItem,
+            this.toolStripMenuItem1,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.checkForUpdatesToolStripMenuItem.Text = "Check For Updates";
+            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 6);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.aboutToolStripMenuItem.Text = "A&bout...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -1664,6 +1666,14 @@
             this.SearchOptionsTips.InitialDelay = 250;
             this.SearchOptionsTips.ReshowDelay = 100;
             // 
+            // txtFind
+            // 
+            this.txtFind.Location = new System.Drawing.Point(40, 40);
+            this.txtFind.Name = "txtFind";
+            this.txtFind.Size = new System.Drawing.Size(424, 23);
+            this.txtFind.TabIndex = 12;
+            this.SearchOptionsTips.SetToolTip(this.txtFind, "Enter filename, type, path etc. or part thereof");
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1848,7 +1858,6 @@
         private System.Windows.Forms.Label lblFind;
         private System.Windows.Forms.Button btnFindNext;
         private System.Windows.Forms.Button btnFindAll;
-        private ChreneLib.Controls.TextBoxes.CTextBox txtFind;
         private System.Windows.Forms.ListView lvLocations;
         private System.Windows.Forms.ListView lvExcludedLocations;
         private System.Windows.Forms.ToolStripMenuItem markBySpecificTypesToolStripMenuItem;
@@ -1861,6 +1870,9 @@
         private System.Windows.Forms.ToolStripMenuItem keepNamesWithMoreLettersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem keepNamesWithLessLettersToolStripMenuItem;
         private System.Windows.Forms.CheckBox cbIgnoreEmptyFiles;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.TextBox txtFind;
     }
 }
 

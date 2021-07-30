@@ -92,7 +92,7 @@ namespace DupeClear
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "";
             }
@@ -120,7 +120,7 @@ namespace DupeClear
             {
                 return Icon.ExtractAssociatedIcon(path);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return SystemIcons.WinLogo;
             }
@@ -202,9 +202,9 @@ namespace DupeClear
             return path.Substring(path.LastIndexOf("."));
         }
 
-        public static System.Windows.Forms.DialogResult MsgBox(string message, string title = "Dupe Clear",
-            System.Windows.Forms.MessageBoxButtons buttons = System.Windows.Forms.MessageBoxButtons.OK,
-            System.Windows.Forms.MessageBoxIcon icon = System.Windows.Forms.MessageBoxIcon.Information)
+        public static DialogResult MsgBox(string message, string title = "Dupe Clear",
+            MessageBoxButtons buttons = MessageBoxButtons.OK,
+            MessageBoxIcon icon = MessageBoxIcon.Information)
         {
             return System.Windows.Forms.MessageBox.Show(message, title, buttons, icon);
         }

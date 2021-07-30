@@ -1,50 +1,50 @@
 ﻿// Copyright (C) 2020 Antik Mozib. Released under GNU GPLv3.
 
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using Microsoft.VisualBasic;
-using System.Diagnostics;
-using AntikMozibTechnologies;
 using static DupeClear.general;
-using System.Reflection;
 
 namespace DupeClear
 {
     public partial class frmMain : Form
     {
-        ImageList FolderImageList;
+        private ImageList FolderImageList;
 
         //ListView vars
-        Color highlight1 = Color.White;
-        Color highlight2 = Color.FromArgb(255, 240, 230, 140);
-        Color textColour = Color.Black;
-        Color markedForDeletion = Color.Black;
-        ImageList fileImages = new ImageList();
+        private Color highlight1 = Color.White;
+
+        private Color highlight2 = Color.FromArgb(255, 240, 230, 140);
+        private Color textColour = Color.Black;
+        private Color markedForDeletion = Color.Black;
+        private ImageList fileImages = new ImageList();
 
         //file paths
         public static readonly string BaseSettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Dupe Clear\\";
-        static readonly string IncludedLocationsFile = BaseSettingsPath + "include.txt";
-        static readonly string ExcludedLocationsFile = BaseSettingsPath + "exclude.txt";
+
+        private static readonly string IncludedLocationsFile = BaseSettingsPath + "include.txt";
+        private static readonly string ExcludedLocationsFile = BaseSettingsPath + "exclude.txt";
 
         //Mark Arts
-        const int MODIFIED_OLDEST = 0;
-        const int MODIFIED_NEWEST = 1;
-        const int CREATED_OLDEST = 2;
-        const int CREATED_NEWEST = 3;
-        const int NAME_SHORTEST = 4;
-        const int NAME_LONGEST = 5;
-        const int PATH_SHORTEST = 6;
-        const int PATH_LONGEST = 7;
-        const int MORE_LETTERS = 8;
-        const int MORE_NUMBERS = 9;
+        private const int MODIFIED_OLDEST = 0;
+
+        private const int MODIFIED_NEWEST = 1;
+        private const int CREATED_OLDEST = 2;
+        private const int CREATED_NEWEST = 3;
+        private const int NAME_SHORTEST = 4;
+        private const int NAME_LONGEST = 5;
+        private const int PATH_SHORTEST = 6;
+        private const int PATH_LONGEST = 7;
+        private const int MORE_LETTERS = 8;
+        private const int MORE_NUMBERS = 9;
 
         public frmMain()
         {
@@ -136,6 +136,7 @@ namespace DupeClear
                 }
             }
         }
+
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAbout AboutForm = new frmAbout();
@@ -215,7 +216,6 @@ namespace DupeClear
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -445,7 +445,7 @@ namespace DupeClear
                 return;
             }
 
-            //build extensions.            
+            //build extensions.
             ActionForm.ExtList = new List<string>();
 
             if (cboExtensions.Text.Contains("(") && cboExtensions.Text.Contains(")"))
@@ -582,7 +582,6 @@ namespace DupeClear
                 }
                 catch
                 {
-
                 }
                 if (!lblResultsListStatus.Text.ToLower().Contains("marked"))
                     RefreshList();
@@ -599,7 +598,7 @@ namespace DupeClear
             menuClear.Show(btnClearList, new Point(0, btnClearList.Height));
         }
 
-        void ClearList(int TypeOfClear)
+        private void ClearList(int TypeOfClear)
         {
             if (TypeOfClear == 0)
             {
@@ -634,7 +633,7 @@ namespace DupeClear
             if (!Directory.Exists(BaseSettingsPath))
                 Directory.CreateDirectory(BaseSettingsPath);
 
-            //setup UI            
+            //setup UI
             fileImages.ColorDepth = ColorDepth.Depth32Bit;
             fileImages.ImageSize = new Size(16, 16);
             lvResults.SmallImageList = fileImages;
@@ -659,7 +658,7 @@ namespace DupeClear
             //dtpDateModifiedFrom.Checked = false;
             //dtpDateModifiedTo.Checked = false;
 
-            //populate listboxes from files           
+            //populate listboxes from files
             Stream stream; StreamReader reader;
             //included list
             stream = new FileStream(IncludedLocationsFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
@@ -720,7 +719,6 @@ namespace DupeClear
                             //this means the file has been moved
                             item.SubItems[clmLocation.Index].Text = Destination;
                         }
-
                     }
                 }
 
@@ -733,8 +731,7 @@ namespace DupeClear
             this.Cursor = Cursors.Default;
         }
 
-
-        void SearchCompleted(List<ListViewItem> Results)
+        private void SearchCompleted(List<ListViewItem> Results)
         {
             this.Cursor = Cursors.WaitCursor;
 
@@ -759,10 +756,9 @@ namespace DupeClear
 
         private void autoMarkAllDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
-        void UncheckAllMenus()
+        private void UncheckAllMenus()
         {
             byDateCreatedToolStripMenuItem.Checked = false;
             keepOldestToolStripMenuItem.Checked = false;
@@ -938,8 +934,7 @@ namespace DupeClear
             MessageBox.Show(Results.Count.ToString() + " records imported.", "Import", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-
-        void MarkFiles(int art)
+        private void MarkFiles(int art)
         {
             if (lvResults.Items.Count == 0) return;
 
@@ -1054,7 +1049,7 @@ namespace DupeClear
             splitContainer1.Panel2Collapsed = !cbShowPreview.Checked;
         }
 
-        void UncheckAllPreviews()
+        private void UncheckAllPreviews()
         {
             autoToolStripMenuItem.Checked = false;
             normalToolStripMenuItem.Checked = false;
@@ -1166,7 +1161,7 @@ namespace DupeClear
             general.MsgBox(counter.ToString() + " entries exported successfully.");
         }
 
-        void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList, bool skipSameFolder)
+        private void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList, bool skipSameFolder)
         {
             ListViewItem head = null;
             List<ListViewItem> itemsToDelete = new List<ListViewItem>();
@@ -1238,7 +1233,7 @@ namespace DupeClear
             RefreshList();
         }
 
-        int RemoveItemsFromListView(List<ListViewItem> items)
+        private int RemoveItemsFromListView(List<ListViewItem> items)
         {
             int count = 0;
 
@@ -1249,7 +1244,7 @@ namespace DupeClear
                 {
                     if (lvResults.Items[item.Index + 1].BackColor == item.BackColor)
                     {
-                        //safe to remove - next file from same group                        
+                        //safe to remove - next file from same group
                         lvResults.Items.Remove(item);
                         count++;
                     }
@@ -1286,7 +1281,7 @@ namespace DupeClear
             return count;
         }
 
-        void FlipListViewColours(int startIndex)
+        private void FlipListViewColours(int startIndex)
         {
             for (int i = startIndex; i < lvResults.Items.Count; i++)
             {
@@ -1374,7 +1369,6 @@ namespace DupeClear
 
         private void keepPaneFixedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void keepPaneFixedToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
@@ -1563,7 +1557,6 @@ namespace DupeClear
             }
         }
 
-
         private void viewPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lvResults.SelectedItems.Count == 0) return;
@@ -1598,7 +1591,7 @@ namespace DupeClear
             lvResults.Focus();
         }
 
-        void Find(string title, bool findNext)
+        private void Find(string title, bool findNext)
         {
             title = title.ToLower();
             if (lvResults.Items.Count == 0) return;
@@ -1658,10 +1651,9 @@ namespace DupeClear
 
         private void lbLocations_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
-        void addLocation(ref ListView listView, string path)
+        private void addLocation(ref ListView listView, string path)
         {
             if (Directory.Exists(path) == false)
                 return;
@@ -1807,7 +1799,7 @@ namespace DupeClear
             general.MsgBox(counter.ToString() + " files processed successfully.", "Mark Specific Types");
         }
 
-        void ResetPreviewPane()
+        private void ResetPreviewPane()
         {
             PreviewPane.Image = null;
             PreviewPane.Width = splitContainer1.Panel2.Width;
@@ -1882,22 +1874,25 @@ namespace DupeClear
             {
                 if (!silent)
                 {
-                    MessageBox.Show(
-                        "No new updates are available.", "Update",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    ActiveForm.Invoke((MethodInvoker)delegate
+                    {
+                       MessageBox.Show("No new updates are available.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    });
                 }
                 return;
             }
 
-            if (MessageBox.Show(
-                "An update is available.\n\nWould you like to download it now?", "Update",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            ActiveForm.Invoke((MethodInvoker)delegate
             {
-                Process.Start("explorer.exe", url);
-            }
+                if (MessageBox.Show(
+                        "An update is available.\n\nWould you like to download it now?", "Update",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information,
+                        MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    Process.Start("explorer.exe", url);
+                }
+            });
         }
     }
 }

@@ -1,0 +1,4 @@
+*.user
+obj/
+Setup/*.*
+!Setup/Dupe Clear.iss

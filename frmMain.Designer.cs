@@ -77,6 +77,7 @@
             this.cbExcludeSystemFiles = new System.Windows.Forms.CheckBox();
             this.cbExcludeHiddenFiles = new System.Windows.Forms.CheckBox();
             this.tabpageResults = new System.Windows.Forms.TabPage();
+            this.txtFind = new System.Windows.Forms.TextBox();
             this.btnAutoMark = new System.Windows.Forms.Button();
             this.btnFindAll = new System.Windows.Forms.Button();
             this.btnFindNext = new System.Windows.Forms.Button();
@@ -181,7 +182,6 @@
             this.OpenXML = new System.Windows.Forms.OpenFileDialog();
             this.SaveXML = new System.Windows.Forms.SaveFileDialog();
             this.SearchOptionsTips = new System.Windows.Forms.ToolTip(this.components);
-            this.txtFind = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabpageLocation.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -765,6 +765,14 @@
             this.tabpageResults.TabIndex = 1;
             this.tabpageResults.Text = "Search Results";
             this.tabpageResults.UseVisualStyleBackColor = true;
+            // 
+            // txtFind
+            // 
+            this.txtFind.Location = new System.Drawing.Point(40, 40);
+            this.txtFind.Name = "txtFind";
+            this.txtFind.Size = new System.Drawing.Size(424, 23);
+            this.txtFind.TabIndex = 12;
+            this.SearchOptionsTips.SetToolTip(this.txtFind, "Enter filename, type, path etc. or part thereof");
             // 
             // btnAutoMark
             // 
@@ -1352,20 +1360,20 @@
             // checkForUpdatesToolStripMenuItem
             // 
             this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
-            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.checkForUpdatesToolStripMenuItem.Text = "Check For Updates";
             this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.aboutToolStripMenuItem.Text = "A&bout...";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Text = "A&bout";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // menuCopy
@@ -1665,14 +1673,6 @@
             this.SearchOptionsTips.AutoPopDelay = 15000;
             this.SearchOptionsTips.InitialDelay = 250;
             this.SearchOptionsTips.ReshowDelay = 100;
-            // 
-            // txtFind
-            // 
-            this.txtFind.Location = new System.Drawing.Point(40, 40);
-            this.txtFind.Name = "txtFind";
-            this.txtFind.Size = new System.Drawing.Size(424, 23);
-            this.txtFind.TabIndex = 12;
-            this.SearchOptionsTips.SetToolTip(this.txtFind, "Enter filename, type, path etc. or part thereof");
             // 
             // frmMain
             // 

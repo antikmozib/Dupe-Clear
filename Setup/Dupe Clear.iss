@@ -22,7 +22,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
-LicenseFile=gpl-3.0.rtf
+LicenseFile=gpl-3.0.txt
 OutputDir=output
 OutputBaseFilename={#MyAppOutputName}-{#MyAppVersion}-setup
 Compression=lzma
@@ -30,8 +30,6 @@ SolidCompression=yes
 UsePreviousAppDir=True
 UninstallDisplayName={#MyAppName}
 UninstallDisplayIcon={app}\{#MyAppName}.exe
-WizardSmallImageFile=small.bmp
-WizardStyle=modern
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"

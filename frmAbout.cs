@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2020 Antik Mozib. Released under GNU GPLv3.
+﻿// Copyright (C) 2020-2022 Antik Mozib. All rights reserved.
 
 using System;
 using System.Windows.Forms;

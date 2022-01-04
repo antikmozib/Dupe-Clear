@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2020-2022 Antik Mozib. All rights reserved.
+﻿// Copyright (C) Antik Mozib. All rights reserved.
 
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Antik Mozib")]
 [assembly: AssemblyProduct("Dupe Clear")]
-[assembly: AssemblyCopyright("Copyright © 2021 Antik Mozib. All Rights Reserved.")]
+[assembly: AssemblyCopyright("Copyright © Antik Mozib. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

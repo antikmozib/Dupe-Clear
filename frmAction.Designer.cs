@@ -79,7 +79,7 @@
             this.btnCancel.BackColor = System.Drawing.SystemColors.Window;
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnCancel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnCancel.Location = new System.Drawing.Point(499, 147);
+            this.btnCancel.Location = new System.Drawing.Point(499, 167);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(101, 28);
             this.btnCancel.TabIndex = 3;
@@ -110,7 +110,7 @@
             this.btnViewErrors.BackColor = System.Drawing.SystemColors.Window;
             this.btnViewErrors.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnViewErrors.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnViewErrors.Location = new System.Drawing.Point(392, 147);
+            this.btnViewErrors.Location = new System.Drawing.Point(392, 167);
             this.btnViewErrors.Name = "btnViewErrors";
             this.btnViewErrors.Size = new System.Drawing.Size(101, 28);
             this.btnViewErrors.TabIndex = 4;

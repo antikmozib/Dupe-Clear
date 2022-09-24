@@ -759,7 +759,7 @@ namespace DupeClear
                 lblStatus5.Text = status5;
 
             if (progressBar1.Value != progress)
-            progressBar1.Value = progress;
+                progressBar1.Value = progress;
 
             string title = "";
             if (TypeOfWork == 0)

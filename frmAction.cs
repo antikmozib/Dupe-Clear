@@ -263,26 +263,16 @@ namespace DupeClear
                     //compare size                    
                     if (mainFileList[j].size != mainFileList[i].size) continue;
 
-                    //compare hash/contents
-                    if (mainFileList[i].hash == "")
-                    {
-                        mainFileList[i].hash = general.hashFile(mainFileList[i].path);
-                    }
-                    if (mainFileList[j].hash == "")
-                    {
-                        mainFileList[j].hash = general.hashFile(mainFileList[j].path);
-                    }
-                    if (soSameContents && (mainFileList[j].hash != mainFileList[i].hash))
-                        continue;
-
                     //match same name
                     if (soSameFileName)
                         if (general.GetFileName(mainFileList[j].path, false).ToLower() != general.GetFileName(mainFileList[i].path, false).ToLower())
                             continue;
+
                     //match same type
                     if (soSameType)
                         if (general.GetFileExt(mainFileList[j].path) != general.GetFileExt(mainFileList[i].path))
                             continue;
+
                     //match same folder
                     if (soSameFolder)
                         if (general.GetFolderPath(mainFileList[j].path).ToLower() != general.GetFolderPath(mainFileList[i].path).ToLower())
@@ -294,10 +284,27 @@ namespace DupeClear
                     if (soSameCreationTime)
                         if (fj.CreationTime != new FileInfo(mainFileList[i].path).CreationTime)
                             continue;
+                    
                     //match same modification date
                     if (soSameModificationTime)
                         if (fj.LastWriteTime != new FileInfo(mainFileList[i].path).LastWriteTime)
                             continue;
+
+                    if (soSameContents)
+                    {
+                        //compare hash/contents
+                        if (mainFileList[i].hash == "")
+                        {
+                            mainFileList[i].hash = general.hashFile(mainFileList[i].path);
+                        }
+                        if (mainFileList[j].hash == "")
+                        {
+                            mainFileList[j].hash = general.hashFile(mainFileList[j].path);
+                        }
+
+                        if (mainFileList[j].hash != mainFileList[i].hash)
+                            continue;
+                    }
 
                     //DUPE FOUND AT THIS STAGE ################################################################
                     ListViewItem item = new ListViewItem();
@@ -751,6 +758,7 @@ namespace DupeClear
             if (status5 != "")
                 lblStatus5.Text = status5;
 
+            if (progressBar1.Value != progress)
             progressBar1.Value = progress;
 
             string title = "";

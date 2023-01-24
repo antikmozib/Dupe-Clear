@@ -1,4 +1,4 @@
-﻿// Copyright (C) Antik Mozib. All rights reserved.
+﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
 using System;
 using System.Windows.Forms;

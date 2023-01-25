@@ -1,9 +1,7 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DupeClear

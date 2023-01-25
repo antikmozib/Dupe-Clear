@@ -1,8 +1,8 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
 using System;
-using System.Windows.Forms;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace DupeClear
 {

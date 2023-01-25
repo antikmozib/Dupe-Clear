@@ -1876,7 +1876,7 @@ namespace DupeClear
                 {
                     ActiveForm.Invoke((MethodInvoker)delegate
                     {
-                       MessageBox.Show("No new updates are available.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("No new updates are available.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     });
                 }
                 return;

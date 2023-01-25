@@ -1,15 +1,14 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
-using System;
-using System.IO;
-using System.Drawing;
 using Microsoft.Win32;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Net.Http;
+using System;
+using System.Drawing;
+using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DupeClear
 {

@@ -2,3 +2,4 @@
 obj/
 Setup/*
 !Setup/Dupe Clear.iss
+!.editorconfig

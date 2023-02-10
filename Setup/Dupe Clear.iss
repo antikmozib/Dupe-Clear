@@ -17,7 +17,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\{#MyAppName}
+DefaultDirName={commonpf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 LicenseFile=gpl-3.0.txt
 OutputDir=output
@@ -36,10 +36,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "{#SourcePath}\..\bin\Release\Dupe Clear.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourcePath}\..\bin\Release\Dupe Clear.application"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourcePath}\..\bin\Release\Dupe Clear.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourcePath}\..\bin\Release\Dupe Clear.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourcePath}\..\bin\Release\Dupe Clear.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourcePath}\..\bin\Release\GrabFolderIcon.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

@@ -1894,5 +1894,19 @@ namespace DupeClear
                 }
             });
         }
+
+        private void lvLocations_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control)
+            {
+                if (e.KeyCode == Keys.A)
+                {
+                    foreach (ListViewItem lvItem in lvLocations.Items)
+                    {
+                        lvItem.Selected = true;
+                    }
+                }
+            }
+        }
     }
 }

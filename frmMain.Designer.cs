@@ -1204,19 +1204,19 @@
             this.findToolStripMenuItem.CheckOnClick = true;
             this.findToolStripMenuItem.Name = "findToolStripMenuItem";
             this.findToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.findToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.findToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.findToolStripMenuItem.Text = "Fi&nd";
             this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
             // 
             // toolStripMenuItem12
             // 
             this.toolStripMenuItem12.Name = "toolStripMenuItem12";
-            this.toolStripMenuItem12.Size = new System.Drawing.Size(186, 6);
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(188, 6);
             // 
             // importXMLToolStripMenuItem
             // 
             this.importXMLToolStripMenuItem.Name = "importXMLToolStripMenuItem";
-            this.importXMLToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.importXMLToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.importXMLToolStripMenuItem.Text = "&Import XML";
             this.importXMLToolStripMenuItem.Click += new System.EventHandler(this.importXMLToolStripMenuItem_Click);
             // 
@@ -1224,20 +1224,20 @@
             // 
             this.exportAsXMLToolStripMenuItem.Name = "exportAsXMLToolStripMenuItem";
             this.exportAsXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.exportAsXMLToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.exportAsXMLToolStripMenuItem.Text = "&Export as XML";
+            this.exportAsXMLToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.exportAsXMLToolStripMenuItem.Text = "&Export As XML";
             this.exportAsXMLToolStripMenuItem.Click += new System.EventHandler(this.exportAsXMLToolStripMenuItem_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(186, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(188, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

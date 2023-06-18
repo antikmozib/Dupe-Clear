@@ -284,25 +284,34 @@ namespace DupeClear
 
         public static class AppUpdateService
         {
-            public static async Task<string> GetUpdateUrl(string url, string appName, string appVersion)
+            public static async Task<string> GetUpdateUrl(
+                string server, string appName, string appVersion, HttpClient httpClient = null)
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                using (var c = new HttpClient())
+
+                if (httpClient == null)
                 {
-                    appName = appName.Replace(" ", ""); // replace spaces in url
-                    try
+                    httpClient = new HttpClient();
+                }
+
+                appName = appName.Replace(" ", ""); // replace spaces in url
+
+                try
+                {
+                    using (var response = await httpClient.GetAsync(server + "?appname=" + appName + "&version=" + appVersion))
                     {
-                        var response = await c.GetAsync(url + "?appname=" + appName + "&version=" + appVersion);
+
                         if (response.IsSuccessStatusCode)
                         {
                             return await response.Content.ReadAsStringAsync();
                         }
+
                         return string.Empty;
                     }
-                    catch (Exception)
-                    {
-                        return string.Empty;
-                    }
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
                 }
             }
         }

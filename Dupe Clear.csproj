@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>dupeclear.ico</ApplicationIcon>
+    <ApplicationIcon>Dupe Clear.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>48FE6FE2180342A26611F6FA22087022DBFF32FE</ManifestCertificateThumbprint>
@@ -191,7 +191,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dupeclear.ico" />
+    <Content Include="Dupe Clear.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

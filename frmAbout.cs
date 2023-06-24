@@ -11,10 +11,6 @@ namespace DupeClear
         public frmAbout()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.label1.Text = AssemblyProduct;
-            this.label2.Text = String.Format("Version {0}", AssemblyVersion);
-            this.label5.Text = AssemblyCopyright;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -24,7 +20,9 @@ namespace DupeClear
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
-
+            this.label1.Text = AssemblyProduct;
+            this.label2.Text = String.Format("Version {0}", AssemblyVersion);
+            this.label5.Text = AssemblyCopyright;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

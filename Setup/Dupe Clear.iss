@@ -36,9 +36,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: 
 
 [Files]
-Source: "{#SourcePath}\..\bin\Release\Dupe Clear.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourcePath}\..\bin\Release\Dupe Clear.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourcePath}\..\bin\Release\GrabFolderIcon.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourcePath}\..\bin\Release\*"; Excludes: "*.pdb"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

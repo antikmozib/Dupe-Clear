@@ -285,7 +285,7 @@ namespace DupeClear
         public static class AppUpdateService
         {
             public static async Task<string> GetUpdateUrl(
-                string server, string appName, string appVersion, HttpClient httpClient = null)
+                string apiAddress, string appName, string appVersion, HttpClient httpClient = null)
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
@@ -298,7 +298,7 @@ namespace DupeClear
 
                 try
                 {
-                    using (var response = await httpClient.GetAsync(server + "?appname=" + appName + "&version=" + appVersion))
+                    using (var response = await httpClient.GetAsync(apiAddress + "?appname=" + appName + "&version=" + appVersion))
                     {
 
                         if (response.IsSuccessStatusCode)

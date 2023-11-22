@@ -9,7 +9,7 @@ namespace DupeClear
 {
     public partial class frmFromSpecificFolder : Form
     {
-        public int typeOfAction = -1; // 0 = folders, 1 = extensions
+        public int TypeOfAction = -1; // 0 = folders, 1 = extensions
 
         public delegate void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList, bool skipSameFolder);
         public FromSpecificFolder ProcessSpecificFolders;
@@ -26,9 +26,9 @@ namespace DupeClear
 
         private void frmFromSpecificFolder_Load(object sender, EventArgs e)
         {
-            if (typeOfAction == -1) // no action set
+            if (TypeOfAction == -1) // no action set
                 this.Close();
-            else if (typeOfAction == 0) // from specific folders
+            else if (TypeOfAction == 0) // from specific folders
             {
                 textBox1.Text = DefaultPath;
                 this.Text = "Mark/Unmark From Specific Folder";
@@ -37,7 +37,7 @@ namespace DupeClear
                 checkBox2.Visible = true; // Include Sub-Folders
                 lblExtHelp.Visible = false;
             }
-            else if (typeOfAction == 1) // specific extensions
+            else if (TypeOfAction == 1) // specific extensions
             {
                 this.Text = "Mark/Unmark Specific Types";
                 label1.Text = "&Extensions:";
@@ -51,7 +51,7 @@ namespace DupeClear
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (typeOfAction == 0) // folders
+            if (TypeOfAction == 0) // folders
             {
                 if (textBox1.Text.Trim() == "" || !(new System.IO.DirectoryInfo(textBox1.Text).Exists))
                 {
@@ -67,7 +67,7 @@ namespace DupeClear
                 ProcessSpecificFolders(textBox1.Text, checkBox2.Checked, radioButton1.Checked, cbRemoveFromList.Checked, cbSkipSamePath.Checked);
                 this.Close();
             }
-            else if (typeOfAction == 1) // extensions
+            else if (TypeOfAction == 1) // extensions
             {
                 if (!textBox1.Text.Contains(".") || !textBox1.Text.Contains("*") || textBox1.Text.Trim().Length < 3)
                 {

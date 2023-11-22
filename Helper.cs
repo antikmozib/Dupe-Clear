@@ -16,9 +16,9 @@ namespace DupeClear
     {
         public struct DupeFile
         {
-            public string path;
-            public long size;
-            public string hash;
+            public string Path;
+            public long Size;
+            public string Hash;
         }
 
         public struct SHELLEXECUTEINFO
@@ -154,38 +154,38 @@ namespace DupeClear
 
         public static string FileLengthToString(long size)
         {
-            double return_size;
+            double returnSize;
             string type;
 
             if (size > (1024 * 1024 * 1024))
             {
-                return_size = (double)size / (1024 * 1024 * 1024);
+                returnSize = (double)size / (1024 * 1024 * 1024);
                 type = "GB";
             }
             else if (size > (1024 * 1024))
             {
-                return_size = (double)size / (1024 * 1024);
+                returnSize = (double)size / (1024 * 1024);
                 type = "MB";
             }
             else if (size > 1024)
             {
-                return_size = (double)size / (1024);
+                returnSize = (double)size / (1024);
                 type = "KB";
             }
             else
             {
-                return_size = (double)size;
+                returnSize = (double)size;
                 type = "B";
             }
 
             if (type == "GB")
-                return_size = Math.Round(return_size, 3);
+                returnSize = Math.Round(returnSize, 3);
             else if (type == "B" || type == "KB")
-                return_size = (int)return_size;
+                returnSize = (int)returnSize;
             else
-                return_size = Math.Round(return_size, 2);
+                returnSize = Math.Round(returnSize, 2);
 
-            return return_size.ToString() + " " + type;
+            return returnSize.ToString() + " " + type;
         }
 
         public static string GetFileExt(string path)

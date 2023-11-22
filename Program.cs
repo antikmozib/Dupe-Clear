@@ -17,7 +17,7 @@ namespace DupeClear
             String[] arguments = Environment.GetCommandLineArgs();
             if (arguments.Count() > 1)
             {
-                if (arguments[1].ToLower() == "-debug")
+                if (arguments[1].ToLower() == "--debug")
                 {
                     Helper.debugEnabled = true;
                 }

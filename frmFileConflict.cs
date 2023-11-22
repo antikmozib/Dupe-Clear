@@ -7,7 +7,7 @@ namespace DupeClear
 {
     public partial class frmFileConflict : Form
     {
-        public int ActionType; // 0 = skip, 1 = replace, 2 = keep both
+        public int ActionType; // 0 = skip; 1 = replace; 2 = keep both
         public bool KeepGoing = false;
         public string FileName, Destination;
 

@@ -57,7 +57,7 @@ namespace DupeClear
 
         // copy-move
         private bool _keepDoing;
-        private int _replaceCode; // 1=skip 2=replace 3=keep both
+        private int _replaceCode; // 1 = skip; 2 = replace; 3 = keep both
 
         private void btnCancel_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -81,18 +81,17 @@ namespace DupeClear
             {
                 if (e.ProgressPercentage == 0)
                 {
-                    progressBar1.ShowPercentage = true;
                     progressBar1.Text = "";
                     progressBar1.Maximum = _mainFileList.Count();
                 }
 
                 if (_errors.Count > 0)
                 {
-                    ShowProgress("Location: " + _currentlyWorkingPath, "Duplicates found: " + _dupesFound.ToString("###,###,##0") + " (" + Helper.FileLengthToString((long)_spaceSaveable) + ")", e.ProgressPercentage, "", "Files searched: " + _totalSearched.ToString("###,###,##0"), "Errors: " + _errors.Count.ToString());
+                    ShowProgress("Location: " + _currentlyWorkingPath, "Duplicates found: " + _dupesFound.ToString("###,###,##0") + " (" + Helper.FileLengthToString(_spaceSaveable) + ")", e.ProgressPercentage, "", "Files searched: " + _totalSearched.ToString("###,###,##0"), "Errors: " + _errors.Count.ToString());
                 }
                 else
                 {
-                    ShowProgress("Location: " + _currentlyWorkingPath, "Duplicates found: " + _dupesFound.ToString("###,###,##0") + " (" + Helper.FileLengthToString((long)_spaceSaveable) + ")", e.ProgressPercentage, "", "Files searched: " + _totalSearched.ToString("###,###,##0"));
+                    ShowProgress("Location: " + _currentlyWorkingPath, "Duplicates found: " + _dupesFound.ToString("###,###,##0") + " (" + Helper.FileLengthToString(_spaceSaveable) + ")", e.ProgressPercentage, "", "Files searched: " + _totalSearched.ToString("###,###,##0"));
                 }
             }
         }
@@ -136,7 +135,7 @@ namespace DupeClear
             if (_timeElapsed.Length > 6 && _timeElapsed.Substring(0, 2) == "0:")
                 _timeElapsed = _timeElapsed.Substring(2);
 
-            // dont show the remaining time until the search has actually commenced
+            // don't show the remaining time until the search has actually commenced
 
             if (_spaceSearched > 0)
             {
@@ -501,8 +500,6 @@ namespace DupeClear
             lblStatus4.Text = "";
             lblStatus5.Text = "";
 
-            // general.MsgBox(ActionList.Count.ToString());
-
             if (TypeOfWork == 3) // dupe search
             {
                 // START SEARCH PROCEDURE.
@@ -523,9 +520,7 @@ namespace DupeClear
                 _results = new List<ListViewItem>();
 
                 // set UI
-                // progressBar1.Style = ProgressBarStyle.Marquee;
                 progressBar1.Text = "Please wait...";
-                progressBar1.ShowPercentage = false;
                 lblStatus1.Text = "Building file list...";
                 lblStatus2.Text = "";
                 lblStatus3.Text = "";
@@ -570,7 +565,6 @@ namespace DupeClear
                 {
                     this.Cursor = Cursors.WaitCursor;
                     lblStatus1.Text = "Cancelling...";
-                    progressBar1.ShowPercentage = false;
                     progressBar1.Text = "Please wait...";
                     btnCancel.Visible = false;
 
@@ -769,7 +763,7 @@ namespace DupeClear
                 title = "Searching";
             }
 
-            this.Text = (int)(((double)progressBar1.Value / (double)progressBar1.Maximum) * 100) + "% - " + title;
+            this.Text = (int)((progressBar1.Value / (double)progressBar1.Maximum) * 100) + "% - " + title;
         }
 
         private void btnViewErrors_Click(object sender, EventArgs e)
@@ -791,7 +785,6 @@ namespace DupeClear
             progressBar1.Visible = false;
             btnCancel.Visible = false;
             progressBar1.Text = "";
-            progressBar1.ShowPercentage = false;
             this.Refresh();
 
             if (TypeOfWork == 3) // dupe search
@@ -804,7 +797,7 @@ namespace DupeClear
                 }
                 else
                 {
-                    lblStatus1.Text = _dupesFound.ToString("###,###,##0") + " Duplicate files found, " + Helper.FileLengthToString((long)_spaceSaveable) + " of space recoverable.";
+                    lblStatus1.Text = _dupesFound.ToString("###,###,##0") + " Duplicate files found, " + Helper.FileLengthToString(_spaceSaveable) + " of space recoverable.";
                 }
                 lblStatus2.Text = "Total files searched: " + _totalSearched.ToString("###,###,##0");
                 if (_numExcluded > 0) lblStatus4.Text = "Folders excluded: " + _numExcluded.ToString();
@@ -834,7 +827,6 @@ namespace DupeClear
             }
 
             progressBar1.Visible = true;
-            // progressBar1.Style = ProgressBarStyle.Continuous;
             if (progressBar1.Maximum == 0) progressBar1.Maximum = 1; // so that we at least show a full green bar even if 0 files were scanned
             progressBar1.Value = progressBar1.Maximum;
             timer1.Enabled = false;
@@ -850,8 +842,6 @@ namespace DupeClear
                 this.Text = "Operation complete";
             else
             {
-                progressBar1.BorderColor = Color.LightCoral;
-                progressBar1.ProgressColor = Color.Orange;
                 this.Text = "Operation interrupted";
             }
 

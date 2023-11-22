@@ -29,49 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lblStatus1 = new System.Windows.Forms.Label();
-            this.lblStatus2 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.bwDelete = new System.ComponentModel.BackgroundWorker();
             this.bwCopyMove = new System.ComponentModel.BackgroundWorker();
             this.btnViewErrors = new System.Windows.Forms.Button();
             this.bwDupeFinder = new System.ComponentModel.BackgroundWorker();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lblStatus1 = new System.Windows.Forms.Label();
+            this.lblStatus2 = new System.Windows.Forms.Label();
             this.lblStatus3 = new System.Windows.Forms.Label();
             this.lblStatus4 = new System.Windows.Forms.Label();
             this.lblStatus5 = new System.Windows.Forms.Label();
-            this.progressBar1 = new ProgressBarEx.ProgressBarEx();
             this.SuspendLayout();
-            // 
-            // lblStatus1
-            // 
-            this.lblStatus1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStatus1.AutoEllipsis = true;
-            this.lblStatus1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblStatus1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.lblStatus1.Location = new System.Drawing.Point(12, 69);
-            this.lblStatus1.Name = "lblStatus1";
-            this.lblStatus1.Size = new System.Drawing.Size(591, 20);
-            this.lblStatus1.TabIndex = 1;
-            this.lblStatus1.Text = "Status1";
-            this.lblStatus1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblStatus2
-            // 
-            this.lblStatus2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStatus2.AutoEllipsis = true;
-            this.lblStatus2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblStatus2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus2.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.lblStatus2.Location = new System.Drawing.Point(12, 89);
-            this.lblStatus2.Name = "lblStatus2";
-            this.lblStatus2.Size = new System.Drawing.Size(391, 20);
-            this.lblStatus2.TabIndex = 2;
-            this.lblStatus2.Text = "Status2";
-            this.lblStatus2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnCancel
             // 
@@ -79,9 +49,9 @@
             this.btnCancel.BackColor = System.Drawing.SystemColors.Window;
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnCancel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnCancel.Location = new System.Drawing.Point(499, 167);
+            this.btnCancel.Location = new System.Drawing.Point(504, 96);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(101, 28);
+            this.btnCancel.Size = new System.Drawing.Size(96, 24);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -110,9 +80,9 @@
             this.btnViewErrors.BackColor = System.Drawing.SystemColors.Window;
             this.btnViewErrors.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnViewErrors.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnViewErrors.Location = new System.Drawing.Point(392, 167);
+            this.btnViewErrors.Location = new System.Drawing.Point(408, 96);
             this.btnViewErrors.Name = "btnViewErrors";
-            this.btnViewErrors.Size = new System.Drawing.Size(101, 28);
+            this.btnViewErrors.Size = new System.Drawing.Size(96, 24);
             this.btnViewErrors.TabIndex = 4;
             this.btnViewErrors.Text = "View &Errors";
             this.btnViewErrors.UseVisualStyleBackColor = false;
@@ -132,84 +102,90 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(8, 8);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(592, 24);
+            this.progressBar1.TabIndex = 8;
+            // 
+            // lblStatus1
+            // 
+            this.lblStatus1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatus1.AutoEllipsis = true;
+            this.lblStatus1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus1.Location = new System.Drawing.Point(8, 40);
+            this.lblStatus1.Name = "lblStatus1";
+            this.lblStatus1.Size = new System.Drawing.Size(592, 16);
+            this.lblStatus1.TabIndex = 9;
+            this.lblStatus1.Text = "label1";
+            // 
+            // lblStatus2
+            // 
+            this.lblStatus2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatus2.AutoEllipsis = true;
+            this.lblStatus2.Location = new System.Drawing.Point(8, 56);
+            this.lblStatus2.Name = "lblStatus2";
+            this.lblStatus2.Size = new System.Drawing.Size(432, 16);
+            this.lblStatus2.TabIndex = 10;
+            this.lblStatus2.Text = "label2";
+            // 
             // lblStatus3
             // 
             this.lblStatus3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus3.AutoEllipsis = true;
-            this.lblStatus3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblStatus3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus3.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.lblStatus3.Location = new System.Drawing.Point(12, 109);
+            this.lblStatus3.Location = new System.Drawing.Point(8, 72);
             this.lblStatus3.Name = "lblStatus3";
-            this.lblStatus3.Size = new System.Drawing.Size(391, 20);
-            this.lblStatus3.TabIndex = 5;
-            this.lblStatus3.Text = "Status3";
-            this.lblStatus3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblStatus3.Size = new System.Drawing.Size(432, 16);
+            this.lblStatus3.TabIndex = 11;
+            this.lblStatus3.Text = "label3";
             // 
             // lblStatus4
             // 
             this.lblStatus4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStatus4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblStatus4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus4.Location = new System.Drawing.Point(409, 89);
+            this.lblStatus4.AutoEllipsis = true;
+            this.lblStatus4.Location = new System.Drawing.Point(440, 56);
             this.lblStatus4.Name = "lblStatus4";
-            this.lblStatus4.Size = new System.Drawing.Size(191, 20);
-            this.lblStatus4.TabIndex = 6;
-            this.lblStatus4.Text = "Status4";
-            this.lblStatus4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblStatus4.Size = new System.Drawing.Size(160, 16);
+            this.lblStatus4.TabIndex = 12;
+            this.lblStatus4.Text = "label4";
+            this.lblStatus4.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblStatus5
             // 
             this.lblStatus5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStatus5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblStatus5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus5.Location = new System.Drawing.Point(409, 109);
+            this.lblStatus5.AutoEllipsis = true;
+            this.lblStatus5.Location = new System.Drawing.Point(440, 72);
             this.lblStatus5.Name = "lblStatus5";
-            this.lblStatus5.Size = new System.Drawing.Size(191, 20);
-            this.lblStatus5.TabIndex = 7;
-            this.lblStatus5.Text = "Status5";
-            this.lblStatus5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar1.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.progressBar1.BorderColor = System.Drawing.Color.PaleGreen;
-            this.progressBar1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.progressBar1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.progressBar1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.progressBar1.GradiantColor = System.Drawing.SystemColors.Window;
-            this.progressBar1.GradiantPosition = ProgressBarEx.ProgressBarEx.GradiantArea.Bottom;
-            this.progressBar1.Image = null;
-            this.progressBar1.Location = new System.Drawing.Point(12, 12);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.RoundedCorners = false;
-            this.progressBar1.ShowPercentage = true;
-            this.progressBar1.ShowText = true;
-            this.progressBar1.Size = new System.Drawing.Size(588, 38);
+            this.lblStatus5.Size = new System.Drawing.Size(160, 16);
+            this.lblStatus5.TabIndex = 13;
+            this.lblStatus5.Text = "label5";
+            this.lblStatus5.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // frmAction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(612, 207);
+            this.ClientSize = new System.Drawing.Size(608, 125);
             this.ControlBox = false;
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblStatus5);
             this.Controls.Add(this.lblStatus4);
             this.Controls.Add(this.lblStatus3);
-            this.Controls.Add(this.btnViewErrors);
-            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblStatus2);
             this.Controls.Add(this.lblStatus1);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.btnViewErrors);
+            this.Controls.Add(this.btnCancel);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(628, 223);
+            this.MinimumSize = new System.Drawing.Size(624, 164);
             this.Name = "frmAction";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -222,17 +198,17 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label lblStatus1;
-        private System.Windows.Forms.Label lblStatus2;
         private System.Windows.Forms.Button btnCancel;
         private System.ComponentModel.BackgroundWorker bwDelete;
         private System.ComponentModel.BackgroundWorker bwCopyMove;
         private System.Windows.Forms.Button btnViewErrors;
         private System.ComponentModel.BackgroundWorker bwDupeFinder;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label lblStatus1;
+        private System.Windows.Forms.Label lblStatus2;
         private System.Windows.Forms.Label lblStatus3;
         private System.Windows.Forms.Label lblStatus4;
         private System.Windows.Forms.Label lblStatus5;
-        private ProgressBarEx.ProgressBarEx progressBar1;
     }
 }

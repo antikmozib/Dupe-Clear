@@ -9,7 +9,7 @@ namespace DupeClear
 {
     public partial class frmFolderMarker : Form
     {
-        public int TypeOfAction = -1; // 0 = folders, 1 = extensions
+        public int TypeOfAction = -1; // 0 = folders; 1 = extensions
 
         public delegate void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList, bool skipSameFolder);
         public FromSpecificFolder ProcessSpecificFolders;

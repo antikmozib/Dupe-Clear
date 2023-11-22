@@ -102,12 +102,12 @@ namespace DupeClear
         {
             string extensionName;
 
-            if (path.Contains("\\")) path = path.Substring(path.LastIndexOf("\\")); //reduce path to file NAME
+            if (path.Contains("\\")) path = path.Substring(path.LastIndexOf("\\")); // reduce path to file NAME
 
             if (path.Contains(".") == false)
                 return "Unknown";
             else
-                path = path.Substring(path.LastIndexOf(".")); //reduce path to extension
+                path = path.Substring(path.LastIndexOf(".")); // reduce path to extension
 
             extensionName = (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + path, "", path);
             return (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + extensionName, "", path);
@@ -174,7 +174,7 @@ namespace DupeClear
             }
             else
             {
-                returnSize = (double)size;
+                returnSize = size;
                 type = "B";
             }
 
@@ -190,12 +190,12 @@ namespace DupeClear
 
         public static string GetFileExt(string path)
         {
-            if (path.Contains("\\")) //ensure we're only dealing with the fileNAME part... not whole PATH
+            if (path.Contains("\\")) // ensure we're only dealing with the fileNAME part... not whole PATH
             {
                 path = path.Substring(path.LastIndexOf("\\"));
             }
 
-            if (!path.Contains(".")) //this file has no extension
+            if (!path.Contains(".")) // this file has no extension
                 return "";
 
             return path.Substring(path.LastIndexOf("."));
@@ -242,8 +242,6 @@ namespace DupeClear
             long total = 0;
             int counter = 0;
 
-            //this.Cursor = Cursors.WaitCursor;
-
             foreach (ListViewItem item in lvListView.Items)
             {
                 if (!item.Checked || item.Font.Strikeout)
@@ -261,7 +259,6 @@ namespace DupeClear
             }
 
             return counter.ToString() + " Files Marked (" + Helper.FileLengthToString(total) + ")";
-            //this.Cursor = Cursors.Default;
         }
 
         public static void StyleDeletedItems(ref ListView lvListView, int PathColumnIndex)

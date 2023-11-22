@@ -20,14 +20,14 @@ namespace DupeClear
         private ImageList _folderImageList;
 
         // ListView vars
-        private Color _highlight1 = Color.White;
-        private Color _highlight2 = Color.FromArgb(255, 240, 230, 140);
-        private ImageList _fileImages = new ImageList();
+        private readonly Color _highlight1 = Color.White;
+        private readonly Color _highlight2 = Color.FromArgb(255, 240, 230, 140);
+        private readonly ImageList _fileImages = new ImageList();
 
         // file paths
         public static readonly string BaseSettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Dupe Clear\\";
-        private static readonly string IncludedLocationsFile = BaseSettingsPath + "include.txt";
-        private static readonly string ExcludedLocationsFile = BaseSettingsPath + "exclude.txt";
+        private static readonly string _includedLocationsFile = BaseSettingsPath + "include.txt";
+        private static readonly string _excludedLocationsFile = BaseSettingsPath + "exclude.txt";
 
         // Marking criteria
         private const int MODIFIED_OLDEST = 0;
@@ -644,19 +644,11 @@ namespace DupeClear
             findToolStripMenuItem_Click(sender, e);
             cboExtensions.Text = Properties.Settings.Default.SearchExtensions;
             cboExcludedExts.Text = Properties.Settings.Default.ExcludedExtensions;
-            // dtpDateCreatedFrom.Value = Properties.Settings.Default.DateCreatedFrom;
-            // dtpDateCreatedTo.Value = Properties.Settings.Default.DateCreatedTo;
-            // dtpDateModifiedFrom.Value = Properties.Settings.Default.DateModifiedFrom;
-            // dtpDateModifiedTo.Value = Properties.Settings.Default.DateModifiedTo;
-            // dtpDateCreatedFrom.Checked = false;
-            // dtpDateCreatedTo.Checked = false;
-            // dtpDateModifiedFrom.Checked = false;
-            // dtpDateModifiedTo.Checked = false;
 
             // populate listboxes from files
             Stream stream; StreamReader reader;
             // included list
-            stream = new FileStream(IncludedLocationsFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            stream = new FileStream(_includedLocationsFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             reader = new StreamReader(stream);
             while (!reader.EndOfStream)
             {
@@ -664,7 +656,7 @@ namespace DupeClear
             }
             stream.Close(); reader.Close();
             // excluded list
-            stream = new FileStream(ExcludedLocationsFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            stream = new FileStream(_excludedLocationsFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             reader = new StreamReader(stream);
             while (!reader.EndOfStream)
             {
@@ -1338,14 +1330,14 @@ namespace DupeClear
             // save listbox entries
             StreamWriter writer;
 
-            writer = new StreamWriter(IncludedLocationsFile, false);
+            writer = new StreamWriter(_includedLocationsFile, false);
             for (int i = 0; i < lvLocations.Items.Count; i++)
             {
                 writer.WriteLine(lvLocations.Items[i].Text);
             }
             writer.Close();
 
-            writer = new StreamWriter(ExcludedLocationsFile, false);
+            writer = new StreamWriter(_excludedLocationsFile, false);
             for (int i = 0; i < lvExcludedLocations.Items.Count; i++)
             {
                 writer.WriteLine(lvExcludedLocations.Items[i].Text);
@@ -1355,10 +1347,6 @@ namespace DupeClear
             // Save other settings.
             Properties.Settings.Default.SearchExtensions = cboExtensions.Text;
             Properties.Settings.Default.ExcludedExtensions = cboExcludedExts.Text;
-            // if (dtpDateCreatedFrom.Checked) Properties.Settings.Default.DateCreatedFrom = dtpDateCreatedFrom.Value;
-            // if (dtpDateCreatedTo.Checked) Properties.Settings.Default.DateCreatedTo = dtpDateCreatedTo.Value;
-            // if (dtpDateModifiedFrom.Checked) Properties.Settings.Default.DateModifiedFrom = dtpDateModifiedFrom.Value;
-            // if (dtpDateModifiedTo.Checked) Properties.Settings.Default.DateModifiedTo = dtpDateModifiedTo.Value;
             Properties.Settings.Default.Save();
         }
 

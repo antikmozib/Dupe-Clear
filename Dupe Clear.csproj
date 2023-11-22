@@ -119,23 +119,20 @@
     <Compile Include="frmErrors.Designer.cs">
       <DependentUpon>frmErrors.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmFileReplaceSkip.cs">
+    <Compile Include="frmFileConflict.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmFileReplaceSkip.Designer.cs">
-      <DependentUpon>frmFileReplaceSkip.cs</DependentUpon>
+    <Compile Include="frmFileConflict.Designer.cs">
+      <DependentUpon>frmFileConflict.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmFromSpecificFolder.cs">
+    <Compile Include="frmFolderMarker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmFromSpecificFolder.Designer.cs">
-      <DependentUpon>frmFromSpecificFolder.cs</DependentUpon>
+    <Compile Include="frmFolderMarker.Designer.cs">
+      <DependentUpon>frmFolderMarker.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProgressBarEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -154,11 +151,11 @@
     <EmbeddedResource Include="frmErrors.resx">
       <DependentUpon>frmErrors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFileReplaceSkip.resx">
-      <DependentUpon>frmFileReplaceSkip.cs</DependentUpon>
+    <EmbeddedResource Include="frmFileConflict.resx">
+      <DependentUpon>frmFileConflict.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFromSpecificFolder.resx">
-      <DependentUpon>frmFromSpecificFolder.cs</DependentUpon>
+    <EmbeddedResource Include="frmFolderMarker.resx">
+      <DependentUpon>frmFolderMarker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

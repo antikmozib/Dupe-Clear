@@ -109,10 +109,5 @@ namespace DupeClear
             }
         }
         #endregion
-
-        private void pictureboxAustraliaLogo_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://www.australia.com/en/places/nsw.html");
-        }
     }
 }

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static DupeClear.general;
+using static DupeClear.Helper;
 
 namespace DupeClear
 {
@@ -19,23 +19,21 @@ namespace DupeClear
     {
         private ImageList FolderImageList;
 
-        //ListView vars
+        // ListView vars
         private Color highlight1 = Color.White;
-
         private Color highlight2 = Color.FromArgb(255, 240, 230, 140);
-        private Color textColour = Color.Black;
+        private Color textColor = Color.Black;
         private Color markedForDeletion = Color.Black;
         private ImageList fileImages = new ImageList();
 
-        //file paths
+        // file paths
         public static readonly string BaseSettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Dupe Clear\\";
 
         private static readonly string IncludedLocationsFile = BaseSettingsPath + "include.txt";
         private static readonly string ExcludedLocationsFile = BaseSettingsPath + "exclude.txt";
 
-        //Mark Arts
+        // Marking criteria
         private const int MODIFIED_OLDEST = 0;
-
         private const int MODIFIED_NEWEST = 1;
         private const int CREATED_OLDEST = 2;
         private const int CREATED_NEWEST = 3;
@@ -98,7 +96,7 @@ namespace DupeClear
         {
             if (lvResults.Items.Count == 0) return;
 
-            Color backcolour = lvResults.Items[0].BackColor;
+            Color backColor = lvResults.Items[0].BackColor;
             ListViewItem NewestItem = lvResults.Items[0];
 
             for (int i = 0; i < lvResults.Items.Count; i++)
@@ -110,9 +108,9 @@ namespace DupeClear
 
                 ListViewItem item = lvResults.Items[i];
 
-                if (item.BackColor == backcolour)
+                if (item.BackColor == backColor)
                 {
-                    //child
+                    // child
                     if (DateTime.Parse(item.SubItems[clmDateCreated.Index].Text) > DateTime.Parse(NewestItem.SubItems[clmDateCreated.Index].Text))
                     {
                         NewestItem.Checked = true;
@@ -128,8 +126,8 @@ namespace DupeClear
                 }
                 else
                 {
-                    //parent
-                    backcolour = item.BackColor;
+                    // parent
+                    backColor = item.BackColor;
                     NewestItem = item;
                     item.Checked = false;
                     continue;
@@ -189,7 +187,7 @@ namespace DupeClear
             {
                 ActionList = new List<string>(),
                 TypeOfWork = 0,
-                Destination = " ",//need 1 byte space
+                Destination = " ",// need 1 byte space
                 UpdateResults = UpdateResults
             };
 
@@ -199,12 +197,12 @@ namespace DupeClear
                 if (item.Checked && !item.Font.Strikeout)
                 {
                     // check if the selected file is open in preview
-                    if (PreviewPane.ImageLocation == general.ParseFileName(item, clmLocation.Index))
+                    if (PreviewPane.ImageLocation == Helper.ParseFileName(item, clmLocation.Index))
                     {
                         PreviewPane.Image.Dispose();
                         ResetPreviewPane();
                     }
-                    action.ActionList.Add(general.ParseFileName(item, clmLocation.Index));
+                    action.ActionList.Add(Helper.ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -244,7 +242,7 @@ namespace DupeClear
             {
                 if (!item.Font.Strikeout)
                 {
-                    ActionForm.ActionList.Add(general.ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(Helper.ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -267,7 +265,7 @@ namespace DupeClear
             {
                 if (item.Checked && !item.Font.Strikeout)
                 {
-                    ActionForm.ActionList.Add(general.ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(Helper.ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -290,7 +288,7 @@ namespace DupeClear
             {
                 if (!item.Checked && !item.Font.Strikeout)
                 {
-                    ActionForm.ActionList.Add(general.ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(Helper.ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -333,7 +331,7 @@ namespace DupeClear
             {
                 if (!item.Font.Strikeout && item.Checked)
                 {
-                    ActionForm.ActionList.Add(general.ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(Helper.ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -359,7 +357,7 @@ namespace DupeClear
             {
                 if (!item.Font.Strikeout)
                 {
-                    ActionForm.ActionList.Add(general.ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(Helper.ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -385,7 +383,7 @@ namespace DupeClear
             {
                 if (!item.Font.Strikeout && !item.Checked)
                 {
-                    ActionForm.ActionList.Add(general.ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(Helper.ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -412,13 +410,13 @@ namespace DupeClear
             {
                 TypeOfWork = 3,
                 SearchCompleted = SearchCompleted,
-                highlight1 = highlight1,
-                highlight2 = highlight2
+                Highlight1 = highlight1,
+                Highlight2 = highlight2
             };
 
             if (lvLocations.Items.Count == 0) return;
 
-            //check search options
+            // check search options
             if (!cbSameContents.Checked && !cbSameName.Checked)
             {
                 MessageBox.Show("One of \"Match Same Contents\" or \"Match Same File Name\" must be selected.", "Invalid File Match Condition", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -427,7 +425,7 @@ namespace DupeClear
                 return;
             }
 
-            //check extentions
+            // check extensions
             if (cboExtensions.Text.Contains("*.") == false || cboExtensions.Text.Trim() == "")
             {
                 MessageBox.Show("Invalid extension. Enter the catch-all extension (*.*) as a minimum. Two or more extensions can be included by separating them with a semi-colon, e.g. *.doc;*.txt.", "Invalid Extension", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -445,7 +443,7 @@ namespace DupeClear
                 return;
             }
 
-            //build extensions.
+            // build extensions.
             ActionForm.ExtList = new List<string>();
 
             if (cboExtensions.Text.Contains("(") && cboExtensions.Text.Contains(")"))
@@ -463,7 +461,7 @@ namespace DupeClear
                 ActionForm.ExtList[i] = ActionForm.ExtList[i].Substring(1, ActionForm.ExtList[i].Length - 1);
             }
 
-            //build excluded extentions.
+            // build excluded extensions.
             ActionForm.ExcludeExtList = new List<string>();
 
             if (cboExcludedExts.Text.Trim() != "")
@@ -486,21 +484,21 @@ namespace DupeClear
 
             this.Cursor = Cursors.WaitCursor;
 
-            //build search locations.
+            // build search locations.
             ActionForm.SearchLocationsList = new List<string>();
 
             for (int i = 0; i < lvLocations.Items.Count; i++)
             {
-                //ignore unchecked items
+                // ignore unchecked items
                 if (lvLocations.Items[i].Checked)
                     ActionForm.SearchLocationsList.Add(lvLocations.Items[i].Text);
             }
 
-            //build excluded locations.
+            // build excluded locations.
             ActionForm.ExcludedLocationsList = new List<string>();
 
             for (int i = 0; i < lvExcludedLocations.Items.Count; i++)
-                //ignore unchecked items
+                // ignore unchecked items
                 if (lvExcludedLocations.Items[i].Checked)
                     ActionForm.ExcludedLocationsList.Add(lvExcludedLocations.Items[i].Text);
 
@@ -508,7 +506,7 @@ namespace DupeClear
 
             this.Cursor = Cursors.Default;
 
-            //check sizelimit
+            // check sizelimit
             bool IsNumeric = long.TryParse(txtMinFileSize.Text, out ActionForm.SizeLimit);
             if (!IsNumeric)
             {
@@ -521,7 +519,7 @@ namespace DupeClear
             else
                 ActionForm.SizeLimit = ActionForm.SizeLimit * 1024;
 
-            //build dates
+            // build dates
             if (dtpDateCreatedFrom.Checked)
                 ActionForm.CreatedFrom = dtpDateCreatedFrom.Value;
             else
@@ -539,7 +537,7 @@ namespace DupeClear
             else
                 ActionForm.ModifiedTo = DateTime.Now;
 
-            //set search options
+            // set search options
             ActionForm.soSameContents = cbSameContents.Checked;
             ActionForm.soSameFileName = cbSameName.Checked;
             ActionForm.soSameCreationTime = cbSameCreationDate.Checked;
@@ -574,7 +572,7 @@ namespace DupeClear
             {
                 try
                 {
-                    using (var bmpTemp = new Bitmap(general.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index)))
+                    using (var bmpTemp = new Bitmap(Helper.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index)))
                     {
                         PreviewPane.Image = new Bitmap(bmpTemp);
                     }
@@ -633,7 +631,7 @@ namespace DupeClear
             if (!Directory.Exists(BaseSettingsPath))
                 Directory.CreateDirectory(BaseSettingsPath);
 
-            //setup UI
+            // setup UI
             fileImages.ColorDepth = ColorDepth.Depth32Bit;
             fileImages.ImageSize = new Size(16, 16);
             lvResults.SmallImageList = fileImages;
@@ -649,18 +647,18 @@ namespace DupeClear
             findToolStripMenuItem_Click(sender, e);
             cboExtensions.Text = Properties.Settings.Default.SearchExtensions;
             cboExcludedExts.Text = Properties.Settings.Default.ExcludedExtensions;
-            //dtpDateCreatedFrom.Value = Properties.Settings.Default.DateCreatedFrom;
-            //dtpDateCreatedTo.Value = Properties.Settings.Default.DateCreatedTo;
-            //dtpDateModifiedFrom.Value = Properties.Settings.Default.DateModifiedFrom;
-            //dtpDateModifiedTo.Value = Properties.Settings.Default.DateModifiedTo;
-            //dtpDateCreatedFrom.Checked = false;
-            //dtpDateCreatedTo.Checked = false;
-            //dtpDateModifiedFrom.Checked = false;
-            //dtpDateModifiedTo.Checked = false;
+            // dtpDateCreatedFrom.Value = Properties.Settings.Default.DateCreatedFrom;
+            // dtpDateCreatedTo.Value = Properties.Settings.Default.DateCreatedTo;
+            // dtpDateModifiedFrom.Value = Properties.Settings.Default.DateModifiedFrom;
+            // dtpDateModifiedTo.Value = Properties.Settings.Default.DateModifiedTo;
+            // dtpDateCreatedFrom.Checked = false;
+            // dtpDateCreatedTo.Checked = false;
+            // dtpDateModifiedFrom.Checked = false;
+            // dtpDateModifiedTo.Checked = false;
 
-            //populate listboxes from files
+            // populate listboxes from files
             Stream stream; StreamReader reader;
-            //included list
+            // included list
             stream = new FileStream(IncludedLocationsFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             reader = new StreamReader(stream);
             while (!reader.EndOfStream)
@@ -668,7 +666,7 @@ namespace DupeClear
                 addLocation(ref lvLocations, reader.ReadLine());
             }
             stream.Close(); reader.Close();
-            //excluded list
+            // excluded list
             stream = new FileStream(ExcludedLocationsFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             reader = new StreamReader(stream);
             while (!reader.EndOfStream)
@@ -679,7 +677,7 @@ namespace DupeClear
 
             // ---- VALIDATION SECTION -----
             this.Text = Application.ProductName;
-            if (general.debugEnabled) this.Text += " (Debug mode)";
+            if (Helper.debugEnabled) this.Text += " (Debug mode)";
             // ---- END SECTION -----
         }
 
@@ -712,17 +710,17 @@ namespace DupeClear
             {
                 foreach (ListViewItem item in lvResults.Items)
                 {
-                    if (!File.Exists(general.ParseFileName(item, clmLocation.Index)))
+                    if (!File.Exists(Helper.ParseFileName(item, clmLocation.Index)))
                     {
                         if (TypeOfWork == 2 && File.Exists(Destination + "\\" + item.Text))
                         {
-                            //this means the file has been moved
+                            // this means the file has been moved
                             item.SubItems[clmLocation.Index].Text = Destination;
                         }
                     }
                 }
 
-                if (TypeOfWork == 0) //only refresh list if we moved files...
+                if (TypeOfWork == 0) // only refresh list if we moved files...
                 {
                     RefreshList();
                 }
@@ -739,10 +737,10 @@ namespace DupeClear
 
             foreach (ListViewItem item in Results)
             {
-                if (!fileImages.Images.ContainsKey(general.GetFileExt(general.ParseFileName(item, clmLocation.Index))))
+                if (!fileImages.Images.ContainsKey(Helper.GetFileExt(Helper.ParseFileName(item, clmLocation.Index))))
                 {
-                    fileImages.Images.Add(general.GetFileExt(general.ParseFileName(item, clmLocation.Index)),
-                        general.GetFileIcon(general.ParseFileName(item, clmLocation.Index)));
+                    fileImages.Images.Add(Helper.GetFileExt(Helper.ParseFileName(item, clmLocation.Index)),
+                        Helper.GetFileIcon(Helper.ParseFileName(item, clmLocation.Index)));
                 }
                 lvResults.Items.Add(item);
             }
@@ -819,7 +817,7 @@ namespace DupeClear
                 string field = "";
                 string value = "";
 
-                //this cannot be tolerated.
+                // this cannot be tolerated.
                 try
                 {
                     field = line.Substring(line.IndexOf("<") + 1,
@@ -830,12 +828,12 @@ namespace DupeClear
                     break;
                 }
 
-                //this can be tolerated.
+                // this can be tolerated.
                 try
                 {
                     if (line.Length > field.Length + 2)
                     {
-                        //this line also contains a value
+                        // this line also contains a value
                         value = line.Substring(line.IndexOf(">") + 1, line.LastIndexOf("<") - line.IndexOf(">") - 1);
                     }
                 }
@@ -849,7 +847,7 @@ namespace DupeClear
 
                 if (field == "group")
                 {
-                    //change group colour
+                    // change group color
                     if (highlight == highlight1)
                         highlight = highlight2;
                     else
@@ -859,7 +857,7 @@ namespace DupeClear
 
                 if (field == "file")
                 {
-                    //create new ListViewItem
+                    // create new ListViewItem
                     item = new ListViewItem()
                     {
                         BackColor = highlight
@@ -876,7 +874,7 @@ namespace DupeClear
                     }
                     catch (Exception ex)
                     {
-                        general.MsgBox("Error parsing file: " + ex.Message);
+                        Helper.MsgBox("Error parsing file: " + ex.Message);
                         break;
                     }
                 }
@@ -890,19 +888,19 @@ namespace DupeClear
                     }
                     catch (Exception ex)
                     {
-                        general.MsgBox("Error parsing file: " + ex.Message);
+                        Helper.MsgBox("Error parsing file: " + ex.Message);
                         break;
                     }
                 }
 
                 if (field == "path")
                 {
-                    item.SubItems.Add(general.GetFolderPath(value));
-                    if (!fileImages.Images.ContainsKey(general.GetFileExt(value)))
+                    item.SubItems.Add(Helper.GetFolderPath(value));
+                    if (!fileImages.Images.ContainsKey(Helper.GetFileExt(value)))
                     {
-                        fileImages.Images.Add(general.GetFileExt(value), general.GetFileIcon(value));
+                        fileImages.Images.Add(Helper.GetFileExt(value), Helper.GetFileIcon(value));
                     }
-                    item.ImageKey = general.GetFileExt(value);
+                    item.ImageKey = Helper.GetFileExt(value);
                     continue;
                 }
 
@@ -938,7 +936,7 @@ namespace DupeClear
         {
             if (lvResults.Items.Count == 0) return;
 
-            Color backcolour = Color.White;
+            Color backColor = Color.White;
             ListViewItem TheUnmarkedItem = null;
 
             for (int i = 0; i < lvResults.Items.Count; i++)
@@ -946,16 +944,16 @@ namespace DupeClear
                 if (TheUnmarkedItem == null)
                 {
                     TheUnmarkedItem = lvResults.Items[i];
-                    backcolour = TheUnmarkedItem.BackColor;
+                    backColor = TheUnmarkedItem.BackColor;
                     TheUnmarkedItem.Checked = false;
                     continue;
                 }
 
                 ListViewItem item = lvResults.Items[i];
 
-                if (item.BackColor == backcolour)
+                if (item.BackColor == backColor)
                 {
-                    //child
+                    // child
 
                     DateTime Date1 = DateTime.Parse(item.SubItems[clmDateModified.Index].Text);
                     DateTime Date2 = DateTime.Parse(TheUnmarkedItem.SubItems[clmDateModified.Index].Text);
@@ -974,8 +972,8 @@ namespace DupeClear
                     }
                     else if (art == PATH_LONGEST || art == PATH_SHORTEST)
                     {
-                        path1 = general.ParseFileName(item, clmLocation.Index);
-                        path2 = general.ParseFileName(TheUnmarkedItem, clmLocation.Index);
+                        path1 = Helper.ParseFileName(item, clmLocation.Index);
+                        path2 = Helper.ParseFileName(TheUnmarkedItem, clmLocation.Index);
                     }
 
                     if (((art == MODIFIED_OLDEST || art == CREATED_OLDEST) && Date1 < Date2) ||
@@ -998,7 +996,7 @@ namespace DupeClear
                 }
                 else
                 {
-                    backcolour = item.BackColor;
+                    backColor = item.BackColor;
                     TheUnmarkedItem = item;
                     item.Checked = false;
                     continue;
@@ -1090,7 +1088,7 @@ namespace DupeClear
         {
             if (lvResults.Items.Count == 0)
             {
-                general.MsgBox("List is empty.", "Export");
+                Helper.MsgBox("List is empty.", "Export");
                 return;
             }
 
@@ -1115,37 +1113,37 @@ namespace DupeClear
             {
                 if (Head == null)
                 {
-                    //1st item
+                    // 1st item
                     Head = item;
                     writer.WriteLine("<Group>");
                 }
 
                 if (item.BackColor == Head.BackColor)
                 {
-                    //within 1 group
+                    // within 1 group
                     writer.WriteLine("<File>");
                     writer.WriteLine("<Name>" + item.Text + "</Name>");
                     writer.WriteLine("<Type>" + item.SubItems[clmType.Index].Text + "</Type>");
                     writer.WriteLine("<Size>" + item.SubItems[clmSize.Index].Text + "</Size>");
                     writer.WriteLine("<DateCreated>" + item.SubItems[clmDateCreated.Index].Text + "</DateCreated>");
                     writer.WriteLine("<DateModified>" + item.SubItems[clmDateModified.Index].Text + "</DateModified>");
-                    writer.WriteLine("<Path>" + general.ParseFileName(item, clmLocation.Index) + "</Path>");
+                    writer.WriteLine("<Path>" + Helper.ParseFileName(item, clmLocation.Index) + "</Path>");
                     writer.WriteLine("<Marked>" + item.Checked.ToString() + "</Marked>");
                     writer.WriteLine("<Deleted>" + item.Font.Strikeout.ToString() + "</Deleted>");
                     writer.WriteLine("</File>");
                     counter++;
 
-                    //check if this is the last item
+                    // check if this is the last item
                     if (item.Index == lvResults.Items.Count - 1)
                     {
                         writer.WriteLine("</Group>");
                     }
                     else
                     {
-                        //check if next item is a head
+                        // check if next item is a head
                         if (lvResults.Items[item.Index + 1].BackColor != Head.BackColor)
                         {
-                            //next item is another head - so close group
+                            // next item is another head - so close group
                             writer.WriteLine("</Group>");
                             Head = null;
                         }
@@ -1158,7 +1156,7 @@ namespace DupeClear
             stream.Close();
 
             this.Cursor = Cursors.Default;
-            general.MsgBox(counter.ToString() + " entries exported successfully.");
+            Helper.MsgBox(counter.ToString() + " entries exported successfully.");
         }
 
         private void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList, bool skipSameFolder)
@@ -1182,7 +1180,7 @@ namespace DupeClear
 
                 if (item.BackColor == head.BackColor)
                 {
-                    if ((SubFolders && general.ParseFileName(item, clmLocation.Index).ToLower().Contains(path)) || (item.SubItems[clmLocation.Index].Text.ToLower() == path))
+                    if ((SubFolders && Helper.ParseFileName(item, clmLocation.Index).ToLower().Contains(path)) || (item.SubItems[clmLocation.Index].Text.ToLower() == path))
                     {
                         if (UnMark)
                         {
@@ -1204,14 +1202,14 @@ namespace DupeClear
                 }
             }
 
-            //Remove the items from the list if the user directed so
+            // Remove the items from the list if the user directed so
             foreach (ListViewItem item in itemsToDelete)
             {
                 lvResults.Items.Remove(item);
             }
 
-            //Show msg
-            general.MsgBox(counter.ToString() + " files processed successfully.", "From Specific Folder");
+            // Show msg
+            Helper.MsgBox(counter.ToString() + " files processed successfully.", "From Specific Folder");
         }
 
         private void fromSpecificFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1239,12 +1237,12 @@ namespace DupeClear
 
             foreach (ListViewItem item in items)
             {
-                //check if next item is from the same group
+                // check if next item is from the same group
                 if (item.Index < lvResults.Items.Count - 1)
                 {
                     if (lvResults.Items[item.Index + 1].BackColor == item.BackColor)
                     {
-                        //safe to remove - next file from same group
+                        // safe to remove - next file from same group
                         lvResults.Items.Remove(item);
                         count++;
                     }
@@ -1253,16 +1251,16 @@ namespace DupeClear
                         // check if the whole group has been orphaned or not
                         if (item.Index > 0 && item.BackColor == lvResults.Items[item.Index - 1].BackColor)
                         {
-                            // group not orphaned - don't flip colours
+                            // group not orphaned - don't flip colors
                         }
                         else if (item.Index == 0)
                         {
-                            // first item in the list - no need to flip colours
+                            // first item in the list - no need to flip colors
                         }
                         else
                         {
-                            //different backcolour - flip colours
-                            FlipListViewColours(item.Index + 1);
+                            // different backColor - flip colors
+                            FlipListViewColors(item.Index + 1);
                         }
 
                         lvResults.Items.Remove(item);
@@ -1271,7 +1269,7 @@ namespace DupeClear
                 }
                 else if (item.Index == lvResults.Items.Count - 1)
                 {
-                    //last item - can be removed without any checks
+                    // last item - can be removed without any checks
                     lvResults.Items.Remove(item);
                     count++;
                 }
@@ -1281,7 +1279,7 @@ namespace DupeClear
             return count;
         }
 
-        private void FlipListViewColours(int startIndex)
+        private void FlipListViewColors(int startIndex)
         {
             for (int i = startIndex; i < lvResults.Items.Count; i++)
             {
@@ -1340,7 +1338,7 @@ namespace DupeClear
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //save listbox entries
+            // save listbox entries
             StreamWriter writer;
 
             writer = new StreamWriter(IncludedLocationsFile, false);
@@ -1360,10 +1358,10 @@ namespace DupeClear
             // Save other settings.
             Properties.Settings.Default.SearchExtensions = cboExtensions.Text;
             Properties.Settings.Default.ExcludedExtensions = cboExcludedExts.Text;
-            //if (dtpDateCreatedFrom.Checked) Properties.Settings.Default.DateCreatedFrom = dtpDateCreatedFrom.Value;
-            //if (dtpDateCreatedTo.Checked) Properties.Settings.Default.DateCreatedTo = dtpDateCreatedTo.Value;
-            //if (dtpDateModifiedFrom.Checked) Properties.Settings.Default.DateModifiedFrom = dtpDateModifiedFrom.Value;
-            //if (dtpDateModifiedTo.Checked) Properties.Settings.Default.DateModifiedTo = dtpDateModifiedTo.Value;
+            // if (dtpDateCreatedFrom.Checked) Properties.Settings.Default.DateCreatedFrom = dtpDateCreatedFrom.Value;
+            // if (dtpDateCreatedTo.Checked) Properties.Settings.Default.DateCreatedTo = dtpDateCreatedTo.Value;
+            // if (dtpDateModifiedFrom.Checked) Properties.Settings.Default.DateModifiedFrom = dtpDateModifiedFrom.Value;
+            // if (dtpDateModifiedTo.Checked) Properties.Settings.Default.DateModifiedTo = dtpDateModifiedTo.Value;
             Properties.Settings.Default.Save();
         }
 
@@ -1412,11 +1410,11 @@ namespace DupeClear
             {
                 try
                 {
-                    Process.Start(general.ParseFileName(item, clmLocation.Index));
+                    Process.Start(Helper.ParseFileName(item, clmLocation.Index));
                 }
                 catch (Exception ex)
                 {
-                    general.MsgBox(ex.Message, icon: MessageBoxIcon.Error);
+                    Helper.MsgBox(ex.Message, icon: MessageBoxIcon.Error);
                 }
             }
         }
@@ -1433,21 +1431,21 @@ namespace DupeClear
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (general.MsgBox("Delete " + lvResults.SelectedItems.Count.ToString() + " files to the Recycle Bin?", buttons: MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            if (Helper.MsgBox("Delete " + lvResults.SelectedItems.Count.ToString() + " files to the Recycle Bin?", buttons: MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                 return;
 
             foreach (ListViewItem item in lvResults.SelectedItems)
             {
                 try
                 {
-                    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(general.ParseFileName(item, clmLocation.Index),
+                    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(Helper.ParseFileName(item, clmLocation.Index),
                         Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
                         Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin,
                         Microsoft.VisualBasic.FileIO.UICancelOption.DoNothing);
                 }
                 catch (Exception ex)
                 {
-                    general.MsgBox(ex.Message, icon: MessageBoxIcon.Error);
+                    Helper.MsgBox(ex.Message, icon: MessageBoxIcon.Error);
                 }
             }
 
@@ -1512,14 +1510,14 @@ namespace DupeClear
 
             if (lvResults.SelectedItems.Count > 0)
             {
-                if (File.Exists(general.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index)) == false)
+                if (File.Exists(Helper.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index)) == false)
                 {
-                    //file already deleted. open last known folder instead...
-                    pathToOpen = general.GetFolderPath(general.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index));
+                    // file already deleted. open last known folder instead...
+                    pathToOpen = Helper.GetFolderPath(Helper.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index));
                 }
                 else
                 {
-                    pathToOpen = general.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index);
+                    pathToOpen = Helper.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index);
                 }
 
                 try
@@ -1528,7 +1526,7 @@ namespace DupeClear
                 }
                 catch (Exception ex)
                 {
-                    general.MsgBox(ex.Message, "Error Opening Folder", icon: MessageBoxIcon.Error);
+                    Helper.MsgBox(ex.Message, "Error Opening Folder", icon: MessageBoxIcon.Error);
                 }
             }
         }
@@ -1561,18 +1559,18 @@ namespace DupeClear
         {
             if (lvResults.SelectedItems.Count == 0) return;
 
-            general.SHELLEXECUTEINFO shellExec = new general.SHELLEXECUTEINFO();
+            Helper.SHELLEXECUTEINFO shellExec = new Helper.SHELLEXECUTEINFO();
 
             if (lvResults.SelectedItems.Count == 0)
                 return;
 
             shellExec.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(shellExec);
             shellExec.lpVerb = "properties";
-            shellExec.lpFile = general.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index);
-            shellExec.nShow = general.SW_SHOW;
-            shellExec.fMask = (int)general.SEE_MASK_INVOKEIDLIST;
+            shellExec.lpFile = Helper.ParseFileName(lvResults.SelectedItems[0], clmLocation.Index);
+            shellExec.nShow = Helper.SW_SHOW;
+            shellExec.fMask = (int)Helper.SEE_MASK_INVOKEIDLIST;
 
-            if (!general.ShellExecuteEx(ref shellExec))
+            if (!Helper.ShellExecuteEx(ref shellExec))
             {
                 System.ComponentModel.Win32Exception ex = new System.ComponentModel.Win32Exception(System.Runtime.InteropServices.Marshal.GetLastWin32Error());
                 Interaction.MsgBox(ex.Message, MsgBoxStyle.Critical);
@@ -1630,7 +1628,7 @@ namespace DupeClear
 
             if (nothingFound && findNext)
             {
-                if (general.MsgBox("Reached the end of the list. Begin finding from the top?", "Find Next", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (Helper.MsgBox("Reached the end of the list. Begin finding from the top?", "Find Next", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     foreach (ListViewItem item in lvResults.SelectedItems)
                     {
@@ -1675,7 +1673,7 @@ namespace DupeClear
 
         private void lvExcludedLocations_DragDrop(object sender, DragEventArgs e)
         {
-            List<string> filepaths = new List<string>();
+            List<string> filePaths = new List<string>();
             foreach (var s in (string[])e.Data.GetData(DataFormats.FileDrop, false))
             {
                 if (Directory.Exists(s))
@@ -1689,7 +1687,7 @@ namespace DupeClear
         {
             bool great = true;
 
-            List<string> filepaths = new List<string>();
+            List<string> filePaths = new List<string>();
             foreach (var s in (string[])e.Data.GetData(DataFormats.FileDrop, false))
             {
                 if (!Directory.Exists(s))
@@ -1710,7 +1708,7 @@ namespace DupeClear
 
         private void lvLocations_DragDrop(object sender, DragEventArgs e)
         {
-            List<string> filepaths = new List<string>();
+            List<string> filePaths = new List<string>();
             foreach (var s in (string[])e.Data.GetData(DataFormats.FileDrop, false))
             {
                 if (Directory.Exists(s))
@@ -1724,7 +1722,7 @@ namespace DupeClear
         {
             bool great = true;
 
-            List<string> filepaths = new List<string>();
+            List<string> filePaths = new List<string>();
             foreach (var s in (string[])e.Data.GetData(DataFormats.FileDrop, false))
             {
                 if (!Directory.Exists(s))
@@ -1772,12 +1770,12 @@ namespace DupeClear
 
             foreach (ListViewItem item in lvResults.Items)
             {
-                if (!item.Text.Contains(".")) //file has no extension
+                if (!item.Text.Contains(".")) // file has no extension
                     continue;
 
                 if (extensions.Contains(item.Text.Substring(item.Text.LastIndexOf(".")).ToLower()))
                 {
-                    //found a match
+                    // found a match
                     item.Checked = isMarked;
 
                     if (!isMarked && removeFromList)
@@ -1795,8 +1793,8 @@ namespace DupeClear
             }
 
             this.Cursor = Cursors.Default;
-            //Show msg
-            general.MsgBox(counter.ToString() + " files processed successfully.", "Mark Specific Types");
+            // Show msg
+            Helper.MsgBox(counter.ToString() + " files processed successfully.", "Mark Specific Types");
         }
 
         private void ResetPreviewPane()
@@ -1835,8 +1833,8 @@ namespace DupeClear
         private void RefreshList()
         {
             this.Cursor = Cursors.WaitCursor;
-            lblResultsListStatus.Text = general.ExtractDataFromResults(lvResults, clmLocation.Index);
-            general.StyleDeletedItems(ref lvResults, clmLocation.Index);
+            lblResultsListStatus.Text = Helper.ExtractDataFromResults(lvResults, clmLocation.Index);
+            Helper.StyleDeletedItems(ref lvResults, clmLocation.Index);
             this.Cursor = Cursors.Default;
         }
 

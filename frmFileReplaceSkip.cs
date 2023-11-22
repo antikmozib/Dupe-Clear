@@ -8,8 +8,8 @@ namespace DupeClear
     public partial class frmFileReplaceSkip : Form
     {
         public int ActionType; // 0 = skip, 1 = replace, 2 = keep both
-        public bool keepGoing = false;
-        public string fileName, destiNation;
+        public bool KeepGoing = false;
+        public string FileName, Destination;
 
         public frmFileReplaceSkip()
         {
@@ -18,8 +18,8 @@ namespace DupeClear
 
         private void frmFileReplaceSkip_Load(object sender, EventArgs e)
         {
-            lblChosenDir.Text = destiNation;
-            lblFileName.Text = fileName;
+            lblChosenDir.Text = Destination;
+            lblFileName.Text = FileName;
             System.Media.SystemSounds.Beep.Play();
         }
 
@@ -43,7 +43,7 @@ namespace DupeClear
 
         private void frmFileReplaceSkip_FormClosing(object sender, FormClosingEventArgs e)
         {
-            keepGoing = cbDoInFuture.Checked;
+            KeepGoing = cbDoInFuture.Checked;
         }
     }
 }

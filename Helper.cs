@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace DupeClear
 {
-    public class general
+    public class Helper
     {
-        public struct fileListStruct
+        public struct DupeFile
         {
             public string path;
             public long size;
@@ -77,7 +77,7 @@ namespace DupeClear
             return path.Substring(0, path.LastIndexOf("\\"));
         }
 
-        public static string hashFile(string path)
+        public static string GetFileHash(string path)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace DupeClear
             }
         }
 
-        public static long DirSize(DirectoryInfo d)
+        public static long GetDirSize(DirectoryInfo d)
         {
             long size = 0;
             FileInfo[] fis;
@@ -147,12 +147,12 @@ namespace DupeClear
             DirectoryInfo[] dis = d.GetDirectories();
             foreach (DirectoryInfo di in dis)
             {
-                size += DirSize(di);
+                size += GetDirSize(di);
             }
             return size;
         }
 
-        public static string SexySize(long size)
+        public static string FileLengthToString(long size)
         {
             double return_size;
             string type;
@@ -260,7 +260,7 @@ namespace DupeClear
                 }
             }
 
-            return counter.ToString() + " Files Marked (" + general.SexySize(total) + ")";
+            return counter.ToString() + " Files Marked (" + Helper.FileLengthToString(total) + ")";
             //this.Cursor = Cursors.Default;
         }
 

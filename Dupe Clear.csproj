@@ -131,7 +131,7 @@
     <Compile Include="frmFromSpecificFolder.Designer.cs">
       <DependentUpon>frmFromSpecificFolder.cs</DependentUpon>
     </Compile>
-    <Compile Include="general.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgressBarEx.cs">
       <SubType>Component</SubType>

@@ -33,16 +33,16 @@ namespace DupeClear
                 textBox1.Text = DefaultPath;
                 this.Text = "Mark/Unmark From Specific Folder";
                 label1.Text = "&Location:";
-                button1.Visible = true; //Browse
-                checkBox2.Visible = true; //Include Sub-Folders
+                button1.Visible = true; // Browse
+                checkBox2.Visible = true; // Include Sub-Folders
                 lblExtHelp.Visible = false;
             }
             else if (typeOfAction == 1) // specific extensions
             {
                 this.Text = "Mark/Unmark Specific Types";
                 label1.Text = "&Extensions:";
-                button1.Visible = false; //Browse
-                checkBox2.Visible = false; //Include Sub-Folders
+                button1.Visible = false; // Browse
+                checkBox2.Visible = false; // Include Sub-Folders
                 lblExtHelp.Visible = true;
             }
 
@@ -51,7 +51,7 @@ namespace DupeClear
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (typeOfAction == 0) //folders
+            if (typeOfAction == 0) // folders
             {
                 if (textBox1.Text.Trim() == "" || !(new System.IO.DirectoryInfo(textBox1.Text).Exists))
                 {
@@ -71,7 +71,7 @@ namespace DupeClear
             {
                 if (!textBox1.Text.Contains(".") || !textBox1.Text.Contains("*") || textBox1.Text.Trim().Length < 3)
                 {
-                    general.MsgBox("Invalid extensions.", "Invalid Extensions", icon: MessageBoxIcon.Error);
+                    Helper.MsgBox("Invalid extensions.", "Invalid Extensions", icon: MessageBoxIcon.Error);
                     textBox1.SelectAll();
                     textBox1.Focus();
                     return;

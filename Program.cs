@@ -19,11 +19,11 @@ namespace DupeClear
             {
                 if (arguments[1].ToLower() == "-debug")
                 {
-                    general.debugEnabled = true;
+                    Helper.debugEnabled = true;
                 }
                 else
                 {
-                    general.debugEnabled = false;
+                    Helper.debugEnabled = false;
                 }
             }
 

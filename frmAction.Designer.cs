@@ -49,7 +49,7 @@
             this.btnCancel.BackColor = System.Drawing.SystemColors.Window;
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnCancel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnCancel.Location = new System.Drawing.Point(504, 96);
+            this.btnCancel.Location = new System.Drawing.Point(504, 104);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(96, 24);
             this.btnCancel.TabIndex = 3;
@@ -80,7 +80,7 @@
             this.btnViewErrors.BackColor = System.Drawing.SystemColors.Window;
             this.btnViewErrors.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnViewErrors.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnViewErrors.Location = new System.Drawing.Point(408, 96);
+            this.btnViewErrors.Location = new System.Drawing.Point(408, 104);
             this.btnViewErrors.Name = "btnViewErrors";
             this.btnViewErrors.Size = new System.Drawing.Size(96, 24);
             this.btnViewErrors.TabIndex = 4;
@@ -128,7 +128,7 @@
             this.lblStatus2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus2.AutoEllipsis = true;
-            this.lblStatus2.Location = new System.Drawing.Point(8, 56);
+            this.lblStatus2.Location = new System.Drawing.Point(8, 64);
             this.lblStatus2.Name = "lblStatus2";
             this.lblStatus2.Size = new System.Drawing.Size(432, 16);
             this.lblStatus2.TabIndex = 10;
@@ -139,7 +139,7 @@
             this.lblStatus3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus3.AutoEllipsis = true;
-            this.lblStatus3.Location = new System.Drawing.Point(8, 72);
+            this.lblStatus3.Location = new System.Drawing.Point(8, 80);
             this.lblStatus3.Name = "lblStatus3";
             this.lblStatus3.Size = new System.Drawing.Size(432, 16);
             this.lblStatus3.TabIndex = 11;
@@ -149,7 +149,7 @@
             // 
             this.lblStatus4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus4.AutoEllipsis = true;
-            this.lblStatus4.Location = new System.Drawing.Point(440, 56);
+            this.lblStatus4.Location = new System.Drawing.Point(440, 64);
             this.lblStatus4.Name = "lblStatus4";
             this.lblStatus4.Size = new System.Drawing.Size(160, 16);
             this.lblStatus4.TabIndex = 12;
@@ -160,7 +160,7 @@
             // 
             this.lblStatus5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus5.AutoEllipsis = true;
-            this.lblStatus5.Location = new System.Drawing.Point(440, 72);
+            this.lblStatus5.Location = new System.Drawing.Point(440, 80);
             this.lblStatus5.Name = "lblStatus5";
             this.lblStatus5.Size = new System.Drawing.Size(160, 16);
             this.lblStatus5.TabIndex = 13;
@@ -172,7 +172,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(608, 125);
+            this.ClientSize = new System.Drawing.Size(608, 136);
             this.ControlBox = false;
             this.Controls.Add(this.lblStatus5);
             this.Controls.Add(this.lblStatus4);
@@ -185,7 +185,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(624, 164);
+            this.MinimumSize = new System.Drawing.Size(624, 175);
             this.Name = "frmAction";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

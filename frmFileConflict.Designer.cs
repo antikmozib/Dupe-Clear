@@ -1,6 +1,6 @@
 ﻿namespace DupeClear
 {
-    partial class frmFileReplaceSkip
+    partial class frmFileConflict
     {
         /// <summary>
         /// Required designer variable.

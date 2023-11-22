@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace DupeClear
 {
-    public partial class frmFromSpecificFolder : Form
+    public partial class frmFolderMarker : Form
     {
         public int TypeOfAction = -1; // 0 = folders, 1 = extensions
 
@@ -19,7 +19,7 @@ namespace DupeClear
 
         public string DefaultPath = "";
 
-        public frmFromSpecificFolder()
+        public frmFolderMarker()
         {
             InitializeComponent();
         }

@@ -590,7 +590,7 @@ namespace DupeClear
 
         private void bwCopyMove_DoWork(object sender, DoWorkEventArgs e)
         {
-            frmFileReplaceSkip ReplaceForm = new frmFileReplaceSkip();
+            frmFileConflict ReplaceForm = new frmFileConflict();
 
             // add slash to destination path
             if (Destination.Substring(Destination.Length - 1, 1) != "\\")

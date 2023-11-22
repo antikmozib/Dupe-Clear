@@ -1211,7 +1211,7 @@ namespace DupeClear
 
         private void fromSpecificFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmFromSpecificFolder FSFForm = new frmFromSpecificFolder()
+            frmFolderMarker FSFForm = new frmFolderMarker()
             {
                 ProcessSpecificFolders = FromSpecificFolder,
                 TypeOfAction = 0
@@ -1740,7 +1740,7 @@ namespace DupeClear
 
         private void markBySpecificTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmFromSpecificFolder WorkForm = new frmFromSpecificFolder()
+            frmFolderMarker WorkForm = new frmFolderMarker()
             {
                 TypeOfAction = 1,
                 ProcessSpecificTypes = MarkSpecificTypes

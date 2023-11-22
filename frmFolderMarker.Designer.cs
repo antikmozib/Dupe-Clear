@@ -1,6 +1,6 @@
 ﻿namespace DupeClear
 {
-    partial class frmFromSpecificFolder
+    partial class frmFolderMarker
     {
         /// <summary>
         /// Required designer variable.

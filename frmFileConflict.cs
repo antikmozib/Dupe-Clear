@@ -7,9 +7,9 @@ namespace DupeClear
 {
     public partial class frmFileConflict : Form
     {
-        public int ActionType; // 0 = skip; 1 = replace; 2 = keep both
-        public bool KeepGoing = false;
-        public string FileName, Destination;
+        public int actionType; // 0 = skip; 1 = replace; 2 = keep both
+        public bool keepGoing = false;
+        public string filename, destination;
 
         public frmFileConflict()
         {
@@ -18,32 +18,32 @@ namespace DupeClear
 
         private void frmFileReplaceSkip_Load(object sender, EventArgs e)
         {
-            lblChosenDir.Text = Destination;
-            lblFileName.Text = FileName;
+            lblChosenDir.Text = destination;
+            lblFileName.Text = filename;
             System.Media.SystemSounds.Beep.Play();
         }
 
         private void btnSkip_Click(object sender, EventArgs e)
         {
-            ActionType = 0;
+            actionType = 0;
             this.Close();
         }
 
         private void btnReplace_Click(object sender, EventArgs e)
         {
-            ActionType = 1;
+            actionType = 1;
             this.Close();
         }
 
         private void btnKeepBoth_Click(object sender, EventArgs e)
         {
-            ActionType = 2;
+            actionType = 2;
             this.Close();
         }
 
         private void frmFileReplaceSkip_FormClosing(object sender, FormClosingEventArgs e)
         {
-            KeepGoing = cbDoInFuture.Checked;
+            keepGoing = cbDoInFuture.Checked;
         }
     }
 }

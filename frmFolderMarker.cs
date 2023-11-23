@@ -9,15 +9,15 @@ namespace DupeClear
 {
     public partial class frmFolderMarker : Form
     {
-        public int TypeOfAction = -1; // 0 = folders; 1 = extensions
+        public int typeOfAction = -1; // 0 = folders; 1 = extensions
 
         public delegate void FromSpecificFolder(string path, bool SubFolders, bool UnMark, bool removeFromList, bool skipSameFolder);
-        public FromSpecificFolder ProcessSpecificFolders;
+        public FromSpecificFolder processSpecificFolders;
 
         public delegate void SpecificTypes(List<string> extensions, bool isMarked, bool removeFromList);
-        public SpecificTypes ProcessSpecificTypes;
+        public SpecificTypes processSpecificTypes;
 
-        public string DefaultPath = "";
+        public string defaultPath = "";
 
         public frmFolderMarker()
         {
@@ -26,18 +26,18 @@ namespace DupeClear
 
         private void frmFromSpecificFolder_Load(object sender, EventArgs e)
         {
-            if (TypeOfAction == -1) // no action set
+            if (typeOfAction == -1) // no action set
                 this.Close();
-            else if (TypeOfAction == 0) // from specific folders
+            else if (typeOfAction == 0) // from specific folders
             {
-                textBox1.Text = DefaultPath;
+                textBox1.Text = defaultPath;
                 this.Text = "Mark/Unmark From Specific Folder";
                 label1.Text = "&Location:";
                 button1.Visible = true; // Browse
                 checkBox2.Visible = true; // Include Sub-Folders
                 lblExtHelp.Visible = false;
             }
-            else if (TypeOfAction == 1) // specific extensions
+            else if (typeOfAction == 1) // specific extensions
             {
                 this.Text = "Mark/Unmark Specific Types";
                 label1.Text = "&Extensions:";
@@ -51,7 +51,7 @@ namespace DupeClear
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (TypeOfAction == 0) // folders
+            if (typeOfAction == 0) // folders
             {
                 if (textBox1.Text.Trim() == "" || !(new System.IO.DirectoryInfo(textBox1.Text).Exists))
                 {
@@ -64,10 +64,10 @@ namespace DupeClear
                 // ensure there is a trailing slash in the path
                 if (textBox1.Text.Substring(textBox1.Text.Length - 1) != "\\") textBox1.Text = textBox1.Text + "\\";
 
-                ProcessSpecificFolders(textBox1.Text, checkBox2.Checked, radioButton1.Checked, cbRemoveFromList.Checked, cbSkipSamePath.Checked);
+                processSpecificFolders(textBox1.Text, checkBox2.Checked, radioButton1.Checked, cbRemoveFromList.Checked, cbSkipSamePath.Checked);
                 this.Close();
             }
-            else if (TypeOfAction == 1) // extensions
+            else if (typeOfAction == 1) // extensions
             {
                 if (!textBox1.Text.Contains(".") || !textBox1.Text.Contains("*") || textBox1.Text.Trim().Length < 3)
                 {
@@ -77,8 +77,8 @@ namespace DupeClear
                     return;
                 }
 
-                List<string> ExtList = textBox1.Text.Split(';').ToList<string>();
-                ProcessSpecificTypes(ExtList, radioButton2.Checked, cbRemoveFromList.Checked);
+                List<string> ExtList = textBox1.Text.Split(';').ToList();
+                processSpecificTypes(ExtList, radioButton2.Checked, cbRemoveFromList.Checked);
                 this.Close();
             }
         }

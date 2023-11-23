@@ -268,7 +268,7 @@ namespace DupeClear
             MessageBoxButtons buttons = MessageBoxButtons.OK,
             MessageBoxIcon icon = MessageBoxIcon.Information)
         {
-            return System.Windows.Forms.MessageBox.Show(message, title, buttons, icon);
+            return MessageBox.Show(message, title, buttons, icon);
         }
 
         public static void WriteLog(string log)
@@ -321,7 +321,7 @@ namespace DupeClear
                 }
             }
 
-            return counter.ToString() + " Files Marked (" + Helper.FileLengthToString(total) + ")";
+            return counter.ToString() + " Files Marked (" + FileLengthToString(total) + ")";
         }
 
         public static void StyleDeletedItems(ref ListView lvListView, int PathColumnIndex)

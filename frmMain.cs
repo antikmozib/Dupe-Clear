@@ -797,7 +797,7 @@ namespace DupeClear
 
             while (!reader.EndOfStream)
             {
-                string line = reader.ReadLine();
+                string line = reader.ReadLine().Trim();
                 string value = "";
                 string field;
                 // this cannot be tolerated.

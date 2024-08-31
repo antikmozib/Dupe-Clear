@@ -27,7 +27,9 @@ namespace DupeClear
         private void frmFromSpecificFolder_Load(object sender, EventArgs e)
         {
             if (typeOfAction == -1) // no action set
+            {
                 this.Close();
+            }
             else if (typeOfAction == 0) // from specific folders
             {
                 textBox1.Text = defaultPath;
@@ -62,7 +64,10 @@ namespace DupeClear
                 }
 
                 // ensure there is a trailing slash in the path
-                if (textBox1.Text.Substring(textBox1.Text.Length - 1) != "\\") textBox1.Text = textBox1.Text + "\\";
+                if (textBox1.Text.Substring(textBox1.Text.Length - 1) != "\\")
+                {
+                    textBox1.Text = textBox1.Text + "\\";
+                }
 
                 processSpecificFolders(textBox1.Text, checkBox2.Checked, radioButton1.Checked, cbRemoveFromList.Checked, cbSkipSamePath.Checked);
                 this.Close();

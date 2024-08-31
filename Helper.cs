@@ -145,22 +145,24 @@ namespace DupeClear
 
         public static string GetFileHash(string path)
         {
-            try
+            Stream stream;
+            if (JpegPatcher.IsJpeg(path))
             {
-                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    using (System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider())
-                    {
-                        byte[] hash;
-                        hash = md5.ComputeHash(stream);
-                        return System.Text.Encoding.Unicode.GetString(hash);
-                    }
-                }
+                var memStream = new MemoryStream();
+                using var fileStream = new FileStream(path, FileMode.Open);
+                stream = JpegPatcher.PatchAwayExif(fileStream, memStream);
             }
-            catch (Exception)
+            else
             {
-                return "";
+                stream = new FileStream(path, FileMode.Open);
             }
+
+            stream.Position = 0;
+            using var md5 = MD5.Create();
+            var hash = md5.ComputeHash(stream);
+            stream.Dispose();
+
+            return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
 
         // e.g. txt = Text Document

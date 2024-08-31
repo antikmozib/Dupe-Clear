@@ -1849,7 +1849,7 @@ namespace DupeClear
             {
                 if (!silent)
                 {
-                    ActiveForm.Invoke((MethodInvoker)delegate
+                    ActiveForm.Invoke((System.Windows.Forms.MethodInvoker)delegate
                     {
                         MessageBox.Show("No new updates are available.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     });
@@ -1857,7 +1857,7 @@ namespace DupeClear
                 return;
             }
 
-            ActiveForm.Invoke((MethodInvoker)delegate
+            ActiveForm.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
                 if (MessageBox.Show(
                         "An update is available.\n\nWould you like to download it now?", "Update",

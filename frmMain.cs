@@ -1,5 +1,6 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
+using DupeClear.Helpers.Native;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static DupeClear.Helper;
+using static DupeClear.Helpers.Helper;
 
 namespace DupeClear
 {

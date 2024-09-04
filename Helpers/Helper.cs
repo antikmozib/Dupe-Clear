@@ -1,5 +1,6 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
+using DupeClear.Helpers.Native;
 using Microsoft.Win32;
 using System;
 using System.Drawing;
@@ -11,75 +12,11 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DupeClear
+namespace DupeClear.Helpers
 {
     public class Helper
     {
         #region Native
-
-        public static class Shell32
-        {
-            public const int MAX_PATH = 256;
-            public const int NAMESIZE = 80;
-
-            public const uint SHGFI_ICON = 0x000000100;
-            public const uint SHGFI_LARGEICON = 0x000000000;
-            public const uint SHGFI_SMALLICON = 0x000000001;
-
-            public const uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
-
-            public const short SW_SHOW = 5;
-            public const uint SEE_MASK_INVOKEIDLIST = 0xc;
-
-            [StructLayout(LayoutKind.Sequential)]
-            public struct SHFILEINFO
-            {
-                public IntPtr hIcon;
-                public int iIcon;
-                public uint dwAttributes;
-                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_PATH)]
-                public string szDisplayName;
-                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NAMESIZE)]
-                public string szTypeName;
-            };
-
-            [StructLayout(LayoutKind.Sequential)]
-            public struct SHELLEXECUTEINFO
-            {
-                public int cbSize;
-                public int fMask;
-                public IntPtr hwnd;
-                [MarshalAs(UnmanagedType.LPTStr)]
-                public string lpVerb;
-                [MarshalAs(UnmanagedType.LPTStr)]
-                public string lpFile;
-                [MarshalAs(UnmanagedType.LPTStr)]
-                public string lpParameters;
-                [MarshalAs(UnmanagedType.LPTStr)]
-                public string lpDirectory;
-                public int nShow;
-                public IntPtr hInstApp;
-                public IntPtr lpIDList;
-                [MarshalAs(UnmanagedType.LPTStr)]
-                public string lpClass;
-                public IntPtr hkeyClass;
-                public int dwHotKey;
-                public IntPtr hIcon;
-                public IntPtr hProcess;
-            }
-
-            [DllImport("shell32.dll")]
-            public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
-
-            [DllImport("shell32.dll")]
-            public static extern bool ShellExecuteEx(ref SHELLEXECUTEINFO lpExecInfo);
-        }
-
-        public static class User32
-        {
-            [DllImport("user32.dll")]
-            public static extern int DestroyIcon(IntPtr hIcon);
-        }
 
         public static Image GetFolderIcon(string path, bool largeIcon)
         {
@@ -225,19 +162,19 @@ namespace DupeClear
             double returnSize;
             string type;
 
-            if (size > (1024 * 1024 * 1024))
+            if (size > 1024 * 1024 * 1024)
             {
                 returnSize = (double)size / (1024 * 1024 * 1024);
                 type = "GB";
             }
-            else if (size > (1024 * 1024))
+            else if (size > 1024 * 1024)
             {
                 returnSize = (double)size / (1024 * 1024);
                 type = "MB";
             }
             else if (size > 1024)
             {
-                returnSize = (double)size / (1024);
+                returnSize = (double)size / 1024;
                 type = "KB";
             }
             else

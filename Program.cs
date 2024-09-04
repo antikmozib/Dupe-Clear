@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using DupeClear.Helpers;
 
 namespace DupeClear
 {

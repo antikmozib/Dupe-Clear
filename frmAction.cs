@@ -84,7 +84,7 @@ namespace DupeClear
                 if (e.ProgressPercentage == 0)
                 {
                     progressBar1.Text = "";
-                    progressBar1.Maximum = _mainFileList.Count();
+                    progressBar1.Maximum = _mainFileList.Length;
                 }
 
                 if (_errors.Count > 0)
@@ -169,7 +169,7 @@ namespace DupeClear
             // CALC length.
             _currentState = PERFORMING_CALCULATIONS;
             bwDupeFinder.ReportProgress(0);
-            for (int i = 0; i < _mainFileList.Count(); i++)
+            for (int i = 0; i < _mainFileList.Length; i++)
             {
                 if (bwDupeFinder.CancellationPending)
                 {
@@ -200,7 +200,7 @@ namespace DupeClear
             _currentState = CONDUCTING_SEARCH;
             bwDupeFinder.ReportProgress(0); // set progressbar max
             _beganTime = DateTime.Now;
-            for (int i = 0; i < _mainFileList.Count(); i++)
+            for (int i = 0; i < _mainFileList.Length; i++)
             {
                 if (bwDupeFinder.CancellationPending == true)
                 {
@@ -254,7 +254,7 @@ namespace DupeClear
                 _currentlyWorkingPath = Helper.GetFolderPath(_mainFileList[i].FullName);
                 bwDupeFinder.ReportProgress(i + 1);
 
-                for (int j = 0; j < _mainFileList.Count(); j++)
+                for (int j = 0; j < _mainFileList.Length; j++)
                 {
                     if (bwDupeFinder.CancellationPending == true)
                     {
@@ -405,7 +405,7 @@ namespace DupeClear
             try
             {
                 CurrentDir = new DirectoryInfo(dir);
-                int i = CurrentDir.GetFiles().Count() - 1;
+                int i = CurrentDir.GetFiles().Length - 1;
             }
             catch (Exception ex)
             {
@@ -420,7 +420,7 @@ namespace DupeClear
                 return TempList;
             }
 
-            Array.Resize(ref TempList, CurrentDir.GetFiles().Count());
+            Array.Resize(ref TempList, CurrentDir.GetFiles().Length);
             foreach (FileInfo fi in CurrentDir.GetFiles())
             {
                 if (bwDupeFinder.CancellationPending)
@@ -478,7 +478,7 @@ namespace DupeClear
                     }
 
                     DupeFile[] s = BuildFileList(SubDir.FullName);
-                    Array.Resize(ref TempList, TempList.Length + s.Count());
+                    Array.Resize(ref TempList, TempList.Length + s.Length);
                     foreach (DupeFile fl in s)
                     {
                         if (bwDupeFinder.CancellationPending)

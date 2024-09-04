@@ -159,7 +159,7 @@ namespace DupeClear
             _currentState = BUILDING_FILELIST;
             foreach (string s in searchLocationsList)
             {
-                temp = new DupeFile[0];
+                temp = [];
                 temp = BuildFileList(s);
                 int oldSize = _mainFileList.Length;
                 Array.Resize(ref _mainFileList, _mainFileList.Length + temp.Length);
@@ -374,7 +374,7 @@ namespace DupeClear
         private DupeFile[] BuildFileList(string dir)
         {
             DirectoryInfo CurrentDir;
-            DupeFile[] TempList = { };
+            DupeFile[] TempList = [];
             int fileNum = 0;
 
             // Exclude folders.
@@ -594,7 +594,7 @@ namespace DupeClear
                 _startTime = DateTime.Now;
                 _timeElapsed = "00:00";
                 _timeRemaining = "Estimating...";
-                _mainFileList = new DupeFile[0];
+                _mainFileList = [];
                 _results = new List<ListViewItem>();
 
                 // set UI

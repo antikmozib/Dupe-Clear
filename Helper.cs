@@ -110,13 +110,6 @@ namespace DupeClear
 
         #endregion
 
-        public struct DupeFile
-        {
-            public string path;
-            public long size;
-            public string hash;
-        }
-
         public static bool debugEnabled;
 
         public static string GetFileName(string path, bool ext = true)

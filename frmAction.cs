@@ -1,5 +1,6 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
+using DupeClear.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +27,7 @@ namespace DupeClear
         public List<string> actionList;
         private int _successful, _failed;
 
-        private Helper.DupeFile[] _mainFileList;
+        private DupeFile[] _mainFileList;
         private List<ListViewItem> _results;
         private const int PERFORMING_CALCULATIONS = 0, BUILDING_FILELIST = 1, CONDUCTING_SEARCH = 2;
         private int _currentState;
@@ -158,12 +159,12 @@ namespace DupeClear
         {
             bool printHead;
             Color highlight = highlight1;
-            Helper.DupeFile[] temp;
+            DupeFile[] temp;
 
             _currentState = BUILDING_FILELIST;
             foreach (string s in searchLocationsList)
             {
-                temp = new Helper.DupeFile[0];
+                temp = new DupeFile[0];
                 temp = BuildFileList(s);
                 int oldSize = _mainFileList.Length;
 
@@ -183,20 +184,20 @@ namespace DupeClear
                     return;
                 }
 
-                if (_mainFileList[i].path == null)
+                if (_mainFileList[i].FullName == null)
                 {
                     continue;
                 }
 
                 try
                 {
-                    _mainFileList[i].size = new FileInfo(_mainFileList[i].path).Length;
-                    _spaceToSearch += _mainFileList[i].size;
+                    _mainFileList[i].Length = new FileInfo(_mainFileList[i].FullName).Length;
+                    _spaceToSearch += _mainFileList[i].Length;
                 }
                 catch (Exception ex)
                 {
-                    _errors.Add(_mainFileList[i].path + " - " + ex.Message);
-                    _mainFileList[i].path = "";
+                    _errors.Add(_mainFileList[i].FullName + " - " + ex.Message);
+                    _mainFileList[i].FullName = "";
                     continue;
                 }
             }
@@ -213,14 +214,14 @@ namespace DupeClear
                     return;
                 }
 
-                if (_mainFileList[i].path == null)
+                if (_mainFileList[i].FullName == null)
                 {
                     continue;
                 }
 
-                _spaceSearched += _mainFileList[i].size;
+                _spaceSearched += _mainFileList[i].Length;
 
-                if (_mainFileList[i].path != "")
+                if (_mainFileList[i].FullName != "")
                 {
                     // check file timestamps to only scan designated files
                     if (soCheckCreationTime || soCheckModificationTime)
@@ -228,7 +229,7 @@ namespace DupeClear
                         FileInfo fi;
                         try
                         {
-                            fi = new FileInfo(_mainFileList[i].path);
+                            fi = new FileInfo(_mainFileList[i].FullName);
                             if (fi.LastWriteTime < modifiedFrom || fi.LastWriteTime > modifiedTo)
                             {
                                 continue;
@@ -248,7 +249,7 @@ namespace DupeClear
 
                 _totalSearched++;
 
-                if (_mainFileList[i].path == "")
+                if (_mainFileList[i].FullName == "")
                 {
                     continue;
                 }
@@ -256,7 +257,7 @@ namespace DupeClear
                 printHead = false;
 
                 // report progress                
-                _currentlyWorkingPath = Helper.GetFolderPath(_mainFileList[i].path);
+                _currentlyWorkingPath = Helper.GetFolderPath(_mainFileList[i].FullName);
                 bwDupeFinder.ReportProgress(i + 1);
 
                 for (int j = 0; j < _mainFileList.Count(); j++)
@@ -267,21 +268,21 @@ namespace DupeClear
                         return;
                     }
 
-                    if (_mainFileList[j].path == "" || _mainFileList[j].path == _mainFileList[i].path || _mainFileList[j].path == null)
+                    if (_mainFileList[j].FullName == "" || _mainFileList[j].FullName == _mainFileList[i].FullName || _mainFileList[j].FullName == null)
                     {
                         continue;
                     }
 
                     // compare hash/contents
-                    if (_mainFileList[i].hash == "")
+                    if (_mainFileList[i].Hash == "")
                     {
-                        _mainFileList[i].hash = Helper.GetFileHash(_mainFileList[i].path);
+                        _mainFileList[i].Hash = Helper.GetFileHash(_mainFileList[i].FullName);
                     }
-                    if (_mainFileList[j].hash == "")
+                    if (_mainFileList[j].Hash == "")
                     {
-                        _mainFileList[j].hash = Helper.GetFileHash(_mainFileList[j].path);
+                        _mainFileList[j].Hash = Helper.GetFileHash(_mainFileList[j].FullName);
                     }
-                    if (soSameContents && (_mainFileList[j].hash != _mainFileList[i].hash))
+                    if (soSameContents && (_mainFileList[j].Hash != _mainFileList[i].Hash))
                     {
                         continue;
                     }
@@ -289,7 +290,7 @@ namespace DupeClear
                     // match same name
                     if (soSameFileName)
                     {
-                        if (Helper.GetFileName(_mainFileList[j].path, false).ToLower() != Helper.GetFileName(_mainFileList[i].path, false).ToLower())
+                        if (Helper.GetFileName(_mainFileList[j].FullName, false).ToLower() != Helper.GetFileName(_mainFileList[i].FullName, false).ToLower())
                         {
                             continue;
                         }
@@ -297,7 +298,7 @@ namespace DupeClear
                     // match same type
                     if (soSameType)
                     {
-                        if (Helper.GetFileExt(_mainFileList[j].path) != Helper.GetFileExt(_mainFileList[i].path))
+                        if (Helper.GetFileExt(_mainFileList[j].FullName) != Helper.GetFileExt(_mainFileList[i].FullName))
                         {
                             continue;
                         }
@@ -305,18 +306,18 @@ namespace DupeClear
                     // match same folder
                     if (soSameFolder)
                     {
-                        if (Helper.GetFolderPath(_mainFileList[j].path).ToLower() != Helper.GetFolderPath(_mainFileList[i].path).ToLower())
+                        if (Helper.GetFolderPath(_mainFileList[j].FullName).ToLower() != Helper.GetFolderPath(_mainFileList[i].FullName).ToLower())
                         {
                             continue;
                         }
                     }
 
-                    FileInfo fj = new FileInfo(_mainFileList[j].path);
+                    FileInfo fj = new FileInfo(_mainFileList[j].FullName);
 
                     // match same creation date
                     if (soSameCreationTime)
                     {
-                        if (fj.CreationTime != new FileInfo(_mainFileList[i].path).CreationTime)
+                        if (fj.CreationTime != new FileInfo(_mainFileList[i].FullName).CreationTime)
                         {
                             continue;
                         }
@@ -324,7 +325,7 @@ namespace DupeClear
                     // match same modification date
                     if (soSameModificationTime)
                     {
-                        if (fj.LastWriteTime != new FileInfo(_mainFileList[i].path).LastWriteTime)
+                        if (fj.LastWriteTime != new FileInfo(_mainFileList[i].FullName).LastWriteTime)
                         {
                             continue;
                         }
@@ -334,31 +335,31 @@ namespace DupeClear
                     ListViewItem item = new ListViewItem();
                     item.ImageKey = fj.Extension;
                     item.Checked = true;
-                    item.Text = Helper.GetFileName(_mainFileList[j].path); // name
-                    item.SubItems.Add(Helper.GetFileDescription(_mainFileList[j].path)); // type
-                    item.SubItems.Add(Helper.FileLengthToString(_mainFileList[j].size)); // size
+                    item.Text = Helper.GetFileName(_mainFileList[j].FullName); // name
+                    item.SubItems.Add(Helper.GetFileDescription(_mainFileList[j].FullName)); // type
+                    item.SubItems.Add(Helper.FileLengthToString(_mainFileList[j].Length)); // size
                     item.SubItems.Add(fj.LastWriteTime.ToString()); // date modified
                     item.SubItems.Add(fj.CreationTime.ToString()); // date created
-                    item.SubItems.Add(Helper.GetFolderPath(_mainFileList[j].path)); // path
+                    item.SubItems.Add(Helper.GetFolderPath(_mainFileList[j].FullName)); // path
                     item.BackColor = highlight;
 
                     _dupesFound++;
-                    _spaceSaveable = _spaceSaveable + _mainFileList[j].size;
+                    _spaceSaveable = _spaceSaveable + _mainFileList[j].Length;
                     _results.Add(item);
                     printHead = true;
-                    _mainFileList[j].path = "";
+                    _mainFileList[j].FullName = "";
                 }
                 if (printHead)
                 {
-                    FileInfo fi = new FileInfo(_mainFileList[i].path);
+                    FileInfo fi = new FileInfo(_mainFileList[i].FullName);
                     ListViewItem item = new ListViewItem();
                     item.ImageKey = fi.Extension;
-                    item.Text = Helper.GetFileName(_mainFileList[i].path); // name
-                    item.SubItems.Add(Helper.GetFileDescription(_mainFileList[i].path)); // type
-                    item.SubItems.Add(Helper.FileLengthToString(_mainFileList[i].size)); // size
+                    item.Text = Helper.GetFileName(_mainFileList[i].FullName); // name
+                    item.SubItems.Add(Helper.GetFileDescription(_mainFileList[i].FullName)); // type
+                    item.SubItems.Add(Helper.FileLengthToString(_mainFileList[i].Length)); // size
                     item.SubItems.Add(fi.LastWriteTime.ToString()); // date modified
                     item.SubItems.Add(fi.CreationTime.ToString()); // date created
-                    item.SubItems.Add(Helper.GetFolderPath(_mainFileList[i].path)); // path
+                    item.SubItems.Add(Helper.GetFolderPath(_mainFileList[i].FullName)); // path
                     item.BackColor = highlight;
 
                     _results.Add(item);
@@ -372,14 +373,14 @@ namespace DupeClear
                         highlight = highlight1;
                     }
                 }
-                _mainFileList[i].path = ""; // kill path so we don't scan file more than once
+                _mainFileList[i].FullName = ""; // kill path so we don't scan file more than once
             }
         }
 
-        private Helper.DupeFile[] BuildFileList(string dir)
+        private DupeFile[] BuildFileList(string dir)
         {
             DirectoryInfo CurrentDir;
-            Helper.DupeFile[] TempList = { };
+            DupeFile[] TempList = { };
             int fileNum = 0;
 
             // Exclude folders.
@@ -466,9 +467,9 @@ namespace DupeClear
                     continue;
                 }
 
-                TempList[fileNum].path = fi.FullName;
-                TempList[fileNum].hash = "";
-                TempList[fileNum].size = 0;
+                TempList[fileNum].FullName = fi.FullName;
+                TempList[fileNum].Hash = "";
+                TempList[fileNum].Length = 0;
                 fileNum++;
                 _buildingCounter++;
             }
@@ -482,20 +483,20 @@ namespace DupeClear
                         return TempList;
                     }
 
-                    Helper.DupeFile[] s = BuildFileList(SubDir.FullName);
+                    DupeFile[] s = BuildFileList(SubDir.FullName);
 
                     Array.Resize(ref TempList, TempList.Length + s.Count());
 
-                    foreach (Helper.DupeFile fl in s)
+                    foreach (DupeFile fl in s)
                     {
                         if (bwDupeFinder.CancellationPending)
                         {
                             return TempList;
                         }
 
-                        TempList[fileNum].path = fl.path;
-                        TempList[fileNum].hash = fl.hash;
-                        TempList[fileNum].size = fl.size;
+                        TempList[fileNum].FullName = fl.FullName;
+                        TempList[fileNum].Hash = fl.Hash;
+                        TempList[fileNum].Length = fl.Length;
                         fileNum++;
                     }
                 }
@@ -598,7 +599,7 @@ namespace DupeClear
                 _startTime = DateTime.Now;
                 _timeElapsed = "00:00";
                 _timeRemaining = "Estimating...";
-                _mainFileList = new Helper.DupeFile[0];
+                _mainFileList = new DupeFile[0];
                 _results = new List<ListViewItem>();
 
                 // set UI

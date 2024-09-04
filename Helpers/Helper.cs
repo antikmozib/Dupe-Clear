@@ -49,28 +49,16 @@ namespace DupeClear.Helpers
 
         public static bool debugEnabled;
 
-        public static string GetFileName(string path, bool ext = true)
+        public static string GetFileName(string path, bool includeExtension = true)
         {
-            string shortName = path.Substring(path.LastIndexOf("\\") + 1);
-
-            if (!shortName.Contains("."))
+            string fileName = Path.GetFileName(path);
+            string ext = Path.GetExtension(path);
+            if (!includeExtension && !string.IsNullOrWhiteSpace(ext))
             {
-                return shortName;
+                fileName = fileName.Substring(0, fileName.Length - ext.Length);
             }
 
-            if (ext)
-            {
-                return shortName;
-            }
-            else
-            {
-                return shortName.Substring(0, shortName.LastIndexOf("."));
-            }
-        }
-
-        public static string GetFolderPath(string path)
-        {
-            return path.Substring(0, path.LastIndexOf("\\"));
+            return fileName;
         }
 
         public static string GetFileHash(string path)

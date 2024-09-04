@@ -1,6 +1,7 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
 using DupeClear.Helpers.Native;
+using DupeClear.Models;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -186,10 +187,10 @@ namespace DupeClear
         {
             frmAction action = new frmAction()
             {
-                actionList = new List<string>(),
-                typeOfWork = 0,
-                destination = " ",// need 1 byte space
-                updateResults = UpdateResults
+                ActionList = new List<string>(),
+                CurrentWorkType = WorkType.Delete,
+                Destination = " ",// need 1 byte space
+                UpdateResults = UpdateResults
             };
 
             // make a list of items to delete
@@ -203,11 +204,11 @@ namespace DupeClear
                         PreviewPane.Image.Dispose();
                         ResetPreviewPane();
                     }
-                    action.actionList.Add(ParseFileName(item, clmLocation.Index));
+                    action.ActionList.Add(ParseFileName(item, clmLocation.Index));
                 }
             }
 
-            DialogResult confirm = MessageBox.Show(this, "Proceed with deleting " + action.actionList.Count.ToString("###,###,##0") +
+            DialogResult confirm = MessageBox.Show(this, "Proceed with deleting " + action.ActionList.Count.ToString("###,###,##0") +
                 " files to the Recycle Bin?", "Delete Marked Files", MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
             if (confirm == DialogResult.OK)
@@ -239,16 +240,16 @@ namespace DupeClear
 
             frmAction ActionForm = new frmAction()
             {
-                actionList = new List<string>(),
-                typeOfWork = 1,
-                destination = folderBrowserDialog1.SelectedPath,
-                updateResults = UpdateResults
+                ActionList = new List<string>(),
+                CurrentWorkType = WorkType.Copy,
+                Destination = folderBrowserDialog1.SelectedPath,
+                UpdateResults = UpdateResults
             };
             foreach (ListViewItem item in lvResults.SelectedItems)
             {
                 if (!item.Font.Strikeout)
                 {
-                    ActionForm.actionList.Add(ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -264,16 +265,16 @@ namespace DupeClear
 
             frmAction ActionForm = new frmAction()
             {
-                actionList = new List<string>(),
-                typeOfWork = 1,
-                destination = folderBrowserDialog1.SelectedPath,
-                updateResults = UpdateResults
+                ActionList = new List<string>(),
+                CurrentWorkType = WorkType.Copy,
+                Destination = folderBrowserDialog1.SelectedPath,
+                UpdateResults = UpdateResults
             };
             foreach (ListViewItem item in lvResults.Items)
             {
                 if (item.Checked && !item.Font.Strikeout)
                 {
-                    ActionForm.actionList.Add(ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -289,16 +290,16 @@ namespace DupeClear
 
             frmAction ActionForm = new frmAction()
             {
-                actionList = new List<string>(),
-                typeOfWork = 1,
-                destination = folderBrowserDialog1.SelectedPath,
-                updateResults = UpdateResults
+                ActionList = new List<string>(),
+                CurrentWorkType = WorkType.Copy,
+                Destination = folderBrowserDialog1.SelectedPath,
+                UpdateResults = UpdateResults
             };
             foreach (ListViewItem item in lvResults.Items)
             {
                 if (!item.Checked && !item.Font.Strikeout)
                 {
-                    ActionForm.actionList.Add(ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -332,16 +333,16 @@ namespace DupeClear
 
             frmAction ActionForm = new frmAction()
             {
-                actionList = new List<string>(),
-                typeOfWork = 2,
-                destination = folderBrowserDialog1.SelectedPath,
-                updateResults = UpdateResults
+                ActionList = new List<string>(),
+                CurrentWorkType = WorkType.Move,
+                Destination = folderBrowserDialog1.SelectedPath,
+                UpdateResults = UpdateResults
             };
             foreach (ListViewItem item in lvResults.Items)
             {
                 if (!item.Font.Strikeout && item.Checked)
                 {
-                    ActionForm.actionList.Add(ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -357,17 +358,17 @@ namespace DupeClear
 
             frmAction ActionForm = new frmAction()
             {
-                actionList = new List<string>(),
-                typeOfWork = 2,
-                destination = folderBrowserDialog1.SelectedPath
+                ActionList = new List<string>(),
+                CurrentWorkType = WorkType.Move,
+                Destination = folderBrowserDialog1.SelectedPath
             };
-            ActionForm.updateResults += UpdateResults;
+            ActionForm.UpdateResults += UpdateResults;
 
             foreach (ListViewItem item in lvResults.SelectedItems)
             {
                 if (!item.Font.Strikeout)
                 {
-                    ActionForm.actionList.Add(ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -383,17 +384,17 @@ namespace DupeClear
 
             frmAction ActionForm = new frmAction()
             {
-                actionList = new List<string>(),
-                typeOfWork = 2,
-                destination = folderBrowserDialog1.SelectedPath
+                ActionList = new List<string>(),
+                CurrentWorkType = WorkType.Move,
+                Destination = folderBrowserDialog1.SelectedPath
             };
-            ActionForm.updateResults += UpdateResults;
+            ActionForm.UpdateResults += UpdateResults;
 
             foreach (ListViewItem item in lvResults.Items)
             {
                 if (!item.Font.Strikeout && !item.Checked)
                 {
-                    ActionForm.actionList.Add(ParseFileName(item, clmLocation.Index));
+                    ActionForm.ActionList.Add(ParseFileName(item, clmLocation.Index));
                 }
             }
 
@@ -418,10 +419,10 @@ namespace DupeClear
 
             frmAction ActionForm = new frmAction()
             {
-                typeOfWork = 3,
-                searchCompleted = SearchCompleted,
-                highlight1 = _highlight1,
-                highlight2 = _highlight2
+                CurrentWorkType = WorkType.Search,
+                SearchCompleted = SearchCompleted,
+                Highlight1 = _highlight1,
+                Highlight2 = _highlight2
             };
 
             if (lvLocations.Items.Count == 0)
@@ -457,76 +458,77 @@ namespace DupeClear
             }
 
             // build extensions.
-            ActionForm.extList = new List<string>();
+            ActionForm.IncludedExtensions = new List<string>();
 
             if (cboExtensions.Text.Contains("(") && cboExtensions.Text.Contains(")"))
             {
-                ActionForm.extList = cboExtensions.Text.ToLower().Substring(cboExtensions.Text.IndexOf("(") + 1,
+                ActionForm.IncludedExtensions = cboExtensions.Text.ToLower().Substring(cboExtensions.Text.IndexOf("(") + 1,
                     cboExtensions.Text.LastIndexOf(")") - cboExtensions.Text.IndexOf("(") - 1).Split(';').ToList();
             }
             else
             {
-                ActionForm.extList = cboExtensions.Text.ToLower().Split(';').ToList();
+                ActionForm.IncludedExtensions = cboExtensions.Text.ToLower().Split(';').ToList();
             }
 
-            for (int i = 0; i < ActionForm.extList.Count; i++)
+            for (int i = 0; i < ActionForm.IncludedExtensions.Count; i++)
             {
-                ActionForm.extList[i] = ActionForm.extList[i].Substring(1, ActionForm.extList[i].Length - 1);
+                ActionForm.IncludedExtensions[i] = ActionForm.IncludedExtensions[i].Substring(1, ActionForm.IncludedExtensions[i].Length - 1);
             }
 
             // build excluded extensions.
-            ActionForm.excludeExtList = new List<string>();
+            ActionForm.ExcludedExtensions = new List<string>();
 
             if (cboExcludedExts.Text.Trim() != "")
             {
                 if (cboExcludedExts.Text.Contains("(") && cboExcludedExts.Text.Contains(")"))
                 {
-                    ActionForm.excludeExtList = cboExcludedExts.Text.ToLower().Substring(cboExcludedExts.Text.IndexOf("(") + 1,
+                    ActionForm.ExcludedExtensions = cboExcludedExts.Text.ToLower().Substring(cboExcludedExts.Text.IndexOf("(") + 1,
                         cboExcludedExts.Text.LastIndexOf(")") - cboExcludedExts.Text.IndexOf("(") - 1).Split(';').ToList();
                 }
                 else
                 {
-                    ActionForm.excludeExtList = cboExcludedExts.Text.ToLower().Split(';').ToList();
+                    ActionForm.ExcludedExtensions = cboExcludedExts.Text.ToLower().Split(';').ToList();
                 }
 
-                for (int i = 0; i < ActionForm.excludeExtList.Count; i++)
+                for (int i = 0; i < ActionForm.ExcludedExtensions.Count; i++)
                 {
-                    ActionForm.excludeExtList[i] = ActionForm.excludeExtList[i].Substring(1, ActionForm.excludeExtList[i].Length - 1);
+                    ActionForm.ExcludedExtensions[i] = ActionForm.ExcludedExtensions[i].Substring(1, ActionForm.ExcludedExtensions[i].Length - 1);
                 }
             }
 
             this.Cursor = Cursors.WaitCursor;
 
             // build search locations.
-            ActionForm.searchLocationsList = new List<string>();
+            ActionForm.SearchLocations = new List<string>();
 
             for (int i = 0; i < lvLocations.Items.Count; i++)
             {
                 // ignore unchecked items
                 if (lvLocations.Items[i].Checked)
                 {
-                    ActionForm.searchLocationsList.Add(lvLocations.Items[i].Text);
+                    ActionForm.SearchLocations.Add(lvLocations.Items[i].Text);
                 }
             }
 
             // build excluded locations.
-            ActionForm.excludedLocationsList = new List<string>();
+            ActionForm.ExcludedLocations = new List<string>();
 
             for (int i = 0; i < lvExcludedLocations.Items.Count; i++)
             {
                 // ignore unchecked items
                 if (lvExcludedLocations.Items[i].Checked)
                 {
-                    ActionForm.excludedLocationsList.Add(lvExcludedLocations.Items[i].Text);
+                    ActionForm.ExcludedLocations.Add(lvExcludedLocations.Items[i].Text);
                 }
             }
 
-            ActionForm.excludeSubFolders = cbIncludeExcludedFolderSubFolders.Checked;
+            ActionForm.ExcludeSubfolders = cbIncludeExcludedFolderSubFolders.Checked;
 
             this.Cursor = Cursors.Default;
 
             // check sizelimit
-            bool IsNumeric = long.TryParse(txtMinFileSize.Text, out ActionForm.sizeLimit);
+            bool IsNumeric = long.TryParse(txtMinFileSize.Text, out long lengthLimit);
+            ActionForm.LengthLimit = lengthLimit;
             if (!IsNumeric)
             {
                 MessageBox.Show("Invalid size limit. Size limit must be 0 KB or greater.", "Invalid Size", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -537,76 +539,112 @@ namespace DupeClear
             }
             else
             {
-                ActionForm.sizeLimit = ActionForm.sizeLimit * 1024;
+                ActionForm.LengthLimit = ActionForm.LengthLimit * 1024;
             }
 
             // build dates
             if (dtpDateCreatedFrom.Checked)
             {
-                ActionForm.createdFrom = dtpDateCreatedFrom.Value;
+                ActionForm.CreatedFrom = dtpDateCreatedFrom.Value;
             }
             else
             {
-                DateTime.TryParse("1 Jan 1900 00:00:01 AM", out ActionForm.createdFrom);
+                DateTime.TryParse("1 Jan 1900 00:00:01 AM", out DateTime createdFrom);
+                ActionForm.CreatedFrom = createdFrom;
+
             }
 
             if (dtpDateCreatedTo.Checked)
             {
-                ActionForm.createdTo = dtpDateCreatedTo.Value;
+                ActionForm.CreatedTo = dtpDateCreatedTo.Value;
             }
             else
             {
-                ActionForm.createdTo = DateTime.Now;
+                ActionForm.CreatedTo = DateTime.Now;
             }
 
             if (dtpDateModifiedFrom.Checked)
             {
-                ActionForm.modifiedFrom = dtpDateModifiedFrom.Value;
+                ActionForm.ModifiedFrom = dtpDateModifiedFrom.Value;
             }
             else
             {
-                DateTime.TryParse("1 Jan 1900 00:00:01 AM", out ActionForm.modifiedFrom);
+                DateTime.TryParse("1 Jan 1900 00:00:01 AM", out DateTime modifiedFrom);
+                ActionForm.ModifiedFrom = modifiedFrom;
             }
 
             if (dtpDateModifiedTo.Checked)
             {
-                ActionForm.modifiedTo = dtpDateModifiedTo.Value;
+                ActionForm.ModifiedTo = dtpDateModifiedTo.Value;
             }
             else
             {
-                ActionForm.modifiedTo = DateTime.Now;
+                ActionForm.ModifiedTo = DateTime.Now;
             }
 
             // set search options
-            ActionForm.soSameContents = cbSameContents.Checked;
-            ActionForm.soSameFileName = cbSameName.Checked;
-            ActionForm.soSameCreationTime = cbSameCreationDate.Checked;
-            ActionForm.soSameModificationTime = cbSameModificationDate.Checked;
-            ActionForm.soSameType = cbSameType.Checked;
-            ActionForm.soSameFolder = !cbSameFolder.Checked;
-            ActionForm.includeSubFolders = cbIncludeSubFolders.Checked;
+            DupeSearchOption searchOptions = DupeSearchOption.Default;
+            if (cbSameContents.Checked)
+            {
+                searchOptions |= DupeSearchOption.SameContents;
+            }
+
+            if (cbSameName.Checked)
+            {
+                searchOptions |= DupeSearchOption.SameFileName;
+            }
+
+            if (cbSameCreationDate.Checked)
+            {
+                searchOptions |= DupeSearchOption.SameDateCreated;
+            }
+
+            if (cbSameModificationDate.Checked)
+            {
+                searchOptions |= DupeSearchOption.SameDateModified;
+            }
+
+            if (cbSameType.Checked)
+            {
+                searchOptions |= DupeSearchOption.SameExtension;
+            }
+
+            if (cbSameFolder.Checked)
+            {
+                searchOptions |= DupeSearchOption.SameDirectoryName;
+            }
+
+            if (cbIncludeSubFolders.Checked)
+            {
+                searchOptions |= DupeSearchOption.IncludeSubfolders;
+            }
+
             if (dtpDateCreatedFrom.Checked || dtpDateCreatedTo.Checked)
             {
-                ActionForm.soCheckCreationTime = true;
-            }
-            else
-            {
-                ActionForm.soCheckCreationTime = false;
+                searchOptions |= DupeSearchOption.CheckDateCreated;
             }
 
             if (dtpDateModifiedFrom.Checked || dtpDateModifiedTo.Checked)
             {
-                ActionForm.soCheckModificationTime = true;
+                searchOptions |= DupeSearchOption.CheckDateModified;
             }
-            else
+
+            if (cbExcludeHiddenFiles.Checked)
             {
-                ActionForm.soCheckModificationTime = false;
+                searchOptions |= DupeSearchOption.ExcludeHiddenFiles;
             }
 
-            ActionForm.soHideHiddenFiles = cbExcludeHiddenFiles.Checked;
-            ActionForm.soHideSystemFiles = cbExcludeSystemFiles.Checked;
-            ActionForm.soIgnoreEmptyFiles = cbIgnoreEmptyFiles.Checked;
+            if (cbExcludeSystemFiles.Checked)
+            {
+                searchOptions |= DupeSearchOption.ExcludeSystemFiles;
+            }
 
+            if (cbIgnoreEmptyFiles.Checked)
+            {
+                searchOptions |= DupeSearchOption.IgnoreEmptyFiles;
+            }
+
+            ActionForm.SearchOptions = searchOptions;
             ActionForm.ShowDialog(this);
         }
 
@@ -759,17 +797,17 @@ namespace DupeClear
             largestToolStripMenuItem.Checked = false;
         }
 
-        public void UpdateResults(int TypeOfWork, string Destination)
+        public void UpdateResults(WorkType workType, string Destination)
         {
             this.Cursor = Cursors.WaitCursor;
 
-            if (TypeOfWork == 0 || TypeOfWork == 2)
+            if (workType == WorkType.Delete || workType == WorkType.Move)
             {
                 foreach (ListViewItem item in lvResults.Items)
                 {
                     if (!File.Exists(ParseFileName(item, clmLocation.Index)))
                     {
-                        if (TypeOfWork == 2 && File.Exists(Destination + "\\" + item.Text))
+                        if (workType == WorkType.Move && File.Exists(Destination + "\\" + item.Text))
                         {
                             // this means the file has been moved
                             item.SubItems[clmLocation.Index].Text = Destination;
@@ -777,7 +815,7 @@ namespace DupeClear
                     }
                 }
 
-                if (TypeOfWork == 0) // only refresh list if we moved files...
+                if (workType == WorkType.Delete) // only refresh list if we moved files...
                 {
                     RefreshList();
                 }
@@ -953,7 +991,7 @@ namespace DupeClear
 
                 if (field == "path")
                 {
-                    item.SubItems.Add(GetFolderPath(value));
+                    item.SubItems.Add(Path.GetDirectoryName(value));
                     if (!_fileImages.Images.ContainsKey(GetFileExt(value)))
                     {
                         _fileImages.Images.Add(GetFileExt(value), GetFileIcon(value));
@@ -1578,7 +1616,7 @@ namespace DupeClear
                 if (File.Exists(ParseFileName(lvResults.SelectedItems[0], clmLocation.Index)) == false)
                 {
                     // file already deleted. open last known folder instead...
-                    pathToOpen = GetFolderPath(ParseFileName(lvResults.SelectedItems[0], clmLocation.Index));
+                    pathToOpen = Path.GetDirectoryName(ParseFileName(lvResults.SelectedItems[0], clmLocation.Index));
                 }
                 else
                 {

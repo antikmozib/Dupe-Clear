@@ -272,12 +272,6 @@ namespace DupeClear
                         continue;
                     }
 
-                    // compare size                    
-                    if (_mainFileList[j].size != _mainFileList[i].size)
-                    {
-                        continue;
-                    }
-
                     // compare hash/contents
                     if (_mainFileList[i].hash == "")
                     {

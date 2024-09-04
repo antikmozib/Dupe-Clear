@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DupeClear.Models
 {
-    public class DupeFile
+    public struct DupeFile
     {
         public string Hash { get; set; }
 

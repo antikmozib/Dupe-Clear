@@ -12,3 +12,7 @@ A duplicate file cleaner for Windows.
 ## Installing
 
 Download and run the setup program and follow its instructions.
+
+## Building
+
+Open the .sln file in Visual Studio 2019 or later, and press F5.

@@ -1,5 +1,6 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
+using DupeClear.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

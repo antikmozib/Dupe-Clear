@@ -11,7 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static DupeClear.Helper;
+using static DupeClear.Helpers.Helper;
 
 namespace DupeClear
 {

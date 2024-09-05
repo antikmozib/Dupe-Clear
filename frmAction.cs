@@ -261,16 +261,23 @@ namespace DupeClear
                     if (_mainFileList[j].size != _mainFileList[i].size) continue;
 
                     // compare hash/contents
-                    if (_mainFileList[i].hash == "")
+                    if (soSameContents)
                     {
-                        _mainFileList[i].hash = Helper.GetFileHash(_mainFileList[i].path);
+                        if (_mainFileList[i].hash == "")
+                        {
+                            _mainFileList[i].hash = Helper.GetFileHash(_mainFileList[i].path);
+                        }
+
+                        if (_mainFileList[j].hash == "")
+                        {
+                            _mainFileList[j].hash = Helper.GetFileHash(_mainFileList[j].path);
+                        }
+
+                        if (_mainFileList[j].hash != _mainFileList[i].hash)
+                        {
+                            continue;
+                        }
                     }
-                    if (_mainFileList[j].hash == "")
-                    {
-                        _mainFileList[j].hash = Helper.GetFileHash(_mainFileList[j].path);
-                    }
-                    if (soSameContents && (_mainFileList[j].hash != _mainFileList[i].hash))
-                        continue;
 
                     // match same name
                     if (soSameFileName)

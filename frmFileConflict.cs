@@ -1,6 +1,5 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
-using DupeClear.Models;
 using System;
 using System.Windows.Forms;
 
@@ -8,13 +7,9 @@ namespace DupeClear
 {
     public partial class frmFileConflict : Form
     {
-        public FileReplacementMode ReplacementMode { get; set; } // 0 = skip; 1 = replace; 2 = keep both
-
-        public bool KeepGoing { get; set; } = false;
-
-        public string FileName { get; set; }
-
-        public string Destination { get; set; }
+        public int actionType; // 0 = skip; 1 = replace; 2 = keep both
+        public bool keepGoing = false;
+        public string filename, destination;
 
         public frmFileConflict()
         {
@@ -23,32 +18,32 @@ namespace DupeClear
 
         private void frmFileReplaceSkip_Load(object sender, EventArgs e)
         {
-            lblChosenDir.Text = Destination;
-            lblFileName.Text = FileName;
+            lblChosenDir.Text = destination;
+            lblFileName.Text = filename;
             System.Media.SystemSounds.Beep.Play();
         }
 
         private void btnSkip_Click(object sender, EventArgs e)
         {
-            ReplacementMode = FileReplacementMode.Skip;
+            actionType = 0;
             this.Close();
         }
 
         private void btnReplace_Click(object sender, EventArgs e)
         {
-            ReplacementMode = FileReplacementMode.Replace;
+            actionType = 1;
             this.Close();
         }
 
         private void btnKeepBoth_Click(object sender, EventArgs e)
         {
-            ReplacementMode = FileReplacementMode.KeepBoth;
+            actionType = 2;
             this.Close();
         }
 
         private void frmFileReplaceSkip_FormClosing(object sender, FormClosingEventArgs e)
         {
-            KeepGoing = cbDoInFuture.Checked;
+            keepGoing = cbDoInFuture.Checked;
         }
     }
 }

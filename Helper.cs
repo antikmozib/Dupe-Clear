@@ -1,6 +1,5 @@
 ﻿// Copyright (C) 2019-2023 Antik Mozib. All rights reserved.
 
-using DupeClear.Helpers.Native;
 using Microsoft.Win32;
 using System;
 using System.Drawing;
@@ -8,15 +7,78 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DupeClear.Helpers
+namespace DupeClear
 {
     public class Helper
     {
         #region Native
+
+        public static class Shell32
+        {
+            public const int MAX_PATH = 256;
+            public const int NAMESIZE = 80;
+
+            public const uint SHGFI_ICON = 0x000000100;
+            public const uint SHGFI_LARGEICON = 0x000000000;
+            public const uint SHGFI_SMALLICON = 0x000000001;
+
+            public const uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
+
+            public const short SW_SHOW = 5;
+            public const uint SEE_MASK_INVOKEIDLIST = 0xc;
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct SHFILEINFO
+            {
+                public IntPtr hIcon;
+                public int iIcon;
+                public uint dwAttributes;
+                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_PATH)]
+                public string szDisplayName;
+                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NAMESIZE)]
+                public string szTypeName;
+            };
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct SHELLEXECUTEINFO
+            {
+                public int cbSize;
+                public int fMask;
+                public IntPtr hwnd;
+                [MarshalAs(UnmanagedType.LPTStr)]
+                public string lpVerb;
+                [MarshalAs(UnmanagedType.LPTStr)]
+                public string lpFile;
+                [MarshalAs(UnmanagedType.LPTStr)]
+                public string lpParameters;
+                [MarshalAs(UnmanagedType.LPTStr)]
+                public string lpDirectory;
+                public int nShow;
+                public IntPtr hInstApp;
+                public IntPtr lpIDList;
+                [MarshalAs(UnmanagedType.LPTStr)]
+                public string lpClass;
+                public IntPtr hkeyClass;
+                public int dwHotKey;
+                public IntPtr hIcon;
+                public IntPtr hProcess;
+            }
+
+            [DllImport("shell32.dll")]
+            public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
+
+            [DllImport("shell32.dll")]
+            public static extern bool ShellExecuteEx(ref SHELLEXECUTEINFO lpExecInfo);
+        }
+
+        public static class User32
+        {
+            [DllImport("user32.dll")]
+            public static extern int DestroyIcon(IntPtr hIcon);
+        }
 
         public static Image GetFolderIcon(string path, bool largeIcon)
         {
@@ -47,40 +109,55 @@ namespace DupeClear.Helpers
 
         #endregion
 
+        public struct DupeFile
+        {
+            public string path;
+            public long size;
+            public string hash;
+        }
+
         public static bool debugEnabled;
 
-        public static string GetFileName(string path, bool includeExtension = true)
+        public static string GetFileName(string path, bool ext = true)
         {
-            string fileName = Path.GetFileName(path);
-            string ext = Path.GetExtension(path);
-            if (!includeExtension && !string.IsNullOrWhiteSpace(ext))
-            {
-                fileName = fileName.Substring(0, fileName.Length - ext.Length);
-            }
+            string shortName = path.Substring(path.LastIndexOf("\\") + 1);
 
-            return fileName;
+            if (!shortName.Contains("."))
+                return shortName;
+
+            if (ext)
+            {
+                return shortName;
+            }
+            else
+            {
+                return shortName.Substring(0, shortName.LastIndexOf("."));
+            }
+        }
+
+        public static string GetFolderPath(string path)
+        {
+            return path.Substring(0, path.LastIndexOf("\\"));
         }
 
         public static string GetFileHash(string path)
         {
-            Stream stream;
-            if (JpegPatcher.IsJpeg(path))
+            try
             {
-                var memStream = new MemoryStream();
-                using var fileStream = new FileStream(path, FileMode.Open);
-                stream = JpegPatcher.PatchAwayExif(fileStream, memStream);
+                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    using (System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider())
+                    {
+                        byte[] hash;
+                        hash = md5.ComputeHash(stream);
+                        return System.Text.Encoding.Unicode.GetString(hash);
+                    }
+                }
             }
-            else
+            catch (Exception)
             {
-                stream = new FileStream(path, FileMode.Open);
+                return "";
             }
-
-            stream.Position = 0;
-            using var md5 = MD5.Create();
-            var hash = md5.ComputeHash(stream);
-            stream.Dispose();
-
-            return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
 
         // e.g. txt = Text Document
@@ -88,19 +165,12 @@ namespace DupeClear.Helpers
         {
             string extensionName;
 
-            if (path.Contains("\\"))
-            {
-                path = path.Substring(path.LastIndexOf("\\")); // reduce path to file NAME
-            }
+            if (path.Contains("\\")) path = path.Substring(path.LastIndexOf("\\")); // reduce path to file NAME
 
             if (path.Contains(".") == false)
-            {
                 return "Unknown";
-            }
             else
-            {
                 path = path.Substring(path.LastIndexOf(".")); // reduce path to extension
-            }
 
             extensionName = (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + path, "", path);
             return (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + extensionName, "", path);
@@ -150,19 +220,19 @@ namespace DupeClear.Helpers
             double returnSize;
             string type;
 
-            if (size > 1024 * 1024 * 1024)
+            if (size > (1024 * 1024 * 1024))
             {
                 returnSize = (double)size / (1024 * 1024 * 1024);
                 type = "GB";
             }
-            else if (size > 1024 * 1024)
+            else if (size > (1024 * 1024))
             {
                 returnSize = (double)size / (1024 * 1024);
                 type = "MB";
             }
             else if (size > 1024)
             {
-                returnSize = (double)size / 1024;
+                returnSize = (double)size / (1024);
                 type = "KB";
             }
             else
@@ -172,17 +242,11 @@ namespace DupeClear.Helpers
             }
 
             if (type == "GB")
-            {
                 returnSize = Math.Round(returnSize, 3);
-            }
             else if (type == "B" || type == "KB")
-            {
                 returnSize = (int)returnSize;
-            }
             else
-            {
                 returnSize = Math.Round(returnSize, 2);
-            }
 
             return returnSize.ToString() + " " + type;
         }
@@ -195,9 +259,7 @@ namespace DupeClear.Helpers
             }
 
             if (!path.Contains(".")) // this file has no extension
-            {
                 return "";
-            }
 
             return path.Substring(path.LastIndexOf("."));
         }
@@ -212,9 +274,7 @@ namespace DupeClear.Helpers
         public static void WriteLog(string log)
         {
             if (!debugEnabled)
-            {
                 return;
-            }
 
             try
             {
@@ -248,9 +308,7 @@ namespace DupeClear.Helpers
             foreach (ListViewItem item in lvListView.Items)
             {
                 if (!item.Checked || item.Font.Strikeout)
-                {
                     continue;
-                }
 
                 try
                 {

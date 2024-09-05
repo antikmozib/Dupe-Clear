@@ -123,7 +123,9 @@ namespace DupeClear
             string shortName = path.Substring(path.LastIndexOf("\\") + 1);
 
             if (!shortName.Contains("."))
+            {
                 return shortName;
+            }
 
             if (ext)
             {
@@ -165,12 +167,19 @@ namespace DupeClear
         {
             string extensionName;
 
-            if (path.Contains("\\")) path = path.Substring(path.LastIndexOf("\\")); // reduce path to file NAME
+            if (path.Contains("\\"))
+            {
+                path = path.Substring(path.LastIndexOf("\\")); // reduce path to file NAME
+            }
 
             if (path.Contains(".") == false)
+            {
                 return "Unknown";
+            }
             else
+            {
                 path = path.Substring(path.LastIndexOf(".")); // reduce path to extension
+            }
 
             extensionName = (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + path, "", path);
             return (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + extensionName, "", path);
@@ -242,11 +251,17 @@ namespace DupeClear
             }
 
             if (type == "GB")
+            {
                 returnSize = Math.Round(returnSize, 3);
+            }
             else if (type == "B" || type == "KB")
+            {
                 returnSize = (int)returnSize;
+            }
             else
+            {
                 returnSize = Math.Round(returnSize, 2);
+            }
 
             return returnSize.ToString() + " " + type;
         }
@@ -259,7 +274,9 @@ namespace DupeClear
             }
 
             if (!path.Contains(".")) // this file has no extension
+            {
                 return "";
+            }
 
             return path.Substring(path.LastIndexOf("."));
         }
@@ -274,7 +291,9 @@ namespace DupeClear
         public static void WriteLog(string log)
         {
             if (!debugEnabled)
+            {
                 return;
+            }
 
             try
             {
@@ -308,7 +327,9 @@ namespace DupeClear
             foreach (ListViewItem item in lvListView.Items)
             {
                 if (!item.Checked || item.Font.Strikeout)
+                {
                     continue;
+                }
 
                 try
                 {

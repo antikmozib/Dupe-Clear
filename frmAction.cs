@@ -133,7 +133,9 @@ namespace DupeClear
             }
 
             if (_timeElapsed.Length > 6 && _timeElapsed.Substring(0, 2) == "0:")
+            {
                 _timeElapsed = _timeElapsed.Substring(2);
+            }
 
             // don't show the remaining time until the search has actually commenced
 
@@ -181,7 +183,10 @@ namespace DupeClear
                     return;
                 }
 
-                if (_mainFileList[i].path == null) continue;
+                if (_mainFileList[i].path == null)
+                {
+                    continue;
+                }
 
                 try
                 {
@@ -208,7 +213,10 @@ namespace DupeClear
                     return;
                 }
 
-                if (_mainFileList[i].path == null) continue;
+                if (_mainFileList[i].path == null)
+                {
+                    continue;
+                }
 
                 _spaceSearched += _mainFileList[i].size;
 
@@ -240,7 +248,11 @@ namespace DupeClear
 
                 _totalSearched++;
 
-                if (_mainFileList[i].path == "") continue;
+                if (_mainFileList[i].path == "")
+                {
+                    continue;
+                }
+
                 printHead = false;
 
                 // report progress                
@@ -255,10 +267,16 @@ namespace DupeClear
                         return;
                     }
 
-                    if (_mainFileList[j].path == "" || _mainFileList[j].path == _mainFileList[i].path || _mainFileList[j].path == null) continue;
+                    if (_mainFileList[j].path == "" || _mainFileList[j].path == _mainFileList[i].path || _mainFileList[j].path == null)
+                    {
+                        continue;
+                    }
 
                     // compare size                    
-                    if (_mainFileList[j].size != _mainFileList[i].size) continue;
+                    if (_mainFileList[j].size != _mainFileList[i].size)
+                    {
+                        continue;
+                    }
 
                     // compare hash/contents
                     if (soSameContents)
@@ -281,27 +299,47 @@ namespace DupeClear
 
                     // match same name
                     if (soSameFileName)
+                    {
                         if (Helper.GetFileName(_mainFileList[j].path, false).ToLower() != Helper.GetFileName(_mainFileList[i].path, false).ToLower())
+                        {
                             continue;
+                        }
+                    }
                     // match same type
                     if (soSameType)
+                    {
                         if (Helper.GetFileExt(_mainFileList[j].path) != Helper.GetFileExt(_mainFileList[i].path))
+                        {
                             continue;
+                        }
+                    }
                     // match same folder
                     if (soSameFolder)
+                    {
                         if (Helper.GetFolderPath(_mainFileList[j].path).ToLower() != Helper.GetFolderPath(_mainFileList[i].path).ToLower())
+                        {
                             continue;
+                        }
+                    }
 
                     FileInfo fj = new FileInfo(_mainFileList[j].path);
 
                     // match same creation date
                     if (soSameCreationTime)
+                    {
                         if (fj.CreationTime != new FileInfo(_mainFileList[i].path).CreationTime)
+                        {
                             continue;
+                        }
+                    }
                     // match same modification date
                     if (soSameModificationTime)
+                    {
                         if (fj.LastWriteTime != new FileInfo(_mainFileList[i].path).LastWriteTime)
+                        {
                             continue;
+                        }
+                    }
 
                     // DUPE FOUND AT THIS STAGE ################################################################
                     ListViewItem item = new ListViewItem();
@@ -337,9 +375,13 @@ namespace DupeClear
                     _results.Add(item);
 
                     if (highlight == highlight1)
+                    {
                         highlight = highlight2;
+                    }
                     else
+                    {
                         highlight = highlight1;
+                    }
                 }
                 _mainFileList[i].path = ""; // kill path so we don't scan file more than once
             }
@@ -386,21 +428,54 @@ namespace DupeClear
             }
 
             // ignore system directory
-            if (CurrentDir.Attributes == FileAttributes.System && soHideSystemFiles) return TempList;
+            if (CurrentDir.Attributes == FileAttributes.System && soHideSystemFiles)
+            {
+                return TempList;
+            }
+
             Array.Resize(ref TempList, CurrentDir.GetFiles().Count());
 
 
             foreach (FileInfo fi in CurrentDir.GetFiles())
             {
 
-                if (bwDupeFinder.CancellationPending) return TempList;
+                if (bwDupeFinder.CancellationPending)
+                {
+                    return TempList;
+                }
 
-                if (fi.Attributes == FileAttributes.System && soHideSystemFiles) continue;
-                if (fi.Attributes == FileAttributes.Hidden && soHideHiddenFiles) continue;
-                if (!extList.Contains(".*")) if (!extList.Contains(fi.Extension.ToLower())) continue;
-                if (excludeExtList.Contains(fi.Extension)) continue;
-                if (fi.Length < sizeLimit) continue;
-                if (soIgnoreEmptyFiles && fi.Length == 0) continue;
+                if (fi.Attributes == FileAttributes.System && soHideSystemFiles)
+                {
+                    continue;
+                }
+
+                if (fi.Attributes == FileAttributes.Hidden && soHideHiddenFiles)
+                {
+                    continue;
+                }
+
+                if (!extList.Contains(".*"))
+                {
+                    if (!extList.Contains(fi.Extension.ToLower()))
+                    {
+                        continue;
+                    }
+                }
+
+                if (excludeExtList.Contains(fi.Extension))
+                {
+                    continue;
+                }
+
+                if (fi.Length < sizeLimit)
+                {
+                    continue;
+                }
+
+                if (soIgnoreEmptyFiles && fi.Length == 0)
+                {
+                    continue;
+                }
 
                 TempList[fileNum].path = fi.FullName;
                 TempList[fileNum].hash = "";
@@ -414,7 +489,9 @@ namespace DupeClear
                 foreach (DirectoryInfo SubDir in CurrentDir.GetDirectories())
                 {
                     if (bwDupeFinder.CancellationPending)
+                    {
                         return TempList;
+                    }
 
                     Helper.DupeFile[] s = BuildFileList(SubDir.FullName);
 
@@ -423,7 +500,9 @@ namespace DupeClear
                     foreach (Helper.DupeFile fl in s)
                     {
                         if (bwDupeFinder.CancellationPending)
+                        {
                             return TempList;
+                        }
 
                         TempList[fileNum].path = fl.path;
                         TempList[fileNum].hash = fl.hash;
@@ -451,7 +530,10 @@ namespace DupeClear
             _totalDeletionSize = 0;
             for (int i = 0; i < actionList.Count; i++)
             {
-                if (File.Exists(actionList[i])) _totalDeletionSize += new FileInfo(actionList[i]).Length;
+                if (File.Exists(actionList[i]))
+                {
+                    _totalDeletionSize += new FileInfo(actionList[i]).Length;
+                }
             }
 
             for (int i = 0; i < actionList.Count; i++)
@@ -492,9 +574,13 @@ namespace DupeClear
             else
             {
                 if (_failed > 0)
+                {
                     ShowProgress("File: " + Helper.GetFileName(_currentlyWorkingPath), "From: " + Helper.GetFolderPath(_currentlyWorkingPath), e.ProgressPercentage, "Remaining: " + (actionList.Count - _successful - _failed).ToString("###,###,##0") + " (" + Helper.FileLengthToString(_totalDeletionSize) + ")", "Failed: " + _failed.ToString());
+                }
                 else
+                {
                     ShowProgress("File: " + Helper.GetFileName(_currentlyWorkingPath), "From: " + Helper.GetFolderPath(_currentlyWorkingPath), e.ProgressPercentage, "Remaining: " + (actionList.Count - _successful - _failed).ToString("###,###,##0") + " (" + Helper.FileLengthToString(_totalDeletionSize) + ")");
+                }
             }
         }
 
@@ -550,7 +636,9 @@ namespace DupeClear
                 _failed = 0;
 
                 if (typeOfWork == 0)
+                {
                     bwDelete.RunWorkerAsync();
+                }
                 else if (typeOfWork == 1 || typeOfWork == 2)
                 {
                     // FILE COPY MOVE
@@ -575,9 +663,20 @@ namespace DupeClear
                     progressBar1.Text = "Please wait...";
                     btnCancel.Visible = false;
 
-                    if (bwCopyMove.IsBusy) bwCopyMove.CancelAsync();
-                    if (bwDelete.IsBusy) bwDelete.CancelAsync();
-                    if (bwDupeFinder.IsBusy) bwDupeFinder.CancelAsync();
+                    if (bwCopyMove.IsBusy)
+                    {
+                        bwCopyMove.CancelAsync();
+                    }
+
+                    if (bwDelete.IsBusy)
+                    {
+                        bwDelete.CancelAsync();
+                    }
+
+                    if (bwDupeFinder.IsBusy)
+                    {
+                        bwDupeFinder.CancelAsync();
+                    }
 
                     btnCancel.Visible = true;
                     this.Cursor = Cursors.Default;
@@ -595,7 +694,9 @@ namespace DupeClear
 
             // add slash to destination path
             if (destination.Substring(destination.Length - 1, 1) != "\\")
+            {
                 destination = destination + "\\";
+            }
 
             Helper.WriteLog("Starting file copy/move. " + actionList.Count.ToString() + " files in buffer."); // ############
             for (int i = 0; i < actionList.Count; i++)
@@ -724,9 +825,13 @@ namespace DupeClear
         private void bwCopyMove_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (_failed > 0)
+            {
                 ShowProgress("File: " + _currentlyWorkingPath, "To: " + destination.Substring(0, destination.Length - 1), e.ProgressPercentage, "Remaining: " + (actionList.Count - _successful - _failed).ToString(), "Failed: " + _failed.ToString());
+            }
             else
+            {
                 ShowProgress("File: " + _currentlyWorkingPath, "To: " + destination.Substring(0, destination.Length - 1), e.ProgressPercentage, "Remaining: " + (actionList.Count - _successful - _failed).ToString());
+            }
         }
 
         private void bwDelete_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -744,11 +849,19 @@ namespace DupeClear
             lblStatus1.Text = status1;
             lblStatus2.Text = status2;
             if (status3 != "")
+            {
                 lblStatus3.Text = status3;
+            }
+
             if (status4 != "")
+            {
                 lblStatus4.Text = status4;
+            }
+
             if (status5 != "")
+            {
                 lblStatus5.Text = status5;
+            }
 
             progressBar1.Value = progress;
 
@@ -807,8 +920,15 @@ namespace DupeClear
                     lblStatus1.Text = _dupesFound.ToString("###,###,##0") + " Duplicate files found, " + Helper.FileLengthToString(_spaceSaveable) + " of space recoverable.";
                 }
                 lblStatus2.Text = "Total files searched: " + _totalSearched.ToString("###,###,##0");
-                if (_numExcluded > 0) lblStatus4.Text = "Folders excluded: " + _numExcluded.ToString();
-                if (_errors.Count > 0) lblStatus3.Text = "Errors: " + _errors.Count.ToString();
+                if (_numExcluded > 0)
+                {
+                    lblStatus4.Text = "Folders excluded: " + _numExcluded.ToString();
+                }
+
+                if (_errors.Count > 0)
+                {
+                    lblStatus3.Text = "Errors: " + _errors.Count.ToString();
+                }
             }
             else
             {
@@ -830,23 +950,33 @@ namespace DupeClear
                 }
 
                 if (_failed > 0)
+                {
                     lblStatus2.Text += _failed.ToString() + " files failed.";
+                }
             }
 
             progressBar1.Visible = true;
-            if (progressBar1.Maximum == 0) progressBar1.Maximum = 1; // so that we at least show a full green bar even if 0 files were scanned
+            if (progressBar1.Maximum == 0)
+            {
+                progressBar1.Maximum = 1; // so that we at least show a full green bar even if 0 files were scanned
+            }
+
             progressBar1.Value = progressBar1.Maximum;
             timer1.Enabled = false;
 
             if (_failed > 0 || _errors.Count > 0)
+            {
                 btnViewErrors.Visible = true;
+            }
 
             btnCancel.Text = "&OK";
             btnCancel.Visible = true;
             System.Media.SystemSounds.Beep.Play();
 
             if (!e.Cancelled)
+            {
                 this.Text = "Operation complete";
+            }
             else
             {
                 this.Text = "Operation interrupted";

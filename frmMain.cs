@@ -91,7 +91,10 @@ namespace DupeClear
 
         private void keepOnlyNewestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (lvResults.Items.Count == 0) return;
+            if (lvResults.Items.Count == 0)
+            {
+                return;
+            }
 
             Color backColor = lvResults.Items[0].BackColor;
             ListViewItem newestItem = lvResults.Items[0];
@@ -206,7 +209,10 @@ namespace DupeClear
             DialogResult confirm = MessageBox.Show(this, "Proceed with deleting " + action.actionList.Count.ToString("###,###,##0") +
                 " files to the Recycle Bin?", "Delete Marked Files", MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-            if (confirm == DialogResult.OK) action.ShowDialog(this);
+            if (confirm == DialogResult.OK)
+            {
+                action.ShowDialog(this);
+            }
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -226,7 +232,9 @@ namespace DupeClear
         private void selectedFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lvResults.Items.Count == 0 || folderBrowserDialog1.ShowDialog(this) == DialogResult.Cancel)
+            {
                 return;
+            }
 
             frmAction ActionForm = new frmAction()
             {
@@ -249,7 +257,9 @@ namespace DupeClear
         private void markedFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lvResults.Items.Count == 0 || folderBrowserDialog1.ShowDialog(this) == DialogResult.Cancel)
+            {
                 return;
+            }
 
             frmAction ActionForm = new frmAction()
             {
@@ -272,7 +282,9 @@ namespace DupeClear
         private void unmarkedFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lvResults.Items.Count == 0 || folderBrowserDialog1.ShowDialog(this) == DialogResult.Cancel)
+            {
                 return;
+            }
 
             frmAction ActionForm = new frmAction()
             {
@@ -411,7 +423,10 @@ namespace DupeClear
                 highlight2 = _highlight2
             };
 
-            if (lvLocations.Items.Count == 0) return;
+            if (lvLocations.Items.Count == 0)
+            {
+                return;
+            }
 
             // check search options
             if (!cbSameContents.Checked && !cbSameName.Checked)
@@ -488,16 +503,22 @@ namespace DupeClear
             {
                 // ignore unchecked items
                 if (lvLocations.Items[i].Checked)
+                {
                     ActionForm.searchLocationsList.Add(lvLocations.Items[i].Text);
+                }
             }
 
             // build excluded locations.
             ActionForm.excludedLocationsList = new List<string>();
 
             for (int i = 0; i < lvExcludedLocations.Items.Count; i++)
+            {
                 // ignore unchecked items
                 if (lvExcludedLocations.Items[i].Checked)
+                {
                     ActionForm.excludedLocationsList.Add(lvExcludedLocations.Items[i].Text);
+                }
+            }
 
             ActionForm.excludeSubFolders = cbIncludeExcludedFolderSubFolders.Checked;
 
@@ -514,25 +535,46 @@ namespace DupeClear
                 return;
             }
             else
+            {
                 ActionForm.sizeLimit = ActionForm.sizeLimit * 1024;
+            }
 
             // build dates
             if (dtpDateCreatedFrom.Checked)
+            {
                 ActionForm.createdFrom = dtpDateCreatedFrom.Value;
+            }
             else
+            {
                 DateTime.TryParse("1 Jan 1900 00:00:01 AM", out ActionForm.createdFrom);
+            }
+
             if (dtpDateCreatedTo.Checked)
+            {
                 ActionForm.createdTo = dtpDateCreatedTo.Value;
+            }
             else
+            {
                 ActionForm.createdTo = DateTime.Now;
+            }
+
             if (dtpDateModifiedFrom.Checked)
+            {
                 ActionForm.modifiedFrom = dtpDateModifiedFrom.Value;
+            }
             else
+            {
                 DateTime.TryParse("1 Jan 1900 00:00:01 AM", out ActionForm.modifiedFrom);
+            }
+
             if (dtpDateModifiedTo.Checked)
+            {
                 ActionForm.modifiedTo = dtpDateModifiedTo.Value;
+            }
             else
+            {
                 ActionForm.modifiedTo = DateTime.Now;
+            }
 
             // set search options
             ActionForm.soSameContents = cbSameContents.Checked;
@@ -543,13 +585,23 @@ namespace DupeClear
             ActionForm.soSameFolder = !cbSameFolder.Checked;
             ActionForm.includeSubFolders = cbIncludeSubFolders.Checked;
             if (dtpDateCreatedFrom.Checked || dtpDateCreatedTo.Checked)
+            {
                 ActionForm.soCheckCreationTime = true;
+            }
             else
+            {
                 ActionForm.soCheckCreationTime = false;
+            }
+
             if (dtpDateModifiedFrom.Checked || dtpDateModifiedTo.Checked)
+            {
                 ActionForm.soCheckModificationTime = true;
+            }
             else
+            {
                 ActionForm.soCheckModificationTime = false;
+            }
+
             ActionForm.soHideHiddenFiles = cbExcludeHiddenFiles.Checked;
             ActionForm.soHideSystemFiles = cbExcludeSystemFiles.Checked;
             ActionForm.soIgnoreEmptyFiles = cbIgnoreEmptyFiles.Checked;
@@ -579,7 +631,9 @@ namespace DupeClear
                 {
                 }
                 if (!lblResultsListStatus.Text.ToLower().Contains("marked"))
+                {
                     RefreshList();
+                }
             }
         }
 
@@ -606,7 +660,9 @@ namespace DupeClear
         private void btnAddExcludedFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog(this) == DialogResult.OK)
+            {
                 addLocation(ref lvExcludedLocations, folderBrowserDialog1.SelectedPath);
+            }
         }
 
         private void btnRemoveExcludedFolder_Click(object sender, EventArgs e)
@@ -622,11 +678,15 @@ namespace DupeClear
             foreach (Control c in this.Controls)
             {
                 if (c.Text.Contains("Blah"))
+                {
                     c.Text = "";
+                }
             }
 
             if (!Directory.Exists(baseSettingsPath))
+            {
                 Directory.CreateDirectory(baseSettingsPath);
+            }
 
             // setup UI
             _fileImages.ColorDepth = ColorDepth.Depth32Bit;
@@ -666,20 +726,27 @@ namespace DupeClear
 
             // ---- VALIDATION SECTION -----
             this.Text = Application.ProductName;
-            if (debugEnabled) this.Text += " (Debug mode)";
+            if (debugEnabled)
+            {
+                this.Text += " (Debug mode)";
+            }
             // ---- END SECTION -----
         }
 
         private void btnAddFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
                 addLocation(ref lvLocations, folderBrowserDialog1.SelectedPath);
+            }
         }
 
         private void btnRemoveFolder_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in lvLocations.SelectedItems)
+            {
                 item.Remove();
+            }
         }
 
         private void TextSizeUncheckAll()
@@ -826,15 +893,22 @@ namespace DupeClear
                 }
 
                 if (field.Contains("?xml") || field.Contains("ver"))
+                {
                     continue;
+                }
 
                 if (field == "group")
                 {
                     // change group color
                     if (highlight == _highlight1)
+                    {
                         highlight = _highlight2;
+                    }
                     else
+                    {
                         highlight = _highlight1;
+                    }
+
                     continue;
                 }
 
@@ -916,7 +990,10 @@ namespace DupeClear
 
         private void MarkFiles(int markCriteria)
         {
-            if (lvResults.Items.Count == 0) return;
+            if (lvResults.Items.Count == 0)
+            {
+                return;
+            }
 
             Color backColor = Color.White;
             ListViewItem unmarkedItem = null;
@@ -1150,7 +1227,10 @@ namespace DupeClear
 
             foreach (ListViewItem item in lvResults.Items)
             {
-                if (item.Font.Strikeout) continue;
+                if (item.Font.Strikeout)
+                {
+                    continue;
+                }
 
                 if (head == null)
                 {
@@ -1165,7 +1245,10 @@ namespace DupeClear
                         if (UnMark)
                         {
                             item.Checked = false;
-                            if (removeFromList) itemsToDelete.Add(item);
+                            if (removeFromList)
+                            {
+                                itemsToDelete.Add(item);
+                            }
                         }
                         else
                         {
@@ -1200,7 +1283,10 @@ namespace DupeClear
                 typeOfAction = 0
             };
             if (lvResults.SelectedItems.Count > 0)
+            {
                 FSFForm.defaultPath = lvResults.SelectedItems[0].SubItems[clmLocation.Index].Text;
+            }
+
             FSFForm.ShowDialog(this);
         }
 
@@ -1408,7 +1494,9 @@ namespace DupeClear
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MsgBox("Delete " + lvResults.SelectedItems.Count.ToString() + " files to the Recycle Bin?", buttons: MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            {
                 return;
+            }
 
             foreach (ListViewItem item in lvResults.SelectedItems)
             {
@@ -1510,7 +1598,9 @@ namespace DupeClear
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (findToolStripMenuItem.Checked)
+            {
                 tabControl1.SelectedTab = tabpageResults;
+            }
 
             txtFind.Visible = findToolStripMenuItem.Checked;
             lblFind.Visible = txtFind.Visible;
@@ -1533,12 +1623,17 @@ namespace DupeClear
 
         private void viewPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (lvResults.SelectedItems.Count == 0) return;
+            if (lvResults.SelectedItems.Count == 0)
+            {
+                return;
+            }
 
             Shell32.SHELLEXECUTEINFO shellExec = new Shell32.SHELLEXECUTEINFO();
 
             if (lvResults.SelectedItems.Count == 0)
+            {
                 return;
+            }
 
             shellExec.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(shellExec);
             shellExec.lpVerb = "properties";
@@ -1568,16 +1663,23 @@ namespace DupeClear
         private void Find(string title, bool findNext)
         {
             title = title.ToLower();
-            if (lvResults.Items.Count == 0) return;
+            if (lvResults.Items.Count == 0)
+            {
+                return;
+            }
 
             int startIndex;
 
             if (findNext)
             {
                 if (lvResults.SelectedItems.Count == 0)
+                {
                     startIndex = 0;
+                }
                 else
+                {
                     startIndex = lvResults.SelectedItems[lvResults.SelectedItems.Count - 1].Index + 1;
+                }
             }
             else
             {
@@ -1598,7 +1700,9 @@ namespace DupeClear
                     item.EnsureVisible();
                     nothingFound = false;
                     if (findNext)
+                    {
                         return;
+                    }
                 }
             }
 
@@ -1630,7 +1734,9 @@ namespace DupeClear
         private void addLocation(ref ListView listView, string path)
         {
             if (Directory.Exists(path) == false)
+            {
                 return;
+            }
 
             if (!_folderImageList.Images.ContainsKey(path))
             {
@@ -1740,7 +1846,10 @@ namespace DupeClear
             List<ListViewItem> itemsToRemove = new List<ListViewItem>();
             int counter = 0;
 
-            if (extensions == null || extensions.Count == 0) return;
+            if (extensions == null || extensions.Count == 0)
+            {
+                return;
+            }
 
             for (int i = 0; i < extensions.Count; i++)
             {
@@ -1753,7 +1862,9 @@ namespace DupeClear
             foreach (ListViewItem item in lvResults.Items)
             {
                 if (!item.Text.Contains(".")) // file has no extension
+                {
                     continue;
+                }
 
                 if (extensions.Contains(item.Text.Substring(item.Text.LastIndexOf(".")).ToLower()))
                 {
@@ -1771,7 +1882,9 @@ namespace DupeClear
             if (itemsToRemove.Count > 0)
             {
                 foreach (ListViewItem item in itemsToRemove)
+                {
                     lvResults.Items.Remove(item);
+                }
             }
 
             this.Cursor = Cursors.Default;

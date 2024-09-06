@@ -301,7 +301,7 @@ namespace DupeClear
                     // match same name
                     if (soSameFileName)
                     {
-                        if (Helper.GetFileName(_mainFileList[j].path, false).ToLower() != Helper.GetFileName(_mainFileList[i].path, false).ToLower())
+                        if (string.Compare(Helper.GetFileName(_mainFileList[j].path, false), Helper.GetFileName(_mainFileList[i].path, false), true) != 0)
                         {
                             continue;
                         }
@@ -317,7 +317,7 @@ namespace DupeClear
                     // match same folder
                     if (soSameFolder)
                     {
-                        if (Helper.GetFolderPath(_mainFileList[j].path).ToLower() != Helper.GetFolderPath(_mainFileList[i].path).ToLower())
+                        if (string.Compare(Path.GetDirectoryName(_mainFileList[j].path), Path.GetDirectoryName(_mainFileList[i].path), true) != 0)
                         {
                             continue;
                         }

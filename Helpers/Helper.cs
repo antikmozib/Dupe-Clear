@@ -119,28 +119,21 @@ namespace DupeClear.Helpers
 
         public static bool debugEnabled;
 
-        public static string GetFileName(string path, bool ext = true)
+        public static string GetFileName(string path, bool includeExt = true)
         {
-            string shortName = path.Substring(path.LastIndexOf("\\") + 1);
-
-            if (!shortName.Contains("."))
+            string ext = Path.GetExtension(path);
+            string fileName = Path.GetFileName(path);
+            if (!includeExt && !string.IsNullOrWhiteSpace(ext))
             {
-                return shortName;
+                return fileName.Substring(0, fileName.Length - ext.Length);
             }
 
-            if (ext)
-            {
-                return shortName;
-            }
-            else
-            {
-                return shortName.Substring(0, shortName.LastIndexOf("."));
-            }
+            return fileName;
         }
 
         public static string GetFolderPath(string path)
         {
-            return path.Substring(0, path.LastIndexOf("\\"));
+            return Path.GetDirectoryName(path);
         }
 
         public static string GetFileHash(string path)
@@ -174,24 +167,16 @@ namespace DupeClear.Helpers
         // e.g. txt = Text Document
         public static string GetFileDescription(string path)
         {
-            string extensionName;
-
-            if (path.Contains("\\"))
-            {
-                path = path.Substring(path.LastIndexOf("\\")); // reduce path to file NAME
-            }
-
-            if (path.Contains(".") == false)
+            string ext = Path.GetExtension(path);
+            if (string.IsNullOrWhiteSpace(ext))
             {
                 return "Unknown";
             }
-            else
-            {
-                path = path.Substring(path.LastIndexOf(".")); // reduce path to extension
-            }
 
-            extensionName = (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + path, "", path);
-            return (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + extensionName, "", path);
+            string extDescription;
+            extDescription = (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + ext, "", ext);
+
+            return (string)Registry.GetValue("HKEY_CLASSES_ROOT\\" + extDescription, "", ext);
         }
 
         public static Icon GetFileIcon(string path)

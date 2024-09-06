@@ -129,6 +129,9 @@
   <data name="cboExcludedExts.Items" xml:space="preserve">
     <value>Videos (*.webm;*.mkv;*.flv;*.vob;*.ogv;*.ogg;*.drc;*.gif;*.gifv;*.mng;*.avi;*.mov;*.qt;*.wmv;*.yuv;*.rm;*.rmvb;*.asf;*.amv;*.mp4;*.m4p;*.m4v;*.mpg;*.mp2;*.mpeg;*.mpe;*.mpv;*.m2v;*.svi;*.3gp;*.3g2;*.mxf;*.roq;*.nsv;*.flv;*.f4v;*.f4p;*.f4a;*.f4b)</value>
   </data>
+  <metadata name="SearchOptionsTips.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>500, 59</value>
+  </metadata>
   <metadata name="menuRightClick.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 57</value>
   </metadata>
@@ -152,9 +155,6 @@
   </metadata>
   <metadata name="SaveXML.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>399, 59</value>
-  </metadata>
-  <metadata name="SearchOptionsTips.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>500, 59</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>127</value>

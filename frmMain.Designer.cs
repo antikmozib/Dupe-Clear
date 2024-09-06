@@ -85,6 +85,13 @@
             this.lblFind = new System.Windows.Forms.Label();
             this.cbShowPreview = new System.Windows.Forms.CheckBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lvResults = new System.Windows.Forms.ListView();
+            this.clmName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmDateModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
@@ -103,6 +110,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.invertSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblNoPreview = new System.Windows.Forms.Label();
+            this.PreviewPane = new System.Windows.Forms.PictureBox();
             this.lblResultsListStatus = new System.Windows.Forms.Label();
             this.btnClearList = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
@@ -174,15 +183,6 @@
             this.OpenXML = new System.Windows.Forms.OpenFileDialog();
             this.SaveXML = new System.Windows.Forms.SaveFileDialog();
             this.SearchOptionsTips = new System.Windows.Forms.ToolTip(this.components);
-            this.PreviewPane = new System.Windows.Forms.PictureBox();
-            this.lblNoPreview = new System.Windows.Forms.Label();
-            this.lvResults = new System.Windows.Forms.ListView();
-            this.clmName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmDateModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.tabpageLocation.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -195,12 +195,12 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.menuRightClick.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewPane)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.menuCopy.SuspendLayout();
             this.menuMove.SuspendLayout();
             this.menuClear.SuspendLayout();
             this.menuFileMarker.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewPane)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -216,7 +216,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(770, 520);
-            this.tabControl1.TabIndex = 13;
+            this.tabControl1.TabIndex = 12;
             // 
             // tabpageLocation
             // 
@@ -245,7 +245,7 @@
             this.lvLocations.Location = new System.Drawing.Point(8, 8);
             this.lvLocations.Name = "lvLocations";
             this.lvLocations.Size = new System.Drawing.Size(592, 288);
-            this.lvLocations.TabIndex = 1;
+            this.lvLocations.TabIndex = 0;
             this.lvLocations.UseCompatibleStateImageBehavior = false;
             this.lvLocations.View = System.Windows.Forms.View.List;
             this.lvLocations.DragDrop += new System.Windows.Forms.DragEventHandler(this.lvLocations_DragDrop);
@@ -263,7 +263,7 @@
             this.btnStart.Location = new System.Drawing.Point(608, 112);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(149, 28);
-            this.btnStart.TabIndex = 11;
+            this.btnStart.TabIndex = 4;
             this.btnStart.Text = "&Start";
             this.btnStart.UseVisualStyleBackColor = false;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
@@ -291,7 +291,7 @@
             this.cbSameSize.Location = new System.Drawing.Point(8, 56);
             this.cbSameSize.Name = "cbSameSize";
             this.cbSameSize.Size = new System.Drawing.Size(113, 19);
-            this.cbSameSize.TabIndex = 11;
+            this.cbSameSize.TabIndex = 7;
             this.cbSameSize.Text = "Match same si&ze";
             this.cbSameSize.UseVisualStyleBackColor = true;
             // 
@@ -301,7 +301,7 @@
             this.cbSameType.Location = new System.Drawing.Point(8, 128);
             this.cbSameType.Name = "cbSameType";
             this.cbSameType.Size = new System.Drawing.Size(117, 19);
-            this.cbSameType.TabIndex = 9;
+            this.cbSameType.TabIndex = 10;
             this.cbSameType.Text = "Match same &type";
             this.cbSameType.UseVisualStyleBackColor = true;
             // 
@@ -321,7 +321,7 @@
             this.cbSameModificationDate.Location = new System.Drawing.Point(8, 104);
             this.cbSameModificationDate.Name = "cbSameModificationDate";
             this.cbSameModificationDate.Size = new System.Drawing.Size(209, 19);
-            this.cbSameModificationDate.TabIndex = 8;
+            this.cbSameModificationDate.TabIndex = 9;
             this.cbSameModificationDate.Text = "Match same &last modification date";
             this.cbSameModificationDate.UseVisualStyleBackColor = true;
             // 
@@ -331,7 +331,7 @@
             this.cbSameCreationDate.Location = new System.Drawing.Point(8, 80);
             this.cbSameCreationDate.Name = "cbSameCreationDate";
             this.cbSameCreationDate.Size = new System.Drawing.Size(163, 19);
-            this.cbSameCreationDate.TabIndex = 7;
+            this.cbSameCreationDate.TabIndex = 8;
             this.cbSameCreationDate.Text = "Match same creation &date";
             this.cbSameCreationDate.UseVisualStyleBackColor = true;
             // 
@@ -343,7 +343,7 @@
             this.cbSameFolder.Location = new System.Drawing.Point(8, 152);
             this.cbSameFolder.Name = "cbSameFolder";
             this.cbSameFolder.Size = new System.Drawing.Size(135, 19);
-            this.cbSameFolder.TabIndex = 10;
+            this.cbSameFolder.TabIndex = 11;
             this.cbSameFolder.Text = "Match acr&oss folders";
             this.SearchOptionsTips.SetToolTip(this.cbSameFolder, "If unchecked, this will match files only against other files within the same fold" +
         "er.");
@@ -371,7 +371,7 @@
             this.cbIncludeSubFolders.Location = new System.Drawing.Point(608, 72);
             this.cbIncludeSubFolders.Name = "cbIncludeSubFolders";
             this.cbIncludeSubFolders.Size = new System.Drawing.Size(128, 19);
-            this.cbIncludeSubFolders.TabIndex = 4;
+            this.cbIncludeSubFolders.TabIndex = 3;
             this.cbIncludeSubFolders.Text = "&Include sub-folders";
             this.cbIncludeSubFolders.UseVisualStyleBackColor = true;
             // 
@@ -381,7 +381,7 @@
             this.btnRemoveFolder.Location = new System.Drawing.Point(608, 40);
             this.btnRemoveFolder.Name = "btnRemoveFolder";
             this.btnRemoveFolder.Size = new System.Drawing.Size(149, 28);
-            this.btnRemoveFolder.TabIndex = 3;
+            this.btnRemoveFolder.TabIndex = 2;
             this.btnRemoveFolder.Text = "&Remove folder";
             this.btnRemoveFolder.UseVisualStyleBackColor = true;
             this.btnRemoveFolder.Click += new System.EventHandler(this.btnRemoveFolder_Click);
@@ -392,7 +392,7 @@
             this.btnAddFolder.Location = new System.Drawing.Point(608, 8);
             this.btnAddFolder.Name = "btnAddFolder";
             this.btnAddFolder.Size = new System.Drawing.Size(149, 28);
-            this.btnAddFolder.TabIndex = 2;
+            this.btnAddFolder.TabIndex = 1;
             this.btnAddFolder.Text = "&Add folder";
             this.btnAddFolder.UseVisualStyleBackColor = true;
             this.btnAddFolder.Click += new System.EventHandler(this.btnAddFolder_Click);
@@ -432,7 +432,7 @@
             this.cbIgnoreEmptyFiles.Location = new System.Drawing.Point(8, 72);
             this.cbIgnoreEmptyFiles.Name = "cbIgnoreEmptyFiles";
             this.cbIgnoreEmptyFiles.Size = new System.Drawing.Size(121, 19);
-            this.cbIgnoreEmptyFiles.TabIndex = 19;
+            this.cbIgnoreEmptyFiles.TabIndex = 4;
             this.cbIgnoreEmptyFiles.Text = "&Ignore empty files";
             this.cbIgnoreEmptyFiles.UseVisualStyleBackColor = true;
             // 
@@ -458,7 +458,7 @@
             this.btnResetSearchCriteria.Location = new System.Drawing.Point(8, 456);
             this.btnResetSearchCriteria.Name = "btnResetSearchCriteria";
             this.btnResetSearchCriteria.Size = new System.Drawing.Size(106, 28);
-            this.btnResetSearchCriteria.TabIndex = 12;
+            this.btnResetSearchCriteria.TabIndex = 13;
             this.btnResetSearchCriteria.Text = "Reset criteria";
             this.btnResetSearchCriteria.UseVisualStyleBackColor = true;
             this.btnResetSearchCriteria.Click += new System.EventHandler(this.btnResetSearchCriteria_Click);
@@ -510,7 +510,7 @@
             this.dtpDateModifiedTo.Name = "dtpDateModifiedTo";
             this.dtpDateModifiedTo.ShowCheckBox = true;
             this.dtpDateModifiedTo.Size = new System.Drawing.Size(167, 23);
-            this.dtpDateModifiedTo.TabIndex = 11;
+            this.dtpDateModifiedTo.TabIndex = 12;
             // 
             // label5
             // 
@@ -518,7 +518,7 @@
             this.label5.Location = new System.Drawing.Point(312, 136);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(23, 15);
-            this.label5.TabIndex = 10;
+            this.label5.TabIndex = 11;
             this.label5.Text = "T&o:";
             // 
             // dtpDateModifiedFrom
@@ -529,7 +529,7 @@
             this.dtpDateModifiedFrom.Name = "dtpDateModifiedFrom";
             this.dtpDateModifiedFrom.ShowCheckBox = true;
             this.dtpDateModifiedFrom.Size = new System.Drawing.Size(167, 23);
-            this.dtpDateModifiedFrom.TabIndex = 9;
+            this.dtpDateModifiedFrom.TabIndex = 10;
             // 
             // label6
             // 
@@ -537,7 +537,7 @@
             this.label6.Location = new System.Drawing.Point(96, 136);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(38, 15);
-            this.label6.TabIndex = 8;
+            this.label6.TabIndex = 9;
             this.label6.Text = "Fro&m:";
             // 
             // label7
@@ -557,7 +557,7 @@
             this.dtpDateCreatedTo.Name = "dtpDateCreatedTo";
             this.dtpDateCreatedTo.ShowCheckBox = true;
             this.dtpDateCreatedTo.Size = new System.Drawing.Size(167, 23);
-            this.dtpDateCreatedTo.TabIndex = 7;
+            this.dtpDateCreatedTo.TabIndex = 8;
             // 
             // label4
             // 
@@ -565,7 +565,7 @@
             this.label4.Location = new System.Drawing.Point(312, 104);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(23, 15);
-            this.label4.TabIndex = 6;
+            this.label4.TabIndex = 7;
             this.label4.Text = "&To:";
             // 
             // dtpDateCreatedFrom
@@ -576,7 +576,7 @@
             this.dtpDateCreatedFrom.Name = "dtpDateCreatedFrom";
             this.dtpDateCreatedFrom.ShowCheckBox = true;
             this.dtpDateCreatedFrom.Size = new System.Drawing.Size(167, 23);
-            this.dtpDateCreatedFrom.TabIndex = 5;
+            this.dtpDateCreatedFrom.TabIndex = 6;
             // 
             // label3
             // 
@@ -584,7 +584,7 @@
             this.label3.Location = new System.Drawing.Point(96, 104);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(38, 15);
-            this.label3.TabIndex = 4;
+            this.label3.TabIndex = 5;
             this.label3.Text = "F&rom:";
             // 
             // label2
@@ -787,7 +787,7 @@
             this.txtFind.Location = new System.Drawing.Point(40, 48);
             this.txtFind.Name = "txtFind";
             this.txtFind.Size = new System.Drawing.Size(456, 23);
-            this.txtFind.TabIndex = 12;
+            this.txtFind.TabIndex = 9;
             this.SearchOptionsTips.SetToolTip(this.txtFind, "Enter filename, type, path etc. or part thereof");
             // 
             // btnAutoMark
@@ -879,6 +879,64 @@
             this.splitContainer1.Size = new System.Drawing.Size(744, 372);
             this.splitContainer1.SplitterDistance = 558;
             this.splitContainer1.TabIndex = 9;
+            // 
+            // lvResults
+            // 
+            this.lvResults.AllowColumnReorder = true;
+            this.lvResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvResults.CheckBoxes = true;
+            this.lvResults.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clmName,
+            this.clmType,
+            this.clmSize,
+            this.clmDateModified,
+            this.clmDateCreated,
+            this.clmLocation});
+            this.lvResults.ContextMenuStrip = this.menuRightClick;
+            this.lvResults.FullRowSelect = true;
+            this.lvResults.HideSelection = false;
+            this.lvResults.Location = new System.Drawing.Point(0, 0);
+            this.lvResults.Name = "lvResults";
+            this.lvResults.Size = new System.Drawing.Size(558, 372);
+            this.lvResults.TabIndex = 0;
+            this.lvResults.UseCompatibleStateImageBehavior = false;
+            this.lvResults.View = System.Windows.Forms.View.Details;
+            this.lvResults.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvResults_ItemChecked);
+            this.lvResults.SelectedIndexChanged += new System.EventHandler(this.lvResults_SelectedIndexChanged);
+            // 
+            // clmName
+            // 
+            this.clmName.Text = "Name";
+            this.clmName.Width = 200;
+            // 
+            // clmType
+            // 
+            this.clmType.Text = "Type";
+            this.clmType.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmType.Width = 130;
+            // 
+            // clmSize
+            // 
+            this.clmSize.Text = "Size";
+            this.clmSize.Width = 70;
+            // 
+            // clmDateModified
+            // 
+            this.clmDateModified.Text = "Last Modified";
+            this.clmDateModified.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmDateModified.Width = 150;
+            // 
+            // clmDateCreated
+            // 
+            this.clmDateCreated.Text = "Created";
+            this.clmDateCreated.Width = 150;
+            // 
+            // clmLocation
+            // 
+            this.clmLocation.Text = "Location";
+            this.clmLocation.Width = 250;
             // 
             // menuRightClick
             // 
@@ -1015,6 +1073,35 @@
             this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.invertSelectionToolStripMenuItem.Text = "Invert Selection";
             this.invertSelectionToolStripMenuItem.Click += new System.EventHandler(this.invertSelectionToolStripMenuItem_Click);
+            // 
+            // lblNoPreview
+            // 
+            this.lblNoPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNoPreview.BackColor = System.Drawing.SystemColors.Window;
+            this.lblNoPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblNoPreview.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblNoPreview.Location = new System.Drawing.Point(0, 0);
+            this.lblNoPreview.Margin = new System.Windows.Forms.Padding(0);
+            this.lblNoPreview.Name = "lblNoPreview";
+            this.lblNoPreview.Size = new System.Drawing.Size(182, 372);
+            this.lblNoPreview.TabIndex = 11;
+            this.lblNoPreview.Text = "Preview Not Available";
+            this.lblNoPreview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PreviewPane
+            // 
+            this.PreviewPane.BackColor = System.Drawing.SystemColors.Window;
+            this.PreviewPane.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PreviewPane.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PreviewPane.Location = new System.Drawing.Point(0, 0);
+            this.PreviewPane.Name = "PreviewPane";
+            this.PreviewPane.Size = new System.Drawing.Size(182, 372);
+            this.PreviewPane.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PreviewPane.TabIndex = 10;
+            this.PreviewPane.TabStop = false;
+            this.PreviewPane.DoubleClick += new System.EventHandler(this.PreviewPane_DoubleClick);
             // 
             // lblResultsListStatus
             // 
@@ -1605,90 +1692,6 @@
             this.SearchOptionsTips.InitialDelay = 250;
             this.SearchOptionsTips.ReshowDelay = 100;
             // 
-            // PreviewPane
-            // 
-            this.PreviewPane.BackColor = System.Drawing.SystemColors.Window;
-            this.PreviewPane.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PreviewPane.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PreviewPane.Location = new System.Drawing.Point(0, 0);
-            this.PreviewPane.Name = "PreviewPane";
-            this.PreviewPane.Size = new System.Drawing.Size(182, 372);
-            this.PreviewPane.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PreviewPane.TabIndex = 10;
-            this.PreviewPane.TabStop = false;
-            // 
-            // lblNoPreview
-            // 
-            this.lblNoPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblNoPreview.BackColor = System.Drawing.SystemColors.Window;
-            this.lblNoPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblNoPreview.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.lblNoPreview.Location = new System.Drawing.Point(0, 0);
-            this.lblNoPreview.Margin = new System.Windows.Forms.Padding(0);
-            this.lblNoPreview.Name = "lblNoPreview";
-            this.lblNoPreview.Size = new System.Drawing.Size(182, 372);
-            this.lblNoPreview.TabIndex = 11;
-            this.lblNoPreview.Text = "Preview Not Available";
-            this.lblNoPreview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lvResults
-            // 
-            this.lvResults.AllowColumnReorder = true;
-            this.lvResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvResults.CheckBoxes = true;
-            this.lvResults.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.clmName,
-            this.clmType,
-            this.clmSize,
-            this.clmDateModified,
-            this.clmDateCreated,
-            this.clmLocation});
-            this.lvResults.ContextMenuStrip = this.menuRightClick;
-            this.lvResults.FullRowSelect = true;
-            this.lvResults.HideSelection = false;
-            this.lvResults.Location = new System.Drawing.Point(0, 0);
-            this.lvResults.Name = "lvResults";
-            this.lvResults.Size = new System.Drawing.Size(558, 372);
-            this.lvResults.TabIndex = 16;
-            this.lvResults.UseCompatibleStateImageBehavior = false;
-            this.lvResults.View = System.Windows.Forms.View.Details;
-            // 
-            // clmName
-            // 
-            this.clmName.Text = "Name";
-            this.clmName.Width = 200;
-            // 
-            // clmType
-            // 
-            this.clmType.Text = "Type";
-            this.clmType.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmType.Width = 130;
-            // 
-            // clmSize
-            // 
-            this.clmSize.Text = "Size";
-            this.clmSize.Width = 70;
-            // 
-            // clmDateModified
-            // 
-            this.clmDateModified.Text = "Last Modified";
-            this.clmDateModified.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmDateModified.Width = 150;
-            // 
-            // clmDateCreated
-            // 
-            this.clmDateCreated.Text = "Created";
-            this.clmDateCreated.Width = 150;
-            // 
-            // clmLocation
-            // 
-            this.clmLocation.Text = "Location";
-            this.clmLocation.Width = 250;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1722,13 +1725,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.menuRightClick.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewPane)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.menuCopy.ResumeLayout(false);
             this.menuMove.ResumeLayout(false);
             this.menuClear.ResumeLayout(false);
             this.menuFileMarker.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewPane)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

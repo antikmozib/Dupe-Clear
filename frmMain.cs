@@ -579,6 +579,7 @@ namespace DupeClear
             // set search options
             ActionForm.soSameContents = cbSameContents.Checked;
             ActionForm.soSameFileName = cbSameName.Checked;
+            ActionForm.soSameSize = cbSameSize.Checked;
             ActionForm.soSameCreationTime = cbSameCreationDate.Checked;
             ActionForm.soSameModificationTime = cbSameModificationDate.Checked;
             ActionForm.soSameType = cbSameType.Checked;

@@ -43,7 +43,7 @@ namespace DupeClear
         public DateTime modifiedFrom, modifiedTo, createdFrom, createdTo;
 
         // search options
-        public bool soSameContents, soSameFileName, soCheckCreationTime, soCheckModificationTime;
+        public bool soSameContents, soSameFileName, soSameSize, soCheckCreationTime, soCheckModificationTime;
         public bool soSameCreationTime, soSameModificationTime, soSameFolder, soSameType;
         public bool soHideSystemFiles, soHideHiddenFiles, includeSubFolders;
         public bool soIgnoreEmptyFiles;
@@ -274,7 +274,7 @@ namespace DupeClear
                     }
 
                     // compare size                    
-                    if (_mainFileList[j].size != _mainFileList[i].size)
+                    if (soSameSize && _mainFileList[j].size != _mainFileList[i].size)
                     {
                         continue;
                     }

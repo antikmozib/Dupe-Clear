@@ -274,7 +274,7 @@ namespace DupeClear
                     }
 
                     // compare size                    
-                    if (soSameSize && _mainFileList[j].size != _mainFileList[i].size)
+                    if ((soSameSize || soSameContents) && _mainFileList[j].size != _mainFileList[i].size)
                     {
                         continue;
                     }

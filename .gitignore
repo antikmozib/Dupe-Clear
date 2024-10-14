@@ -1,5 +1,5 @@
-Setup/*
-!Setup/Dupe Clear.iss
+Installer/*
+!Installer/Dupe Clear.iss
 Dupe Clear.svg
 
 ## Ignore Visual Studio temporary files, build results, and

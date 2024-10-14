@@ -28,6 +28,7 @@ UsePreviousAppDir=True
 UninstallDisplayName={#MyAppName}
 UninstallDisplayIcon={app}\{#MyAppName}.exe
 WizardStyle=modern
+CloseApplications=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"

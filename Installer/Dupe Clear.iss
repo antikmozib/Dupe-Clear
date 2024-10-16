@@ -17,7 +17,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={commonpf}\{#MyAppName}
+DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 LicenseFile=gpl-3.0.rtf
 OutputDir=output
@@ -28,6 +28,7 @@ UsePreviousAppDir=True
 UninstallDisplayName={#MyAppName}
 UninstallDisplayIcon={app}\{#MyAppName}.exe
 WizardStyle=modern
+PrivilegesRequired=lowest
 CloseApplications=yes
 
 [Languages]
@@ -43,7 +44,7 @@ Source: "{#SourcePath}\..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\w
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent

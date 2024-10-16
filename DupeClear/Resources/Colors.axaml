@@ -1,0 +1,142 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary>
+			<!--Title Bar-->
+			<!--<SolidColorBrush x:Key="DupeClearTitleBarDefaultForegroundBrush"
+							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
+			<SolidColorBrush x:Key="DupeClearTitleBarDefaultForegroundBrush"
+							 Color="{DynamicResource SystemBaseMediumColor}" />
+
+			<!--Border-->
+			<SolidColorBrush x:Key="DupeClearDefaultBorderBrush"
+							 Color="{DynamicResource SystemChromeMediumColor}" />
+			<!--<SolidColorBrush x:Key="DupeClearDefaultBorderBrush"
+							 Color="{DynamicResource ThemeBorderMidColor}" />-->
+
+			<!--Start Button-->
+			<SolidColorBrush x:Key="DupeClearStartButtonDefaultBackgroundBrush"
+							 Color="#18cd5e" />
+			<SolidColorBrush x:Key="DupeClearStartButtonDefaultForegroundBrush"
+							 Color="#08441f" />
+
+			<!--Cancel Operation Button-->
+			<SolidColorBrush x:Key="DupeClearCancelOperationButtonDefaultBackgroundBrush"
+							 Color="Transparent"  />
+			<SolidColorBrush x:Key="DupeClearCancelOperationButtonDefaultForegroundBrush"
+							 Color="#dc143c" />
+
+			<!--Search Results Grid-->
+			<SolidColorBrush x:Key="DupeClearSearchResultsDefaultForegroundBrush"
+							 Color="{DynamicResource SystemBaseHighColor}" />
+			<!--<SolidColorBrush x:Key="DupeClearSearchResultsDefaultForegroundBrush"
+							 Color="{DynamicResource ThemeForegroundColor}" />-->
+			<SolidColorBrush x:Key="DupeClearSearchResultsDeletedDefaultForegroundBrush"
+							 Color="{DynamicResource SystemBaseMediumColor}" />
+			<!--<SolidColorBrush x:Key="DupeClearSearchResultsDeletedDefaultForegroundBrush"
+							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
+			<SolidColorBrush x:Key="DupeClearSearchResultsDisabledDefaultForegroundBrush"
+							 Color="{DynamicResource SystemChromeDisabledLowColor}" />
+			<!--<SolidColorBrush x:Key="DupeClearSearchResultsDisabledDefaultForegroundBrush"
+							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
+
+			<!--Delete Button-->
+			<SolidColorBrush x:Key="DupeClearDeleteButtonDefaultBackgroundBrush"
+							 Color="#ff8080" />
+			<SolidColorBrush x:Key="DupeClearDeleteButtonDefaultForegroundBrush"
+							 Color="#660000" />
+
+			<!--Preview Pane-->
+			<SolidColorBrush x:Key="DupeClearPreviewPaneDefaultWatermarkBrush"
+							 Color="{DynamicResource SystemBaseMediumLowColor}" />
+			<!--<SolidColorBrush x:Key="DupeClearPreviewPaneDefaultWatermarkBrush"
+							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
+
+			<!--Message Box Default Button-->
+			<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonDefaultBackgroundBrush"
+							 Color="#4dafff" />
+			<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonDefaultForegroundBrush"
+							 Color="#002a4d" />
+
+			<!--MenuItem-->
+			<SolidColorBrush x:Key="DupeClearMenuItemIconDisabledDefaultBrush"
+							 Color="{DynamicResource SystemBaseMediumLowColor}" />
+			<!--<SolidColorBrush x:Key="DupeClearMenuItemIconDisabledDefaultBrush"
+							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
+		</ResourceDictionary>
+
+		<ResourceDictionary>
+			<ResourceDictionary.ThemeDictionaries>
+				<ResourceDictionary x:Key="Default">
+					<!--Title Bar-->
+					<StaticResource x:Key="DupeClearTitleBarForegroundBrush"
+									ResourceKey="DupeClearTitleBarDefaultForegroundBrush" />
+
+					<!--Border-->
+					<StaticResource x:Key="DupeClearBorderBrush"
+									ResourceKey="DupeClearDefaultBorderBrush" />
+
+					<!--Start Button-->
+					<StaticResource x:Key="DupeClearStartButtonBackgroundBrush"
+									ResourceKey="DupeClearStartButtonDefaultBackgroundBrush" />
+					<StaticResource x:Key="DupeClearStartButtonForegroundBrush"
+									ResourceKey="DupeClearStartButtonDefaultForegroundBrush" />
+
+					<!--Cancel Operation Button-->
+					<StaticResource x:Key="DupeClearCancelOperationButtonBackgroundBrush"
+									ResourceKey="DupeClearCancelOperationButtonDefaultBackgroundBrush"  />
+					<StaticResource x:Key="DupeClearCancelOperationButtonForegroundBrush"
+									ResourceKey="DupeClearCancelOperationButtonDefaultForegroundBrush" />
+
+					<!--Search Results Grid-->
+					<StaticResource x:Key="DupeClearSearchResultsForegroundBrush"
+									ResourceKey="DupeClearSearchResultsDefaultForegroundBrush" />
+					<StaticResource x:Key="DupeClearSearchResultsDeletedForegroundBrush"
+									ResourceKey="DupeClearSearchResultsDeletedDefaultForegroundBrush" />
+					<StaticResource x:Key="DupeClearSearchResultsDisabledForegroundBrush"
+									ResourceKey="DupeClearSearchResultsDisabledDefaultForegroundBrush" />
+
+					<!--Delete Button-->
+					<StaticResource x:Key="DupeClearDeleteButtonBackgroundBrush"
+									ResourceKey="DupeClearDeleteButtonDefaultBackgroundBrush"  />
+					<StaticResource x:Key="DupeClearDeleteButtonForegroundBrush"
+									ResourceKey="DupeClearDeleteButtonDefaultForegroundBrush" />
+
+					<!--Preview Pane-->
+					<StaticResource x:Key="DupeClearPreviewPaneWatermarkBrush"
+									ResourceKey="DupeClearPreviewPaneDefaultWatermarkBrush" />
+
+					<!--Message Box Default Button-->
+					<StaticResource x:Key="DupeClearMessageBoxDefaultButtonBackgroundBrush"
+									ResourceKey="DupeClearMessageBoxDefaultButtonDefaultBackgroundBrush" />
+					<StaticResource x:Key="DupeClearMessageBoxDefaultButtonForegroundBrush"
+									ResourceKey="DupeClearMessageBoxDefaultButtonDefaultForegroundBrush" />
+
+					<!--MenuItem-->
+					<StaticResource x:Key="DupeClearMenuItemIconDisabledBrush"
+									ResourceKey="DupeClearMenuItemIconDisabledDefaultBrush" />
+				</ResourceDictionary>
+
+				<ResourceDictionary x:Key="Dark">
+					<!--Start Button-->
+					<SolidColorBrush x:Key="DupeClearStartButtonBackgroundBrush"
+									 Color="#10893E" />
+					<SolidColorBrush x:Key="DupeClearStartButtonForegroundBrush"
+									 Color="#d1fae1" />
+
+					<!--Delete Button-->
+					<SolidColorBrush x:Key="DupeClearDeleteButtonBackgroundBrush"
+									 Color="#B22222"  />
+					<SolidColorBrush x:Key="DupeClearDeleteButtonForegroundBrush"
+									 Color="#fbeaea" />
+
+					<!--Message Box Default Button-->
+					<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonBackgroundBrush"
+									 Color="#0078d7" />
+					<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonForegroundBrush"
+									 Color="#e6f4ff" />
+				</ResourceDictionary>
+			</ResourceDictionary.ThemeDictionaries>
+		</ResourceDictionary>
+	</ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

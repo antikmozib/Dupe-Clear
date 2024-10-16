@@ -15,4 +15,4 @@ Download and run the setup program and follow its instructions.
 
 ## Building
 
-Open the .sln file in Visual Studio 2019 or later, and press F5.
+Open the .sln file in Visual Studio 2022 or later, and press F5.

@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DupeClear", "DupeClear\DupeClear.csproj", "{EA4AACC5-6D73-4DC5-9EF4-CE9A1CD137D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DupeClear.Desktop", "DupeClear.Desktop\DupeClear.Desktop.csproj", "{609808E3-15D6-4376-8854-18F0D1870875}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95E49E0B-F9CF-4DAB-AA50-C2F3B95EBA3A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DupeClear.Native.Windows", "DupeClear.Windows\DupeClear.Native.Windows.csproj", "{AA2D3180-6DD9-4BB4-8416-C0F42A29E41E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DupeClear.Native", "DupeClear.Services\DupeClear.Native.csproj", "{B7CA6C0F-002C-47FC-AE85-364AC9E6962A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DupeClear.Native.Linux", "DupeClear.Native.Linux\DupeClear.Native.Linux.csproj", "{69F31254-E8B4-4D65-9556-DC73E415FDAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA4AACC5-6D73-4DC5-9EF4-CE9A1CD137D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA4AACC5-6D73-4DC5-9EF4-CE9A1CD137D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA4AACC5-6D73-4DC5-9EF4-CE9A1CD137D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA4AACC5-6D73-4DC5-9EF4-CE9A1CD137D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{609808E3-15D6-4376-8854-18F0D1870875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{609808E3-15D6-4376-8854-18F0D1870875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{609808E3-15D6-4376-8854-18F0D1870875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{609808E3-15D6-4376-8854-18F0D1870875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA2D3180-6DD9-4BB4-8416-C0F42A29E41E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA2D3180-6DD9-4BB4-8416-C0F42A29E41E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA2D3180-6DD9-4BB4-8416-C0F42A29E41E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA2D3180-6DD9-4BB4-8416-C0F42A29E41E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7CA6C0F-002C-47FC-AE85-364AC9E6962A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7CA6C0F-002C-47FC-AE85-364AC9E6962A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7CA6C0F-002C-47FC-AE85-364AC9E6962A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7CA6C0F-002C-47FC-AE85-364AC9E6962A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69F31254-E8B4-4D65-9556-DC73E415FDAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69F31254-E8B4-4D65-9556-DC73E415FDAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69F31254-E8B4-4D65-9556-DC73E415FDAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69F31254-E8B4-4D65-9556-DC73E415FDAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {623CA690-E110-470A-82D1-7220D23A61C6}
+	EndGlobalSection
+EndGlobal

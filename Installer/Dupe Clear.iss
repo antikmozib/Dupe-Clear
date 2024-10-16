@@ -1,5 +1,5 @@
 #define MyAppName "Dupe Clear"
-#define MyAppVersion GetVersionNumbersString("..\bin\Release\Dupe Clear.exe")
+#define MyAppVersion GetVersionNumbersString("..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\win-x86\Dupe Clear.exe")
 #define MyAppPublisher "Antik Mozib"
 #define MyAppURL "https://mozib.io/dupeclear"
 #define MyAppExeName "Dupe Clear.exe"
@@ -37,7 +37,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: 
 
 [Files]
-Source: "{#SourcePath}\..\bin\Release\*"; Excludes: "*.pdb"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#SourcePath}\..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\win-x86\*"; Excludes: "*.pdb"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

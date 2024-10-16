@@ -2609,7 +2609,7 @@ public partial class MainViewModel : ViewModelBase
 
                     if (silent)
                     {
-                        msgBoxVM.CustomButton1Content = "Disable _Auto Check";
+                        msgBoxVM.CustomButton1Content = "D_on't Ask";
                         msgBoxVM.CustomButton1Action = new Action(() =>
                         {
                             _userData.CheckForUpdates = false;
@@ -2680,7 +2680,7 @@ public partial class MainViewModel : ViewModelBase
 
                     if (!_userData.CheckForUpdates)
                     {
-                        msgBoxVM.CustomButton1Content = "Enable _Auto Check";
+                        msgBoxVM.CustomButton1Content = "_Auto Check";
                         msgBoxVM.CustomButton1Action = new Action(() =>
                         {
                             _userData.CheckForUpdates = true;

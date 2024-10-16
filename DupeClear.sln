@@ -12,9 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DupeClear.Native.Windows", "DupeClear.Windows\DupeClear.Native.Windows.csproj", "{AA2D3180-6DD9-4BB4-8416-C0F42A29E41E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DupeClear.Native.Windows", "DupeClear.Native.Windows\DupeClear.Native.Windows.csproj", "{AA2D3180-6DD9-4BB4-8416-C0F42A29E41E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DupeClear.Native", "DupeClear.Services\DupeClear.Native.csproj", "{B7CA6C0F-002C-47FC-AE85-364AC9E6962A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DupeClear.Native", "DupeClear.Native\DupeClear.Native.csproj", "{B7CA6C0F-002C-47FC-AE85-364AC9E6962A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DupeClear.Native.Linux", "DupeClear.Native.Linux\DupeClear.Native.Linux.csproj", "{69F31254-E8B4-4D65-9556-DC73E415FDAC}"
 EndProject

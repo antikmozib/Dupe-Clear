@@ -2210,10 +2210,11 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void ShowAbout(object? arg)
     {
-        var assembly = Assembly.GetEntryAssembly();
-        var appName = assembly?.GetCustomAttribute<AssemblyTitleAttribute>()?.Title;
-        var appVer = assembly?.GetName().Version?.ToString();
-        var appCopyright = assembly?.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
+        var assembly = Assembly.GetExecutingAssembly();
+        var fileVerInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+        var appName = fileVerInfo.ProductName;
+        var appVer = fileVerInfo.FileVersion;
+        var appCopyright = fileVerInfo.LegalCopyright;
         MessageBox?.Invoke(new MessageBoxViewModel()
         {
             Title = "About",
@@ -2583,13 +2584,10 @@ public partial class MainViewModel : ViewModelBase
                 return;
             }
 
-            var currentVer = Assembly.GetEntryAssembly()?.GetName().Version;
+            var currentVer = Assembly.GetExecutingAssembly().GetName().Version;
             if (currentVer != null)
             {
                 var updateable = Updater.IsUpdateAvailable(updateInfo, currentVer);
-#if DEBUG
-                updateable = true;
-#endif
                 if (updateable)
                 {
                     MessageBoxResult? msgBoxResult = null;

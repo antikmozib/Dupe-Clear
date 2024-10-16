@@ -4,8 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Copyright>Copyright © 2024 Antik Mozib. All rights reserved.</Copyright>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -15,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DupeClear.Services\DupeClear.Native.csproj" />
+    <ProjectReference Include="..\DupeClear.Native\DupeClear.Native.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DupeClear.Services\DupeClear.Native.csproj" />
+    <ProjectReference Include="..\DupeClear.Native\DupeClear.Native.csproj" />
   </ItemGroup>
 
 </Project>

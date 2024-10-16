@@ -3,8 +3,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
+	<AssemblyVersion>3.1.0.0</AssemblyVersion>
     <Copyright>Copyright © 2024 Antik Mozib. All rights reserved.</Copyright>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+	<Product>Dupe Clear</Product>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -24,8 +25,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DupeClear.Native.Linux\DupeClear.Native.Linux.csproj" />
-    <ProjectReference Include="..\DupeClear.Services\DupeClear.Native.csproj" />
-    <ProjectReference Include="..\DupeClear.Windows\DupeClear.Native.Windows.csproj" />
+    <ProjectReference Include="..\DupeClear.Native.Windows\DupeClear.Native.Windows.csproj" />
+    <ProjectReference Include="..\DupeClear.Native\DupeClear.Native.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AppUpdateService">

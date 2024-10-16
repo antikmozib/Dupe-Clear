@@ -7,11 +7,8 @@
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <Copyright>Copyright © 2024 Antik Mozib. All rights reserved.</Copyright>
     <AvaloniaIncludeApplicationIconAsWindowIcon>false</AvaloniaIncludeApplicationIconAsWindowIcon>
     <ApplicationIcon>DupeClear.ico</ApplicationIcon>
-    <AssemblyName>Dupe Clear</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="DupeClear.ico" />

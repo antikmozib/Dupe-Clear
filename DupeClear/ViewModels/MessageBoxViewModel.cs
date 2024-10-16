@@ -3,6 +3,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DupeClear.Models.MessageBox;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -74,8 +75,8 @@ public partial class MessageBoxViewModel : ViewModelBase
 
     public MessageBoxViewModel()
     {
-        var assembly = Assembly.GetEntryAssembly();
-        var appTitle = assembly?.GetCustomAttribute<AssemblyTitleAttribute>()?.Title;
+        var assembly = Assembly.GetExecutingAssembly();
+        var appTitle = FileVersionInfo.GetVersionInfo(assembly.Location).ProductName;
         _appTitle = appTitle;
     }
 

@@ -7,6 +7,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using DupeClear.Helpers;
+using DupeClear.Models.MessageBox;
 using DupeClear.Native;
 using DupeClear.ViewModels;
 using System;
@@ -294,7 +295,7 @@ public partial class MainView : UserControl
         return null;
     }
 
-    private async Task<bool?> ShowMessageBoxAsync(MessageBoxViewModel viewModel)
+    private async Task<MessageBoxResult?> ShowMessageBoxAsync(MessageBoxViewModel viewModel)
     {
         var tl = TopLevel.GetTopLevel(this);
         if (tl != null)

@@ -323,9 +323,9 @@
 									<!--Match Same Filename-->
 									<CheckBox x:Name="MatchSameFileNameCheckBox"
 											  Margin="0 0 12 0"
+											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
 											  IsChecked="{Binding MatchSameFileName, Mode=TwoWay}"
-											  Content="Match Same Fi_lename"
-											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}" />
+											  Content="Match Same Fi_lename" />
 
 									<!--Match Same Contents-->
 									<StackPanel Margin="0 0 12 0"
@@ -351,21 +351,21 @@
 
 									<!--Match Same Type-->
 									<CheckBox Margin="0 0 12 0"
+											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
 											  IsChecked="{Binding MatchSameType, Mode=TwoWay}"
-											  Content="Match Same T_ype"
-											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}" />
+											  Content="Match Same T_ype" />
 
 									<!--Match Same Size-->
 									<CheckBox Margin="0 0 12 0"
 											  x:Name="MatchSameSizeCheckBox"
+											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
 											  IsChecked="{Binding MatchSameSize, Mode=TwoWay}"
-											  Content="Match Same Si_ze"
-											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}" />
+											  Content="Match Same Si_ze" />
 
 									<!--Match Across Folders-->
-									<CheckBox IsChecked="{Binding MatchAcrossDirectories, Mode=TwoWay}"
-											  Content="Match Across F_olders"
-											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}" />
+									<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+											  IsChecked="{Binding MatchAcrossDirectories, Mode=TwoWay}"
+											  Content="Match Across F_olders" />
 								</WrapPanel>
 
 								<!--Additional Options-->
@@ -492,9 +492,9 @@
 
 												<CheckBox x:Name="DateCreatedCheckBox"
 														  VerticalAlignment="Center"
-														  Content="Da_te Created:"
 														  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-														  IsChecked="{Binding MatchDateCreated, Mode=TwoWay}" />
+														  IsChecked="{Binding MatchDateCreated, Mode=TwoWay}"
+														  Content="Da_te Created:" />
 
 												<!--From-->
 												<Label Grid.Column="2"
@@ -557,9 +557,9 @@
 
 												<CheckBox x:Name="DateModifiedCheckBox"
 														  VerticalAlignment="Center"
-														  Content="Date _Modified:"
 														  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-														  IsChecked="{Binding MatchDateModified, Mode=TwoWay}" />
+														  IsChecked="{Binding MatchDateModified, Mode=TwoWay}"
+														  Content="Date _Modified:" />
 
 												<!--From-->
 												<Label Grid.Column="2"
@@ -628,9 +628,9 @@
 								Command="{Binding RemoveIncludedDirectoryCommand}" />
 
 						<!--Include Subfolders-->
-						<CheckBox IsChecked="{Binding IncludeSubdirectories, Mode=TwoWay}"
-								  Content="_Include Subfolders"
-								  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}" />
+						<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+								  IsChecked="{Binding IncludeSubdirectories, Mode=TwoWay}"
+								  Content="_Include Subfolders" />
 
 						<Border Height="32" />
 
@@ -745,14 +745,14 @@
 								</WrapPanel.Styles>
 
 								<!--Exclude System Files-->
-								<CheckBox IsChecked="{Binding ExcludeSystemFiles, Mode=TwoWay}"
-										  Content="_Exclude System Files (Recommended)"
-										  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}" />
+								<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+										  IsChecked="{Binding ExcludeSystemFiles, Mode=TwoWay}"
+										  Content="_Exclude System Files (Recommended)" />
 
 								<!--Exclude Hidden Files-->
-								<CheckBox IsChecked="{Binding ExcludeHiddenFiles, Mode=TwoWay}"
-										  Content="E_xclude Hidden Files"
-										  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}" />
+								<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+										  IsChecked="{Binding ExcludeHiddenFiles, Mode=TwoWay}"
+										  Content="E_xclude Hidden Files" />
 							</WrapPanel>
 
 							<!--Exclude Extensions-->
@@ -804,9 +804,9 @@
 								Command="{Binding RemoveExcludedDirectoryCommand}" />
 
 						<!--Include Subfolders-->
-						<CheckBox IsChecked="{Binding ExcludeSubdirectories, Mode=TwoWay}"
-								  Content="_Include Subfolders"
-								  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}" />
+						<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+								  IsChecked="{Binding ExcludeSubdirectories, Mode=TwoWay}"
+								  Content="_Include Subfolders" />
 					</StackPanel>
 				</Grid>
 			</TabItem>

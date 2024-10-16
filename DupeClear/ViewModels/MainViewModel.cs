@@ -72,7 +72,7 @@ public partial class MainViewModel : ViewModelBase
 
     public FilePickerDelegate? AsyncFilePicker { get; set; }
 
-    public Func<MessageBoxViewModel, Task<bool?>>? MessageBox { get; set; }
+    public Func<MessageBoxViewModel, Task<MessageBoxResult?>>? MessageBox { get; set; }
 
     private bool _includeSubdirectories;
     /// <summary>
@@ -724,10 +724,7 @@ public partial class MainViewModel : ViewModelBase
         }
 
         // Check for updates.
-        if (_userData.CheckForUpdates)
-        {
-            Task.Run(async () => await CheckForUpdatesAsync(true));
-        }
+        Task.Run(async () => await CheckForUpdatesAsync(true));
     }
 
     #endregion // Ctor
@@ -1106,8 +1103,8 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "At least one option from \"Match Same Filename\" and \"Match Same Contents\" must be specified.",
-                Icon = MessageBoxIcon.Error,
                 IsCopyToClipboardVisible = false,
+                Icon = MessageBoxIcon.Error,
             });
 
             return;
@@ -1141,8 +1138,8 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "The extensions must be of the valid format.",
-                Icon = MessageBoxIcon.Error,
                 IsCopyToClipboardVisible = false,
+                Icon = MessageBoxIcon.Error,
             });
 
             RaiseEvent(InvalidExtensionsToIncludeEntered);
@@ -1168,8 +1165,8 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "The extensions to exclude must be of the valid format.",
-                Icon = MessageBoxIcon.Error,
                 IsCopyToClipboardVisible = false,
+                Icon = MessageBoxIcon.Error,
             });
 
             RaiseEvent(InvalidExtensionsToExcludeEntered);
@@ -1190,8 +1187,8 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "The selected dates must be valid and in the correct order.",
-                Icon = MessageBoxIcon.Error,
                 IsCopyToClipboardVisible = false,
+                Icon = MessageBoxIcon.Error,
             });
 
             return;
@@ -1363,8 +1360,8 @@ public partial class MainViewModel : ViewModelBase
                     ? $"Duplicates found: {result.DuplicateCount:N0} ({result.Files.Sum(x => x.Length).ConvertLengthToString()})"
                     : "No duplicate files were found.",
                 Message = message.ToString(),
-                Icon = result.Errors.Count == 0 ? MessageBoxIcon.Information : MessageBoxIcon.Warning,
                 IsCopyToClipboardVisible = false,
+                Icon = result.Errors.Count == 0 ? MessageBoxIcon.Information : MessageBoxIcon.Warning,
                 CustomButton1Content = result.ExcludedDirectories.Count == 0 ? null : "_View Exclusions",
                 CustomButton1Action = result.ExcludedDirectories.Count == 0 ? null : new Action(() =>
                 {
@@ -1600,7 +1597,7 @@ public partial class MainViewModel : ViewModelBase
                         .Select(g => $"Group {g.Key}\n{string.Join("\n", g.Where(x => !x.IsDeleted).Select(x => $"\t{x.FullName}"))}"));
                 }
 
-                var confirm = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = "Delete",
                     Header = header.ToString(),
@@ -1613,7 +1610,7 @@ public partial class MainViewModel : ViewModelBase
                     CancelButtonContent = "_No"
                 });
 
-                if (confirm != true)
+                if (msgBoxResult?.DialogResult != true)
                 {
                     return;
                 }
@@ -1802,7 +1799,7 @@ public partial class MainViewModel : ViewModelBase
             var count = selectedItems.Count();
             if (MessageBox != null && count > 2)
             {
-                var confirm = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = "Open",
                     Message = $"Open {count} files?",
@@ -1813,7 +1810,7 @@ public partial class MainViewModel : ViewModelBase
                     DefaultButton = MessageBoxDefaultButton.Cancel
                 });
 
-                if (confirm != true)
+                if (msgBoxResult?.DialogResult != true)
                 {
                     return;
                 }
@@ -1845,7 +1842,7 @@ public partial class MainViewModel : ViewModelBase
             var count = selectedItems.Count();
             if (MessageBox != null && count > 2)
             {
-                var confirm = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = "Open Containing Folder",
                     Message = $"Open {count} folders?",
@@ -1856,7 +1853,7 @@ public partial class MainViewModel : ViewModelBase
                     DefaultButton = MessageBoxDefaultButton.Cancel
                 });
 
-                if (confirm != true)
+                if (msgBoxResult?.DialogResult != true)
                 {
                     return;
                 }
@@ -2171,7 +2168,7 @@ public partial class MainViewModel : ViewModelBase
         {
             if (MessageBox != null && IsSearching)
             {
-                var confirm = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Message = "Search operation in progress.\n\nCancel and exit program?",
                     Icon = MessageBoxIcon.Question,
@@ -2181,7 +2178,7 @@ public partial class MainViewModel : ViewModelBase
                     DefaultButton = MessageBoxDefaultButton.Cancel
                 });
 
-                if (confirm != true)
+                if (msgBoxResult?.DialogResult != true)
                 {
                     return;
                 }
@@ -2221,8 +2218,8 @@ public partial class MainViewModel : ViewModelBase
         {
             Title = "About",
             Message = $"{appName} v{appVer}\n\n{appCopyright}",
-            Icon = MessageBoxIcon.AppIcon,
             IsCopyToClipboardVisible = false,
+            Icon = MessageBoxIcon.AppIcon,
             HyperlinkButtonContent = Constants.AppHomepage,
             HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(Constants.AppHomepage))
         });
@@ -2385,7 +2382,7 @@ public partial class MainViewModel : ViewModelBase
         {
             if (DuplicateFiles.Count > 0)
             {
-                var confirm = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = msgBoxTitle,
                     Message = "Existing search results will be cleared.\n\nProceed?",
@@ -2393,7 +2390,7 @@ public partial class MainViewModel : ViewModelBase
                     Buttons = MessageBoxButton.OKCancel
                 });
 
-                if (confirm != true)
+                if (msgBoxResult?.DialogResult != true)
                 {
                     return false;
                 }
@@ -2578,8 +2575,8 @@ public partial class MainViewModel : ViewModelBase
                     {
                         Title = "Update",
                         Message = $"An error occurred while attempting to check for updates.\n\n{ex.GetInnermostException()?.Message}",
-                        Icon = MessageBoxIcon.Error,
                         IsCopyToClipboardVisible = false,
+                        Icon = MessageBoxIcon.Error,
                     }));
                 }
 
@@ -2595,32 +2592,20 @@ public partial class MainViewModel : ViewModelBase
 #endif
                 if (updateable)
                 {
-                    var msgBoxVM = new MessageBoxViewModel()
+                    MessageBoxResult? msgBoxResult = null;
+                    await Dispatcher.UIThread.InvokeAsync(async () => msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
                     {
                         Title = "Update",
                         Message = $"An update has been released.\n\nNew version: {updateInfo.Version}\nCurrent version: {currentVer}\n",
-                        Icon = MessageBoxIcon.Information,
                         IsCopyToClipboardVisible = false,
+                        Icon = MessageBoxIcon.Information,
                         Buttons = MessageBoxButton.OKCancel,
                         OKButtonContent = "_Download",
                         HyperlinkButtonContent = "Learn More",
-                        HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl))
-                    };
+                        HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl)),
+                    }));
 
-                    if (silent)
-                    {
-                        msgBoxVM.CustomButton1Content = "D_on't Ask";
-                        msgBoxVM.CustomButton1Action = new Action(() =>
-                        {
-                            _userData.CheckForUpdates = false;
-                            msgBoxVM.Close();
-                        });
-                    }
-
-                    bool? download = null;
-                    await Dispatcher.UIThread.InvokeAsync(async () => download = await MessageBox.Invoke(msgBoxVM));
-
-                    if (download == true)
+                    if (msgBoxResult?.DialogResult == true)
                     {
                         if (IsBusy)
                         {
@@ -2657,8 +2642,8 @@ public partial class MainViewModel : ViewModelBase
                                 {
                                     Title = "Update",
                                     Message = $"An error occurred while attempting download the update.\n\n{ex.Message}",
-                                    Icon = MessageBoxIcon.Error,
                                     IsCopyToClipboardVisible = false,
+                                    Icon = MessageBoxIcon.Error,
                                 }));
                             }
                             finally
@@ -2670,30 +2655,20 @@ public partial class MainViewModel : ViewModelBase
                 }
                 else
                 {
-                    var msgBoxVM = new MessageBoxViewModel()
-                    {
-                        Title = "Update",
-                        Message = "No new updates have been released.",
-                        Icon = MessageBoxIcon.Information,
-                        IsCopyToClipboardVisible = false,
-                    };
-
-                    if (!_userData.CheckForUpdates)
-                    {
-                        msgBoxVM.CustomButton1Content = "_Auto Check";
-                        msgBoxVM.CustomButton1Action = new Action(() =>
-                        {
-                            _userData.CheckForUpdates = true;
-                            msgBoxVM.Close();
-                        });
-                    }
-
                     if (!silent)
                     {
-                        await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(msgBoxVM));
+                        await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(new MessageBoxViewModel()
+                        {
+                            Title = "Update",
+                            Message = "No new updates have been released.",
+                            IsCopyToClipboardVisible = false,
+                            Icon = MessageBoxIcon.Information,
+                        }));
                     }
                 }
             }
+
+
         }
     }
 

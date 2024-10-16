@@ -1,7 +1,7 @@
 # Dupe Clear
 A duplicate file cleaner for Windows and Linux.
 
-![Screenshot](screenshot.png?raw=true)
+![Screenshot](screenshot.jpg?raw=true)
 
 ## Features
 

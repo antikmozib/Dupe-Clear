@@ -11,9 +11,11 @@ A duplicate file cleaner for Windows and Linux.
 
 ## Installing
 
-Windows: Download and run the setup program and follow its instructions.
+### Windows
+
+Download and run the setup program and follow its instructions.
 
 ## Building
 
-Open the .sln file in Visual Studio 2022 or later, and press F5.
+Open the .sln file in Visual Studio 2022 or later, and press F5.  
 `DupeClear.Desktop` must be set as the startup project to run the application.

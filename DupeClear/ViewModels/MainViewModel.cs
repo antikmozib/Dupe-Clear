@@ -724,7 +724,10 @@ public partial class MainViewModel : ViewModelBase
         }
 
         // Check for updates.
-        //Task.Run(async () => await CheckForUpdatesAsync(true));
+        if (_userData.CheckForUpdates)
+        {
+            Task.Run(async () => await CheckForUpdatesAsync(true));
+        }
     }
 
     #endregion // Ctor
@@ -2592,8 +2595,7 @@ public partial class MainViewModel : ViewModelBase
 #endif
                 if (updateable)
                 {
-                    bool? download = null;
-                    await Dispatcher.UIThread.InvokeAsync(async () => download = await MessageBox.Invoke(new MessageBoxViewModel()
+                    var msgBoxVM = new MessageBoxViewModel()
                     {
                         Title = "Update",
                         Message = $"An update has been released.\n\nNew version: {updateInfo.Version}\nCurrent version: {currentVer}\n",
@@ -2603,7 +2605,20 @@ public partial class MainViewModel : ViewModelBase
                         OKButtonContent = "_Download",
                         HyperlinkButtonContent = "Learn More",
                         HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl))
-                    }));
+                    };
+
+                    if (silent)
+                    {
+                        msgBoxVM.CustomButton1Content = "Disable _Auto Check";
+                        msgBoxVM.CustomButton1Action = new Action(() =>
+                        {
+                            _userData.CheckForUpdates = false;
+                            msgBoxVM.Close();
+                        });
+                    }
+
+                    bool? download = null;
+                    await Dispatcher.UIThread.InvokeAsync(async () => download = await MessageBox.Invoke(msgBoxVM));
 
                     if (download == true)
                     {
@@ -2655,15 +2670,27 @@ public partial class MainViewModel : ViewModelBase
                 }
                 else
                 {
+                    var msgBoxVM = new MessageBoxViewModel()
+                    {
+                        Title = "Update",
+                        Message = "No new updates have been released.",
+                        Icon = MessageBoxIcon.Information,
+                        IsCopyToClipboardVisible = false,
+                    };
+
+                    if (!_userData.CheckForUpdates)
+                    {
+                        msgBoxVM.CustomButton1Content = "Enable _Auto Check";
+                        msgBoxVM.CustomButton1Action = new Action(() =>
+                        {
+                            _userData.CheckForUpdates = true;
+                            msgBoxVM.Close();
+                        });
+                    }
+
                     if (!silent)
                     {
-                        await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(new MessageBoxViewModel()
-                        {
-                            Title = "Update",
-                            Message = "No new updates have been released.",
-                            Icon = MessageBoxIcon.Information,
-                            IsCopyToClipboardVisible = false,
-                        }));
+                        await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(msgBoxVM));
                     }
                 }
             }

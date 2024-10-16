@@ -79,6 +79,12 @@ public partial class MessageBoxViewModel : ViewModelBase
         _appTitle = appTitle;
     }
 
+    public void Close(bool? dialogResult = null)
+    {
+        Result = dialogResult;
+        RaiseEvent(Closed);
+    }
+
     [RelayCommand(CanExecute = nameof(CanCopyToClipboard))]
     private async Task CopyToClipboardAsync(object? arg)
     {
@@ -101,15 +107,13 @@ public partial class MessageBoxViewModel : ViewModelBase
     [RelayCommand]
     private void OKButton(object? arg)
     {
-        Result = true;
-        RaiseEvent(Closed);
+        Close(true);
     }
 
     [RelayCommand]
     private void CancelButton(object? arg)
     {
-        Result = false;
-        RaiseEvent(Closed);
+        Close(false);
     }
 
     [RelayCommand]

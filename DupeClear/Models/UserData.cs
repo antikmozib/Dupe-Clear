@@ -56,4 +56,6 @@ public class UserData
     public int PreviewPaneWidth { get; set; } = Constants.DefaultPreviewPaneWidth;
 
     public int Theme { get; set; } = (int)Constants.DefaultTheme;
+
+    public bool CheckForUpdates { get; set; } = true;
 }

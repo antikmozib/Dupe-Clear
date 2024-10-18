@@ -16,7 +16,7 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public DateTime Created { get; }
 
-    public string? DirectoryName => Path.GetDirectoryName(FullName);
+    public string? DirectoryName { get; }
 
     public Avalonia.Media.Imaging.Bitmap? FileIcon => _fileService?.GetFileIcon(FullName);
 
@@ -63,22 +63,9 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public DateTime Modified { get; }
 
-    public string Name => Path.GetFileName(FullName);
+    public string Name { get; }
 
-    public string NameWithoutExtension
-    {
-        get
-        {
-            if (Name.Contains('.'))
-            {
-                return Name.Substring(0, Name.IndexOf('.'));
-            }
-            else
-            {
-                return Name;
-            }
-        }
-    }
+    public string NameWithoutExtension { get; }
 
     private Match? _patternMatch;
     public Match? PatternMatch
@@ -99,33 +86,71 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public string? PatternMatchValue { get; private set; }
 
-    public string? Type => _fileService?.GetFileDescription(FullName);
+    public string? Type { get; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public DuplicateFile(string fullName, IFileService? fileService = null)
-    {
-        _fileService = fileService;
-
-        var fi = new FileInfo(fullName);
-        Created = fi.CreationTime;
-        FullName = fullName;
-        IsHidden = fi.Attributes.HasFlag(FileAttributes.Hidden);
-        IsSystemFile = fi.Attributes.HasFlag(FileAttributes.System);
-        Length = fi.Length;
-        Modified = fi.LastWriteTime;
-    }
+        : this(
+              fullName,
+              null,
+              null,
+              null,
+              null,
+              null,
+              fileService)
+    { }
 
     public DuplicateFile(SerializableDuplicateFile serializable, IFileService? fileService = null)
-    {
-        _fileService = fileService;
+        : this(
+              serializable.FullName,
+              serializable.Created,
+              serializable.IsHidden,
+              serializable.IsSystemFile,
+              serializable.Length,
+              serializable.Modified,
+              fileService)
+    { }
 
-        Created = serializable.Created;
-        FullName = serializable.FullName ?? "";
-        IsHidden = serializable.IsHidden;
-        IsSystemFile = serializable.IsSystemFile;
-        Length = serializable.Length;
-        Modified = serializable.Modified;
+    private DuplicateFile(
+        string? fullName,
+        DateTime? created,
+        bool? isHidden,
+        bool? isSystemFile,
+        long? length,
+        DateTime? modified,
+        IFileService? fileService)
+    {
+        if (string.IsNullOrEmpty(fullName))
+        {
+            throw new InvalidOperationException(nameof(fullName) + " cannot be null or empty.");
+        }
+        else
+        {
+            _fileService = fileService;
+
+            var fileInfo = new FileInfo(fullName);
+
+            FullName = fullName;
+            Created = created ?? fileInfo.CreationTime;
+            IsHidden = isHidden ?? fileInfo.Attributes.HasFlag(FileAttributes.Hidden);
+            IsSystemFile = isSystemFile ?? fileInfo.Attributes.HasFlag(FileAttributes.System);
+            Length = length ?? fileInfo.Length;
+            Modified = modified ?? fileInfo.LastWriteTime;
+            DirectoryName = Path.GetDirectoryName(fullName);
+            Name = Path.GetFileName(fullName);
+            Type = _fileService?.GetFileDescription(fullName);
+
+            var ext = Path.GetExtension(fullName);
+            if (string.IsNullOrEmpty(ext))
+            {
+                NameWithoutExtension = Name;
+            }
+            else
+            {
+                NameWithoutExtension = Name.Substring(0, Name.Length - ext.Length);
+            }
+        }
     }
 
     public void Refresh()

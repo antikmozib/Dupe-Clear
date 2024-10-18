@@ -1321,6 +1321,20 @@ public partial class MainViewModel : ViewModelBase
 
                     break;
 
+                case MarkingCriteria.BiggestLength:
+                    await KeepBiggestLengthAsync(result.Files);
+
+                    SelectedMarkingCriteria = MarkingCriteria.BiggestLength;
+
+                    break;
+
+                case MarkingCriteria.SmallestLength:
+                    await KeepSmallestLengthAsync(result.Files);
+
+                    SelectedMarkingCriteria = MarkingCriteria.SmallestLength;
+
+                    break;
+
                 default:
                     await KeepLatestModifiedAsync(result.Files);
 
@@ -1501,6 +1515,52 @@ public partial class MainViewModel : ViewModelBase
         else if (arg is IList items)
         {
             await KeepLatestCreatedAsync(items.Cast<DuplicateFile>(), ct);
+        }
+
+        SetBusy(false);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanMark))]
+    private async Task KeepBiggestLengthAsync(object? arg, CancellationToken ct)
+    {
+        if (!CanMark(arg))
+        {
+            return;
+        }
+
+        SetBusy("Marking...", KeepBiggestLengthCommand);
+        if (arg == null)
+        {
+            await KeepBiggestLengthAsync(DuplicateFiles, ct);
+
+            SelectedMarkingCriteria = MarkingCriteria.BiggestLength;
+        }
+        else if (arg is IList items)
+        {
+            await KeepBiggestLengthAsync(items.Cast<DuplicateFile>(), ct);
+        }
+
+        SetBusy(false);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanMark))]
+    private async Task KeepSmallestLengthAsync(object? arg, CancellationToken ct)
+    {
+        if (!CanMark(arg))
+        {
+            return;
+        }
+
+        SetBusy("Marking...", KeepSmallestLengthCommand);
+        if (arg == null)
+        {
+            await KeepSmallestLengthAsync(DuplicateFiles, ct);
+
+            SelectedMarkingCriteria = MarkingCriteria.SmallestLength;
+        }
+        else if (arg is IList items)
+        {
+            await KeepSmallestLengthAsync(items.Cast<DuplicateFile>(), ct);
         }
 
         SetBusy(false);
@@ -2419,6 +2479,16 @@ public partial class MainViewModel : ViewModelBase
     private async Task KeepLatestCreatedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
         await MarkFilesAsync(files, f => f.Created, true, ct);
+    }
+
+    private async Task KeepBiggestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    {
+        await MarkFilesAsync(files, f => f.Length, true, ct);
+    }
+
+    private async Task KeepSmallestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    {
+        await MarkFilesAsync(files, f => f.Length, ct: ct);
     }
 
     private async Task MarkFilesAsync<T>(

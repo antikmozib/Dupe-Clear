@@ -960,6 +960,45 @@
 											</MenuItem>
 										</MenuItem>
 
+										<!--By Size-->
+										<MenuItem Header="By _Size">
+											<MenuItem.Icon>
+												<TextBlock Classes="icon"
+														   Text="{StaticResource CircleCheck}">
+													<TextBlock.IsVisible>
+														<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+															<Binding Path="SelectedMarkingCriteria"
+																	 Converter="{StaticResource IntToTrueConverter}"
+																	 ConverterParameter="{x:Static models:MarkingCriteria.BiggestLength}" />
+															<Binding Path="SelectedMarkingCriteria"
+																	 Converter="{StaticResource IntToTrueConverter}"
+																	 ConverterParameter="{x:Static models:MarkingCriteria.SmallestLength}" />
+														</MultiBinding>
+													</TextBlock.IsVisible>
+												</TextBlock>
+											</MenuItem.Icon>
+
+											<!--Keep Biggest-->
+											<MenuItem Header="Keep _Biggest"
+													  Command="{Binding KeepBiggestLengthCommand}">
+												<MenuItem.Icon>
+													<TextBlock Classes="icon"
+															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.BiggestLength}}"
+															   Text="{StaticResource CircleCheck}" />
+												</MenuItem.Icon>
+											</MenuItem>
+
+											<!--Keep Smallest-->
+											<MenuItem Header="Keep _Smallest"
+													  Command="{Binding KeepSmallestLengthCommand}">
+												<MenuItem.Icon>
+													<TextBlock Classes="icon"
+															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.SmallestLength}}"
+															   Text="{StaticResource CircleCheck}" />
+												</MenuItem.Icon>
+											</MenuItem>
+										</MenuItem>
+
 										<Separator />
 
 										<!--Mark All-->
@@ -1162,6 +1201,19 @@
 											<!--Keep Earliest-->
 											<MenuItem Header="Keep _Earliest"
 													  Command="{Binding KeepEarliestCreatedCommand}"
+													  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+										</MenuItem>
+
+										<!--By Size-->
+										<MenuItem Header="By _Size">
+											<!--Keep Biggest-->
+											<MenuItem Header="Keep _Biggest"
+													  Command="{Binding KeepBiggestLengthCommand}"
+													  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+											<!--Keep Smallest-->
+											<MenuItem Header="Keep _Smallest"
+													  Command="{Binding KeepSmallestLengthCommand}"
 													  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 										</MenuItem>
 									</MenuItem>

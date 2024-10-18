@@ -12,5 +12,9 @@ public enum MarkingCriteria
 
     LatestCreated,
 
-    EarliestCreated
+    EarliestCreated,
+
+    BiggestLength,
+
+    SmallestLength
 }

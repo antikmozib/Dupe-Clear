@@ -635,7 +635,7 @@ public partial class MainViewModel : ViewModelBase
 
         _userData = userData;
 
-        ChangeTheme((Theme)_userData.Theme);
+        ChangeTheme((Theme)userData.Theme);
 
         _lastAddedDirectory = userData.LastAddedDirectory;
         _oldPreviewPaneWidth = userData.PreviewPaneWidth;

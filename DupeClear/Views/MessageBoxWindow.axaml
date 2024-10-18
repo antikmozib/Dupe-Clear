@@ -11,6 +11,7 @@
 		x:DataType="vm:MessageBoxViewModel"
 		Icon="/Assets/Icons/DupeClear.ico"
 		Title="{Binding Title}"
+		MinHeight="176"
 		SizeToContent="WidthAndHeight"
 		CanResize="False"
 		ShowInTaskbar="False"
@@ -34,154 +35,161 @@
 		<system:Boolean x:Key="BoolTrue">True</system:Boolean>
 	</Window.Resources>
 
-	<Grid Margin="16"
-		  RenderOptions.BitmapInterpolationMode="HighQuality">
+	<Grid RenderOptions.BitmapInterpolationMode="HighQuality">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="auto" />
-			<RowDefinition Height="auto" />
 			<RowDefinition Height="*" />
-			<RowDefinition Height="auto" />
-			<RowDefinition Height="32" />
 			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
 
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="auto" />
-			<ColumnDefinition Width="*"
-							  MaxWidth="640" />
-		</Grid.ColumnDefinitions>
+		<Grid Margin="16">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
 
-		<!--App icon-->
-		<Image Grid.RowSpan="3"
-			   Margin="0 0 16 0"
-			   VerticalAlignment="Top"
-			   Width="48"
-			   Height="48"
-			   IsVisible="{Binding Icon, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxIcon.AppIcon}}"
-			   Source="/Assets/Icons/DupeClear.ico" />
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="auto" />
+				<ColumnDefinition Width="*"
+								  MaxWidth="600" />
+			</Grid.ColumnDefinitions>
 
-		<!--Icon-->
-		<TextBlock Grid.RowSpan="3"
+			<!--App icon-->
+			<Image Grid.RowSpan="5"
 				   Margin="0 0 16 0"
 				   VerticalAlignment="Top"
-				   FontSize="32"
-				   FontFamily="{StaticResource FontAwesomeSolid}"
-				   Text="{Binding Icon, Converter={StaticResource MessageBoxIconToValueConverter}}">
-			<TextBlock.IsVisible>
-				<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-					<Binding Path="Icon"
-							 Converter="{StaticResource IntToFalseConverter}"
-							 ConverterParameter="{x:Static msgbox:MessageBoxIcon.AppIcon}, Mode=OneWay}" />
-					<Binding Path="Icon"
-							 Converter="{StaticResource IntToFalseConverter}"
-							 ConverterParameter="{x:Static msgbox:MessageBoxIcon.None}, Mode=OneWay}" />
-				</MultiBinding>
-			</TextBlock.IsVisible>
-		</TextBlock>
+				   Width="48"
+				   Height="48"
+				   IsVisible="{Binding Icon, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxIcon.AppIcon}}"
+				   Source="/Assets/Icons/DupeClear.ico" />
 
-		<!--Header-->
-		<TextBlock Grid.Column="1"
-				   Margin="0 0 0 16"
-				   FontSize="16"
-				   TextWrapping="Wrap"
-				   IsVisible="{Binding Header, Converter={StaticResource NullToFalseConverter}}"
-				   Text="{Binding Header}" />
+			<!--Icon-->
+			<TextBlock Grid.RowSpan="5"
+					   Margin="0 0 16 0"
+					   VerticalAlignment="Top"
+					   FontSize="32"
+					   FontFamily="{StaticResource FontAwesomeSolid}"
+					   Text="{Binding Icon, Converter={StaticResource MessageBoxIconToValueConverter}}">
+				<TextBlock.IsVisible>
+					<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+						<Binding Path="Icon"
+								 Converter="{StaticResource IntToFalseConverter}"
+								 ConverterParameter="{x:Static msgbox:MessageBoxIcon.AppIcon}, Mode=OneWay}" />
+						<Binding Path="Icon"
+								 Converter="{StaticResource IntToFalseConverter}"
+								 ConverterParameter="{x:Static msgbox:MessageBoxIcon.None}, Mode=OneWay}" />
+					</MultiBinding>
+				</TextBlock.IsVisible>
+			</TextBlock>
 
-		<!--Message-->
-		<TextBlock Grid.Row="1"
-				   Grid.Column="1"
-				   TextWrapping="Wrap"
-				   IsVisible="{Binding Message, Converter={StaticResource NullToFalseConverter}}"
-				   Text="{Binding Message}" />
-
-		<!--Secondary message-->
-		<ScrollViewer x:Name="MessageScrollViewer"
-					  Grid.Row="2"
-					  Grid.Column="1"
-					  MaxHeight="240"
-					  VerticalScrollBarVisibility="Auto"
-					  IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}">
-			<ScrollViewer.ContextMenu>
-				<ContextMenu x:Name="MessageContextMenu"
-							 Opening="MessageContextMenu_Opening">
-					<MenuItem Header="_Copy to Clipboard"
-							  HotKey="Ctrl+C"
-							  IsVisible="{Binding IsCopyToClipboardVisible}"
-							  Command="{Binding CopyToClipboardCommand}">
-						<MenuItem.Icon>
-							<TextBlock VerticalAlignment="Center"
-									   FontFamily="{StaticResource FontAwesomeSolid}"
-									   Text="&#xf0c5;" />
-						</MenuItem.Icon>
-					</MenuItem>
-				</ContextMenu>
-			</ScrollViewer.ContextMenu>
-
-			<TextBlock x:Name="MessageTextBox"
-					   Padding="0 0 24 0"
+			<!--Header-->
+			<TextBlock Grid.Column="1"
+					   Margin="0 0 0 16"
+					   FontSize="16"
 					   TextWrapping="Wrap"
-					   IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}"
-					   Text="{Binding SecondaryMessage}" />
-		</ScrollViewer>
+					   IsVisible="{Binding Header, Converter={StaticResource NullToFalseConverter}}"
+					   Text="{Binding Header}" />
 
-		<!--Hyperlink-->
-		<HyperlinkButton Grid.Row="3"
-						 Grid.Column="1"
-						 Padding="0"
-						 BorderThickness="0"
-						 IsVisible="{Binding HyperlinkButtonContent, Converter={StaticResource NullToFalseConverter}}"
-						 Content="{Binding HyperlinkButtonContent}"
-						 Command="{Binding HyperlinkButtonCommand}" />
+			<!--Message-->
+			<TextBlock Grid.Row="1"
+					   Grid.Column="1"
+					   TextWrapping="Wrap"
+					   IsVisible="{Binding Message, Converter={StaticResource NullToFalseConverter}}"
+					   Text="{Binding Message}" />
+
+			<!--Secondary message-->
+			<ScrollViewer x:Name="MessageScrollViewer"
+						  Grid.Row="2"
+						  Grid.Column="1"
+						  MaxHeight="240"
+						  VerticalScrollBarVisibility="Auto"
+						  IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}">
+				<ScrollViewer.ContextMenu>
+					<ContextMenu x:Name="MessageContextMenu"
+								 Opening="MessageContextMenu_Opening">
+						<MenuItem Header="_Copy to Clipboard"
+								  HotKey="Ctrl+C"
+								  IsVisible="{Binding IsCopyToClipboardVisible}"
+								  Command="{Binding CopyToClipboardCommand}">
+							<MenuItem.Icon>
+								<TextBlock VerticalAlignment="Center"
+										   FontFamily="{StaticResource FontAwesomeSolid}"
+										   Text="&#xf0c5;" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</ContextMenu>
+				</ScrollViewer.ContextMenu>
+
+				<TextBlock x:Name="MessageTextBox"
+						   Padding="0 0 24 0"
+						   TextWrapping="Wrap"
+						   IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}"
+						   Text="{Binding SecondaryMessage}" />
+			</ScrollViewer>
+
+			<!--Hyperlink-->
+			<HyperlinkButton Grid.Row="3"
+							 Grid.Column="1"
+							 Padding="0"
+							 BorderThickness="0"
+							 IsVisible="{Binding HyperlinkButtonContent, Converter={StaticResource NullToFalseConverter}}"
+							 Content="{Binding HyperlinkButtonContent}"
+							 Command="{Binding HyperlinkButtonCommand}" />
+		</Grid>
 
 		<!--Buttons-->
-		<StackPanel Grid.Row="5"
-					Grid.ColumnSpan="2"
-					Orientation="Horizontal"
-					Spacing="4"
-					HorizontalAlignment="Right">
-			<StackPanel.Styles>
-				<Style Selector="Button">
-					<Setter Property="HorizontalContentAlignment"
-							Value="Center" />
-					<Setter Property="MaxWidth"
-							Value="176" />
-					<Setter Property="MinWidth"
-							Value="88" />
-				</Style>
+		<Border Grid.Row="2"
+				Background="{DynamicResource MessageBoxButtonRowBackgroundBrush}">
+			<StackPanel Margin="8"
+						Orientation="Horizontal"
+						Spacing="4"
+						HorizontalAlignment="Right">
+				<StackPanel.Styles>
+					<Style Selector="Button">
+						<Setter Property="HorizontalContentAlignment"
+								Value="Center" />
+						<Setter Property="MaxWidth"
+								Value="176" />
+						<Setter Property="MinWidth"
+								Value="88" />
+					</Style>
 
-				<Style Selector="Button[IsDefault=True]">
-					<Setter Property="Background"
-							Value="{DynamicResource DupeClearMessageBoxDefaultButtonBackgroundBrush}" />
+					<Style Selector="Button[IsDefault=True]">
+						<Setter Property="Background"
+								Value="{DynamicResource DupeClearMessageBoxDefaultButtonBackgroundBrush}" />
 
-					<Setter Property="Foreground"
-							Value="{DynamicResource DupeClearMessageBoxDefaultButtonForegroundBrush}" />
-				</Style>
-			</StackPanel.Styles>
+						<Setter Property="Foreground"
+								Value="{DynamicResource DupeClearMessageBoxDefaultButtonForegroundBrush}" />
+					</Style>
+				</StackPanel.Styles>
 
-			<Border Width="88" />
+				<Border Width="88" />
 
-			<!--OK-->
-			<Button Content="{Binding OKButtonContent}"
-					IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.OK}}"
-					IsCancel="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.OK}}"
-					Command="{Binding OKButtonCommand}" />
+				<!--OK-->
+				<Button Content="{Binding OKButtonContent}"
+						IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.OK}}"
+						IsCancel="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.OK}}"
+						Command="{Binding OKButtonCommand}" />
 
-			<!--Cancel-->
-			<Button Content="{Binding CancelButtonContent}"
-					IsVisible="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.OKCancel}}"
-					IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.Cancel}}"
-					IsCancel="True"
-					Command="{Binding CancelButtonCommand}" />
+				<!--Cancel-->
+				<Button Content="{Binding CancelButtonContent}"
+						IsVisible="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.OKCancel}}"
+						IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.Cancel}}"
+						IsCancel="True"
+						Command="{Binding CancelButtonCommand}" />
 
-			<!--Custom button 1-->
-			<Button Content="{Binding CustomButton1Content}"
-					IsVisible="{Binding CustomButton1Content, Converter={StaticResource NullToFalseConverter}}"
-					Command="{Binding CustomButton1Command}" />
+				<!--Custom button 1-->
+				<Button Content="{Binding CustomButton1Content}"
+						IsVisible="{Binding CustomButton1Content, Converter={StaticResource NullToFalseConverter}}"
+						Command="{Binding CustomButton1Command}" />
 
-			<!--Custom button 2-->
-			<Button Content="{Binding CustomButton2Content}"
-					IsVisible="{Binding CustomButton2Content, Converter={StaticResource NullToFalseConverter}}"
-					Command="{Binding CustomButton2Command}" />
-		</StackPanel>
+				<!--Custom button 2-->
+				<Button Content="{Binding CustomButton2Content}"
+						IsVisible="{Binding CustomButton2Content, Converter={StaticResource NullToFalseConverter}}"
+						Command="{Binding CustomButton2Command}" />
+			</StackPanel>
+		</Border>
 	</Grid>
 </Window>

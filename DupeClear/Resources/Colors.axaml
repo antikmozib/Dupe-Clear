@@ -52,11 +52,13 @@
 			<!--<SolidColorBrush x:Key="DupeClearPreviewPaneDefaultWatermarkBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
 
-			<!--Message Box Default Button-->
+			<!--Message Box-->
 			<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonDefaultBackgroundBrush"
 							 Color="#4dafff" />
 			<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonDefaultForegroundBrush"
 							 Color="#002a4d" />
+			<SolidColorBrush x:Key="MessageBoxButtonRowDefaultBackgroundBrush"
+							 Color="{DynamicResource SystemChromeLowColor}" />
 
 			<!--MenuItem-->
 			<SolidColorBrush x:Key="DupeClearMenuItemIconDisabledDefaultBrush"
@@ -106,11 +108,13 @@
 					<StaticResource x:Key="DupeClearPreviewPaneWatermarkBrush"
 									ResourceKey="DupeClearPreviewPaneDefaultWatermarkBrush" />
 
-					<!--Message Box Default Button-->
+					<!--Message Box-->
 					<StaticResource x:Key="DupeClearMessageBoxDefaultButtonBackgroundBrush"
 									ResourceKey="DupeClearMessageBoxDefaultButtonDefaultBackgroundBrush" />
 					<StaticResource x:Key="DupeClearMessageBoxDefaultButtonForegroundBrush"
 									ResourceKey="DupeClearMessageBoxDefaultButtonDefaultForegroundBrush" />
+					<StaticResource x:Key="MessageBoxButtonRowBackgroundBrush"
+									ResourceKey="MessageBoxButtonRowDefaultBackgroundBrush" />
 
 					<!--MenuItem-->
 					<StaticResource x:Key="DupeClearMenuItemIconDisabledBrush"
@@ -130,7 +134,7 @@
 					<SolidColorBrush x:Key="DupeClearDeleteButtonForegroundBrush"
 									 Color="#fbeaea" />
 
-					<!--Message Box Default Button-->
+					<!--Message Box-->
 					<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonBackgroundBrush"
 									 Color="#0078d7" />
 					<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonForegroundBrush"

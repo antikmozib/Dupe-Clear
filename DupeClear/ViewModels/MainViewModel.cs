@@ -1623,7 +1623,11 @@ public partial class MainViewModel : ViewModelBase
 
                 // Undeletable files are undeleted files from groups where all undeleted files have been marked for
                 // deletion.
-                var undeleteableFiles = DuplicateFiles.GroupBy(x => x.Group).Where(g => g.Where(x => !x.IsDeleted).All(x => x.IsMarked)).SelectMany(g => g);
+                var undeleteableFiles = DuplicateFiles
+                    .GroupBy(x => x.Group)
+                    .Where(g => g.Any(x => !x.IsDeleted))
+                    .Where(g => g.Where(x => !x.IsDeleted).All(x => x.IsMarked))
+                    .SelectMany(g => g);
                 if (undeleteableFiles.Any())
                 {
                     message = "WARNING: The following sets of duplicate files have all existing files marked for deletion. "

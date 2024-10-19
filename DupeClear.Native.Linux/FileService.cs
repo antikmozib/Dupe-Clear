@@ -84,8 +84,9 @@ public class FileService : IFileService
 
             var deletionDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
             var trashInfoContents = $"[Trash Info]"
-                + $"\nPath={Uri.EscapeDataString(Path.GetFullPath(fileName)).Replace("%2F", "/")}"
-                + $"\nDeletionDate={deletionDate}\n";
+                + $"{Environment.NewLine}Path={Uri.EscapeDataString(Path.GetFullPath(fileName)).Replace("%2F", "/")}"
+                + $"{Environment.NewLine}DeletionDate={deletionDate}"
+                + Environment.NewLine;
 
             File.Move(fileName, Path.Combine(trashFilesDir, trashFileName));
             File.WriteAllText(Path.Combine(trashInfoDir, $"{trashFileName}.trashinfo"), trashInfoContents);

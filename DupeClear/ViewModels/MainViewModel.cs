@@ -1222,42 +1222,21 @@ public partial class MainViewModel : ViewModelBase
 
         var etaReporterTask = Task.Run(async () =>
         {
-            double lengthStart = 0;
-            var sw = new Stopwatch();
+            var sw = Stopwatch.StartNew();
             while (IsBusy)
             {
                 var delay = Task.Delay(EtaReporterDelay);
-                if (dfProgress.TotalLength > 0)
+                if (dfProgress.ProgressLength > 0 && (dfProgress.TotalLength - dfProgress.ProgressLength > 0))
                 {
-                    if (!sw.IsRunning)
-                    {
-                        lengthStart = dfProgress.ProgressLength;
-                        sw.Start();
-                    }
-                    else
-                    {
-                        sw.Stop();
-                        var lengthSearched = dfProgress.ProgressLength - lengthStart;
-                        var lengthRemaining = dfProgress.TotalLength - dfProgress.ProgressLength;
-                        if (lengthSearched > 0 && lengthRemaining > 0)
-                        {
-                            var timeRemaining = sw.ElapsedMilliseconds / lengthSearched * lengthRemaining;
-                            if (timeRemaining > 1000)
-                            {
-                                QuaternaryStatus = $"ETA: {timeRemaining.ConvertMillisecondsToString()}";
-                            }
-                        }
-
-                        lengthStart = dfProgress.ProgressLength;
-                        sw.Restart();
-                    }
+                    var msRemaining = sw.ElapsedMilliseconds / (double)dfProgress.ProgressLength * (dfProgress.TotalLength - dfProgress.ProgressLength);
+                    QuaternaryStatus = $"ETA: {msRemaining.ConvertMillisecondsToString()}";
                 }
 
                 await delay;
             }
         });
 
-        PrimaryStatus = "Starting...";
+        PrimaryStatus = "Preparing...";
         DuplicateFiles.Clear();
         try
         {

@@ -11,7 +11,6 @@
 		x:DataType="vm:MessageBoxViewModel"
 		Icon="/Assets/Icons/DupeClear.ico"
 		Title="{Binding Title}"
-		MinHeight="176"
 		SizeToContent="WidthAndHeight"
 		CanResize="False"
 		ShowInTaskbar="False"
@@ -35,7 +34,7 @@
 		<system:Boolean x:Key="BoolTrue">True</system:Boolean>
 	</Window.Resources>
 
-	<Grid RenderOptions.BitmapInterpolationMode="HighQuality">
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
 			<RowDefinition Height="auto" />
@@ -62,6 +61,7 @@
 				   VerticalAlignment="Top"
 				   Width="48"
 				   Height="48"
+				   RenderOptions.BitmapInterpolationMode="HighQuality"
 				   IsVisible="{Binding Icon, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxIcon.AppIcon}}"
 				   Source="/Assets/Icons/DupeClear.ico" />
 
@@ -132,6 +132,7 @@
 			<!--Hyperlink-->
 			<HyperlinkButton Grid.Row="3"
 							 Grid.Column="1"
+							 Margin="0 0 0 16"
 							 Padding="0"
 							 BorderThickness="0"
 							 IsVisible="{Binding HyperlinkButtonContent, Converter={StaticResource NullToFalseConverter}}"
@@ -142,9 +143,9 @@
 		<!--Buttons-->
 		<Border Grid.Row="2"
 				Background="{DynamicResource MessageBoxButtonRowBackgroundBrush}">
-			<StackPanel Margin="8"
+			<StackPanel Margin="10"
 						Orientation="Horizontal"
-						Spacing="4"
+						Spacing="6"
 						HorizontalAlignment="Right">
 				<StackPanel.Styles>
 					<Style Selector="Button">

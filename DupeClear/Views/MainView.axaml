@@ -17,8 +17,7 @@
 			 x:DataType="vm:MainViewModel"
 			 x:Name="MainUserControl"
 			 Loaded="UserControl_Loaded"
-			 DataContextChanged="UserControl_DataContextChanged"
-			 RenderOptions.BitmapInterpolationMode="HighQuality">
+			 DataContextChanged="UserControl_DataContextChanged">
 	<Design.DataContext>
 		<vm:MainViewModel />
 	</Design.DataContext>
@@ -114,6 +113,7 @@
 			<Image x:Name="AppIconImage"
 				   Width="24"
 				   Height="24"
+				   RenderOptions.BitmapInterpolationMode="HighQuality"
 				   Source="avares://DupeClear/Assets/Icons/DupeClear.ico" />
 
 			<!--Title-->

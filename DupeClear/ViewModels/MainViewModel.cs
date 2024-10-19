@@ -2209,6 +2209,7 @@ public partial class MainViewModel : ViewModelBase
             {
                 var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
+                    Title = "Exit",
                     Message = "Search operation in progress.\n\nCancel and exit program?",
                     Icon = MessageBoxIcon.Question,
                     Buttons = MessageBoxButton.OKCancel,
@@ -2255,16 +2256,16 @@ public partial class MainViewModel : ViewModelBase
             var name = assm.GetCustomAttribute<AssemblyProductAttribute>()?.Product;
             var version = assm.GetName().Version;
             var copyright = assm.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
-        MessageBox?.Invoke(new MessageBoxViewModel()
-        {
-            Title = "About",
+            MessageBox?.Invoke(new MessageBoxViewModel()
+            {
+                Title = "About",
                 Message = $"{name} v{version}\n\n{copyright}",
-            IsCopyToClipboardVisible = false,
-            Icon = MessageBoxIcon.AppIcon,
-            HyperlinkButtonContent = Constants.AppHomepage,
-            HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(Constants.AppHomepage))
-        });
-    }
+                IsCopyToClipboardVisible = false,
+                Icon = MessageBoxIcon.AppIcon,
+                HyperlinkButtonContent = Constants.AppHomepage,
+                HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(Constants.AppHomepage))
+            });
+        }
     }
 
     private bool GetIfNotBusy(object? arg)

@@ -40,7 +40,7 @@
 			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
 
-		<Grid Margin="16">
+		<Grid Margin="16 16 16 40">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="auto" />
 				<RowDefinition Height="auto" />
@@ -52,7 +52,7 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="auto" />
 				<ColumnDefinition Width="*"
-								  MaxWidth="600" />
+								  MaxWidth="640" />
 			</Grid.ColumnDefinitions>
 
 			<!--App icon-->
@@ -103,7 +103,7 @@
 			<ScrollViewer x:Name="MessageScrollViewer"
 						  Grid.Row="2"
 						  Grid.Column="1"
-						  MaxHeight="240"
+						  MaxHeight="360"
 						  VerticalScrollBarVisibility="Auto"
 						  IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}">
 				<ScrollViewer.ContextMenu>
@@ -132,7 +132,7 @@
 			<!--Hyperlink-->
 			<HyperlinkButton Grid.Row="3"
 							 Grid.Column="1"
-							 Margin="0 0 0 16"
+							 Margin="0"
 							 Padding="0"
 							 BorderThickness="0"
 							 IsVisible="{Binding HyperlinkButtonContent, Converter={StaticResource NullToFalseConverter}}"

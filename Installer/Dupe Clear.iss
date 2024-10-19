@@ -1,8 +1,8 @@
 #define MyAppName "Dupe Clear"
-#define MyAppVersion GetVersionNumbersString("..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\win-x86\Dupe Clear.exe")
+#define MyAppVersion GetVersionNumbersString("..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\win-x86\DupeClear.Desktop.exe")
 #define MyAppPublisher "Antik Mozib"
 #define MyAppURL "https://mozib.io/dupeclear"
-#define MyAppExeName "Dupe Clear.exe"
+#define MyAppExeName "DupeClear.Desktop.exe"
 #define MyAppOutputName "DupeClear"
 
 [Setup]

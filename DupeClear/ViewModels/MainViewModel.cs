@@ -2249,20 +2249,22 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void ShowAbout(object? arg)
     {
-        var assembly = Assembly.GetExecutingAssembly();
-        var fileVerInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-        var appName = fileVerInfo.ProductName;
-        var appVer = fileVerInfo.FileVersion;
-        var appCopyright = fileVerInfo.LegalCopyright;
+        var assm = Assembly.GetEntryAssembly();
+        if (assm != null)
+        {
+            var name = assm.GetCustomAttribute<AssemblyProductAttribute>()?.Product;
+            var version = assm.GetName().Version;
+            var copyright = assm.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
         MessageBox?.Invoke(new MessageBoxViewModel()
         {
             Title = "About",
-            Message = $"{appName} v{appVer}\n\n{appCopyright}",
+                Message = $"{name} v{version}\n\n{copyright}",
             IsCopyToClipboardVisible = false,
             Icon = MessageBoxIcon.AppIcon,
             HyperlinkButtonContent = Constants.AppHomepage,
             HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(Constants.AppHomepage))
         });
+    }
     }
 
     private bool GetIfNotBusy(object? arg)
@@ -2633,7 +2635,7 @@ public partial class MainViewModel : ViewModelBase
                 return;
             }
 
-            var currentVer = Assembly.GetExecutingAssembly().GetName().Version;
+            var currentVer = Assembly.GetEntryAssembly()?.GetName().Version;
             if (currentVer != null)
             {
                 var updateable = Updater.IsUpdateAvailable(updateInfo, currentVer);
@@ -2688,8 +2690,8 @@ public partial class MainViewModel : ViewModelBase
                                 await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(new MessageBoxViewModel()
                                 {
                                     Title = "Update",
-                                    Message = $"An error occurred while attempting download the update.\n\n{ex.Message}",
-                                    IsCopyToClipboardVisible = false,
+                                    Message = $"An error occurred while attempting download the update.\n\n",
+                                    SecondaryMessage = ex.Message,
                                     Icon = MessageBoxIcon.Error,
                                 }));
                             }

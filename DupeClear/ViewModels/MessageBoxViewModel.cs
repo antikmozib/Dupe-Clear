@@ -75,9 +75,12 @@ public partial class MessageBoxViewModel : ViewModelBase
 
     public MessageBoxViewModel()
     {
-        var assembly = Assembly.GetExecutingAssembly();
-        var appTitle = FileVersionInfo.GetVersionInfo(assembly.Location).ProductName;
-        _appTitle = appTitle;
+        var assm = Assembly.GetEntryAssembly();
+        if (assm != null)
+        {
+            var appTitle = assm.GetCustomAttribute<AssemblyProductAttribute>()?.Product;
+            _appTitle = appTitle;
+        }
     }
 
     public void Close(bool? dialogResult = null)

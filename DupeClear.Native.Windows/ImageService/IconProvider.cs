@@ -20,7 +20,7 @@ internal static class IconProvider
             {
                 path = Directory.Exists(fileName)
                     ? fileName
-                    : Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+                    : Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
             }
             else
             {

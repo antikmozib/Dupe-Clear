@@ -13,11 +13,11 @@ public class UserData
 
     public List<SerializableSearchDirectory> ExcludedDirectories { get; set; } = [];
 
-    public List<string?> SavedFileNamePatterns { get; set; } = [];
+    public List<string?> SavedFileNamePatterns { get; set; } = new List<string?> { Constants.DefaultFileNamePattern };
 
-    public List<string> SavedIncludedExtensions { get; set; } = [];
+    public List<string> SavedIncludedExtensions { get; set; } = new List<string> { Constants.DefaultIncludedExtensions };
 
-    public List<string?> SavedExcludedExtensions { get; set; } = [];
+    public List<string?> SavedExcludedExtensions { get; set; } = new List<string?> { Constants.DefaultExcludedExtensions };
 
     public string LastAddedDirectory { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 

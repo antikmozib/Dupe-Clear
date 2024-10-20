@@ -8,6 +8,8 @@ public static class Constants
 {
     public const MarkingCriteria DefaultMarkingCriteria = MarkingCriteria.LatestModified;
 
+    public const string DefaultFileNamePattern = @"^.*?(?=\s?\(\d+\)\s*$)|^.*$";
+
     public const string DefaultIncludedExtensions = "*.*";
 
     public const string DefaultExcludedExtensions = "*.cfg;*.conf;*.dll;*.drv;*.exe;*.sh;*.so;*.sys";

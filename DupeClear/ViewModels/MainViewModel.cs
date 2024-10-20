@@ -667,18 +667,8 @@ public partial class MainViewModel : ViewModelBase
         }
 
         userData.SavedFileNamePatterns.ForEach(x => SavedFileNamePatterns.Add(x));
-
         userData.SavedIncludedExtensions.ForEach(x => SavedIncludedExtensions.Add(x));
-        if (!SavedIncludedExtensions.Contains(Constants.DefaultIncludedExtensions))
-        {
-            SavedIncludedExtensions.Add(Constants.DefaultIncludedExtensions);
-        }
-
         userData.SavedExcludedExtensions.ForEach(x => SavedExcludedExtensions.Add(x));
-        if (!SavedExcludedExtensions.Contains(Constants.DefaultExcludedExtensions))
-        {
-            SavedExcludedExtensions.Add(Constants.DefaultExcludedExtensions);
-        }
 
         IncludeSubdirectories = userData.IncludeSubdirectories;
         ExcludeSubdirectories = userData.ExcludeSubdirectories;

@@ -16,5 +16,6 @@ public class DesignMessageBoxViewModel : MessageBoxViewModel
         HyperlinkButtonContent = "Hyperlink";
         CustomButton1Content = "Custom Button 1";
         CustomButton2Content = "Custom Button 2";
+        CheckBoxContent = "Check Box";
     }
 }

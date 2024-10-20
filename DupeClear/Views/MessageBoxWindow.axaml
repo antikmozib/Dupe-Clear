@@ -46,6 +46,7 @@
 				<RowDefinition Height="auto" />
 				<RowDefinition Height="auto" />
 				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 
@@ -138,6 +139,14 @@
 							 IsVisible="{Binding HyperlinkButtonContent, Converter={StaticResource NullToFalseConverter}}"
 							 Content="{Binding HyperlinkButtonContent}"
 							 Command="{Binding HyperlinkButtonCommand}" />
+
+			<!--CheckBox-->
+			<CheckBox Grid.Row="4"
+					  Grid.Column="1"
+					  Margin="0 8 0 0"
+					  IsVisible="{Binding CheckBoxContent, Converter={StaticResource NullToFalseConverter}}"
+					  IsChecked="{Binding CheckBoxChecked, Mode=TwoWay}"
+					  Content="{Binding CheckBoxContent}" />
 		</Grid>
 
 		<!--Buttons-->

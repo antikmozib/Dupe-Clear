@@ -69,6 +69,10 @@ public partial class MessageBoxViewModel : ViewModelBase
 
     public Action? CustomButton2Action { get; set; }
 
+    public string? CheckBoxContent { get; set; }
+
+    public bool CheckBoxChecked { get; set; }
+
     public MessageBoxResult Result { get; } = new MessageBoxResult();
 
     public event EventHandler? Closed;
@@ -85,6 +89,7 @@ public partial class MessageBoxViewModel : ViewModelBase
 
     public void Close(bool? dialogResult = null)
     {
+        Result.CheckBoxChecked = CheckBoxChecked;
         Result.DialogResult = dialogResult;
         RaiseEvent(Closed);
     }

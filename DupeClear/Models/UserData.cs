@@ -57,5 +57,5 @@ public class UserData
 
     public int Theme { get; set; } = (int)Constants.DefaultTheme;
 
-    public bool CheckForUpdates { get; set; } = true;
+    public bool AutoUpdateCheck { get; set; } = true;
 }

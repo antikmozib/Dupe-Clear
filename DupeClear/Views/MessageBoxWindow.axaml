@@ -40,7 +40,7 @@
 			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
 
-		<Grid Margin="16 16 16 40">
+		<Grid Margin="16 16 32 40">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="auto" />
 				<RowDefinition Height="auto" />
@@ -57,7 +57,7 @@
 			</Grid.ColumnDefinitions>
 
 			<!--App icon-->
-			<Image Grid.RowSpan="5"
+			<Image Grid.RowSpan="6"
 				   Margin="0 0 16 0"
 				   VerticalAlignment="Top"
 				   Width="48"
@@ -67,7 +67,7 @@
 				   Source="/Assets/Icons/DupeClear.ico" />
 
 			<!--Icon-->
-			<TextBlock Grid.RowSpan="5"
+			<TextBlock Grid.RowSpan="6"
 					   Margin="0 0 16 0"
 					   VerticalAlignment="Top"
 					   FontSize="32"
@@ -143,7 +143,7 @@
 			<!--CheckBox-->
 			<CheckBox Grid.Row="4"
 					  Grid.Column="1"
-					  Margin="0 8 0 0"
+					  Margin="0 16 0 0"
 					  IsVisible="{Binding CheckBoxContent, Converter={StaticResource NullToFalseConverter}}"
 					  IsChecked="{Binding CheckBoxChecked, Mode=TwoWay}"
 					  Content="{Binding CheckBoxContent}" />

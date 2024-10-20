@@ -532,6 +532,8 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
+    public bool AutoUpdateCheck { get; set; }
+
     public ObservableCollection<SearchDirectory> IncludedDirectories { get; } = [];
 
     private SearchDirectory? _selectedIncludedDirectory = null;
@@ -687,6 +689,7 @@ public partial class MainViewModel : ViewModelBase
         IncludedExtensions = userData.IncludedExtensions;
         ExcludedExtensions = userData.ExcludedExtensions;
         ShowPreview = userData.ShowPreview;
+        AutoUpdateCheck = userData.AutoUpdateCheck;
 
         if (userData.MatchSameFileName)
         {
@@ -724,7 +727,10 @@ public partial class MainViewModel : ViewModelBase
         }
 
         // Check for updates.
-        Task.Run(async () => await CheckForUpdatesAsync(true));
+        if (AutoUpdateCheck)
+        {
+            Task.Run(async () => await CheckForUpdatesAsync(true));
+        }
     }
 
     #endregion // Ctor
@@ -2646,8 +2652,7 @@ public partial class MainViewModel : ViewModelBase
                 var updateable = Updater.IsUpdateAvailable(updateInfo, currentVer);
                 if (updateable)
                 {
-                    MessageBoxResult? msgBoxResult = null;
-                    await Dispatcher.UIThread.InvokeAsync(async () => msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
+                    var msgBoxVM = new MessageBoxViewModel()
                     {
                         Title = "Update",
                         Message = $"An update has been released.\n\nNew version: {updateInfo.Version}\nCurrent version: {currentVer}\n",
@@ -2657,9 +2662,20 @@ public partial class MainViewModel : ViewModelBase
                         OKButtonContent = "_Download",
                         HyperlinkButtonContent = "Learn More",
                         HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl)),
-                    }));
+                    };
 
-                    if (msgBoxResult?.DialogResult == true)
+                    if (silent)
+                    {
+                        msgBoxVM.CustomButton1Content = "Don't _Ask";
+                        msgBoxVM.CustomButton1Action = new Action(() =>
+                        {
+                            AutoUpdateCheck = false;
+                            msgBoxVM.Close();
+                        });
+                    }
+
+                    var result = await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(msgBoxVM));
+                    if (result?.DialogResult == true)
                     {
                         if (IsBusy)
                         {
@@ -2711,18 +2727,24 @@ public partial class MainViewModel : ViewModelBase
                 {
                     if (!silent)
                     {
-                        await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(new MessageBoxViewModel()
+                        var msgBoxVM = new MessageBoxViewModel()
                         {
                             Title = "Update",
                             Message = "No new updates have been released.",
                             IsCopyToClipboardVisible = false,
                             Icon = MessageBoxIcon.Information,
-                        }));
+                            CheckBoxContent = "_Automatically check for updates",
+                            CheckBoxChecked = AutoUpdateCheck
+                        };
+
+                        var result = await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(msgBoxVM));
+                        if (result != null)
+                        {
+                            AutoUpdateCheck = result.CheckBoxChecked;
+                        }
                     }
                 }
             }
-
-
         }
     }
 
@@ -2778,6 +2800,7 @@ public partial class MainViewModel : ViewModelBase
             _userData.ShowPreview = ShowPreview;
             _userData.PreviewPaneWidth = _oldPreviewPaneWidth;
             _userData.Theme = (int)Theme;
+            _userData.AutoUpdateCheck = AutoUpdateCheck;
 
             var jsonString = JsonSerializer.Serialize(_userData, new JsonSerializerOptions() { WriteIndented = true });
             var userDataDir = Path.GetDirectoryName(_userDataFile);

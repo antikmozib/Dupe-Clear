@@ -53,14 +53,6 @@ public partial class MessageBoxWindow : Window
         }
     }
 
-    private void MessageContextMenu_Opening(object? sender, System.ComponentModel.CancelEventArgs e)
-    {
-        if (string.IsNullOrEmpty(MessageTextBox.Text))
-        {
-            e.Cancel = true;
-        }
-    }
-
     private void ViewModel_Closed(object? sender, System.EventArgs e)
     {
         Dispatcher.UIThread.InvokeAsync(Close);

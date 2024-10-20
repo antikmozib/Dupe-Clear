@@ -1099,7 +1099,6 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "At least one option from \"Match Same Filename\" and \"Match Same Contents\" must be specified.",
-                IsCopyToClipboardVisible = false,
                 Icon = MessageBoxIcon.Error,
             });
 
@@ -1134,7 +1133,6 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "The extensions must be of the valid format.",
-                IsCopyToClipboardVisible = false,
                 Icon = MessageBoxIcon.Error,
             });
 
@@ -1161,7 +1159,6 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "The extensions to exclude must be of the valid format.",
-                IsCopyToClipboardVisible = false,
                 Icon = MessageBoxIcon.Error,
             });
 
@@ -1183,7 +1180,6 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "The selected dates must be valid and in the correct order.",
-                IsCopyToClipboardVisible = false,
                 Icon = MessageBoxIcon.Error,
             });
 
@@ -1349,7 +1345,6 @@ public partial class MainViewModel : ViewModelBase
                     ? $"Duplicates found: {result.DuplicateCount:N0} ({result.Files.Sum(x => x.Length).ConvertLengthToString()})"
                     : "No duplicate files were found.",
                 Message = message.ToString(),
-                IsCopyToClipboardVisible = false,
                 Icon = result.Errors.Count == 0 ? MessageBoxIcon.Information : MessageBoxIcon.Warning,
                 CustomButton1Content = result.ExcludedDirectories.Count == 0 ? null : "_View Exclusions",
                 CustomButton1Action = result.ExcludedDirectories.Count == 0 ? null : new Action(() =>
@@ -1627,7 +1622,7 @@ public partial class MainViewModel : ViewModelBase
                 if (undeleteableFiles.Any())
                 {
                     message = "WARNING: The following sets of duplicate files have all existing files marked for deletion. "
-                        + "It is highly recommended to leave at least one existing file from each set unmarked.\n";
+                        + "It is highly recommended to leave at least one existing file from each set unmarked.";
 
                     secondaryMessage = string.Join(
                         "\n\n",
@@ -1710,7 +1705,6 @@ public partial class MainViewModel : ViewModelBase
                     Header = $"Files deleted: {result.Files.Count:N0} ({result.Files.Sum(x => x.Length).ConvertLengthToString()})",
                     Message = $"{(result.Errors.Count > 0 ? $"Errors: {result.Errors.Count:N0}\n\n" : "")}"
                         + $"Deleted files can be recovered or permanently deleted from the {_fileService.RecycleBinLabel}.",
-                    IsCopyToClipboardVisible = false,
                     Icon = MessageBoxIcon.Information,
                     CustomButton1Content = result.Errors.Count == 0 ? null : "_View Errors",
                     CustomButton1Action = result.Errors.Count == 0 ? null : new Action(async () =>
@@ -1785,7 +1779,7 @@ public partial class MainViewModel : ViewModelBase
                         MessageBox?.Invoke(new MessageBoxViewModel()
                         {
                             Title = "Export",
-                            Message = "An error occurred while attempting to export data.\n",
+                            Message = "An error occurred while attempting to export data.",
                             SecondaryMessage = ex.Message,
                             Icon = MessageBoxIcon.Error
                         });
@@ -2259,8 +2253,8 @@ public partial class MainViewModel : ViewModelBase
             MessageBox?.Invoke(new MessageBoxViewModel()
             {
                 Title = "About",
-                Message = $"{name} v{version}\n\n{copyright}",
-                IsCopyToClipboardVisible = false,
+                Header = $"{name} v{version}",
+                Message = $"{copyright}",
                 Icon = MessageBoxIcon.AppIcon,
                 HyperlinkButtonContent = Constants.AppHomepage,
                 HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(Constants.AppHomepage))
@@ -2337,7 +2331,7 @@ public partial class MainViewModel : ViewModelBase
                     MessageBox?.Invoke(new MessageBoxViewModel()
                     {
                         Title = "Export",
-                        Message = "An error occurred while attempting to import data.\n",
+                        Message = "An error occurred while attempting to import data.",
                         SecondaryMessage = ex.Message,
                         Icon = MessageBoxIcon.Error
                     });
@@ -2627,8 +2621,8 @@ public partial class MainViewModel : ViewModelBase
                     await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(new MessageBoxViewModel()
                     {
                         Title = "Update",
-                        Message = $"An error occurred while attempting to check for updates.\n\n{ex.GetInnermostException()?.Message}",
-                        IsCopyToClipboardVisible = false,
+                        Message = $"An error occurred while attempting to check for updates.",
+                        SecondaryMessage = ex.GetInnermostException()?.Message,
                         Icon = MessageBoxIcon.Error,
                     }));
                 }
@@ -2646,7 +2640,6 @@ public partial class MainViewModel : ViewModelBase
                     {
                         Title = "Update",
                         Message = $"An update has been released.\n\nNew version: {updateInfo.Version}\nCurrent version: {currentVer}\n",
-                        IsCopyToClipboardVisible = false,
                         Icon = MessageBoxIcon.Information,
                         Buttons = MessageBoxButton.OKCancel,
                         OKButtonContent = "_Download",
@@ -2701,7 +2694,7 @@ public partial class MainViewModel : ViewModelBase
                                 await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(new MessageBoxViewModel()
                                 {
                                     Title = "Update",
-                                    Message = $"An error occurred while attempting download the update.\n\n",
+                                    Message = $"An error occurred while attempting download the update.",
                                     SecondaryMessage = ex.Message,
                                     Icon = MessageBoxIcon.Error,
                                 }));
@@ -2721,14 +2714,13 @@ public partial class MainViewModel : ViewModelBase
                         {
                             Title = "Update",
                             Message = "No new updates have been released.",
-                            IsCopyToClipboardVisible = false,
                             Icon = MessageBoxIcon.Information,
                             CheckBoxContent = "_Automatically check for updates",
                             CheckBoxChecked = AutoUpdateCheck
                         };
 
                         var result = await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(msgBoxVM));
-                        if (result != null)
+                        if (result != null && result.DialogResult == true)
                         {
                             AutoUpdateCheck = result.CheckBoxChecked;
                         }

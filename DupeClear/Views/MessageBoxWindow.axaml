@@ -104,15 +104,14 @@
 			<ScrollViewer x:Name="MessageScrollViewer"
 						  Grid.Row="2"
 						  Grid.Column="1"
+						  Margin="0 16 0 0"
 						  MaxHeight="360"
 						  VerticalScrollBarVisibility="Auto"
 						  IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}">
 				<ScrollViewer.ContextMenu>
-					<ContextMenu x:Name="MessageContextMenu"
-								 Opening="MessageContextMenu_Opening">
+					<ContextMenu>
 						<MenuItem Header="_Copy to Clipboard"
 								  HotKey="Ctrl+C"
-								  IsVisible="{Binding IsCopyToClipboardVisible}"
 								  Command="{Binding CopyToClipboardCommand}">
 							<MenuItem.Icon>
 								<TextBlock VerticalAlignment="Center"
@@ -123,8 +122,7 @@
 					</ContextMenu>
 				</ScrollViewer.ContextMenu>
 
-				<TextBlock x:Name="MessageTextBox"
-						   Padding="0 0 24 0"
+				<TextBlock Padding="0 0 24 0"
 						   TextWrapping="Wrap"
 						   IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}"
 						   Text="{Binding SecondaryMessage}" />

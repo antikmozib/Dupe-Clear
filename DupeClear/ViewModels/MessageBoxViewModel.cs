@@ -47,8 +47,6 @@ public partial class MessageBoxViewModel : ViewModelBase
 
     public bool IsIconVisible => Icon != MessageBoxIcon.None;
 
-    public bool IsCopyToClipboardVisible { get; set; } = true;
-
     public MessageBoxButton Buttons { get; set; } = MessageBoxButton.OK;
 
     public string OKButtonContent { get; set; } = "_OK";
@@ -94,23 +92,13 @@ public partial class MessageBoxViewModel : ViewModelBase
         RaiseEvent(Closed);
     }
 
-    [RelayCommand(CanExecute = nameof(CanCopyToClipboard))]
+    [RelayCommand]
     private async Task CopyToClipboardAsync(object? arg)
     {
-        if (!CanCopyToClipboard(arg))
-        {
-            return;
-        }
-
         if (AsyncClipboardCopier != null)
         {
             await AsyncClipboardCopier.Invoke(SecondaryMessage);
         }
-    }
-
-    private bool CanCopyToClipboard(object? arg)
-    {
-        return IsCopyToClipboardVisible;
     }
 
     [RelayCommand]

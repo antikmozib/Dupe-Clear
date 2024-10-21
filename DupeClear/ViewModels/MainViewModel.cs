@@ -1572,7 +1572,7 @@ public partial class MainViewModel : ViewModelBase
 
     private bool CanMarkAll(object? arg)
     {
-        return !IsBusy && DuplicateFiles.Any(x => !x.IsMarked);
+        return !IsBusy && DuplicateFiles.Any(x => !x.IsDeleted && !x.IsMarked);
     }
 
     [RelayCommand(CanExecute = nameof(CanUnmarkAll))]

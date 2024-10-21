@@ -3,7 +3,7 @@
 #define Publisher "Antik Mozib"
 #define Url "https://mozib.io/dupeclear"
 #define ExeName "DupeClear.Desktop.exe"
-#define OutputFileName "DupeClear-" + Version + "-setup"
+#define SetupFileName "DupeClear-" + Version + "-setup"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -19,14 +19,14 @@ AppSupportURL={#Url}
 AppUpdatesURL={#Url}
 DefaultDirName={autopf}\{#Title}
 DefaultGroupName={#Title}
-LicenseFile=gpl-3.0.rtf
+LicenseFile={#SourcePath}\..\LICENSE
 OutputDir=output
-OutputBaseFilename={#OutputFileName}
+OutputBaseFilename={#SetupFileName}
 Compression=lzma
 SolidCompression=yes
 UsePreviousAppDir=True
 UninstallDisplayName={#Title}
-UninstallDisplayIcon={app}\{#Title}.exe
+UninstallDisplayIcon={app}\{#ExeName}
 WizardStyle=modern
 PrivilegesRequiredOverridesAllowed=commandline dialog
 CloseApplications=yes
@@ -39,6 +39,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "{#SourcePath}\..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\win-x86\*"; Excludes: "*.pdb"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#SourcePath}\..\LICENSE"; DestDir: "{app}"; Flags: 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -48,3 +49,52 @@ Name: "{autodesktop}\{#Title}"; Filename: "{app}\{#ExeName}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#ExeName}"; Description: "{cm:LaunchProgram,{#StringChange(Title, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
+[UninstallDelete]
+Type: dirifempty; Name: "{app}"
+
+[Code]
+function GetUninstallString(): String;
+var
+  UninstallPath : String;
+  UninstallString : String;
+begin
+  UninstallPath := ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\{#emit SetupSetting("AppId")}_is1');
+  UninstallString := '';
+  if not RegQueryStringValue(HKLM, UninstallPath, 'UninstallString', UninstallString) then
+    RegQueryStringValue(HKCU, UninstallPath, 'UninstallString', UninstallString);
+    
+  Result := UninstallString;
+end;
+
+function IsUpgrade(): Boolean;
+begin
+  Result := GetUninstallString() <> '';
+end;
+
+function UninstallOldVersion(): Integer;
+var
+  UninstallString : String;
+  ResultCode : Integer;
+begin
+  Result := 0;
+  UninstallString := GetUninstallString();
+  if UninstallString <> '' then 
+  begin
+    UninstallString := RemoveQuotes(UninstallString);
+  
+    if Exec(UninstallString, '/SILENT /NORESTART /SUPPRESSMSGBOXES', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+      Result := 3
+    else
+      Result := 2;
+  end 
+  else
+    Result := 1;
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssInstall then
+    if IsUpgrade() then
+      UninstallOldVersion();
+end;

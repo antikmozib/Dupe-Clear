@@ -29,8 +29,12 @@
 		<conv:IntToTrueConverter x:Key="IntToFalseConverter"
 								 Inverted="True" />
 		<conv:MessageBoxIconToValueConverter x:Key="MessageBoxIconToValueConverter" />
+		<conv:NullToTrueConverter x:Key="NullToTrueConverter" />
 		<conv:NullToTrueConverter x:Key="NullToFalseConverter"
 								  Inverted="True" />
+		<conv:TrueToScrollBarAutoVisibilityConverter x:Key="FalseToScrollBarAutoVisibilityConverter"
+													 Inverted="True" />
+		<conv:TrueToTextWrappingWrapConverter x:Key="TrueToTextWrappingWrapConverter" />
 		<system:Boolean x:Key="BoolFalse">False</system:Boolean>
 		<system:Boolean x:Key="BoolTrue">True</system:Boolean>
 	</Window.Resources>
@@ -41,7 +45,7 @@
 			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
 
-		<Grid Margin="16 16 32 40">
+		<Grid Margin="24">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="auto" />
 				<RowDefinition Height="auto" />
@@ -56,9 +60,37 @@
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
+			<Grid.Styles>
+				<Style Selector="ScrollViewer#SecondaryMessageScrollViewer">
+					<Setter Property="MaxHeight"
+							Value="162" />
+
+					<Setter Property="Margin"
+							Value="0 16 0 0" />
+
+					<Style Selector="^.ExtendedHeight">
+						<Setter Property="MaxHeight"
+								Value="270" />
+
+						<Setter Property="Margin"
+								Value="0" />
+					</Style>
+
+					<Style Selector="^ TextBlock#SecondaryMessageTextBlock[TextWrapping=Wrap]">
+						<Setter Property="Padding"
+								Value="0 0 24 0" />
+					</Style>
+
+					<Style Selector="^ TextBlock#SecondaryMessageTextBlock[TextWrapping=NoWrap]">
+						<Setter Property="Padding"
+								Value="0 0 24 24" />
+					</Style>
+				</Style>
+			</Grid.Styles>
+
 			<!--App icon-->
 			<Image Grid.RowSpan="6"
-				   Margin="0 0 16 0"
+				   Margin="0 0 8 0"
 				   VerticalAlignment="Top"
 				   Width="48"
 				   Height="48"
@@ -68,7 +100,7 @@
 
 			<!--Icon-->
 			<TextBlock Grid.RowSpan="6"
-					   Margin="0 0 16 0"
+					   Margin="0 0 8 0"
 					   VerticalAlignment="Top"
 					   FontSize="32"
 					   FontFamily="{StaticResource FontAwesomeSolid}"
@@ -101,13 +133,21 @@
 					   Text="{Binding Message}" />
 
 			<!--Secondary message-->
-			<ScrollViewer x:Name="MessageScrollViewer"
+			<ScrollViewer x:Name="SecondaryMessageScrollViewer"
 						  Grid.Row="2"
 						  Grid.Column="1"
-						  Margin="0 16 0 0"
-						  MaxHeight="153"
+						  HorizontalScrollBarVisibility="{Binding SecondaryMessageWrapped, Converter={StaticResource FalseToScrollBarAutoVisibilityConverter}}"
 						  VerticalScrollBarVisibility="Auto"
 						  IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}">
+				<Classes.ExtendedHeight>
+					<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+						<Binding Path="Header"
+								 Converter="{StaticResource NullToTrueConverter}" />
+						<Binding Path="Message"
+								 Converter="{StaticResource NullToTrueConverter}" />
+					</MultiBinding>
+				</Classes.ExtendedHeight>
+
 				<ScrollViewer.ContextMenu>
 					<ContextMenu>
 						<MenuItem Header="_Copy to Clipboard"
@@ -122,8 +162,8 @@
 					</ContextMenu>
 				</ScrollViewer.ContextMenu>
 
-				<TextBlock Padding="0 0 24 0"
-						   TextWrapping="Wrap"
+				<TextBlock x:Name="SecondaryMessageTextBlock"
+						   TextWrapping="{Binding SecondaryMessageWrapped, Converter={StaticResource TrueToTextWrappingWrapConverter}}"
 						   IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}"
 						   Text="{Binding SecondaryMessage}" />
 			</ScrollViewer>

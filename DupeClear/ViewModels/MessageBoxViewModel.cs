@@ -43,6 +43,8 @@ public partial class MessageBoxViewModel : ViewModelBase
 
     public string? SecondaryMessage { get; set; }
 
+    public bool SecondaryMessageWrapped { get; set; } = true;
+
     public MessageBoxIcon Icon { get; set; } = MessageBoxIcon.None;
 
     public bool IsIconVisible => Icon != MessageBoxIcon.None;

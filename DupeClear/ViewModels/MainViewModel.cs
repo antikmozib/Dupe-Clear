@@ -1098,7 +1098,7 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "At least one option from \"Match Same Filename\" and \"Match Same Contents\" must be specified.",
-                Icon = MessageBoxIcon.Error,
+                Icon = MessageBoxIcon.Error
             });
 
             return;
@@ -1132,7 +1132,7 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "The extensions must be of the valid format.",
-                Icon = MessageBoxIcon.Error,
+                Icon = MessageBoxIcon.Error
             });
 
             RaiseEvent(InvalidExtensionsToIncludeEntered);
@@ -1158,7 +1158,7 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "The extensions to exclude must be of the valid format.",
-                Icon = MessageBoxIcon.Error,
+                Icon = MessageBoxIcon.Error
             });
 
             RaiseEvent(InvalidExtensionsToExcludeEntered);
@@ -1179,7 +1179,7 @@ public partial class MainViewModel : ViewModelBase
             {
                 Title = "Invalid Search Criteria",
                 Message = "The selected dates must be valid and in the correct order.",
-                Icon = MessageBoxIcon.Error,
+                Icon = MessageBoxIcon.Error
             });
 
             return;
@@ -1351,8 +1351,9 @@ public partial class MainViewModel : ViewModelBase
                     MessageBox?.Invoke(new MessageBoxViewModel()
                     {
                         Title = "Exclusions",
-                        Message = $"The following {(result.ExcludedDirectories.Count > 1 ? "folders were" : "folder was")} excluded from the search:\n",
+                        Message = $"The following {(result.ExcludedDirectories.Count > 1 ? "folders were" : "folder was")} excluded from the search:",
                         SecondaryMessage = $"{string.Join("\n\n", result.ExcludedDirectories.Select(x => $"\t{x.FullName}"))}",
+                        SecondaryMessageWrapped = false
                     });
                 }),
                 CustomButton2Content = result.Errors.Count == 0 ? null : "View _Errors",
@@ -1361,7 +1362,8 @@ public partial class MainViewModel : ViewModelBase
                     MessageBox?.Invoke(new MessageBoxViewModel()
                     {
                         Title = "Errors",
-                        SecondaryMessage = string.Join("\n\n", result.Errors.Select(x => $"{x.Key}: {x.Value}"))
+                        SecondaryMessage = string.Join("\n\n", result.Errors.Select(x => $"{x.Key}: {x.Value}")),
+                        SecondaryMessageWrapped = false
                     });
                 })
             });
@@ -1636,6 +1638,7 @@ public partial class MainViewModel : ViewModelBase
                     Header = header.ToString(),
                     Message = message,
                     SecondaryMessage = secondaryMessage,
+                    SecondaryMessageWrapped = false,
                     Icon = MessageBoxIcon.Warning,
                     Buttons = MessageBoxButton.OKCancel,
                     DefaultButton = MessageBoxDefaultButton.Cancel,
@@ -1711,7 +1714,8 @@ public partial class MainViewModel : ViewModelBase
                         await MessageBox.Invoke(new MessageBoxViewModel()
                         {
                             Title = "Errors",
-                            SecondaryMessage = string.Join("\n\n", result.Errors.Select(x => $"{x.Key} - {x.Value}"))
+                            SecondaryMessage = string.Join("\n\n", result.Errors.Select(x => $"{x.Key} - {x.Value}")),
+                            SecondaryMessageWrapped = false
                         });
                     })
                 });
@@ -2255,6 +2259,23 @@ public partial class MainViewModel : ViewModelBase
                 Header = $"{name} v{version}",
                 Message = $"{copyright}",
                 Icon = MessageBoxIcon.AppIcon,
+                CustomButton1Content = "_License",
+                CustomButton1Action = new Action(() =>
+                {
+                    if (File.Exists("LICENSE"))
+                    {
+                        MessageBox?.Invoke(new MessageBoxViewModel()
+                        {
+                            Title = "License",
+                            SecondaryMessage = File.ReadAllText("LICENSE"),
+                            SecondaryMessageWrapped = false
+                        });
+                    }
+                    else
+                    {
+                        _fileService?.LaunchUrl(@"https://www.gnu.org/licenses/gpl-3.0.en.html#license-text");
+                    }
+                }),
                 HyperlinkButtonContent = Constants.AppHomepage,
                 HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(Constants.AppHomepage))
             });
@@ -2622,7 +2643,7 @@ public partial class MainViewModel : ViewModelBase
                         Title = "Update",
                         Message = $"An error occurred while attempting to check for updates.",
                         SecondaryMessage = ex.GetInnermostException()?.Message,
-                        Icon = MessageBoxIcon.Error,
+                        Icon = MessageBoxIcon.Error
                     }));
                 }
 
@@ -2643,7 +2664,7 @@ public partial class MainViewModel : ViewModelBase
                         Buttons = MessageBoxButton.OKCancel,
                         OKButtonContent = "_Download",
                         HyperlinkButtonContent = "Learn More",
-                        HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl)),
+                        HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl))
                     };
 
                     if (silent)
@@ -2695,7 +2716,7 @@ public partial class MainViewModel : ViewModelBase
                                     Title = "Update",
                                     Message = $"An error occurred while attempting download the update.",
                                     SecondaryMessage = ex.Message,
-                                    Icon = MessageBoxIcon.Error,
+                                    Icon = MessageBoxIcon.Error
                                 }));
                             }
                             finally

@@ -11,6 +11,7 @@
 		x:DataType="vm:MessageBoxViewModel"
 		Icon="/Assets/Icons/DupeClear.ico"
 		Title="{Binding Title}"
+		MaxWidth="640"
 		SizeToContent="WidthAndHeight"
 		CanResize="False"
 		ShowInTaskbar="False"
@@ -52,8 +53,7 @@
 
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="auto" />
-				<ColumnDefinition Width="*"
-								  MaxWidth="640" />
+				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
 			<!--App icon-->
@@ -105,7 +105,7 @@
 						  Grid.Row="2"
 						  Grid.Column="1"
 						  Margin="0 16 0 0"
-						  MaxHeight="360"
+						  MaxHeight="153"
 						  VerticalScrollBarVisibility="Auto"
 						  IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}">
 				<ScrollViewer.ContextMenu>

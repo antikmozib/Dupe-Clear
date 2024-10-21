@@ -824,11 +824,13 @@ public partial class MainViewModel : ViewModelBase
             }
         }
 
+        SelectedMarkingCriteria = MarkingCriteria.Custom;
         Dispatcher.UIThread.Invoke(() =>
         {
             ExportCommand.NotifyCanExecuteChanged();
             MarkAllCommand.NotifyCanExecuteChanged();
             UnmarkAllCommand.NotifyCanExecuteChanged();
+            DeleteMarkedFilesCommand.NotifyCanExecuteChanged();
             RefreshCommand.NotifyCanExecuteChanged();
         });
     }
@@ -837,12 +839,9 @@ public partial class MainViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
+            case nameof(DuplicateFile.IsDeleted):
             case nameof(DuplicateFile.IsMarked):
-                if (SelectedMarkingCriteria != MarkingCriteria.Custom)
-                {
-                    SelectedMarkingCriteria = MarkingCriteria.Custom;
-                }
-
+                SelectedMarkingCriteria = MarkingCriteria.Custom;
                 Dispatcher.UIThread.Invoke(() =>
                 {
                     MarkAllCommand.NotifyCanExecuteChanged();
@@ -850,18 +849,18 @@ public partial class MainViewModel : ViewModelBase
                     DeleteMarkedFilesCommand.NotifyCanExecuteChanged();
                 });
 
-                break;
-
-            case nameof(DuplicateFile.IsDeleted):
-                Dispatcher.UIThread.Invoke(() =>
+                if (e.PropertyName == nameof(DuplicateFile.IsDeleted))
                 {
-                    KeepEarliestCreatedCommand.NotifyCanExecuteChanged();
-                    KeepLatestCreatedCommand.NotifyCanExecuteChanged();
-                    KeepEarliestModifiedCommand.NotifyCanExecuteChanged();
-                    KeepLatestModifiedCommand.NotifyCanExecuteChanged();
-                    DeleteMarkedFilesCommand.NotifyCanExecuteChanged();
-                    OpenCommand.NotifyCanExecuteChanged();
-                });
+                    Dispatcher.UIThread.Invoke(() =>
+                    {
+                        KeepEarliestCreatedCommand.NotifyCanExecuteChanged();
+                        KeepLatestCreatedCommand.NotifyCanExecuteChanged();
+                        KeepEarliestModifiedCommand.NotifyCanExecuteChanged();
+                        KeepLatestModifiedCommand.NotifyCanExecuteChanged();
+                        DeleteMarkedFilesCommand.NotifyCanExecuteChanged();
+                        OpenCommand.NotifyCanExecuteChanged();
+                    });
+                }
 
                 break;
 

@@ -38,7 +38,7 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public string? Hash { get; set; }
 
-    public bool IsDeleted => !File.Exists(FullName);
+    public bool IsDeleted => File.Exists(FullName) == false;
 
     public bool IsHidden { get; }
 

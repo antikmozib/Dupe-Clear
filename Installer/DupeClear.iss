@@ -72,8 +72,8 @@ Type: dirifempty; Name: "{app}"
 [Code]
 function GetUninstallString(): String;
 var
-  UninstallPath : String;
-  UninstallString : String;
+  UninstallPath: String;
+  UninstallString: String;
 begin
   UninstallPath := ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\{#emit SetupSetting("AppId")}_is1');
   UninstallString := '';
@@ -88,10 +88,11 @@ begin
   Result := GetUninstallString() <> '';
 end;
 
+// Uninstall previous versions of the app when updating.
 function UninstallOldVersion(): Integer;
 var
-  UninstallString : String;
-  ResultCode : Integer;
+  UninstallString: String;
+  ResultCode: Integer;
 begin
   Result := 0;
   UninstallString := GetUninstallString();

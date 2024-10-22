@@ -15,7 +15,10 @@ A duplicate file cleaner for Windows and Linux.
 
 Download and run the setup program and follow its instructions.
 
+### Linux
+
+Prebuilt binaries are not provided, and the application must be built from the source. Follow the instructions provided below.
+
 ## Building
 
-Open the .sln file in Visual Studio 2022 or later, and press F5.  
-`DupeClear.Desktop` must be set as the startup project to run the application.
+Clone the repository, `cd` into the root directory and execute `dotnet build DupeClear.Desktop`.

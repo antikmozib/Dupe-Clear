@@ -1,9 +1,20 @@
+#ifdef X64
+  #define FilesPath "win-x64"
+#else
+  #define FilesPath "win-x86"
+#endif
+
 #define Title "Dupe Clear"
-#define Version GetVersionNumbersString("..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\win-x86\DupeClear.Desktop.exe")
+#define Version GetVersionNumbersString("..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\" + FilesPath + "\DupeClear.Desktop.exe")
 #define Publisher "Antik Mozib"
 #define Url "https://mozib.io/dupeclear"
 #define ExeName "DupeClear.Desktop.exe"
-#define SetupFileName "DupeClear-" + Version + "-setup"
+
+#ifdef X64
+  #define SetupFileName "DupeClear-" + Version + "_x64-setup"
+#else
+  #define SetupFileName "DupeClear-" + Version + "_x86-setup"
+#endif
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -31,6 +42,11 @@ WizardStyle=modern
 PrivilegesRequiredOverridesAllowed=commandline dialog
 CloseApplications=yes
 
+#ifdef X64
+  ArchitecturesAllowed=x64compatible
+  ArchitecturesInstallIn64BitMode=x64compatible
+#endif
+
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
@@ -38,7 +54,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: 
 
 [Files]
-Source: "{#SourcePath}\..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\win-x86\*"; Excludes: "*.pdb"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#SourcePath}\..\DupeClear.Desktop\bin\Release\net8.0-windows\publish\{#FilesPath}\*"; Excludes: "*.pdb"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#SourcePath}\..\LICENSE"; DestDir: "{app}"; Flags: 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -83,7 +99,7 @@ begin
   begin
     UninstallString := RemoveQuotes(UninstallString);
   
-    if Exec(UninstallString, '/SILENT /NORESTART /SUPPRESSMSGBOXES', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+    if Exec(UninstallString, '/VERYSILENT /NORESTART /SUPPRESSMSGBOXES', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
       Result := 3
     else
       Result := 2;

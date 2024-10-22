@@ -20,9 +20,6 @@
     <PackageReference Include="Avalonia.Desktop" Version="11.1.4" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\PublishProfiles\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DupeClear\DupeClear.csproj" />
   </ItemGroup>
 </Project>

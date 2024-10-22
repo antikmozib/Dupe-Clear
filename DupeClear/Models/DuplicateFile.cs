@@ -129,14 +129,14 @@ public class DuplicateFile : INotifyPropertyChanged
         {
             _fileService = fileService;
 
-            var fileInfo = new FileInfo(fullName);
+            var fi = new FileInfo(fullName);
 
             FullName = fullName;
-            Created = created ?? fileInfo.CreationTime;
-            IsHidden = isHidden ?? fileInfo.Attributes.HasFlag(FileAttributes.Hidden);
-            IsSystemFile = isSystemFile ?? fileInfo.Attributes.HasFlag(FileAttributes.System);
-            Length = length ?? fileInfo.Length;
-            Modified = modified ?? fileInfo.LastWriteTime;
+            Created = created ?? fi.CreationTime;
+            IsHidden = isHidden ?? fi.Attributes.HasFlag(FileAttributes.Hidden);
+            IsSystemFile = isSystemFile ?? fi.Attributes.HasFlag(FileAttributes.System);
+            Length = length ?? fi.Length;
+            Modified = modified ?? fi.LastWriteTime;
             DirectoryName = Path.GetDirectoryName(fullName);
             Name = Path.GetFileName(fullName);
             Type = _fileService?.GetFileDescription(fullName);

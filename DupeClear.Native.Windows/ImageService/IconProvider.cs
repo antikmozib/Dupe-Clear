@@ -40,7 +40,7 @@ internal static class IconProvider
             {
                 System.Drawing.Bitmap? bitmap;
                 System.Drawing.Icon? icon;
-                var shFileInfo = new Shell32.SHFILEINFO();
+                var shfi = new Shell32.SHFILEINFO();
                 var attrs = Shell32.FILE_ATTRIBUTE_DIRECTORY;
                 var flags = Shell32.SHGFI.Icon | Shell32.SHGFI.LargeIcon;
                 if (!isDirectory)
@@ -50,15 +50,15 @@ internal static class IconProvider
                 }
 
                 // Fetch the icon.
-                Shell32.SHGetFileInfo(path, attrs, ref shFileInfo, (uint)Marshal.SizeOf(shFileInfo), flags);
+                Shell32.SHGetFileInfo(path, attrs, ref shfi, (uint)Marshal.SizeOf(shfi), flags);
 
-                icon = System.Drawing.Icon.FromHandle(shFileInfo.hIcon);
+                icon = System.Drawing.Icon.FromHandle(shfi.hIcon);
 
                 // Create the image from the icon.
                 bitmap = icon.ToBitmap();
 
                 // Perform cleanup.
-                User32.DestroyIcon(shFileInfo.hIcon);
+                User32.DestroyIcon(shfi.hIcon);
                 if (tempFileCreated)
                 {
                     File.Delete(path);

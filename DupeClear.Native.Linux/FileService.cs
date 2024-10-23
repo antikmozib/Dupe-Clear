@@ -33,7 +33,7 @@ public class FileService : IFileService
         }
     }
 
-    public void MoveToRecycleBin(string? fileName)
+    public bool MoveToRecycleBin(string? fileName)
     {
         // Linux trash spec: https://cgit.freedesktop.org/xdg/xdg-specs/tree/trash/trash-spec.xml
         // Trashing a file in Linux is a two-step process:
@@ -91,6 +91,8 @@ public class FileService : IFileService
             File.Move(fileName, Path.Combine(trashFilesDir, trashFileName));
             File.WriteAllText(Path.Combine(trashInfoDir, $"{trashFileName}.trashinfo"), trashInfoContents);
         }
+
+        return true;
     }
 
     public string GetFileDescription(string? fileName)

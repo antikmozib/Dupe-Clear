@@ -15,7 +15,12 @@ public interface IFileService
 
     void LaunchContainingDirectory(string? fileName);
 
-    void MoveToRecycleBin(string? fileName);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="fileName"></param>
+    /// <returns><see langword="true"/> if the file was deleted or didn't exist; <see langword="false"/> otherwise</returns>
+    bool MoveToRecycleBin(string? fileName);
 
     string GetFileDescription(string? fileName);
 

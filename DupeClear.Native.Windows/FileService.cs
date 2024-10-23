@@ -51,7 +51,7 @@ namespace DupeClear.Native.Windows
             LaunchFile(explorerParam);
         }
 
-        public void MoveToRecycleBin(string? fileName)
+        public bool MoveToRecycleBin(string? fileName)
         {
             if (!string.IsNullOrWhiteSpace(fileName))
             {
@@ -61,6 +61,8 @@ namespace DupeClear.Native.Windows
                     Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin,
                     Microsoft.VisualBasic.FileIO.UICancelOption.DoNothing);
             }
+
+            return true;
         }
 
         public string GetFileDescription(string? fileName)

@@ -42,11 +42,11 @@ internal static class IconProvider
                 System.Drawing.Icon? icon;
                 var shfi = new Shell32.SHFILEINFO();
                 var attrs = Shell32.FILE_ATTRIBUTE_DIRECTORY;
-                var flags = Shell32.SHGFI.Icon | Shell32.SHGFI.LargeIcon;
+                var flags = Shell32.SHGFI_FLAGS.SHGFI_ICON | Shell32.SHGFI_FLAGS.SHGFI_LARGEICON;
                 if (!isDirectory)
                 {
                     attrs = Shell32.FILE_ATTRIBUTE_NORMAL;
-                    flags |= Shell32.SHGFI.UseFileAttributes;
+                    flags |= Shell32.SHGFI_FLAGS.SHGFI_USEFILEATTRIBUTES;
                 }
 
                 // Fetch the icon.

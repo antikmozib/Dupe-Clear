@@ -78,13 +78,14 @@ namespace DupeClear.Native.Windows
                         return description;
                     }
 
-                    Shell32.SHFILEINFO shfi = new Shell32.SHFILEINFO();
-                    if (IntPtr.Zero != Shell32.SHGetFileInfo(
+                    var shfi = new Shell32.SHFILEINFO();
+                    var result = Shell32.SHGetFileInfo(
                         ext,
                         Shell32.FILE_ATTRIBUTE_NORMAL,
                         ref shfi,
                         (uint)Marshal.SizeOf(typeof(Shell32.SHFILEINFO)),
-                        Shell32.SHGFI.UseFileAttributes | Shell32.SHGFI.TypeName))
+                        Shell32.SHGFI_FLAGS.SHGFI_USEFILEATTRIBUTES | Shell32.SHGFI_FLAGS.SHGFI_TYPENAME);
+                    if (result != 0)
                     {
                         _fileExtensionsToDescriptions.TryAdd(ext, shfi.szTypeName);
 

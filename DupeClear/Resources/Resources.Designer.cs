@@ -92,9 +92,9 @@ namespace DupeClear.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Match files whose names match the specified regular expressions pattern
+        ///   Looks up a localized string similar to Match files whose names (excluding extensions) match the specified regular expressions pattern
         ///
-        ///&quot;Match same filename&quot; must be selected before a filename pattern can be specified.
+        ///&quot;Match Same Filename&quot; must be selected before a filename pattern can be specified.
         /// </summary>
         public static string FileNamePatternToolTip {
             get {
@@ -116,7 +116,7 @@ namespace DupeClear.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Match files based on their MD5 checksums
         ///
-        ///&quot;Match same size&quot; must be selected before this option can be selected.
+        ///&quot;Match Same Size&quot; must be selected before this option can be selected.
         /// </summary>
         public static string MatchSameContentsToolTip {
             get {

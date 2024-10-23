@@ -2257,8 +2257,7 @@ public partial class MainViewModel : ViewModelBase
             MessageBox?.Invoke(new MessageBoxViewModel()
             {
                 Title = "About",
-                Header = $"{name} v{version}",
-                Message = $"{copyright}",
+                Message = $"{name} v{version}\n\n{copyright}",
                 Icon = MessageBoxIcon.AppIcon,
                 CustomButton1Content = "_License",
                 CustomButton1Action = new Action(() =>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FileNamePatternToolTip" xml:space="preserve">
-    <value>Match files whose names match the specified regular expressions pattern
+    <value>Match files whose names (excluding extensions) match the specified regular expressions pattern
 
 "Match Same Filename" must be selected before a filename pattern can be specified</value>
   </data>

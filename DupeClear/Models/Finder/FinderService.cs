@@ -11,9 +11,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DupeClear.Models;
+namespace DupeClear.Models.Finder;
 
-public class Finder
+public class FinderService
 {
     private static async Task<IEnumerable<SearchDirectory>> ListDirectoriesAsync(
         string path,

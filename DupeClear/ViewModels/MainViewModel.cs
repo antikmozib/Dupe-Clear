@@ -9,6 +9,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using DupeClear.Helpers;
 using DupeClear.Models;
+using DupeClear.Models.Finder;
 using DupeClear.Models.MessageBox;
 using DupeClear.Models.Serializable;
 using DupeClear.Native;
@@ -1233,7 +1234,7 @@ public partial class MainViewModel : ViewModelBase
         {
             await Task.Run(async () =>
             {
-                result = await Finder.FindAsync(
+                result = await FinderService.FindAsync(
                     IncludedDirectories.Where(x => x.IsMarked),
                     ExcludedDirectories.Where(x => x.IsMarked),
                     _finderOptions,
@@ -1682,7 +1683,7 @@ public partial class MainViewModel : ViewModelBase
             {
                 try
                 {
-                    result = await Finder.DeleteFilesAsync(
+                    result = await FinderService.DeleteFilesAsync(
                         DuplicateFiles.Where(x => x.IsMarked),
                         _fileService,
                         new Progress<FinderProgress>(p => dfProgress = p),

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace DupeClear.Models;
+namespace DupeClear.Models.Finder;
 
 public class FinderResult
 {

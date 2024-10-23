@@ -2,7 +2,7 @@
 
 using System;
 
-namespace DupeClear.Models;
+namespace DupeClear.Models.Finder;
 
 [Flags]
 public enum FinderOption

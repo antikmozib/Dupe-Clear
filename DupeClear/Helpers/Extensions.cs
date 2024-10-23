@@ -2,7 +2,7 @@
 
 using Avalonia;
 using Avalonia.VisualTree;
-using DupeClear.Models;
+using DupeClear.Models.Finder;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -24,6 +24,7 @@
 
 	<Window.Resources>
 		<conv:AllTrueToTrueConverter x:Key="AllTrueToTrueConverter" />
+		<conv:OneTrueToTrueConverter x:Key="OneTrueToTrueConverter" />
 		<conv:BoolToInvertedBoolConverter x:Key="BoolToInvertedBoolConverter" />
 		<conv:IntToTrueConverter x:Key="IntToTrueConverter" />
 		<conv:IntToTrueConverter x:Key="IntToFalseConverter"
@@ -201,7 +202,7 @@
 						<Setter Property="MaxWidth"
 								Value="176" />
 						<Setter Property="MinWidth"
-								Value="88" />
+								Value="80" />
 					</Style>
 
 					<Style Selector="Button[IsDefault=True]">
@@ -211,22 +212,69 @@
 						<Setter Property="Foreground"
 								Value="{DynamicResource DupeClearMessageBoxDefaultButtonForegroundBrush}" />
 					</Style>
+
+					<Style Selector="Button#PrimaryButton">
+						<Setter Property="Content"
+								Value="{Binding YesButtonContent}" />
+						<Style Selector="^.OKButton">
+							<Setter Property="Content"
+									Value="{Binding OKButtonContent}" />
+						</Style>
+					</Style>
 				</StackPanel.Styles>
 
-				<Border Width="88" />
+				<Border Width="80" />
 
-				<!--OK-->
-				<Button Content="{Binding OKButtonContent}"
-						IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.OK}}"
+				<!--OK/Yes-->
+				<Button x:Name="PrimaryButton"
+						IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.Auto}}"
 						IsCancel="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.OK}}"
-						Command="{Binding OKButtonCommand}" />
+						Command="{Binding PrimaryButtonCommand}">
+					<Classes.OKButton>
+						<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+							<Binding Path="Buttons"
+									 Converter="{StaticResource IntToTrueConverter}"
+									 ConverterParameter="{x:Static msgbox:MessageBoxButton.OK}" />
+							<Binding Path="Buttons"
+									 Converter="{StaticResource IntToTrueConverter}"
+									 ConverterParameter="{x:Static msgbox:MessageBoxButton.OKCancel}" />
+						</MultiBinding>
+					</Classes.OKButton>
+				</Button>
+
+				<!--No-->
+				<Button Content="{Binding NoButtonContent}"
+						IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.No}}"
+						IsCancel="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.YesNo}}"
+						Command="{Binding NoButtonCommand}">
+					<Button.IsVisible>
+						<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+							<Binding Path="Buttons"
+									 Converter="{StaticResource IntToTrueConverter}"
+									 ConverterParameter="{x:Static msgbox:MessageBoxButton.YesNo}" />
+							<Binding Path="Buttons"
+									 Converter="{StaticResource IntToTrueConverter}"
+									 ConverterParameter="{x:Static msgbox:MessageBoxButton.YesNoCancel}" />
+						</MultiBinding>
+					</Button.IsVisible>
+				</Button>
 
 				<!--Cancel-->
 				<Button Content="{Binding CancelButtonContent}"
-						IsVisible="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.OKCancel}}"
 						IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.Cancel}}"
 						IsCancel="True"
-						Command="{Binding CancelButtonCommand}" />
+						Command="{Binding CancelButtonCommand}" >
+					<Button.IsVisible>
+						<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+							<Binding Path="Buttons"
+									 Converter="{StaticResource IntToTrueConverter}"
+									 ConverterParameter="{x:Static msgbox:MessageBoxButton.OKCancel}" />
+							<Binding Path="Buttons"
+									 Converter="{StaticResource IntToTrueConverter}"
+									 ConverterParameter="{x:Static msgbox:MessageBoxButton.YesNoCancel}" />
+						</MultiBinding>
+					</Button.IsVisible>
+				</Button>
 
 				<!--Custom button 1-->
 				<Button Content="{Binding CustomButton1Content}"

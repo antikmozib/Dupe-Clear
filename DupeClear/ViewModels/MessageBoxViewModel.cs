@@ -13,6 +13,8 @@ public partial class MessageBoxViewModel : ViewModelBase
 {
     private readonly string? _appTitle;
 
+    private string? _primaryButtonContent;
+
     public Func<string?, Task>? AsyncClipboardCopier { get; set; } = null;
 
     private string? _title;
@@ -47,15 +49,68 @@ public partial class MessageBoxViewModel : ViewModelBase
 
     public MessageBoxIcon Icon { get; set; } = MessageBoxIcon.None;
 
-    public bool IsIconVisible => Icon != MessageBoxIcon.None;
-
     public MessageBoxButton Buttons { get; set; } = MessageBoxButton.OK;
 
-    public string OKButtonContent { get; set; } = "_OK";
+    public string? OKButtonContent
+    {
+        get => GetPrimaryButtonContent();
+        set
+        {
+            if (_primaryButtonContent != value)
+            {
+                _primaryButtonContent = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public string? YesButtonContent
+    {
+        get => GetPrimaryButtonContent();
+        set
+        {
+            if (_primaryButtonContent != value)
+            {
+                _primaryButtonContent = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    /*private string? _yesButtonContent;
+    public string? YesButtonContent
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_yesButtonContent))
+            {
+                if (Buttons == MessageBoxButton.OK || Buttons == MessageBoxButton.OKCancel)
+                {
+                    YesButtonContent = "_OK";
+                }
+                else
+                {
+                    YesButtonContent = "_Yes";
+                }
+            }
+
+            return _yesButtonContent;
+        }
+        set
+        {
+            if (_yesButtonContent != value)
+            {
+                _yesButtonContent = value;
+                OnPropertyChanged();
+            }
+        }
+    }*/
+
+    public string NoButtonContent { get; set; } = "_No";
 
     public string CancelButtonContent { get; set; } = "_Cancel";
 
-    public MessageBoxDefaultButton DefaultButton { get; set; } = MessageBoxDefaultButton.OK;
+    public MessageBoxDefaultButton DefaultButton { get; set; } = MessageBoxDefaultButton.Auto;
 
     public string? HyperlinkButtonContent { get; set; }
 
@@ -103,16 +158,32 @@ public partial class MessageBoxViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// The Yes or OK button command.
+    /// </summary>
+    /// <param name="arg"></param>
     [RelayCommand]
-    private void OKButton(object? arg)
+    private void PrimaryButton(object? arg)
     {
         Close(true);
     }
 
     [RelayCommand]
-    private void CancelButton(object? arg)
+    private void NoButton(object? arg)
     {
         Close(false);
+    }
+
+    [RelayCommand]
+    private void CancelButton(object? arg)
+    {
+        bool? dialogResult = false;
+        if (Buttons == MessageBoxButton.YesNoCancel)
+        {
+            dialogResult = null;
+        }
+
+        Close(dialogResult);
     }
 
     [RelayCommand]
@@ -131,6 +202,16 @@ public partial class MessageBoxViewModel : ViewModelBase
     private void CustomButton2(object? arg)
     {
         CustomButton2Action?.Invoke();
+    }
+
+    private string GetPrimaryButtonContent()
+    {
+        if (string.IsNullOrEmpty(_primaryButtonContent))
+        {
+            _primaryButtonContent = Buttons == MessageBoxButton.OK || Buttons == MessageBoxButton.OKCancel ? "_OK" : "_Yes";
+        }
+
+        return _primaryButtonContent;
     }
 
     protected void RaiseEvent(EventHandler? handler)

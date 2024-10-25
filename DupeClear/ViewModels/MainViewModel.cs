@@ -1642,10 +1642,8 @@ public partial class MainViewModel : ViewModelBase
                     SecondaryMessage = secondaryMessage,
                     SecondaryMessageWrapped = false,
                     Icon = MessageBoxIcon.Warning,
-                    Buttons = MessageBoxButton.OKCancel,
-                    DefaultButton = MessageBoxDefaultButton.Cancel,
-                    OKButtonContent = "_Yes",
-                    CancelButtonContent = "_No"
+                    Buttons = MessageBoxButton.YesNo,
+                    DefaultButton = MessageBoxDefaultButton.No,
                 });
 
                 if (msgBoxResult?.DialogResult != true)
@@ -1842,10 +1840,8 @@ public partial class MainViewModel : ViewModelBase
                     Title = "Open",
                     Message = $"Open {count} files?",
                     Icon = MessageBoxIcon.Warning,
-                    Buttons = MessageBoxButton.OKCancel,
-                    OKButtonContent = "_Yes",
-                    CancelButtonContent = "_No",
-                    DefaultButton = MessageBoxDefaultButton.Cancel
+                    Buttons = MessageBoxButton.YesNo,
+                    DefaultButton = MessageBoxDefaultButton.No
                 });
 
                 if (msgBoxResult?.DialogResult != true)
@@ -1885,10 +1881,8 @@ public partial class MainViewModel : ViewModelBase
                     Title = "Open Containing Folder",
                     Message = $"Open {count} folders?",
                     Icon = MessageBoxIcon.Warning,
-                    Buttons = MessageBoxButton.OKCancel,
-                    OKButtonContent = "_Yes",
-                    CancelButtonContent = "_No",
-                    DefaultButton = MessageBoxDefaultButton.Cancel
+                    Buttons = MessageBoxButton.YesNo,
+                    DefaultButton = MessageBoxDefaultButton.No
                 });
 
                 if (msgBoxResult?.DialogResult != true)
@@ -2012,22 +2006,20 @@ public partial class MainViewModel : ViewModelBase
                         SecondaryMessage = string.Join('\n', dirsOfFilesFromSubdirs),
                         SecondaryMessageWrapped = false,
                         Icon = MessageBoxIcon.Warning,
-                        Buttons = MessageBoxButton.OKCancel,
-                        OKButtonContent = "_Yes",
-                        CancelButtonContent = "_No",
-                        CustomButton1Content = "_Cancel"
+                        Buttons = MessageBoxButton.YesNoCancel,
                     };
 
-                    msgBoxVM.CustomButton1Action = new Action(() => msgBoxVM.Close());
                     var confirm = await MessageBox.Invoke(msgBoxVM);
-                    if (confirm == null || confirm.DialogResult == null)
+                    if (confirm != null)
                     {
-                        return;
-                    }
-
-                    if (confirm != null && confirm.DialogResult == true)
-                    {
-                        includeFilesFromSubdirs = true;
+                        if (confirm.DialogResult == null)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            includeFilesFromSubdirs = confirm.DialogResult.Value;
+                        }
                     }
                 }
             }
@@ -2254,10 +2246,8 @@ public partial class MainViewModel : ViewModelBase
                     Title = "Exit",
                     Message = "Search operation in progress.\n\nCancel and exit program?",
                     Icon = MessageBoxIcon.Question,
-                    Buttons = MessageBoxButton.OKCancel,
-                    OKButtonContent = "_Yes",
-                    CancelButtonContent = "_No",
-                    DefaultButton = MessageBoxDefaultButton.Cancel
+                    Buttons = MessageBoxButton.YesNo,
+                    DefaultButton = MessageBoxDefaultButton.No
                 });
 
                 if (msgBoxResult?.DialogResult != true)

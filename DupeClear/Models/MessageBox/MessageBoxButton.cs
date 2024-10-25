@@ -6,5 +6,9 @@ public enum MessageBoxButton
 {
     OK,
 
-    OKCancel
+    OKCancel,
+
+    YesNo,
+
+    YesNoCancel
 }

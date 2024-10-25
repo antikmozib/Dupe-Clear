@@ -26,8 +26,8 @@
     <ProjectReference Include="..\DupeClear.Native\DupeClear.Native.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AppUpdateService">
-      <HintPath>..\Libraries\AppUpdateService.dll</HintPath>
+    <Reference Include="AppUpdater">
+      <HintPath>..\Libraries\AppUpdater.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

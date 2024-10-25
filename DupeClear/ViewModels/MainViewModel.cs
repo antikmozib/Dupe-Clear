@@ -1,7 +1,8 @@
 ﻿// Copyright (C) 2024 Antik Mozib. All rights reserved.
 
-using AppUpdateService;
-using AppUpdateService.Models;
+using AntikMozib.AppUpdater;
+using AntikMozib.AppUpdater.Helpers;
+using AntikMozib.AppUpdater.Models;
 using Avalonia;
 using Avalonia.Media.Imaging;
 using Avalonia.Styling;
@@ -51,7 +52,7 @@ public partial class MainViewModel : ViewModelBase
 
     private readonly IFileService? _fileService;
 
-    private readonly Updater _updateService = new Updater("Dupe Clear", Constants.UpdateApiAddress);
+    private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider("Dupe Clear", Constants.UpdateApiAddress);
 
     private FinderOption _finderOptions;
 
@@ -2653,7 +2654,7 @@ public partial class MainViewModel : ViewModelBase
             var currentVer = Assembly.GetEntryAssembly()?.GetName().Version;
             if (currentVer != null)
             {
-                var updateable = Updater.IsUpdateAvailable(updateInfo, currentVer);
+                var updateable = updateInfo.IsNewerThan(currentVer);
                 if (updateable)
                 {
                     var msgBoxVM = new MessageBoxViewModel()

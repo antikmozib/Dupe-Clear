@@ -2306,12 +2306,16 @@ public partial class MainViewModel : ViewModelBase
                 CustomButton1Content = "_License",
                 CustomButton1Action = new Action(() =>
                 {
-                    if (File.Exists("LICENSE"))
+                    string licenseFile = "LICENSE";
+#if DEBUG
+                    licenseFile = "../../../../LICENSE";
+#endif
+                    if (File.Exists(licenseFile))
                     {
                         MessageBox?.Invoke(new MessageBoxViewModel()
                         {
                             Title = "License",
-                            SecondaryMessage = File.ReadAllText("LICENSE"),
+                            SecondaryMessage = File.ReadAllText(licenseFile),
                             SecondaryMessageWrapped = false
                         });
                     }

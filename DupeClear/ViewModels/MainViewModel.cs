@@ -1988,17 +1988,60 @@ public partial class MainViewModel : ViewModelBase
     {
         if (arg is IList items)
         {
+            var selectedFiles = items.Cast<DuplicateFile>();
+            var dirsToRemove = selectedFiles.Select(x => x.DirectoryName).Distinct();
+            var filesToRemove = new List<DuplicateFile>();
+            var filesFromSubdirs = DuplicateFiles.Where(x =>
+                !selectedFiles.Contains(x)
+                && dirsToRemove.Any(y =>
+                    !string.IsNullOrEmpty(y)
+                    && string.Compare(y, x.DirectoryName, true) != 0
+                    && x.DirectoryName.IsSameAsOrSubdirectoryOf(y))
+                && !selectedFiles.Any(y => string.Compare(y.DirectoryName, x.DirectoryName) == 0));
+            var dirsOfFilesFromSubdirs = filesFromSubdirs.Select(x => x.DirectoryName).Distinct();
+            var includeFilesFromSubdirs = false;
+
+            if (filesFromSubdirs.Any())
+            {
+                if (MessageBox != null)
+                {
+                    var msgBoxVM = new MessageBoxViewModel()
+                    {
+                        Title = "Delist",
+                        Message = $"Delist files from the following folder{(dirsOfFilesFromSubdirs.Count() > 1 ? "s" : "")} as well?",
+                        SecondaryMessage = string.Join('\n', dirsOfFilesFromSubdirs),
+                        SecondaryMessageWrapped = false,
+                        Icon = MessageBoxIcon.Warning,
+                        Buttons = MessageBoxButton.OKCancel,
+                        OKButtonContent = "_Yes",
+                        CancelButtonContent = "_No",
+                        CustomButton1Content = "_Cancel"
+                    };
+
+                    msgBoxVM.CustomButton1Action = new Action(() => msgBoxVM.Close());
+                    var confirm = await MessageBox.Invoke(msgBoxVM);
+                    if (confirm == null || confirm.DialogResult == null)
+                    {
+                        return;
+                    }
+
+                    if (confirm != null && confirm.DialogResult == true)
+                    {
+                        includeFilesFromSubdirs = true;
+                    }
+                }
+            }
+
             SetBusy("Delisting...");
             await Task.Run(async () =>
             {
-                var dirsToRemove = items.Cast<DuplicateFile>().Select(x => x.DirectoryName).Distinct();
-                var filesToRemove = new List<DuplicateFile>();
                 foreach (var dir in dirsToRemove)
                 {
                     filesToRemove.AddRange(
                         DuplicateFiles.Where(x => !string.IsNullOrWhiteSpace(x.DirectoryName)
                             && !string.IsNullOrWhiteSpace(dir)
-                            && (string.Compare(x.DirectoryName, dir, true) == 0 || x.DirectoryName.IsSubdirectoryOf(dir))));
+                            && ((includeFilesFromSubdirs && x.DirectoryName.IsSameAsOrSubdirectoryOf(dir))
+                                || !includeFilesFromSubdirs && string.Compare(x.DirectoryName, dir, true) == 0)));
                 }
 
                 await Dispatcher.UIThread.InvokeAsync(() => filesToRemove.Distinct().ForEach(f => DuplicateFiles.Remove(f)));
@@ -2424,7 +2467,7 @@ public partial class MainViewModel : ViewModelBase
 
             if (excludedDir.IncludeSubdirectories)
             {
-                if (directory.FullName.IsSubdirectoryOf(excludedDir.FullName))
+                if (directory.FullName.IsSameAsOrSubdirectoryOf(excludedDir.FullName))
                 {
                     return true;
                 }

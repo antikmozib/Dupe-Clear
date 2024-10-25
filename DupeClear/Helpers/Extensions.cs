@@ -189,11 +189,22 @@ public static class Extensions
         }
     }
 
-    public static bool IsSubdirectoryOf(this string current, string compareAgainst)
+    public static bool IsSameAsOrSubdirectoryOf(this string? current, string? compareAgainst)
     {
-        var dir = Path.GetFullPath(current);
-        var parentDir = Path.GetFullPath(compareAgainst).TrimEnd(Path.DirectorySeparatorChar).Append(Path.DirectorySeparatorChar);
+        if (!string.IsNullOrEmpty(current) && !string.IsNullOrEmpty(compareAgainst))
+        {
+            var dir = string.Concat(Path
+                .GetFullPath(current)
+                .TrimEnd(Path.DirectorySeparatorChar)
+                .Append(Path.DirectorySeparatorChar));
+            var parentDir = string.Concat(Path
+                .GetFullPath(compareAgainst)
+                .TrimEnd(Path.DirectorySeparatorChar)
+                .Append(Path.DirectorySeparatorChar));
 
-        return dir.StartsWith(new string(parentDir.ToArray()), StringComparison.OrdinalIgnoreCase);
+            return dir.StartsWith(parentDir, StringComparison.OrdinalIgnoreCase);
+        }
+
+        return false;
     }
 }

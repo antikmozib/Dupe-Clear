@@ -356,8 +356,8 @@ public partial class MainViewModel : ViewModelBase
                     ImportCommand.NotifyCanExecuteChanged();
                     OpenCommand.NotifyCanExecuteChanged();
                     OpenContainingFolderCommand.NotifyCanExecuteChanged();
-                    RemoveFromListCommand.NotifyCanExecuteChanged();
-                    RemoveGroupFromListCommand.NotifyCanExecuteChanged();
+                    DelistCommand.NotifyCanExecuteChanged();
+                    DelistGroupCommand.NotifyCanExecuteChanged();
                     MarkAllFromThisDirectoryCommand.NotifyCanExecuteChanged();
                     UnmarkAllFromThisDirectoryCommand.NotifyCanExecuteChanged();
                     ApplyMarkingToSelectedSearchResultsCommand.NotifyCanExecuteChanged();
@@ -587,8 +587,8 @@ public partial class MainViewModel : ViewModelBase
 
                 OpenCommand.NotifyCanExecuteChanged();
                 OpenContainingFolderCommand.NotifyCanExecuteChanged();
-                RemoveFromListCommand.NotifyCanExecuteChanged();
-                RemoveGroupFromListCommand.NotifyCanExecuteChanged();
+                DelistCommand.NotifyCanExecuteChanged();
+                DelistGroupCommand.NotifyCanExecuteChanged();
                 MarkAllFromThisDirectoryCommand.NotifyCanExecuteChanged();
                 UnmarkAllFromThisDirectoryCommand.NotifyCanExecuteChanged();
 
@@ -1909,17 +1909,17 @@ public partial class MainViewModel : ViewModelBase
         return !IsBusy && arg != null;
     }
 
-    [RelayCommand(CanExecute = nameof(CanRemoveFromList))]
-    private async Task RemoveFromListAsync(object? arg)
+    [RelayCommand(CanExecute = nameof(CanDelist))]
+    private async Task DelistAsync(object? arg)
     {
-        if (!CanRemoveFromList(arg))
+        if (!CanDelist(arg))
         {
             return;
         }
 
         if (arg is IList items)
         {
-            SetBusy("Removing...");
+            SetBusy("Delisting...");
             await Task.Run(async () =>
             {
                 await Dispatcher.UIThread.InvokeAsync(() =>
@@ -1937,22 +1937,22 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    private bool CanRemoveFromList(object? arg)
+    private bool CanDelist(object? arg)
     {
         return !IsBusy && SelectedDuplicateFile != null;
     }
 
-    [RelayCommand(CanExecute = nameof(CanRemoveGroupFromList))]
-    private async Task RemoveGroupFromListAsync(object? arg)
+    [RelayCommand(CanExecute = nameof(CanDelistGroup))]
+    private async Task DelistGroupAsync(object? arg)
     {
-        if (!CanRemoveGroupFromList(arg))
+        if (!CanDelistGroup(arg))
         {
             return;
         }
 
         if (arg is IList items)
         {
-            SetBusy("Removing...");
+            SetBusy("Delisting...");
             await Task.Run(async () =>
             {
                 List<int?> groupsToRemove = [];
@@ -1978,17 +1978,17 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    private bool CanRemoveGroupFromList(object? arg)
+    private bool CanDelistGroup(object? arg)
     {
         return !IsBusy && SelectedDuplicateFile != null;
     }
 
-    [RelayCommand(CanExecute = nameof(CanRemoveDirectoryFromList))]
-    private async Task RemoveDirectoryFromListAsync(object? arg)
+    [RelayCommand(CanExecute = nameof(CanDelistDirectory))]
+    private async Task DelistDirectoryAsync(object? arg)
     {
         if (arg is IList items)
         {
-            SetBusy("Removing...");
+            SetBusy("Delisting...");
             await Task.Run(async () =>
             {
                 var dirsToRemove = items.Cast<DuplicateFile>().Select(x => x.DirectoryName).Distinct();
@@ -2010,7 +2010,7 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    private bool CanRemoveDirectoryFromList(object? arg)
+    private bool CanDelistDirectory(object? arg)
     {
         return !IsBusy && arg != null;
     }

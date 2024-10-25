@@ -1123,7 +1123,7 @@
 											CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
 								<KeyBinding Gesture="Delete"
-											Command="{Binding RemoveFromListCommand}"
+											Command="{Binding DelistCommand}"
 											CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 							</DataGrid.KeyBindings>
 
@@ -1159,19 +1159,19 @@
 
 									<Separator />
 
-									<!--Remove From List-->
-									<MenuItem Header="_Remove From List"
-											  Command="{Binding RemoveFromListCommand}"
+									<!--Delist-->
+									<MenuItem Header="_Delist"
+											  Command="{Binding DelistCommand}"
 											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
-									<!--Remove Group From List-->
-									<MenuItem Header="Remove _Group From List"
-											  Command="{Binding RemoveGroupFromListCommand}"
+									<!--Delist Group-->
+									<MenuItem Header="Delist _Group"
+											  Command="{Binding DelistGroupCommand}"
 											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
-									<!--Remove Folder From List-->
-									<MenuItem Header="Remove _Folder From List"
-											  Command="{Binding RemoveDirectoryFromListCommand}"
+									<!--Delist Folder-->
+									<MenuItem Header="Delist _Folder"
+											  Command="{Binding DelistDirectoryCommand}"
 											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
 									<Separator />

@@ -2639,13 +2639,13 @@ public partial class MainViewModel : ViewModelBase
             {
                 if (!silent)
                 {
-                    await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(new MessageBoxViewModel()
+                    await MessageBox.Invoke(new MessageBoxViewModel()
                     {
                         Title = "Update",
                         Message = $"An error occurred while attempting to check for updates.",
                         SecondaryMessage = ex.GetInnermostException()?.Message,
                         Icon = MessageBoxIcon.Error
-                    }));
+                    });
                 }
 
                 return;
@@ -2678,7 +2678,7 @@ public partial class MainViewModel : ViewModelBase
                         });
                     }
 
-                    var result = await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(msgBoxVM));
+                    var result = await MessageBox.Invoke(msgBoxVM);
                     if (result?.DialogResult == true)
                     {
                         if (IsBusy)
@@ -2712,13 +2712,13 @@ public partial class MainViewModel : ViewModelBase
                             }
                             catch (Exception ex)
                             {
-                                await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(new MessageBoxViewModel()
+                                await MessageBox.Invoke(new MessageBoxViewModel()
                                 {
                                     Title = "Update",
                                     Message = $"An error occurred while attempting download the update.",
                                     SecondaryMessage = ex.Message,
                                     Icon = MessageBoxIcon.Error
-                                }));
+                                });
                             }
                             finally
                             {
@@ -2740,7 +2740,7 @@ public partial class MainViewModel : ViewModelBase
                             CheckBoxChecked = AutoUpdateCheck
                         };
 
-                        var result = await Dispatcher.UIThread.InvokeAsync(() => MessageBox.Invoke(msgBoxVM));
+                        var result = await MessageBox.Invoke(msgBoxVM);
                         if (result != null && result.DialogResult == true)
                         {
                             AutoUpdateCheck = result.CheckBoxChecked;

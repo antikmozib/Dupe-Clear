@@ -297,26 +297,29 @@ public partial class MainView : UserControl
 
     private async Task<MessageBoxResult?> ShowMessageBoxAsync(MessageBoxViewModel viewModel)
     {
-        var tl = TopLevel.GetTopLevel(this);
-        if (tl != null)
+        return await Dispatcher.UIThread.InvokeAsync<MessageBoxResult?>(async () =>
         {
-            MessageBoxWindow? window;
-            if (_windowService == null)
+            var tl = TopLevel.GetTopLevel(this);
+            if (tl != null)
             {
-                window = new MessageBoxWindow();
+                MessageBoxWindow? window;
+                if (_windowService == null)
+                {
+                    window = new MessageBoxWindow();
+                }
+                else
+                {
+                    window = new MessageBoxWindow(_windowService);
+                }
+
+                window.DataContext = viewModel;
+                await window.ShowDialog((Window)tl);
+
+                return viewModel.Result;
             }
-            else
-            {
-                window = new MessageBoxWindow(_windowService);
-            }
 
-            window.DataContext = viewModel;
-            await window.ShowDialog((Window)tl);
-
-            return viewModel.Result;
-        }
-
-        return null;
+            return null;
+        });
     }
 
     private void SelectParentListBoxItemWhenItemInputClicked(object? sender, bool deselectOthers = false)

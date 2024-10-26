@@ -1130,7 +1130,8 @@
 							<i:Interaction.Behaviors>
 								<ic:EventTriggerBehavior EventName="DoubleTapped"
 														 SourceObject="#ResultsGrid">
-									<ic:InvokeCommandAction Command="{Binding OpenCommand}" />
+									<ic:InvokeCommandAction Command="{Binding OpenCommand}"
+															CommandParameter="{Binding Path=SelectedItem, ElementName=ResultsGrid}" />
 								</ic:EventTriggerBehavior>
 							</i:Interaction.Behaviors>
 

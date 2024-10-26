@@ -1829,10 +1829,19 @@ public partial class MainViewModel : ViewModelBase
             return;
         }
 
+        var selectedItems = new List<DuplicateFile>();
         if (arg is IList items)
         {
-            var selectedItems = items.Cast<DuplicateFile>().Where(x => !x.IsDeleted);
-            var count = selectedItems.Count();
+            selectedItems.AddRange(items.Cast<DuplicateFile>());
+        }
+        else if (arg is DuplicateFile item)
+        {
+            selectedItems.Add(item);
+        }
+
+        var count = selectedItems.Count;
+        if (count > 0)
+        {
             if (MessageBox != null && count > 2)
             {
                 var msgBox = await MessageBox.Invoke(new MessageBoxViewModel()
@@ -1859,7 +1868,9 @@ public partial class MainViewModel : ViewModelBase
 
     private bool CanOpen(object? arg)
     {
-        return !IsBusy && arg is IList items && items.Cast<DuplicateFile>().Any(x => !x.IsDeleted);
+        return !IsBusy
+            && ((arg is IList items && items.Cast<DuplicateFile>().Any(x => !x.IsDeleted))
+                || (arg is DuplicateFile item && !item.IsDeleted));
     }
 
     [RelayCommand(CanExecute = nameof(CanOpenContainingFolder))]
@@ -1949,7 +1960,7 @@ public partial class MainViewModel : ViewModelBase
             SetBusy("Delisting...");
             await Task.Run(async () =>
             {
-                List<int?> groupsToRemove = [];
+                var groupsToRemove = new List<int?>();
                 foreach (var groupNum in items.Cast<DuplicateFile>().GroupBy(x => x.Group).Select(g => g.Key))
                 {
                     groupsToRemove.Add(groupNum);
@@ -2592,7 +2603,7 @@ public partial class MainViewModel : ViewModelBase
 
     private IEnumerable<string> BuildExtensionList(string extensions)
     {
-        List<string> result = [];
+        var result = new List<string>();
         var exts = extensions.Split(';').Select(x => x.Trim());
         foreach (var ext in exts)
         {
@@ -2689,6 +2700,9 @@ public partial class MainViewModel : ViewModelBase
             if (currentVer != null)
             {
                 var updateable = updateInfo.IsNewerThan(currentVer);
+#if DEBUG
+                updateable = true;
+#endif
                 if (updateable)
                 {
                     var msgBoxVM = new MessageBoxViewModel()

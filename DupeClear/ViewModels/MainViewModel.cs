@@ -74,7 +74,7 @@ public partial class MainViewModel : ViewModelBase
 
     public FilePickerDelegate? AsyncFilePicker { get; set; }
 
-    public Func<MessageBoxViewModel, Task<MessageBoxResult?>>? MessageBox { get; set; }
+    public Func<MessageBoxViewModel, Task<MessageBoxResult>>? MessageBox { get; set; }
 
     private bool _includeSubdirectories;
     /// <summary>
@@ -1634,19 +1634,19 @@ public partial class MainViewModel : ViewModelBase
                         .Select(g => $"Group {g.Key}\n{string.Join("\n", g.Where(x => !x.IsDeleted).Select(x => $"\t{x.FullName}"))}"));
                 }
 
-                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBox = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = "Delete",
                     Header = header.ToString(),
                     Message = message,
                     SecondaryMessage = secondaryMessage,
                     SecondaryMessageWrapped = false,
-                    Icon = MessageBoxIcon.Warning,
+                    Icon = !string.IsNullOrEmpty(secondaryMessage) ? MessageBoxIcon.Warning : MessageBoxIcon.Question,
                     Buttons = MessageBoxButton.YesNo,
                     DefaultButton = MessageBoxDefaultButton.No,
                 });
 
-                if (msgBoxResult?.DialogResult != true)
+                if (msgBox.DialogResult != true)
                 {
                     return;
                 }
@@ -1835,7 +1835,7 @@ public partial class MainViewModel : ViewModelBase
             var count = selectedItems.Count();
             if (MessageBox != null && count > 2)
             {
-                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBox = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = "Open",
                     Message = $"Open {count} files?",
@@ -1844,7 +1844,7 @@ public partial class MainViewModel : ViewModelBase
                     DefaultButton = MessageBoxDefaultButton.No
                 });
 
-                if (msgBoxResult?.DialogResult != true)
+                if (msgBox.DialogResult != true)
                 {
                     return;
                 }
@@ -1876,7 +1876,7 @@ public partial class MainViewModel : ViewModelBase
             var count = selectedItems.Count();
             if (MessageBox != null && count > 2)
             {
-                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBox = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = "Open Containing Folder",
                     Message = $"Open {count} folders?",
@@ -1885,7 +1885,7 @@ public partial class MainViewModel : ViewModelBase
                     DefaultButton = MessageBoxDefaultButton.No
                 });
 
-                if (msgBoxResult?.DialogResult != true)
+                if (msgBox.DialogResult != true)
                 {
                     return;
                 }
@@ -2005,21 +2005,18 @@ public partial class MainViewModel : ViewModelBase
                         Message = $"Delist files from the following folder{(dirsOfFilesFromSubdirs.Count() > 1 ? "s" : "")} as well?",
                         SecondaryMessage = string.Join('\n', dirsOfFilesFromSubdirs),
                         SecondaryMessageWrapped = false,
-                        Icon = MessageBoxIcon.Warning,
+                        Icon = MessageBoxIcon.Question,
                         Buttons = MessageBoxButton.YesNoCancel,
                     };
 
-                    var confirm = await MessageBox.Invoke(msgBoxVM);
-                    if (confirm != null)
+                    var msgBox = await MessageBox.Invoke(msgBoxVM);
+                    if (msgBox.DialogResult == null)
                     {
-                        if (confirm.DialogResult == null)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            includeFilesFromSubdirs = confirm.DialogResult.Value;
-                        }
+                        return;
+                    }
+                    else
+                    {
+                        includeFilesFromSubdirs = msgBox.DialogResult.Value;
                     }
                 }
             }
@@ -2241,7 +2238,7 @@ public partial class MainViewModel : ViewModelBase
         {
             if (MessageBox != null && IsSearching)
             {
-                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBox = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = "Exit",
                     Message = "Search operation in progress.\n\nCancel and exit program?",
@@ -2250,7 +2247,7 @@ public partial class MainViewModel : ViewModelBase
                     DefaultButton = MessageBoxDefaultButton.No
                 });
 
-                if (msgBoxResult?.DialogResult != true)
+                if (msgBox.DialogResult != true)
                 {
                     return;
                 }
@@ -2477,15 +2474,15 @@ public partial class MainViewModel : ViewModelBase
         {
             if (DuplicateFiles.Count > 0)
             {
-                var msgBoxResult = await MessageBox.Invoke(new MessageBoxViewModel()
+                var msgBox = await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = msgBoxTitle,
                     Message = "Existing search results will be cleared.\n\nProceed?",
                     Icon = MessageBoxIcon.Question,
-                    Buttons = MessageBoxButton.OKCancel
+                    Buttons = MessageBoxButton.YesNo
                 });
 
-                if (msgBoxResult?.DialogResult != true)
+                if (msgBox.DialogResult != true)
                 {
                     return false;
                 }
@@ -2715,8 +2712,8 @@ public partial class MainViewModel : ViewModelBase
                         });
                     }
 
-                    var result = await MessageBox.Invoke(msgBoxVM);
-                    if (result?.DialogResult == true)
+                    var msgBox = await MessageBox.Invoke(msgBoxVM);
+                    if (msgBox.DialogResult == true)
                     {
                         if (IsBusy)
                         {
@@ -2777,10 +2774,10 @@ public partial class MainViewModel : ViewModelBase
                             CheckBoxChecked = AutoUpdateCheck
                         };
 
-                        var result = await MessageBox.Invoke(msgBoxVM);
-                        if (result != null && result.DialogResult == true)
+                        var msgBox = await MessageBox.Invoke(msgBoxVM);
+                        if (msgBox.DialogResult == true)
                         {
-                            AutoUpdateCheck = result.CheckBoxChecked;
+                            AutoUpdateCheck = msgBox.CheckBoxChecked;
                         }
                     }
                 }

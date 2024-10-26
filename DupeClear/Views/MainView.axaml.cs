@@ -295,30 +295,25 @@ public partial class MainView : UserControl
         return null;
     }
 
-    private async Task<MessageBoxResult?> ShowMessageBoxAsync(MessageBoxViewModel viewModel)
+    private async Task<MessageBoxResult> ShowMessageBoxAsync(MessageBoxViewModel viewModel)
     {
-        return await Dispatcher.UIThread.InvokeAsync<MessageBoxResult?>(async () =>
+        return await Dispatcher.UIThread.InvokeAsync<MessageBoxResult>(async () =>
         {
-            var tl = TopLevel.GetTopLevel(this);
-            if (tl != null)
+            var tl = TopLevel.GetTopLevel(this)!;
+            MessageBoxWindow? window;
+            if (_windowService == null)
             {
-                MessageBoxWindow? window;
-                if (_windowService == null)
-                {
-                    window = new MessageBoxWindow();
-                }
-                else
-                {
-                    window = new MessageBoxWindow(_windowService);
-                }
-
-                window.DataContext = viewModel;
-                await window.ShowDialog((Window)tl);
-
-                return viewModel.Result;
+                window = new MessageBoxWindow();
+            }
+            else
+            {
+                window = new MessageBoxWindow(_windowService);
             }
 
-            return null;
+            window.DataContext = viewModel;
+            await window.ShowDialog((Window)tl);
+
+            return viewModel.Result;
         });
     }
 

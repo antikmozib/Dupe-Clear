@@ -14,9 +14,9 @@ public class DuplicateFile : INotifyPropertyChanged
 {
     private readonly IFileService? _fileService;
 
-    public DateTime Created { get; }
+    public DateTime? Created { get; }
 
-    public string? DirectoryName { get; }
+    public string? DirectoryName => Path.GetDirectoryName(FullName);
 
     public Avalonia.Media.Imaging.Bitmap? FileIcon => _fileService?.GetFileIcon(FullName);
 
@@ -40,7 +40,7 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public bool IsDeleted => File.Exists(FullName) == false;
 
-    public bool IsHidden { get; }
+    public bool? IsHidden { get; }
 
     private bool _isMarked;
     public bool IsMarked
@@ -57,15 +57,29 @@ public class DuplicateFile : INotifyPropertyChanged
         }
     }
 
-    public bool IsSystemFile { get; }
+    public bool? IsSystemFile { get; }
 
-    public long Length { get; }
+    public long? Length { get; }
 
-    public DateTime Modified { get; }
+    public DateTime? Modified { get; }
 
-    public string Name { get; }
+    public string Name => Path.GetFileName(FullName);
 
-    public string NameWithoutExtension { get; }
+    public string NameWithoutExtension
+    {
+        get
+        {
+            var ext = Path.GetExtension(FullName);
+            if (string.IsNullOrEmpty(ext))
+            {
+                return Name;
+            }
+            else
+            {
+                return Name.Substring(0, Name.Length - ext.Length);
+            }
+        }
+    }
 
     private Match? _patternMatch;
     public Match? PatternMatch
@@ -86,7 +100,7 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public string? PatternMatchValue { get; private set; }
 
-    public string? Type { get; }
+    public string? Type => _fileService?.GetFileDescription(FullName);
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -129,26 +143,23 @@ public class DuplicateFile : INotifyPropertyChanged
         {
             _fileService = fileService;
 
-            var fi = new FileInfo(fullName);
-
             FullName = fullName;
-            Created = created ?? fi.CreationTime;
-            IsHidden = isHidden ?? fi.Attributes.HasFlag(FileAttributes.Hidden);
-            IsSystemFile = isSystemFile ?? fi.Attributes.HasFlag(FileAttributes.System);
-            Length = length ?? fi.Length;
-            Modified = modified ?? fi.LastWriteTime;
-            DirectoryName = Path.GetDirectoryName(fullName);
-            Name = Path.GetFileName(fullName);
-            Type = _fileService?.GetFileDescription(fullName);
-
-            var ext = Path.GetExtension(fullName);
-            if (string.IsNullOrEmpty(ext))
+            if (File.Exists(fullName))
             {
-                NameWithoutExtension = Name;
+                var fi = new FileInfo(fullName);
+                Created = fi.CreationTime;
+                IsHidden = fi.Attributes.HasFlag(FileAttributes.Hidden);
+                IsSystemFile = fi.Attributes.HasFlag(FileAttributes.System);
+                Length = fi.Length;
+                Modified = fi.LastWriteTime;
             }
             else
             {
-                NameWithoutExtension = Name.Substring(0, Name.Length - ext.Length);
+                Created = created;
+                IsHidden = isHidden;
+                IsSystemFile = isSystemFile;
+                Length = length;
+                Modified = modified;
             }
         }
     }

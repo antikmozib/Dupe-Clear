@@ -63,7 +63,7 @@ public partial class MainView : UserControl
         }
     }
 
-    private void UserControl_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void UserControl_Loaded(object? sender, RoutedEventArgs e)
     {
         if (Parent is Window parentWindow)
         {
@@ -174,17 +174,17 @@ public partial class MainView : UserControl
         }
     }
 
-    private void IncludedDirectoryCheckBox_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void IncludedDirectoryCheckBox_Click(object? sender, RoutedEventArgs e)
     {
         SelectParentListBoxItemWhenItemInputClicked(sender);
     }
 
-    private void ExcludedDirectoryCheckBox_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void ExcludedDirectoryCheckBox_Click(object? sender, RoutedEventArgs e)
     {
         SelectParentListBoxItemWhenItemInputClicked(sender);
     }
 
-    private void SearchResultCheckBox_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void SearchResultCheckBox_Click(object? sender, RoutedEventArgs e)
     {
         if (sender is CheckBox cb)
         {
@@ -201,7 +201,7 @@ public partial class MainView : UserControl
         }
     }
 
-    private void SelectAllMenuItem_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void SelectAllMenuItem_Click(object? sender, RoutedEventArgs e)
     {
         ResultsGrid.SelectAll();
     }
@@ -297,7 +297,7 @@ public partial class MainView : UserControl
 
     private async Task<MessageBoxResult> ShowMessageBoxAsync(MessageBoxViewModel viewModel)
     {
-        return await Dispatcher.UIThread.InvokeAsync<MessageBoxResult>(async () =>
+        return await Dispatcher.UIThread.InvokeAsync(async () =>
         {
             var tl = TopLevel.GetTopLevel(this)!;
             MessageBoxWindow? window;

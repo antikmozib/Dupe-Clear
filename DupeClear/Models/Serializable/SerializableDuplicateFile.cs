@@ -6,7 +6,7 @@ namespace DupeClear.Models.Serializable;
 
 public class SerializableDuplicateFile
 {
-    public DateTime Created { get; set; }
+    public DateTime? Created { get; set; }
 
     public string? FullName { get; set; }
 
@@ -14,13 +14,13 @@ public class SerializableDuplicateFile
 
     public bool IsDeleted { get; set; }
 
-    public bool IsHidden { get; set; }
+    public bool? IsHidden { get; set; }
 
     public bool IsMarked { get; set; }
 
-    public bool IsSystemFile { get; set; }
+    public bool? IsSystemFile { get; set; }
 
-    public long Length { get; set; }
+    public long? Length { get; set; }
 
-    public DateTime Modified { get; set; }
+    public DateTime? Modified { get; set; }
 }

@@ -34,21 +34,32 @@ public static class Extensions
 
     public static bool HasOption(this FinderOption option, FinderOption flag) => option.HasFlag(flag);
 
+    public static string? ConvertLengthToString(this long? length)
+    {
+        if (length == null)
+        {
+            return null;
+
+        }
+        else
+        {
+            return length.Value.ConvertLengthToString();
+        }
+    }
+
     public static string ConvertLengthToString(this long length)
     {
-        double lengthDbl = length;
-
         if (length > 1000 * 1000 * 1000)
         {
-            return $"{lengthDbl / (1024 * 1024 * 1024):N3} GB";
+            return $"{length / (double)(1024 * 1024 * 1024):N3} GB";
         }
         else if (length > 1000 * 1000)
         {
-            return $"{lengthDbl / (1024 * 1024):N2} MB";
+            return $"{length / (double)(1024 * 1024):N2} MB";
         }
         else if (length > 1000)
         {
-            return $"{lengthDbl / 1024:N0} KB";
+            return $"{length / (double)1024:N0} KB";
         }
         else
         {

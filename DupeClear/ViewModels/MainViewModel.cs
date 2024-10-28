@@ -1704,7 +1704,7 @@ public partial class MainViewModel : ViewModelBase
                 await MessageBox.Invoke(new MessageBoxViewModel()
                 {
                     Title = "Delete",
-                    Header = $"Files deleted: {result.Files.Count:N0} ({result.Files.Sum(x => x.Length).ConvertLengthToString()})",
+                    Header = $"Files deleted: {result.Files.Count:N0} ({result.Files.Where(x => x.Length.HasValue).Sum(x => x.Length).ConvertLengthToString()})",
                     Message = $"{(result.Errors.Count > 0 ? $"Errors: {result.Errors.Count:N0}\n\n" : "")}"
                         + $"Deleted files can be recovered or permanently deleted from the {_fileService.RecycleBinLabel}.",
                     Icon = MessageBoxIcon.Information,

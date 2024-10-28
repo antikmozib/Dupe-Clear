@@ -97,12 +97,12 @@ public class FinderService
                 }
 
                 var df = new DuplicateFile(item.FullName, fileService);
-                if (excludeSystemFiles && df.IsSystemFile)
+                if (excludeSystemFiles && df.IsSystemFile == true)
                 {
                     continue;
                 }
 
-                if (excludeHiddenFiles && df.IsHidden)
+                if (excludeHiddenFiles && df.IsHidden == true)
                 {
                     continue;
                 }
@@ -276,7 +276,7 @@ public class FinderService
         }
 
         var totalCount = sourceFiles.Count;
-        var totalLength = sourceFiles.Sum(x => x.Length);
+        var totalLength = sourceFiles.Where(x => x.Length.HasValue).Sum(x => x.Length!.Value);
         foreach (var file1 in sourceFiles)
         {
             if (ct.IsCancellationRequested)
@@ -301,7 +301,10 @@ public class FinderService
             }
 
             progressCount++;
-            progressLength += file1.Length;
+            if (file1.Length.HasValue)
+            {
+                progressLength += file1.Length.Value;
+            }
 
             if (!string.IsNullOrWhiteSpace(fileNamePattern) && file1.PatternMatch == null)
             {
@@ -427,11 +430,17 @@ public class FinderService
                 if (sourceFiles.Contains(file2))
                 {
                     progressCount++;
-                    progressLength += file2.Length;
+                    if (file2.Length.HasValue)
+                    {
+                        progressLength += file2.Length.Value;
+                    }
                 }
 
                 result.DuplicateCount++;
-                duplicateLength += file2.Length;
+                if (file2.Length.HasValue)
+                {
+                    duplicateLength += file2.Length.Value;
+                }
             }
 
             if (file1.Group.HasValue)
@@ -481,7 +490,11 @@ public class FinderService
                         fileService.MoveToRecycleBin(file.FullName);
                     }
 
-                    actionedFileLength += file.Length;
+                    if (file.Length.HasValue)
+                    {
+                        actionedFileLength += file.Length.Value;
+                    }
+
                     result.Files.Add(file);
                 }
                 catch (Exception ex)

@@ -365,6 +365,7 @@ public partial class MainViewModel : ViewModelBase
                     InvertMarkingOfSelectedSearchResultCommand.NotifyCanExecuteChanged();
                     RefreshCommand.NotifyCanExecuteChanged();
                     FindWithinSearchResultsCommand.NotifyCanExecuteChanged();
+                    ClearFindWithinSearchResultsItemsCommand.NotifyCanExecuteChanged();
                 });
 
                 OnPropertyChanged();
@@ -571,7 +572,11 @@ public partial class MainViewModel : ViewModelBase
             {
                 _findWithinSearchResultsLookFor = value;
 
-                Dispatcher.UIThread.Invoke(FindWithinSearchResultsCommand.NotifyCanExecuteChanged);
+                Dispatcher.UIThread.Invoke(() =>
+                {
+                    FindWithinSearchResultsCommand.NotifyCanExecuteChanged();
+                    ClearFindWithinSearchResultsItemsCommand.NotifyCanExecuteChanged();
+                });
 
                 OnPropertyChanged();
             }
@@ -709,6 +714,7 @@ public partial class MainViewModel : ViewModelBase
         ExcludedDirectories.CollectionChanged += ExcludedDirectories_CollectionChanged;
         SelectedIncludedDirectories.CollectionChanged += SelectedIncludedDirectories_CollectionChanged;
         SelectedExcludedDirectories.CollectionChanged += SelectedExcludedDirectories_CollectionChanged;
+        FindWithinSearchResultsItems.CollectionChanged += FindWithinSearchResultsItems_CollectionChanged;
 
         UserData userData;
         if (File.Exists(_userDataFile))
@@ -953,6 +959,11 @@ public partial class MainViewModel : ViewModelBase
             default:
                 break;
         }
+    }
+
+    private void FindWithinSearchResultsItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        Dispatcher.UIThread.Invoke(ClearFindWithinSearchResultsItemsCommand.NotifyCanExecuteChanged);
     }
 
     protected void RaiseEvent(EventHandler? handler)
@@ -2371,10 +2382,10 @@ public partial class MainViewModel : ViewModelBase
         return !IsBusy && DuplicateFiles.Any();
     }
 
-    [RelayCommand(CanExecute = nameof(CanFindWithinSearchResults))]
+    [RelayCommand(CanExecute = nameof(GetIfNotBusy))]
     private async Task FindWithinSearchResults(object? arg, CancellationToken ct)
     {
-        if (!CanFindWithinSearchResults(arg))
+        if (!GetIfNotBusy(arg))
         {
             return;
         }
@@ -2415,9 +2426,21 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    private bool CanFindWithinSearchResults(object? arg)
+    [RelayCommand(CanExecute = nameof(CanClearFindWithinSearchResultsItems))]
+    private void ClearFindWithinSearchResultsItems(object? arg)
     {
-        return !IsBusy;
+        if (!CanClearFindWithinSearchResultsItems(arg))
+        {
+            return;
+        }
+
+        FindWithinSearchResultsItems.Clear();
+        FindWithinSearchResultsLookFor = null;
+    }
+
+    private bool CanClearFindWithinSearchResultsItems(object? arg)
+    {
+        return !IsBusy && (FindWithinSearchResultsItems.Any() || !string.IsNullOrEmpty(FindWithinSearchResultsLookFor));
     }
 
     [RelayCommand]

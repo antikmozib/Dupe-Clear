@@ -202,8 +202,7 @@
 		<TabControl x:Name="MainTabControl"
 					Grid.Row="1"
 					Margin="8"
-					Padding="8"
-					SelectedIndex="2">
+					Padding="8">
 			<!--Locations-->
 			<TabItem Header="Locations">
 				<Grid>
@@ -640,17 +639,8 @@
 						<Button Background="{DynamicResource AppStartButtonBackgroundBrush}"
 								Foreground="{DynamicResource AppStartButtonForegroundBrush}"
 								FontWeight="Bold"
-								Command="{Binding SearchCommand}">
-							<Button.Content>
-								<StackPanel Orientation="Horizontal"
-											Spacing="4">
-									<TextBlock Classes="icon"
-											   Text="{StaticResource MagnifyingGlass}" />
-
-									<Label Content="_START" />
-								</StackPanel>
-							</Button.Content>
-						</Button>
+								Content="_START"
+								Command="{Binding SearchCommand}" />
 					</StackPanel>
 				</Grid>
 			</TabItem>
@@ -822,7 +812,7 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 
-					<!--Toolbar-->
+					<!--ToolBar-->
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="auto" />
@@ -1483,6 +1473,7 @@
 											<ColumnDefinition Width="auto" />
 										</Grid.ColumnDefinitions>
 
+										<!--Look For-->
 										<TextBox x:Name="LookForTextBox"
 												 VerticalAlignment="Stretch"
 												 VerticalContentAlignment="Center"
@@ -1510,9 +1501,11 @@
 												</Style>
 											</StackPanel.Styles>
 
+											<!--Use Regex-->
 											<ToggleButton ToolTip.Tip="Use Regular Expressions"
 														  Content=".*" />
 
+											<!--Find-->
 											<Button ToolTip.Tip="Find"
 													Command="{Binding FindWithinSearchResultsCommand}" >
 												<Button.Content>
@@ -1521,10 +1514,13 @@
 												</Button.Content>
 											</Button>
 
-											<Button Content="Clear" />
+											<!--Clear-->
+											<Button Content="Clear"
+													Command="{Binding ClearFindWithinSearchResultsItemsCommand}" />
 										</StackPanel>
 									</Grid>
 
+									<!--Look For Results Grid-->
 									<DataGrid x:Name="FindWithSearchResultsDataGrid"
 											  Grid.Row="2"
 											  Margin="8 0"
@@ -1532,12 +1528,17 @@
 											  SelectedItem="{Binding SelectedFindWithinSearchResultsItem, Mode=TwoWay}"
 											  ItemsSource="{Binding FindWithinSearchResultsItems}">
 										<DataGrid.Columns>
+											<!--File-->
 											<DataGridTextColumn Header="File"
 																Width="256"
 																Binding="{Binding Name}" />
+
+											<!--Location-->
 											<DataGridTextColumn Header="Location"
 																Width="512"
 																Binding="{Binding FullName}" />
+
+											<!--Group-->
 											<DataGridTextColumn Header="Group"
 																Width="96"
 																Binding="{Binding Group}" />
@@ -1688,7 +1689,7 @@
 						   Grid.Column="9"
 						   IsVisible="{Binding Path=IsVisible, ElementName=StatusBarProgressBar}" />
 
-				<!--Progress Bar-->
+				<!--ProgressBar-->
 				<ProgressBar x:Name="StatusBarProgressBar"
 							 Grid.Row="1"
 							 Grid.Column="10"

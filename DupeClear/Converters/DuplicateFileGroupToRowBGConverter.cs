@@ -16,8 +16,6 @@ public class DuplicateFileGroupToRowBGConverter : IValueConverter
             if (group % 2 == 0)
             {
                 object? fgBrush = new SolidColorBrush(Colors.LimeGreen, 0.25);
-                //object? fgBrush = null;
-                //Application.Current?.TryGetResource("SystemControlHighlightAltListAccentLowBrush", Application.Current.ActualThemeVariant, out fgBrush);
                 if (fgBrush != null)
                 {
                     return (Brush)fgBrush;

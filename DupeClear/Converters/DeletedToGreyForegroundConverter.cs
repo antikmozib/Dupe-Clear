@@ -17,7 +17,7 @@ public class DeletedToGreyForegroundConverter : IValueConverter
             object? fgBrush = null;
             if (deleted)
             {
-                Application.Current?.TryGetResource("DupeClearSearchResultsDeletedForegroundBrush", Application.Current.ActualThemeVariant, out fgBrush);
+                Application.Current?.TryGetResource("AppSearchResultsDeletedForegroundBrush", Application.Current.ActualThemeVariant, out fgBrush);
                 if (fgBrush != null)
                 {
                     return (Brush)fgBrush;
@@ -25,7 +25,7 @@ public class DeletedToGreyForegroundConverter : IValueConverter
             }
             else
             {
-                Application.Current?.TryGetResource("DupeClearSearchResultsForegroundBrush", Application.Current.ActualThemeVariant, out fgBrush);
+                Application.Current?.TryGetResource("AppSearchResultsForegroundBrush", Application.Current.ActualThemeVariant, out fgBrush);
                 if (fgBrush != null)
                 {
                     return (Brush)fgBrush;

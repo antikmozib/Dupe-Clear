@@ -45,6 +45,10 @@
 							 Color="#ff8080" />
 			<SolidColorBrush x:Key="AppDeleteButtonDefaultForegroundBrush"
 							 Color="#660000" />
+			
+			<!--Find Pane-->
+			<SolidColorBrush x:Key="AppFindPaneTitleBarDefaultBackgroundBrush"
+							 Color="{DynamicResource SystemChromeLowColor}" />
 
 			<!--Preview Pane-->
 			<SolidColorBrush x:Key="AppPreviewPaneDefaultWatermarkBrush"
@@ -103,6 +107,10 @@
 									ResourceKey="AppDeleteButtonDefaultBackgroundBrush"  />
 					<StaticResource x:Key="AppDeleteButtonForegroundBrush"
 									ResourceKey="AppDeleteButtonDefaultForegroundBrush" />
+
+					<!--Find Pane-->
+					<StaticResource x:Key="AppFindPaneTitleBarBackgroundBrush"
+									ResourceKey="AppFindPaneTitleBarDefaultBackgroundBrush" />
 
 					<!--Preview Pane-->
 					<StaticResource x:Key="AppPreviewPaneWatermarkBrush"

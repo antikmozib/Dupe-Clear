@@ -63,7 +63,7 @@
 
 		<Style Selector="MenuItem:disabled TextBlock.icon">
 			<Setter Property="Foreground"
-					Value="{DynamicResource DupeClearMenuItemIconDisabledBrush}" />
+					Value="{DynamicResource AppMenuItemIconDisabledBrush}" />
 		</Style>
 
 		<Style Selector="Image.listbox-file-icon,TextBlock.listbox-file-icon">
@@ -120,7 +120,7 @@
 			<TextBlock x:Name="AppTitleTextBlock"
 					   Grid.Column="2"
 					   VerticalAlignment="Center"
-					   Foreground="{DynamicResource DupeClearTitleBarForegroundBrush}"
+					   Foreground="{DynamicResource AppTitleBarForegroundBrush}"
 					   Text="Dupe Clear" />
 
 			<!--Main Menu-->
@@ -310,7 +310,7 @@
 								Padding="8"
 								CornerRadius="4"
 								BorderThickness="1"
-								BorderBrush="{DynamicResource DupeClearBorderBrush}">
+								BorderBrush="{DynamicResource AppBorderBrush}">
 							<Grid>
 								<Grid.RowDefinitions>
 									<RowDefinition Height="auto" />
@@ -372,7 +372,7 @@
 								<Expander Grid.Row="2"
 										  Header="Additional Options"
 										  HorizontalAlignment="Stretch"
-										  BorderBrush="{DynamicResource DupeClearBorderBrush}"
+										  BorderBrush="{DynamicResource AppBorderBrush}"
 										  BorderThickness="1"
 										  IsExpanded="{Binding AdditionalOptionsExpanded, Mode=TwoWay}">
 									<Grid Grid.IsSharedSizeScope="True">
@@ -635,8 +635,8 @@
 						<Border Height="32" />
 
 						<!--START-->
-						<Button Background="{DynamicResource DupeClearStartButtonBackgroundBrush}"
-								Foreground="{DynamicResource DupeClearStartButtonForegroundBrush}"
+						<Button Background="{DynamicResource AppStartButtonBackgroundBrush}"
+								Foreground="{DynamicResource AppStartButtonForegroundBrush}"
 								FontWeight="Bold"
 								Command="{Binding SearchCommand}">
 							<Button.Content>
@@ -727,7 +727,7 @@
 							Padding="8"
 							CornerRadius="4"
 							BorderThickness="1"
-							BorderBrush="{DynamicResource DupeClearBorderBrush}">
+							BorderBrush="{DynamicResource AppBorderBrush}">
 						<Grid>
 							<Grid.RowDefinitions>
 								<RowDefinition Height="auto" />
@@ -844,7 +844,7 @@
 									<Setter Property="Width"
 											Value="1" />
 									<Setter Property="Fill"
-											Value="{DynamicResource DupeClearBorderBrush}" />
+											Value="{DynamicResource AppBorderBrush}" />
 								</Style>
 							</StackPanel.Styles>
 
@@ -1015,8 +1015,8 @@
 							<Rectangle />
 
 							<!--Delete-->
-							<Button Background="{DynamicResource DupeClearDeleteButtonBackgroundBrush}"
-									Foreground="{DynamicResource DupeClearDeleteButtonForegroundBrush}"
+							<Button Background="{DynamicResource AppDeleteButtonBackgroundBrush}"
+									Foreground="{DynamicResource AppDeleteButtonForegroundBrush}"
 									Command="{Binding DeleteMarkedFilesCommand}">
 								<Button.Content>
 									<StackPanel Orientation="Horizontal"
@@ -1096,7 +1096,7 @@
 
 								<Style Selector="DataGridCell:disabled TextBlock">
 									<Setter Property="Foreground"
-											Value="{DynamicResource DupeClearSearchResultsDisabledForegroundBrush}" />
+											Value="{DynamicResource AppSearchResultsDisabledForegroundBrush}" />
 								</Style>
 
 								<Style Selector="DataGridRow">
@@ -1348,7 +1348,7 @@
 						<!--Preview-->
 						<Border Grid.Column="2"
 								BorderThickness="1"
-								BorderBrush="{DynamicResource DupeClearBorderBrush}"
+								BorderBrush="{DynamicResource AppBorderBrush}"
 								IsVisible="{Binding ShowPreview}">
 							<Grid>
 								<Image Source="{Binding PreviewImage}" />
@@ -1357,7 +1357,7 @@
 										   VerticalAlignment="Center"
 										   Text="Preview"
 										   IsVisible="{Binding PreviewImage, Converter={StaticResource NullToTrueConverter}}"
-										   Foreground="{DynamicResource DupeClearPreviewPaneWatermarkBrush}" />
+										   Foreground="{DynamicResource AppPreviewPaneWatermarkBrush}" />
 							</Grid>
 						</Border>
 					</Grid>
@@ -1367,7 +1367,7 @@
 
 		<!--Status Bar-->
 		<Border Grid.Row="2"
-				BorderBrush="{DynamicResource DupeClearBorderBrush}"
+				BorderBrush="{DynamicResource AppBorderBrush}"
 				BorderThickness="0 1 0 0">
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -1416,7 +1416,7 @@
 								Value="Stretch" />
 
 						<Setter Property="Fill"
-								Value="{DynamicResource DupeClearBorderBrush}" />
+								Value="{DynamicResource AppBorderBrush}" />
 					</Style>
 
 					<Style Selector="ProgressBar[Value=0]">
@@ -1432,8 +1432,8 @@
 						Padding="0"
 						BorderThickness="0"
 						ToolTip.Tip="Cancel"
-						Background="{DynamicResource DupeClearCancelOperationButtonBackgroundBrush}"
-						Foreground="{DynamicResource DupeClearCancelOperationButtonForegroundBrush}"
+						Background="{DynamicResource AppCancelOperationButtonBackgroundBrush}"
+						Foreground="{DynamicResource AppCancelOperationButtonForegroundBrush}"
 						IsVisible="{Binding OperationCanBeCanceled}"
 						Command="{Binding CancelOperationCommand}">
 					<Button.Content>

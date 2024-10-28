@@ -3,67 +3,67 @@
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary>
 			<!--Title Bar-->
-			<!--<SolidColorBrush x:Key="DupeClearTitleBarDefaultForegroundBrush"
+			<!--<SolidColorBrush x:Key="AppTitleBarDefaultForegroundBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
-			<SolidColorBrush x:Key="DupeClearTitleBarDefaultForegroundBrush"
+			<SolidColorBrush x:Key="AppTitleBarDefaultForegroundBrush"
 							 Color="{DynamicResource SystemBaseMediumColor}" />
 
 			<!--Border-->
-			<SolidColorBrush x:Key="DupeClearDefaultBorderBrush"
+			<SolidColorBrush x:Key="AppDefaultBorderBrush"
 							 Color="{DynamicResource SystemChromeMediumColor}" />
-			<!--<SolidColorBrush x:Key="DupeClearDefaultBorderBrush"
+			<!--<SolidColorBrush x:Key="AppDefaultBorderBrush"
 							 Color="{DynamicResource ThemeBorderMidColor}" />-->
 
 			<!--Start Button-->
-			<SolidColorBrush x:Key="DupeClearStartButtonDefaultBackgroundBrush"
+			<SolidColorBrush x:Key="AppStartButtonDefaultBackgroundBrush"
 							 Color="#18cd5e" />
-			<SolidColorBrush x:Key="DupeClearStartButtonDefaultForegroundBrush"
+			<SolidColorBrush x:Key="AppStartButtonDefaultForegroundBrush"
 							 Color="#08441f" />
 
 			<!--Cancel Operation Button-->
-			<SolidColorBrush x:Key="DupeClearCancelOperationButtonDefaultBackgroundBrush"
+			<SolidColorBrush x:Key="AppCancelOperationButtonDefaultBackgroundBrush"
 							 Color="Transparent"  />
-			<SolidColorBrush x:Key="DupeClearCancelOperationButtonDefaultForegroundBrush"
+			<SolidColorBrush x:Key="AppCancelOperationButtonDefaultForegroundBrush"
 							 Color="#dc143c" />
 
 			<!--Search Results Grid-->
-			<SolidColorBrush x:Key="DupeClearSearchResultsDefaultForegroundBrush"
+			<SolidColorBrush x:Key="AppSearchResultsDefaultForegroundBrush"
 							 Color="{DynamicResource SystemBaseHighColor}" />
-			<!--<SolidColorBrush x:Key="DupeClearSearchResultsDefaultForegroundBrush"
+			<!--<SolidColorBrush x:Key="AppSearchResultsDefaultForegroundBrush"
 							 Color="{DynamicResource ThemeForegroundColor}" />-->
-			<SolidColorBrush x:Key="DupeClearSearchResultsDeletedDefaultForegroundBrush"
+			<SolidColorBrush x:Key="AppSearchResultsDeletedDefaultForegroundBrush"
 							 Color="{DynamicResource SystemBaseMediumColor}" />
-			<!--<SolidColorBrush x:Key="DupeClearSearchResultsDeletedDefaultForegroundBrush"
+			<!--<SolidColorBrush x:Key="AppSearchResultsDeletedDefaultForegroundBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
-			<SolidColorBrush x:Key="DupeClearSearchResultsDisabledDefaultForegroundBrush"
+			<SolidColorBrush x:Key="AppSearchResultsDisabledDefaultForegroundBrush"
 							 Color="{DynamicResource SystemChromeDisabledLowColor}" />
-			<!--<SolidColorBrush x:Key="DupeClearSearchResultsDisabledDefaultForegroundBrush"
+			<!--<SolidColorBrush x:Key="AppSearchResultsDisabledDefaultForegroundBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
 
 			<!--Delete Button-->
-			<SolidColorBrush x:Key="DupeClearDeleteButtonDefaultBackgroundBrush"
+			<SolidColorBrush x:Key="AppDeleteButtonDefaultBackgroundBrush"
 							 Color="#ff8080" />
-			<SolidColorBrush x:Key="DupeClearDeleteButtonDefaultForegroundBrush"
+			<SolidColorBrush x:Key="AppDeleteButtonDefaultForegroundBrush"
 							 Color="#660000" />
 
 			<!--Preview Pane-->
-			<SolidColorBrush x:Key="DupeClearPreviewPaneDefaultWatermarkBrush"
+			<SolidColorBrush x:Key="AppPreviewPaneDefaultWatermarkBrush"
 							 Color="{DynamicResource SystemBaseMediumLowColor}" />
-			<!--<SolidColorBrush x:Key="DupeClearPreviewPaneDefaultWatermarkBrush"
+			<!--<SolidColorBrush x:Key="AppPreviewPaneDefaultWatermarkBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
 
 			<!--Message Box-->
-			<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonDefaultBackgroundBrush"
+			<SolidColorBrush x:Key="AppMessageBoxDefaultButtonDefaultBackgroundBrush"
 							 Color="#4dafff" />
-			<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonDefaultForegroundBrush"
+			<SolidColorBrush x:Key="AppMessageBoxDefaultButtonDefaultForegroundBrush"
 							 Color="#002a4d" />
 			<SolidColorBrush x:Key="MessageBoxButtonRowDefaultBackgroundBrush"
 							 Color="{DynamicResource SystemChromeLowColor}" />
 
 			<!--MenuItem-->
-			<SolidColorBrush x:Key="DupeClearMenuItemIconDisabledDefaultBrush"
+			<SolidColorBrush x:Key="AppMenuItemIconDisabledDefaultBrush"
 							 Color="{DynamicResource SystemBaseMediumLowColor}" />
-			<!--<SolidColorBrush x:Key="DupeClearMenuItemIconDisabledDefaultBrush"
+			<!--<SolidColorBrush x:Key="AppMenuItemIconDisabledDefaultBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
 		</ResourceDictionary>
 
@@ -71,73 +71,73 @@
 			<ResourceDictionary.ThemeDictionaries>
 				<ResourceDictionary x:Key="Default">
 					<!--Title Bar-->
-					<StaticResource x:Key="DupeClearTitleBarForegroundBrush"
-									ResourceKey="DupeClearTitleBarDefaultForegroundBrush" />
+					<StaticResource x:Key="AppTitleBarForegroundBrush"
+									ResourceKey="AppTitleBarDefaultForegroundBrush" />
 
 					<!--Border-->
-					<StaticResource x:Key="DupeClearBorderBrush"
-									ResourceKey="DupeClearDefaultBorderBrush" />
+					<StaticResource x:Key="AppBorderBrush"
+									ResourceKey="AppDefaultBorderBrush" />
 
 					<!--Start Button-->
-					<StaticResource x:Key="DupeClearStartButtonBackgroundBrush"
-									ResourceKey="DupeClearStartButtonDefaultBackgroundBrush" />
-					<StaticResource x:Key="DupeClearStartButtonForegroundBrush"
-									ResourceKey="DupeClearStartButtonDefaultForegroundBrush" />
+					<StaticResource x:Key="AppStartButtonBackgroundBrush"
+									ResourceKey="AppStartButtonDefaultBackgroundBrush" />
+					<StaticResource x:Key="AppStartButtonForegroundBrush"
+									ResourceKey="AppStartButtonDefaultForegroundBrush" />
 
 					<!--Cancel Operation Button-->
-					<StaticResource x:Key="DupeClearCancelOperationButtonBackgroundBrush"
-									ResourceKey="DupeClearCancelOperationButtonDefaultBackgroundBrush"  />
-					<StaticResource x:Key="DupeClearCancelOperationButtonForegroundBrush"
-									ResourceKey="DupeClearCancelOperationButtonDefaultForegroundBrush" />
+					<StaticResource x:Key="AppCancelOperationButtonBackgroundBrush"
+									ResourceKey="AppCancelOperationButtonDefaultBackgroundBrush"  />
+					<StaticResource x:Key="AppCancelOperationButtonForegroundBrush"
+									ResourceKey="AppCancelOperationButtonDefaultForegroundBrush" />
 
 					<!--Search Results Grid-->
-					<StaticResource x:Key="DupeClearSearchResultsForegroundBrush"
-									ResourceKey="DupeClearSearchResultsDefaultForegroundBrush" />
-					<StaticResource x:Key="DupeClearSearchResultsDeletedForegroundBrush"
-									ResourceKey="DupeClearSearchResultsDeletedDefaultForegroundBrush" />
-					<StaticResource x:Key="DupeClearSearchResultsDisabledForegroundBrush"
-									ResourceKey="DupeClearSearchResultsDisabledDefaultForegroundBrush" />
+					<StaticResource x:Key="AppSearchResultsForegroundBrush"
+									ResourceKey="AppSearchResultsDefaultForegroundBrush" />
+					<StaticResource x:Key="AppSearchResultsDeletedForegroundBrush"
+									ResourceKey="AppSearchResultsDeletedDefaultForegroundBrush" />
+					<StaticResource x:Key="AppSearchResultsDisabledForegroundBrush"
+									ResourceKey="AppSearchResultsDisabledDefaultForegroundBrush" />
 
 					<!--Delete Button-->
-					<StaticResource x:Key="DupeClearDeleteButtonBackgroundBrush"
-									ResourceKey="DupeClearDeleteButtonDefaultBackgroundBrush"  />
-					<StaticResource x:Key="DupeClearDeleteButtonForegroundBrush"
-									ResourceKey="DupeClearDeleteButtonDefaultForegroundBrush" />
+					<StaticResource x:Key="AppDeleteButtonBackgroundBrush"
+									ResourceKey="AppDeleteButtonDefaultBackgroundBrush"  />
+					<StaticResource x:Key="AppDeleteButtonForegroundBrush"
+									ResourceKey="AppDeleteButtonDefaultForegroundBrush" />
 
 					<!--Preview Pane-->
-					<StaticResource x:Key="DupeClearPreviewPaneWatermarkBrush"
-									ResourceKey="DupeClearPreviewPaneDefaultWatermarkBrush" />
+					<StaticResource x:Key="AppPreviewPaneWatermarkBrush"
+									ResourceKey="AppPreviewPaneDefaultWatermarkBrush" />
 
 					<!--Message Box-->
-					<StaticResource x:Key="DupeClearMessageBoxDefaultButtonBackgroundBrush"
-									ResourceKey="DupeClearMessageBoxDefaultButtonDefaultBackgroundBrush" />
-					<StaticResource x:Key="DupeClearMessageBoxDefaultButtonForegroundBrush"
-									ResourceKey="DupeClearMessageBoxDefaultButtonDefaultForegroundBrush" />
+					<StaticResource x:Key="AppMessageBoxDefaultButtonBackgroundBrush"
+									ResourceKey="AppMessageBoxDefaultButtonDefaultBackgroundBrush" />
+					<StaticResource x:Key="AppMessageBoxDefaultButtonForegroundBrush"
+									ResourceKey="AppMessageBoxDefaultButtonDefaultForegroundBrush" />
 					<StaticResource x:Key="MessageBoxButtonRowBackgroundBrush"
 									ResourceKey="MessageBoxButtonRowDefaultBackgroundBrush" />
 
 					<!--MenuItem-->
-					<StaticResource x:Key="DupeClearMenuItemIconDisabledBrush"
-									ResourceKey="DupeClearMenuItemIconDisabledDefaultBrush" />
+					<StaticResource x:Key="AppMenuItemIconDisabledBrush"
+									ResourceKey="AppMenuItemIconDisabledDefaultBrush" />
 				</ResourceDictionary>
 
 				<ResourceDictionary x:Key="Dark">
 					<!--Start Button-->
-					<SolidColorBrush x:Key="DupeClearStartButtonBackgroundBrush"
+					<SolidColorBrush x:Key="AppStartButtonBackgroundBrush"
 									 Color="#10893E" />
-					<SolidColorBrush x:Key="DupeClearStartButtonForegroundBrush"
+					<SolidColorBrush x:Key="AppStartButtonForegroundBrush"
 									 Color="#d1fae1" />
 
 					<!--Delete Button-->
-					<SolidColorBrush x:Key="DupeClearDeleteButtonBackgroundBrush"
+					<SolidColorBrush x:Key="AppDeleteButtonBackgroundBrush"
 									 Color="#B22222"  />
-					<SolidColorBrush x:Key="DupeClearDeleteButtonForegroundBrush"
+					<SolidColorBrush x:Key="AppDeleteButtonForegroundBrush"
 									 Color="#fbeaea" />
 
 					<!--Message Box-->
-					<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonBackgroundBrush"
+					<SolidColorBrush x:Key="AppMessageBoxDefaultButtonBackgroundBrush"
 									 Color="#0078d7" />
-					<SolidColorBrush x:Key="DupeClearMessageBoxDefaultButtonForegroundBrush"
+					<SolidColorBrush x:Key="AppMessageBoxDefaultButtonForegroundBrush"
 									 Color="#e6f4ff" />
 				</ResourceDictionary>
 			</ResourceDictionary.ThemeDictionaries>

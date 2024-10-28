@@ -207,10 +207,10 @@
 
 					<Style Selector="Button[IsDefault=True]">
 						<Setter Property="Background"
-								Value="{DynamicResource DupeClearMessageBoxDefaultButtonBackgroundBrush}" />
+								Value="{DynamicResource AppMessageBoxDefaultButtonBackgroundBrush}" />
 
 						<Setter Property="Foreground"
-								Value="{DynamicResource DupeClearMessageBoxDefaultButtonForegroundBrush}" />
+								Value="{DynamicResource AppMessageBoxDefaultButtonForegroundBrush}" />
 					</Style>
 
 					<Style Selector="Button#PrimaryButton">

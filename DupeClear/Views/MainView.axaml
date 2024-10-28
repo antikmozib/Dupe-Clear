@@ -50,10 +50,11 @@
 		</Style>
 
 		<Style Selector="TextBlock.icon">
-			<Setter Property="VerticalAlignment"
-					Value="Center" />
 			<Setter Property="FontFamily"
 					Value="{StaticResource FontAwesomeSolid}" />
+
+			<Setter Property="VerticalAlignment"
+					Value="Center" />
 
 			<Style Selector="^.regular">
 				<Setter Property="FontFamily"
@@ -201,7 +202,8 @@
 		<TabControl x:Name="MainTabControl"
 					Grid.Row="1"
 					Margin="8"
-					Padding="8">
+					Padding="8"
+					SelectedIndex="2">
 			<!--Locations-->
 			<TabItem Header="Locations">
 				<Grid>
@@ -828,6 +830,24 @@
 							<ColumnDefinition Width="auto" />
 						</Grid.ColumnDefinitions>
 
+						<Grid.Styles>
+							<Style Selector="Button,DropDownButton,ToggleButton">
+								<Setter Property="Height"
+										Value="32" />
+								<Setter Property="VerticalContentAlignment"
+										Value="Center" />
+							</Style>
+
+							<Style Selector="Rectangle">
+								<Setter Property="Margin"
+										Value="4 0" />
+								<Setter Property="Width"
+										Value="1" />
+								<Setter Property="Fill"
+										Value="{DynamicResource AppBorderBrush}" />
+							</Style>
+						</Grid.Styles>
+
 						<StackPanel Orientation="Horizontal"
 									Spacing="4">
 							<StackPanel.Styles>
@@ -882,6 +902,45 @@
 
 								<DropDownButton.Flyout>
 									<MenuFlyout Placement="BottomEdgeAlignedLeft">
+										<!--By Date Created-->
+										<MenuItem Header="By Date _Created">
+											<MenuItem.Icon>
+												<TextBlock Classes="icon"
+														   Text="{StaticResource CircleCheck}">
+													<TextBlock.IsVisible>
+														<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+															<Binding Path="SelectedMarkingCriteria"
+																	 Converter="{StaticResource IntToTrueConverter}"
+																	 ConverterParameter="{x:Static models:MarkingCriteria.LatestCreated}" />
+															<Binding Path="SelectedMarkingCriteria"
+																	 Converter="{StaticResource IntToTrueConverter}"
+																	 ConverterParameter="{x:Static models:MarkingCriteria.EarliestCreated}" />
+														</MultiBinding>
+													</TextBlock.IsVisible>
+												</TextBlock>
+											</MenuItem.Icon>
+
+											<!--Keep Latest-->
+											<MenuItem Header="Keep _Latest"
+													  Command="{Binding KeepLatestCreatedCommand}">
+												<MenuItem.Icon>
+													<TextBlock Classes="icon"
+															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestCreated}}"
+															   Text="{StaticResource CircleCheck}" />
+												</MenuItem.Icon>
+											</MenuItem>
+
+											<!--Keep Earliest-->
+											<MenuItem Header="Keep _Earliest"
+													  Command="{Binding KeepEarliestCreatedCommand}">
+												<MenuItem.Icon>
+													<TextBlock Classes="icon"
+															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.EarliestCreated}}"
+															   Text="{StaticResource CircleCheck}" />
+												</MenuItem.Icon>
+											</MenuItem>
+										</MenuItem>
+
 										<!--By Date Modified-->
 										<MenuItem Header="By Date _Modified">
 											<MenuItem.Icon>
@@ -1012,8 +1071,6 @@
 								</DropDownButton.Flyout>
 							</DropDownButton>
 
-							<Rectangle />
-
 							<!--Delete-->
 							<Button Background="{DynamicResource AppDeleteButtonBackgroundBrush}"
 									Foreground="{DynamicResource AppDeleteButtonForegroundBrush}"
@@ -1029,22 +1086,36 @@
 							</Button>
 						</StackPanel>
 
-						<!--Preview-->
 						<StackPanel Grid.Column="2"
-									Orientation="Horizontal">
-							<Label VerticalAlignment="Center"
-								   Target="PreviewToggleSwitch"
-								   Content="_Preview" />
+									Orientation="Horizontal"
+									Spacing="4">
+							<!--Find Toggle-->
+							<ToggleButton ToolTip.Tip="Find"
+										  IsChecked="{Binding ShowFindWithinSearchResultsPane, Mode=TwoWay}">
+								<ToggleButton.Content>
+									<TextBlock Classes="icon"
+											   Text="{StaticResource MagnifyingGlass}" />
+								</ToggleButton.Content>
+							</ToggleButton>
 
-							<ToggleSwitch x:Name="PreviewToggleSwitch"
-										  Margin="0"
-										  Padding="0"
-										  Width="40"
-										  VerticalAlignment="Stretch"
-										  VerticalContentAlignment="Center"
-										  OnContent=""
-										  OffContent=""
-										  IsChecked="{Binding ShowPreview, Mode=TwoWay}" />
+							<Rectangle />
+
+							<!--Preview Switch-->
+							<StackPanel Orientation="Horizontal">
+								<Label VerticalAlignment="Center"
+									   Target="PreviewToggleSwitch"
+									   Content="_Preview" />
+
+								<ToggleSwitch x:Name="PreviewToggleSwitch"
+											  Margin="0"
+											  Padding="0"
+											  Width="40"
+											  VerticalAlignment="Stretch"
+											  VerticalContentAlignment="Center"
+											  OnContent=""
+											  OffContent=""
+											  IsChecked="{Binding ShowPreview, Mode=TwoWay}" />
+							</StackPanel>
 						</StackPanel>
 					</Grid>
 
@@ -1055,289 +1126,413 @@
 							<ColumnDefinition Width="{Binding PreviewPaneWidth, Mode=TwoWay, Converter={StaticResource IntToGridLengthConverter}}" />
 						</Grid.ColumnDefinitions>
 
-						<!--Results Grid-->
-						<DataGrid x:Name="ResultsGrid"
-								  CanUserResizeColumns="True"
-								  CanUserSortColumns="False"
-								  SelectionMode="Extended"
-								  SelectedItem="{Binding SelectedDuplicateFile, Mode=TwoWay}"
-								  ItemsSource="{Binding DuplicateFiles}">
-							<DataGrid.Resources>
-								<ControlTheme x:Key="AlternateRowTheme"
-											  TargetType="DataGridRow"
-											  BasedOn="{StaticResource {x:Type DataGridRow}}"
-											  x:DataType="models:DuplicateFile">
-									<Setter Property="Background"
-											Value="{Binding Path=Group, Mode=OneWay, Converter={StaticResource DuplicateFileGroupToRowBGConverter}}" />
-								</ControlTheme>
-							</DataGrid.Resources>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="auto" />
+								<RowDefinition Height="{Binding FindWithinSearchResultsPaneHeight, Mode=TwoWay, Converter={StaticResource IntToGridLengthConverter}}" />
+							</Grid.RowDefinitions>
 
-							<DataGrid.Styles>
-								<Style Selector="DataGridCell.RightAlignedCell">
-									<Setter Property="HorizontalAlignment"
-											Value="Right" />
-								</Style>
+							<!--Results Grid-->
+							<DataGrid x:Name="ResultsGrid"
+									  CanUserResizeColumns="True"
+									  CanUserSortColumns="False"
+									  SelectionMode="Extended"
+									  SelectedItem="{Binding SelectedDuplicateFile, Mode=TwoWay}"
+									  ItemsSource="{Binding DuplicateFiles}"
+									  SelectionChanged="ResultsGrid_SelectionChanged">
+								<DataGrid.Resources>
+									<ControlTheme x:Key="AlternateRowTheme"
+												  TargetType="DataGridRow"
+												  BasedOn="{StaticResource {x:Type DataGridRow}}"
+												  x:DataType="models:DuplicateFile">
+										<Setter Property="Background"
+												Value="{Binding Path=Group, Mode=OneWay, Converter={StaticResource DuplicateFileGroupToRowBGConverter}}" />
+									</ControlTheme>
+								</DataGrid.Resources>
 
-								<Style Selector="DataGridCell.CenterAlignedCell">
-									<Setter Property="HorizontalAlignment"
-											Value="Center" />
-								</Style>
+								<DataGrid.Styles>
+									<Style Selector="DataGridCell.RightAlignedCell">
+										<Setter Property="HorizontalAlignment"
+												Value="Right" />
+									</Style>
 
-								<Style Selector="DataGridCell TextBlock">
-									<Setter Property="TextTrimming"
-											Value="CharacterEllipsis" />
+									<Style Selector="DataGridCell.CenterAlignedCell">
+										<Setter Property="HorizontalAlignment"
+												Value="Center" />
+									</Style>
 
-									<Setter Property="TextDecorations"
-											Value="{Binding IsDeleted, Mode=OneWay, Converter={StaticResource TrueToStrikethroughConverter}}" />
+									<Style Selector="DataGridCell TextBlock">
+										<Setter Property="TextTrimming"
+												Value="CharacterEllipsis" />
 
-									<Setter Property="Foreground"
-											Value="{Binding IsDeleted, Mode=OneWay, Converter={StaticResource DeletedToGreyForegroundConverter}}" />
-								</Style>
+										<Setter Property="TextDecorations"
+												Value="{Binding IsDeleted, Mode=OneWay, Converter={StaticResource TrueToStrikethroughConverter}}" />
 
-								<Style Selector="DataGridCell:disabled TextBlock">
-									<Setter Property="Foreground"
-											Value="{DynamicResource AppSearchResultsDisabledForegroundBrush}" />
-								</Style>
+										<Setter Property="Foreground"
+												Value="{Binding IsDeleted, Mode=OneWay, Converter={StaticResource DeletedToGreyForegroundConverter}}" />
+									</Style>
 
-								<Style Selector="DataGridRow">
-									<Setter Property="Theme"
-											Value="{StaticResource AlternateRowTheme}" />
-								</Style>
-							</DataGrid.Styles>
+									<Style Selector="DataGridCell:disabled TextBlock">
+										<Setter Property="Foreground"
+												Value="{DynamicResource AppSearchResultsDisabledForegroundBrush}" />
+									</Style>
 
-							<DataGrid.KeyBindings>
-								<KeyBinding Gesture="Space"
-											Command="{Binding InvertMarkingOfSelectedSearchResultCommand}">
-									<KeyBinding.CommandParameter>
-										<MultiBinding Converter="{StaticResource MultiCommandParameterConverter}">
-											<Binding Path="SelectedItem"
-													 ElementName="ResultsGrid" />
-											<Binding Path="SelectedItems"
-													 ElementName="ResultsGrid" />
-										</MultiBinding>
-									</KeyBinding.CommandParameter>
-								</KeyBinding>
+									<Style Selector="DataGridRow">
+										<Setter Property="Theme"
+												Value="{StaticResource AlternateRowTheme}" />
+									</Style>
+								</DataGrid.Styles>
 
-								<KeyBinding Gesture="Enter"
-											Command="{Binding OpenCommand}"
-											CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+								<DataGrid.KeyBindings>
+									<KeyBinding Gesture="Space"
+												Command="{Binding InvertMarkingOfSelectedSearchResultCommand}">
+										<KeyBinding.CommandParameter>
+											<MultiBinding Converter="{StaticResource MultiCommandParameterConverter}">
+												<Binding Path="SelectedItem"
+														 ElementName="ResultsGrid" />
+												<Binding Path="SelectedItems"
+														 ElementName="ResultsGrid" />
+											</MultiBinding>
+										</KeyBinding.CommandParameter>
+									</KeyBinding>
 
-								<KeyBinding Gesture="Delete"
-											Command="{Binding DelistCommand}"
-											CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-							</DataGrid.KeyBindings>
+									<KeyBinding Gesture="Enter"
+												Command="{Binding OpenCommand}"
+												CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
-							<i:Interaction.Behaviors>
-								<ic:EventTriggerBehavior EventName="DoubleTapped"
-														 SourceObject="#ResultsGrid">
-									<ic:InvokeCommandAction Command="{Binding OpenCommand}"
-															CommandParameter="{Binding Path=SelectedItem, ElementName=ResultsGrid}" />
-								</ic:EventTriggerBehavior>
-							</i:Interaction.Behaviors>
+									<KeyBinding Gesture="Delete"
+												Command="{Binding DelistCommand}"
+												CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+								</DataGrid.KeyBindings>
 
-							<!--Context Menu-->
-							<DataGrid.ContextMenu>
-								<ContextMenu>
-									<!--Open-->
-									<MenuItem Header="_Open"
-											  Command="{Binding OpenCommand}"
-											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
-										<MenuItem.Icon>
-											<TextBlock Classes="icon"
-													   Text="{StaticResource File}" />
-										</MenuItem.Icon>
-									</MenuItem>
+								<i:Interaction.Behaviors>
+									<ic:EventTriggerBehavior EventName="DoubleTapped"
+															 SourceObject="#ResultsGrid">
+										<ic:InvokeCommandAction Command="{Binding OpenCommand}"
+																CommandParameter="{Binding Path=SelectedItem, ElementName=ResultsGrid}" />
+									</ic:EventTriggerBehavior>
+								</i:Interaction.Behaviors>
 
-									<!--Open Containing Folder-->
-									<MenuItem Header="Open _Containing Folder"
-											  Command="{Binding OpenContainingFolderCommand}"
-											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
-										<MenuItem.Icon>
-											<TextBlock Classes="icon regular"
-													   Text="{StaticResource FolderOpen}" />
-										</MenuItem.Icon>
-									</MenuItem>
-
-									<Separator />
-
-									<!--Delist-->
-									<MenuItem Header="_Delist"
-											  Command="{Binding DelistCommand}"
-											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-									<!--Delist Group-->
-									<MenuItem Header="Delist _Group"
-											  Command="{Binding DelistGroupCommand}"
-											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-									<!--Delist Folder-->
-									<MenuItem Header="Delist _Folder"
-											  Command="{Binding DelistDirectoryCommand}"
-											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-									<Separator />
-
-									<!--Mark-->
-									<MenuItem Header="M_ark Selection">
-										<!--By Date Modified-->
-										<MenuItem Header="By Date _Modified">
-											<!--Keep Latest-->
-											<MenuItem Header="Keep _Latest"
-													  Command="{Binding KeepLatestModifiedCommand}"
-													  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-											<!--Keep Earliest-->
-											<MenuItem Header="Keep _Earliest"
-													  Command="{Binding KeepEarliestModifiedCommand}"
-													  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-										</MenuItem>
-
-										<!--By Date Created-->
-										<MenuItem Header="By Date _Created">
-											<!--Keep Latest-->
-											<MenuItem Header="Keep _Latest"
-													  Command="{Binding KeepLatestCreatedCommand}"
-													  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-											<!--Keep Earliest-->
-											<MenuItem Header="Keep _Earliest"
-													  Command="{Binding KeepEarliestCreatedCommand}"
-													  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-										</MenuItem>
-
-										<!--By Size-->
-										<MenuItem Header="By _Size">
-											<!--Keep Biggest-->
-											<MenuItem Header="Keep _Biggest"
-													  Command="{Binding KeepBiggestLengthCommand}"
-													  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-											<!--Keep Smallest-->
-											<MenuItem Header="Keep _Smallest"
-													  Command="{Binding KeepSmallestLengthCommand}"
-													  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-										</MenuItem>
-									</MenuItem>
-
-									<!--Mark All From This Folder-->
-									<MenuItem Header="_Mark All From Folder"
-											  Command="{Binding MarkAllFromThisDirectoryCommand}"
-											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-									<!--Unmark All From This Folder-->
-									<MenuItem Header="_Unmark All From Folder"
-											  Command="{Binding UnmarkAllFromThisDirectoryCommand}"
-											  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-									<Separator />
-
-									<!--Refresh-->
-									<MenuItem Header="R_efresh"
-											  HotKey="F5"
-											  Command="{Binding RefreshCommand}">
-										<MenuItem.Icon>
-											<TextBlock Classes="icon"
-													   Text="{StaticResource ArrowsRotate}" />
-										</MenuItem.Icon>
-									</MenuItem>
-
-									<!--Clean List-->
-									<MenuItem Header="C_lean List"
-											  Command="{Binding CleanCommand}" />
-
-									<Separator />
-
-									<!--Select All-->
-									<MenuItem x:Name="SelectAllMenuItem"
-											  Header="Select _All"
-											  Click="SelectAllMenuItem_Click" />
-								</ContextMenu>
-							</DataGrid.ContextMenu>
-
-							<DataGrid.Columns>
-								<DataGridTemplateColumn CanUserResize="False"
-														CellStyleClasses="CenterAlignedCell">
-									<DataGridTemplateColumn.CellTemplate>
-										<DataTemplate>
-											<CheckBox x:Name="SearchResultCheckBox"
-													  Focusable="False"
-													  IsEnabled="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToInvertedBoolConverter}}"
-													  IsChecked="{Binding IsMarked, Mode=TwoWay}"
-													  Command="{Binding DataContext.ApplyMarkingToSelectedSearchResultsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-													  Click="SearchResultCheckBox_Click">
-												<CheckBox.CommandParameter>
-													<MultiBinding Converter="{StaticResource MultiCommandParameterConverter}">
-														<Binding />
-														<Binding Path="SelectedItems"
-																 RelativeSource="{RelativeSource AncestorType=DataGrid}" />
-													</MultiBinding>
-												</CheckBox.CommandParameter>
-											</CheckBox>
-										</DataTemplate>
-									</DataGridTemplateColumn.CellTemplate>
-								</DataGridTemplateColumn>
-
-								<!--Name-->
-								<DataGridTemplateColumn Header="File"
-														Width="296">
-									<DataGridTemplateColumn.CellTemplate>
-										<DataTemplate>
-											<Grid Margin="12 0">
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="*" />
-												</Grid.ColumnDefinitions>
-
-												<Image Classes="listbox-file-icon"
-													   IsVisible="{Binding FileIcon, Converter={StaticResource NullToFalseConverter}}"
-													   Source="{Binding FileIcon}" />
-
-												<TextBlock Classes="icon listbox-file-icon"
-														   IsVisible="{Binding FileIcon, Converter={StaticResource NullToTrueConverter}}"
+								<!--Context Menu-->
+								<DataGrid.ContextMenu>
+									<ContextMenu>
+										<!--Open-->
+										<MenuItem Header="_Open"
+												  Command="{Binding OpenCommand}"
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
+											<MenuItem.Icon>
+												<TextBlock Classes="icon"
 														   Text="{StaticResource File}" />
+											</MenuItem.Icon>
+										</MenuItem>
 
-												<TextBlock Grid.Column="1"
-														   VerticalAlignment="Center"
-														   Text="{Binding Name}" />
-											</Grid>
-										</DataTemplate>
-									</DataGridTemplateColumn.CellTemplate>
-								</DataGridTemplateColumn>
+										<!--Open Containing Folder-->
+										<MenuItem Header="Open _Containing Folder"
+												  Command="{Binding OpenContainingFolderCommand}"
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
+											<MenuItem.Icon>
+												<TextBlock Classes="icon regular"
+														   Text="{StaticResource FolderOpen}" />
+											</MenuItem.Icon>
+										</MenuItem>
 
-								<!--Type-->
-								<DataGridTextColumn Header="Type"
-													Width="160"
-													Binding="{Binding Type}" />
+										<Separator />
 
-								<!--Size-->
-								<DataGridTextColumn Header="Size"
-													CellStyleClasses="RightAlignedCell"
-													Width="96"
-													Binding="{Binding Length, Mode=OneWay, Converter={StaticResource LengthToStringConverter}}" />
+										<!--Delist-->
+										<MenuItem Header="_Delist"
+												  Command="{Binding DelistCommand}"
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
-								<!--Modified-->
-								<DataGridTextColumn Header="Modified"
-													Width="208"
-													Binding="{Binding Modified}" />
+										<!--Delist Group-->
+										<MenuItem Header="Delist _Group"
+												  Command="{Binding DelistGroupCommand}"
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
-								<!--Created-->
-								<DataGridTextColumn Header="Created"
-													Width="208"
-													Binding="{Binding Created}" />
+										<!--Delist Folder-->
+										<MenuItem Header="Delist _Folder"
+												  Command="{Binding DelistDirectoryCommand}"
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
-								<!--Location-->
-								<DataGridTextColumn Header="Location"
-													Width="400"
-													Binding="{Binding DirectoryName}" />
+										<Separator />
 
-								<!--Group-->
-								<DataGridTextColumn Header="Group"
-													CellStyleClasses="RightAlignedCell"
-													Width="80"
-													IsReadOnly="True"
-													Binding="{Binding Group}" />
-							</DataGrid.Columns>
-						</DataGrid>
+										<!--Mark-->
+										<MenuItem Header="M_ark Selection">
+											<!--By Date Created-->
+											<MenuItem Header="By Date _Created">
+												<!--Keep Latest-->
+												<MenuItem Header="Keep _Latest"
+														  Command="{Binding KeepLatestCreatedCommand}"
+														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+												<!--Keep Earliest-->
+												<MenuItem Header="Keep _Earliest"
+														  Command="{Binding KeepEarliestCreatedCommand}"
+														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+											</MenuItem>
+
+											<!--By Date Modified-->
+											<MenuItem Header="By Date _Modified">
+												<!--Keep Latest-->
+												<MenuItem Header="Keep _Latest"
+														  Command="{Binding KeepLatestModifiedCommand}"
+														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+												<!--Keep Earliest-->
+												<MenuItem Header="Keep _Earliest"
+														  Command="{Binding KeepEarliestModifiedCommand}"
+														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+											</MenuItem>
+
+											<!--By Size-->
+											<MenuItem Header="By _Size">
+												<!--Keep Biggest-->
+												<MenuItem Header="Keep _Biggest"
+														  Command="{Binding KeepBiggestLengthCommand}"
+														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+												<!--Keep Smallest-->
+												<MenuItem Header="Keep _Smallest"
+														  Command="{Binding KeepSmallestLengthCommand}"
+														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+											</MenuItem>
+										</MenuItem>
+
+										<!--Mark All From This Folder-->
+										<MenuItem Header="_Mark All From Folder"
+												  Command="{Binding MarkAllFromThisDirectoryCommand}"
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+										<!--Unmark All From This Folder-->
+										<MenuItem Header="_Unmark All From Folder"
+												  Command="{Binding UnmarkAllFromThisDirectoryCommand}"
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+										<Separator />
+
+										<!--Refresh-->
+										<MenuItem Header="R_efresh"
+												  HotKey="F5"
+												  Command="{Binding RefreshCommand}">
+											<MenuItem.Icon>
+												<TextBlock Classes="icon"
+														   Text="{StaticResource ArrowsRotate}" />
+											</MenuItem.Icon>
+										</MenuItem>
+
+										<!--Clean List-->
+										<MenuItem Header="C_lean List"
+												  Command="{Binding CleanCommand}" />
+
+										<Separator />
+
+										<!--Select All-->
+										<MenuItem x:Name="SelectAllMenuItem"
+												  Header="Select _All"
+												  Click="SelectAllMenuItem_Click" />
+									</ContextMenu>
+								</DataGrid.ContextMenu>
+
+								<DataGrid.Columns>
+									<DataGridTemplateColumn CanUserResize="False"
+															CellStyleClasses="CenterAlignedCell">
+										<DataGridTemplateColumn.CellTemplate>
+											<DataTemplate>
+												<CheckBox x:Name="SearchResultCheckBox"
+														  Focusable="False"
+														  IsEnabled="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToInvertedBoolConverter}}"
+														  IsChecked="{Binding IsMarked, Mode=TwoWay}"
+														  Command="{Binding DataContext.ApplyMarkingToSelectedSearchResultsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+														  Click="SearchResultCheckBox_Click">
+													<CheckBox.CommandParameter>
+														<MultiBinding Converter="{StaticResource MultiCommandParameterConverter}">
+															<Binding />
+															<Binding Path="SelectedItems"
+																	 RelativeSource="{RelativeSource AncestorType=DataGrid}" />
+														</MultiBinding>
+													</CheckBox.CommandParameter>
+												</CheckBox>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellTemplate>
+									</DataGridTemplateColumn>
+
+									<!--Name-->
+									<DataGridTemplateColumn Header="File"
+															Width="296">
+										<DataGridTemplateColumn.CellTemplate>
+											<DataTemplate>
+												<Grid Margin="12 0">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+
+													<Image Classes="listbox-file-icon"
+														   IsVisible="{Binding FileIcon, Converter={StaticResource NullToFalseConverter}}"
+														   Source="{Binding FileIcon}" />
+
+													<TextBlock Classes="icon listbox-file-icon"
+															   IsVisible="{Binding FileIcon, Converter={StaticResource NullToTrueConverter}}"
+															   Text="{StaticResource File}" />
+
+													<TextBlock Grid.Column="1"
+															   VerticalAlignment="Center"
+															   Text="{Binding Name}" />
+												</Grid>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellTemplate>
+									</DataGridTemplateColumn>
+
+									<!--Type-->
+									<DataGridTextColumn Header="Type"
+														Width="160"
+														Binding="{Binding Type}" />
+
+									<!--Size-->
+									<DataGridTextColumn Header="Size"
+														CellStyleClasses="RightAlignedCell"
+														Width="96"
+														Binding="{Binding Length, Mode=OneWay, Converter={StaticResource LengthToStringConverter}}" />
+
+									<!--Modified-->
+									<DataGridTextColumn Header="Modified"
+														Width="208"
+														Binding="{Binding Modified}" />
+
+									<!--Created-->
+									<DataGridTextColumn Header="Created"
+														Width="208"
+														Binding="{Binding Created}" />
+
+									<!--Location-->
+									<DataGridTextColumn Header="Location"
+														Width="400"
+														Binding="{Binding DirectoryName}" />
+
+									<!--Group-->
+									<DataGridTextColumn Header="Group"
+														CellStyleClasses="RightAlignedCell"
+														Width="80"
+														IsReadOnly="True"
+														Binding="{Binding Group}" />
+								</DataGrid.Columns>
+							</DataGrid>
+
+							<GridSplitter Grid.Row="1"
+										  Height="1"
+										  VerticalAlignment="Stretch"
+										  ShowsPreview="True"
+										  IsVisible="{Binding ShowFind}" />
+
+							<!--Find-->
+							<Border Grid.Row="2"
+									BorderThickness="1"
+									BorderBrush="{DynamicResource AppFindPaneTitleBarBackgroundBrush}"
+									IsVisible="{Binding ShowFindWithinSearchResultsPane}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="auto"/>
+										<RowDefinition Height="auto"/>
+										<RowDefinition Height="*"/>
+									</Grid.RowDefinitions>
+
+									<Border Padding="8"
+											Background="{DynamicResource AppFindPaneTitleBarBackgroundBrush}" >
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*" />
+												<ColumnDefinition Width="auto" />
+											</Grid.ColumnDefinitions>
+
+											<TextBlock Text="Find" />
+
+											<Button Grid.Column="1"
+													Margin="0"
+													Padding="0"
+													HorizontalContentAlignment="Center"
+													VerticalContentAlignment="Center"
+													Background="Transparent"
+													ToolTip.Tip="Hide"
+													Command="{Binding HideFindWithinSearchResultsPaneCommand}">
+												<Button.Content>
+													<TextBlock Classes="icon"
+															   Text="{StaticResource XMark}" />
+												</Button.Content>
+											</Button>
+										</Grid>
+									</Border>
+
+									<Grid Grid.Row="1"
+										  Margin="8">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="4" />
+											<ColumnDefinition Width="auto" />
+										</Grid.ColumnDefinitions>
+
+										<TextBox x:Name="LookForTextBox"
+												 VerticalAlignment="Stretch"
+												 VerticalContentAlignment="Center"
+												 Watermark="Look for..."
+												 Text="{Binding FindWithinSearchResultsLookFor, Mode=TwoWay}">
+											<TextBox.KeyBindings>
+												<KeyBinding Gesture="Enter"
+															Command="{Binding FindWithinSearchResultsCommand}" />
+											</TextBox.KeyBindings>
+										</TextBox>
+
+										<StackPanel Grid.Column="2"
+													Orientation="Horizontal"
+													Spacing="4">
+											<StackPanel.Styles>
+												<Style Selector="Button,ToggleButton">
+													<Setter Property="MinWidth"
+															Value="30" />
+													<Setter Property="Height"
+															Value="27" />
+													<Setter Property="HorizontalContentAlignment"
+															Value="Center" />
+													<Setter Property="VerticalContentAlignment"
+															Value="Center" />
+												</Style>
+											</StackPanel.Styles>
+
+											<ToggleButton ToolTip.Tip="Use Regular Expressions"
+														  Content=".*" />
+
+											<Button ToolTip.Tip="Find"
+													Command="{Binding FindWithinSearchResultsCommand}" >
+												<Button.Content>
+													<TextBlock Classes="icon"
+															   Text="{StaticResource MagnifyingGlass}" />
+												</Button.Content>
+											</Button>
+
+											<Button Content="Clear" />
+										</StackPanel>
+									</Grid>
+
+									<DataGrid x:Name="FindWithSearchResultsDataGrid"
+											  Grid.Row="2"
+											  Margin="8 0"
+											  IsReadOnly="True"
+											  SelectedItem="{Binding SelectedFindWithinSearchResultsItem, Mode=TwoWay}"
+											  ItemsSource="{Binding FindWithinSearchResultsItems}">
+										<DataGrid.Columns>
+											<DataGridTextColumn Header="File"
+																Width="256"
+																Binding="{Binding Name}" />
+											<DataGridTextColumn Header="Location"
+																Width="512"
+																Binding="{Binding FullName}" />
+											<DataGridTextColumn Header="Group"
+																Width="96"
+																Binding="{Binding Group}" />
+										</DataGrid.Columns>
+									</DataGrid>
+								</Grid>
+							</Border>
+						</Grid>
 
 						<GridSplitter Grid.Column="1"
 									  Width="1"
@@ -1345,7 +1540,7 @@
 									  ShowsPreview="True"
 									  IsVisible="{Binding ShowPreview}" />
 
-						<!--Preview-->
+						<!--Preview Pane-->
 						<Border Grid.Column="2"
 								BorderThickness="1"
 								BorderBrush="{DynamicResource AppBorderBrush}"

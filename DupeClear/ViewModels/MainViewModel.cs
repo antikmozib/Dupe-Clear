@@ -10,6 +10,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using DupeClear.Helpers;
 using DupeClear.Models;
+using DupeClear.Models.Events;
 using DupeClear.Models.Finder;
 using DupeClear.Models.MessageBox;
 using DupeClear.Models.Serializable;
@@ -363,6 +364,7 @@ public partial class MainViewModel : ViewModelBase
                     ApplyMarkingToSelectedSearchResultsCommand.NotifyCanExecuteChanged();
                     InvertMarkingOfSelectedSearchResultCommand.NotifyCanExecuteChanged();
                     RefreshCommand.NotifyCanExecuteChanged();
+                    FindWithinSearchResultsCommand.NotifyCanExecuteChanged();
                 });
 
                 OnPropertyChanged();
@@ -444,6 +446,45 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
+    private bool _showFindWithinSearchResultsPane;
+    public bool ShowFindWithinSearchResultsPane
+    {
+        get => _showFindWithinSearchResultsPane;
+        set
+        {
+            if (_showFindWithinSearchResultsPane != value)
+            {
+                _showFindWithinSearchResultsPane = value;
+                if (value == true)
+                {
+                    FindWithinSearchResultsPaneHeight = 256;
+                }
+                else
+                {
+                    FindWithinSearchResultsPaneHeight = 0;
+                    FindWithinSearchResultsLookFor = null;
+                    FindWithinSearchResultsItems.Clear();
+                }
+
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    private int _findWithinSearchResultsPaneHeight;
+    public int FindWithinSearchResultsPaneHeight
+    {
+        get => _findWithinSearchResultsPaneHeight;
+        set
+        {
+            if (_findWithinSearchResultsPaneHeight != value)
+            {
+                _findWithinSearchResultsPaneHeight = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     private bool _showPreview;
     public bool ShowPreview
     {
@@ -513,6 +554,47 @@ public partial class MainViewModel : ViewModelBase
                 if (value != MarkingCriteria.Custom)
                 {
                     _lastValidMarkingCriteria = value;
+                }
+
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    private string? _findWithinSearchResultsLookFor;
+    public string? FindWithinSearchResultsLookFor
+    {
+        get => _findWithinSearchResultsLookFor;
+        set
+        {
+            if (_findWithinSearchResultsLookFor != value)
+            {
+                _findWithinSearchResultsLookFor = value;
+
+                Dispatcher.UIThread.Invoke(FindWithinSearchResultsCommand.NotifyCanExecuteChanged);
+
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public ObservableCollection<DuplicateFile> FindWithinSearchResultsItems { get; } = [];
+
+    private DuplicateFile? _selectedFindWithinSearchResultsItem;
+    public DuplicateFile? SelectedFindWithinSearchResultsItem
+    {
+        get => _selectedFindWithinSearchResultsItem;
+        set
+        {
+            if (_selectedFindWithinSearchResultsItem != value)
+            {
+                _selectedFindWithinSearchResultsItem = value;
+                if (value != null)
+                {
+                    if (DuplicateFiles.Contains(value))
+                    {
+                        SelectedDuplicateFile = value;
+                    }
                 }
 
                 OnPropertyChanged();
@@ -606,6 +688,8 @@ public partial class MainViewModel : ViewModelBase
     public event EventHandler? InvalidExtensionsToExcludeEntered;
 
     public event EventHandler? SearchPerformed;
+
+    public event FindWithinSearchResultsSearchPerformedEventHandler? FindWithinResultsPerformed;
 
     public event EventHandler? Closed;
 
@@ -874,6 +958,11 @@ public partial class MainViewModel : ViewModelBase
     protected void RaiseEvent(EventHandler? handler)
     {
         handler?.Invoke(this, new EventArgs());
+    }
+
+    protected void RaiseFindWithinResultsPerformedEvent(FindWithinSearchResultsSearchPerformedEventHandler? handler, FindWithinSearchResultsSearchPerformedEventArgs e)
+    {
+        handler?.Invoke(this, e);
     }
 
     #endregion // Event Handlers
@@ -1399,6 +1488,12 @@ public partial class MainViewModel : ViewModelBase
     private bool CanCancelOperation(object? arg)
     {
         return OperationCanBeCanceled;
+    }
+
+    [RelayCommand]
+    private void HideFindWithinSearchResultsPane(object? arg)
+    {
+        ShowFindWithinSearchResultsPane = false;
     }
 
     [RelayCommand(CanExecute = nameof(CanMark))]
@@ -2214,6 +2309,55 @@ public partial class MainViewModel : ViewModelBase
     private bool CanClean(object? arg)
     {
         return !IsBusy && DuplicateFiles.Any();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanFindWithinSearchResults))]
+    private async Task FindWithinSearchResults(object? arg, CancellationToken ct)
+    {
+        if (!CanFindWithinSearchResults(arg))
+        {
+            return;
+        }
+
+        var results = new List<DuplicateFile>();
+        SetBusy("Working...", FindWithinSearchResultsCommand);
+        try
+        {
+            await Task.Run(async () =>
+            {
+                if (!string.IsNullOrEmpty(FindWithinSearchResultsLookFor))
+                {
+                    results.AddRange(DuplicateFiles.Where(x => x.Name.Contains(FindWithinSearchResultsLookFor, StringComparison.OrdinalIgnoreCase)));
+                }
+
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    FindWithinSearchResultsItems.Clear();
+
+                    foreach (var item in results)
+                    {
+                        ct.ThrowIfCancellationRequested();
+
+                        FindWithinSearchResultsItems.Add(item);
+                    }
+
+                    RaiseFindWithinResultsPerformedEvent(FindWithinResultsPerformed, new FindWithinSearchResultsSearchPerformedEventArgs(results.Count > 0));
+                });
+            });
+        }
+        catch (OperationCanceledException)
+        {
+
+        }
+        finally
+        {
+            SetBusy(false);
+        }
+    }
+
+    private bool CanFindWithinSearchResults(object? arg)
+    {
+        return !IsBusy;
     }
 
     [RelayCommand]

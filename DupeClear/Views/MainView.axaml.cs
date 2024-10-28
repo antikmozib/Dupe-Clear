@@ -7,6 +7,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using DupeClear.Helpers;
+using DupeClear.Models.Events;
 using DupeClear.Models.MessageBox;
 using DupeClear.Native;
 using DupeClear.ViewModels;
@@ -50,6 +51,7 @@ public partial class MainView : UserControl
             if (_viewModel != null)
             {
                 _viewModel.SearchPerformed -= ViewModel_SearchPerformed;
+                _viewModel.FindWithinResultsPerformed -= ViewModel_FindWithinResultsPerformed;
                 _viewModel.Closed -= ViewModel_Closed;
             }
 
@@ -59,6 +61,7 @@ public partial class MainView : UserControl
             _viewModel.AsyncFilePicker = OpenFileAsync;
             _viewModel.MessageBox = ShowMessageBoxAsync;
             _viewModel.SearchPerformed += ViewModel_SearchPerformed;
+            _viewModel.FindWithinResultsPerformed += ViewModel_FindWithinResultsPerformed;
             _viewModel.Closed += ViewModel_Closed;
         }
     }
@@ -184,6 +187,14 @@ public partial class MainView : UserControl
         SelectParentListBoxItemWhenItemInputClicked(sender);
     }
 
+    private void ResultsGrid_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (sender is DataGrid dg)
+        {
+            dg.ScrollIntoView(dg.SelectedItem, null);
+        }
+    }
+
     private void SearchResultCheckBox_Click(object? sender, RoutedEventArgs e)
     {
         if (sender is CheckBox cb)
@@ -209,6 +220,15 @@ public partial class MainView : UserControl
     private void ViewModel_SearchPerformed(object? sender, EventArgs e)
     {
         MainTabControl.SelectedIndex = 2;
+    }
+
+    private void ViewModel_FindWithinResultsPerformed(object? sender, FindWithinSearchResultsSearchPerformedEventArgs e)
+    {
+        if (e.MatchFound)
+        {
+            FindWithSearchResultsDataGrid.SelectedIndex = 0;
+            FindWithSearchResultsDataGrid.Focus();
+        }
     }
 
     private void ViewModel_Closed(object? sender, EventArgs e)

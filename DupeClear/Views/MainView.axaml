@@ -980,8 +980,8 @@
 											</MenuItem>
 										</MenuItem>
 
-										<!--By Date Created-->
-										<MenuItem Header="By Date _Created">
+										<!--By Letters-->
+										<MenuItem Header="By _Name">
 											<MenuItem.Icon>
 												<TextBlock Classes="icon"
 														   Text="{StaticResource CircleCheck}">
@@ -989,31 +989,31 @@
 														<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
 															<Binding Path="SelectedMarkingCriteria"
 																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.LatestCreated}" />
+																	 ConverterParameter="{x:Static models:MarkingCriteria.MoreLetters}" />
 															<Binding Path="SelectedMarkingCriteria"
 																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.EarliestCreated}" />
+																	 ConverterParameter="{x:Static models:MarkingCriteria.LessLetters}" />
 														</MultiBinding>
 													</TextBlock.IsVisible>
 												</TextBlock>
 											</MenuItem.Icon>
 
-											<!--Keep Latest-->
-											<MenuItem Header="Keep _Latest"
-													  Command="{Binding KeepLatestCreatedCommand}">
+											<!--Keep More Letters-->
+											<MenuItem Header="Keep _More Letters"
+													  Command="{Binding KeepMoreLettersCommand}">
 												<MenuItem.Icon>
 													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestCreated}}"
+															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.MoreLetters}}"
 															   Text="{StaticResource CircleCheck}" />
 												</MenuItem.Icon>
 											</MenuItem>
 
-											<!--Keep Earliest-->
-											<MenuItem Header="Keep _Earliest"
-													  Command="{Binding KeepEarliestCreatedCommand}">
+											<!--Keep Less Letters-->
+											<MenuItem Header="Keep _Less Letters"
+													  Command="{Binding KeepLessLettersCommand}">
 												<MenuItem.Icon>
 													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.EarliestCreated}}"
+															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LessLetters}}"
 															   Text="{StaticResource CircleCheck}" />
 												</MenuItem.Icon>
 											</MenuItem>
@@ -1281,6 +1281,19 @@
 												<!--Keep Earliest-->
 												<MenuItem Header="Keep _Earliest"
 														  Command="{Binding KeepEarliestModifiedCommand}"
+														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+											</MenuItem>
+
+											<!--By Letters-->
+											<MenuItem Header="By _Name">
+												<!--Keep Biggest-->
+												<MenuItem Header="Keep _More Letters"
+														  Command="{Binding KeepMoreLettersCommand}"
+														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+												<!--Keep Smallest-->
+												<MenuItem Header="Keep _Less Letters"
+														  Command="{Binding KeepLessLettersCommand}"
 														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 											</MenuItem>
 

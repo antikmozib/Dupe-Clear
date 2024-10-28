@@ -16,5 +16,9 @@ public enum MarkingCriteria
 
     BiggestLength,
 
-    SmallestLength
+    SmallestLength,
+
+    MoreLetters,
+
+    LessLetters
 }

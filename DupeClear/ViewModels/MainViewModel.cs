@@ -1355,49 +1355,63 @@ public partial class MainViewModel : ViewModelBase
             switch (_lastValidMarkingCriteria)
             {
                 case MarkingCriteria.EarliestModified:
-                    await KeepEarliestModifiedAsync(result.Files);
+                    await MarkFilesKeepEarliestModifiedAsync(result.Files);
 
                     SelectedMarkingCriteria = MarkingCriteria.EarliestModified;
 
                     break;
 
                 case MarkingCriteria.LatestModified:
-                    await KeepLatestModifiedAsync(result.Files);
+                    await MarkFilesKeepLatestModifiedAsync(result.Files);
 
                     SelectedMarkingCriteria = MarkingCriteria.LatestModified;
 
                     break;
 
                 case MarkingCriteria.EarliestCreated:
-                    await KeepEarliestCreatedAsync(result.Files);
+                    await MarkFilesKeepEarliestCreatedAsync(result.Files);
 
                     SelectedMarkingCriteria = MarkingCriteria.EarliestCreated;
 
                     break;
 
                 case MarkingCriteria.LatestCreated:
-                    await KeepLatestCreatedAsync(result.Files);
+                    await MarkFilesKeepLatestCreatedAsync(result.Files);
 
                     SelectedMarkingCriteria = MarkingCriteria.LatestCreated;
 
                     break;
 
                 case MarkingCriteria.BiggestLength:
-                    await KeepBiggestLengthAsync(result.Files);
+                    await MarkFilesKeepBiggestLengthAsync(result.Files);
 
                     SelectedMarkingCriteria = MarkingCriteria.BiggestLength;
 
                     break;
 
                 case MarkingCriteria.SmallestLength:
-                    await KeepSmallestLengthAsync(result.Files);
+                    await MarkFilesKeepSmallestLengthAsync(result.Files);
 
                     SelectedMarkingCriteria = MarkingCriteria.SmallestLength;
 
                     break;
 
+                case MarkingCriteria.MoreLetters:
+                    await MarkFilesKeepMoreLettersAsync(result.Files);
+
+                    SelectedMarkingCriteria = MarkingCriteria.MoreLetters;
+
+                    break;
+
+                case MarkingCriteria.LessLetters:
+                    await MarkFilesKeepLessLettersAsync(result.Files);
+
+                    SelectedMarkingCriteria = MarkingCriteria.LessLetters;
+
+                    break;
+
                 default:
-                    await KeepLatestModifiedAsync(result.Files);
+                    await MarkFilesKeepLatestModifiedAsync(result.Files);
 
                     SelectedMarkingCriteria = MarkingCriteria.LatestModified;
 
@@ -1507,13 +1521,13 @@ public partial class MainViewModel : ViewModelBase
         SetBusy("Marking...", KeepEarliestModifiedCommand);
         if (arg == null)
         {
-            await KeepEarliestModifiedAsync(DuplicateFiles, ct);
+            await MarkFilesKeepEarliestModifiedAsync(DuplicateFiles, ct);
 
             SelectedMarkingCriteria = MarkingCriteria.EarliestModified;
         }
         else if (arg is IList items)
         {
-            await KeepEarliestModifiedAsync(items.Cast<DuplicateFile>(), ct);
+            await MarkFilesKeepEarliestModifiedAsync(items.Cast<DuplicateFile>(), ct);
         }
 
         SetBusy(false);
@@ -1530,13 +1544,13 @@ public partial class MainViewModel : ViewModelBase
         SetBusy("Marking...", KeepLatestModifiedCommand);
         if (arg == null)
         {
-            await KeepLatestModifiedAsync(DuplicateFiles, ct);
+            await MarkFilesKeepLatestModifiedAsync(DuplicateFiles, ct);
 
             SelectedMarkingCriteria = MarkingCriteria.LatestModified;
         }
         else if (arg is IList items)
         {
-            await KeepLatestModifiedAsync(items.Cast<DuplicateFile>(), ct);
+            await MarkFilesKeepLatestModifiedAsync(items.Cast<DuplicateFile>(), ct);
         }
 
         SetBusy(false);
@@ -1553,13 +1567,13 @@ public partial class MainViewModel : ViewModelBase
         SetBusy("Marking...", KeepEarliestCreatedCommand);
         if (arg == null)
         {
-            await KeepEarliestCreatedAsync(DuplicateFiles, ct);
+            await MarkFilesKeepEarliestCreatedAsync(DuplicateFiles, ct);
 
             SelectedMarkingCriteria = MarkingCriteria.EarliestCreated;
         }
         else if (arg is IList items)
         {
-            await KeepEarliestCreatedAsync(items.Cast<DuplicateFile>(), ct);
+            await MarkFilesKeepEarliestCreatedAsync(items.Cast<DuplicateFile>(), ct);
         }
 
         SetBusy(false);
@@ -1576,13 +1590,13 @@ public partial class MainViewModel : ViewModelBase
         SetBusy("Marking...", KeepLatestCreatedCommand);
         if (arg == null)
         {
-            await KeepLatestCreatedAsync(DuplicateFiles, ct);
+            await MarkFilesKeepLatestCreatedAsync(DuplicateFiles, ct);
 
             SelectedMarkingCriteria = MarkingCriteria.LatestCreated;
         }
         else if (arg is IList items)
         {
-            await KeepLatestCreatedAsync(items.Cast<DuplicateFile>(), ct);
+            await MarkFilesKeepLatestCreatedAsync(items.Cast<DuplicateFile>(), ct);
         }
 
         SetBusy(false);
@@ -1599,13 +1613,13 @@ public partial class MainViewModel : ViewModelBase
         SetBusy("Marking...", KeepBiggestLengthCommand);
         if (arg == null)
         {
-            await KeepBiggestLengthAsync(DuplicateFiles, ct);
+            await MarkFilesKeepBiggestLengthAsync(DuplicateFiles, ct);
 
             SelectedMarkingCriteria = MarkingCriteria.BiggestLength;
         }
         else if (arg is IList items)
         {
-            await KeepBiggestLengthAsync(items.Cast<DuplicateFile>(), ct);
+            await MarkFilesKeepBiggestLengthAsync(items.Cast<DuplicateFile>(), ct);
         }
 
         SetBusy(false);
@@ -1622,13 +1636,59 @@ public partial class MainViewModel : ViewModelBase
         SetBusy("Marking...", KeepSmallestLengthCommand);
         if (arg == null)
         {
-            await KeepSmallestLengthAsync(DuplicateFiles, ct);
+            await MarkFilesKeepSmallestLengthAsync(DuplicateFiles, ct);
 
             SelectedMarkingCriteria = MarkingCriteria.SmallestLength;
         }
         else if (arg is IList items)
         {
-            await KeepSmallestLengthAsync(items.Cast<DuplicateFile>(), ct);
+            await MarkFilesKeepSmallestLengthAsync(items.Cast<DuplicateFile>(), ct);
+        }
+
+        SetBusy(false);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanMark))]
+    private async Task KeepMoreLettersAsync(object? arg, CancellationToken ct)
+    {
+        if (!CanMark(arg))
+        {
+            return;
+        }
+
+        SetBusy("Marking...", KeepMoreLettersCommand);
+        if (arg == null)
+        {
+            await MarkFilesKeepMoreLettersAsync(DuplicateFiles, ct);
+
+            SelectedMarkingCriteria = MarkingCriteria.MoreLetters;
+        }
+        else if (arg is IList items)
+        {
+            await MarkFilesKeepMoreLettersAsync(items.Cast<DuplicateFile>(), ct);
+        }
+
+        SetBusy(false);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanMark))]
+    private async Task KeepLessLettersAsync(object? arg, CancellationToken ct)
+    {
+        if (!CanMark(arg))
+        {
+            return;
+        }
+
+        SetBusy("Marking...", KeepLessLettersCommand);
+        if (arg == null)
+        {
+            await MarkFilesKeepLessLettersAsync(DuplicateFiles, ct);
+
+            SelectedMarkingCriteria = MarkingCriteria.LessLetters;
+        }
+        else if (arg is IList items)
+        {
+            await MarkFilesKeepLessLettersAsync(items.Cast<DuplicateFile>(), ct);
         }
 
         SetBusy(false);
@@ -2647,34 +2707,44 @@ public partial class MainViewModel : ViewModelBase
         return true;
     }
 
-    private async Task KeepEarliestModifiedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    private async Task MarkFilesKeepEarliestModifiedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
         await MarkFilesAsync(files, f => f.Modified, ct: ct);
     }
 
-    private async Task KeepLatestModifiedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    private async Task MarkFilesKeepLatestModifiedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
         await MarkFilesAsync(files, f => f.Modified, true, ct);
     }
 
-    private async Task KeepEarliestCreatedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    private async Task MarkFilesKeepEarliestCreatedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
         await MarkFilesAsync(files, f => f.Created, ct: ct);
     }
 
-    private async Task KeepLatestCreatedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    private async Task MarkFilesKeepLatestCreatedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
         await MarkFilesAsync(files, f => f.Created, true, ct);
     }
 
-    private async Task KeepBiggestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    private async Task MarkFilesKeepBiggestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
         await MarkFilesAsync(files, f => f.Length, true, ct);
     }
 
-    private async Task KeepSmallestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    private async Task MarkFilesKeepSmallestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
         await MarkFilesAsync(files, f => f.Length, ct: ct);
+    }
+
+    private async Task MarkFilesKeepMoreLettersAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    {
+        await MarkFilesAsync(files, f => f.NameWithoutExtension.Count(char.IsLetter), true, ct);
+    }
+
+    private async Task MarkFilesKeepLessLettersAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    {
+        await MarkFilesAsync(files, f => f.NameWithoutExtension.Count(char.IsLetter), ct: ct);
     }
 
     private async Task MarkFilesAsync<T>(

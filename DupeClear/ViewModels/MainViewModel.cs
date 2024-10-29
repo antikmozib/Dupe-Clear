@@ -1393,10 +1393,10 @@ public partial class MainViewModel : ViewModelBase
 
                     break;
 
-                case MarkingCriteria.BiggestLength:
-                    await MarkFilesKeepBiggestLengthAsync(result.Files);
+                case MarkingCriteria.LargestLength:
+                    await MarkFilesKeepLargestLengthAsync(result.Files);
 
-                    SelectedMarkingCriteria = MarkingCriteria.BiggestLength;
+                    SelectedMarkingCriteria = MarkingCriteria.LargestLength;
 
                     break;
 
@@ -1614,23 +1614,23 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand(CanExecute = nameof(CanMark))]
-    private async Task KeepBiggestLengthAsync(object? arg, CancellationToken ct)
+    private async Task KeepLargestLengthAsync(object? arg, CancellationToken ct)
     {
         if (!CanMark(arg))
         {
             return;
         }
 
-        SetBusy("Marking...", KeepBiggestLengthCommand);
+        SetBusy("Marking...", KeepLargestLengthCommand);
         if (arg == null)
         {
-            await MarkFilesKeepBiggestLengthAsync(DuplicateFiles, ct);
+            await MarkFilesKeepLargestLengthAsync(DuplicateFiles, ct);
 
-            SelectedMarkingCriteria = MarkingCriteria.BiggestLength;
+            SelectedMarkingCriteria = MarkingCriteria.LargestLength;
         }
         else if (arg is IList items)
         {
-            await MarkFilesKeepBiggestLengthAsync(items.Cast<DuplicateFile>(), ct);
+            await MarkFilesKeepLargestLengthAsync(items.Cast<DuplicateFile>(), ct);
         }
 
         SetBusy(false);
@@ -2750,7 +2750,7 @@ public partial class MainViewModel : ViewModelBase
         await MarkFilesAsync(files, f => f.Created, true, ct);
     }
 
-    private async Task MarkFilesKeepBiggestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
+    private async Task MarkFilesKeepLargestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
         await MarkFilesAsync(files, f => f.Length, true, ct);
     }

@@ -23,4 +23,6 @@ public static class Constants
     public const Theme DefaultTheme = Theme.Auto;
 
     public const string SearchResultsFileExtension = ".dcxml";
+
+    public const string UpdaterAppId = "dupeclear";
 }

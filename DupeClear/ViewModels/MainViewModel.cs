@@ -53,7 +53,10 @@ public partial class MainViewModel : ViewModelBase
 
     private readonly IFileService? _fileService;
 
-    private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider("Dupe Clear", Constants.UpdateApiAddress);
+    private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider(
+        Constants.UpdaterAppId,
+        AppPlatform.Windows,
+        Constants.UpdateApiAddress);
 
     private FinderOption _finderOptions;
 

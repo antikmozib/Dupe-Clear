@@ -77,40 +77,11 @@ public partial class MessageBoxViewModel : ViewModelBase
         }
     }
 
-    /*private string? _yesButtonContent;
-    public string? YesButtonContent
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(_yesButtonContent))
-            {
-                if (Buttons == MessageBoxButton.OK || Buttons == MessageBoxButton.OKCancel)
-                {
-                    YesButtonContent = "_OK";
-                }
-                else
-                {
-                    YesButtonContent = "_Yes";
-                }
-            }
-
-            return _yesButtonContent;
-        }
-        set
-        {
-            if (_yesButtonContent != value)
-            {
-                _yesButtonContent = value;
-                OnPropertyChanged();
-            }
-        }
-    }*/
-
     public string NoButtonContent { get; set; } = "_No";
 
     public string CancelButtonContent { get; set; } = "_Cancel";
 
-    public MessageBoxDefaultButton DefaultButton { get; set; } = MessageBoxDefaultButton.Auto;
+    public MessageBoxDefaultButton DefaultButton { get; set; } = MessageBoxDefaultButton.OK;
 
     public string? HyperlinkButtonContent { get; set; }
 

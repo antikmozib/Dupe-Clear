@@ -64,14 +64,14 @@
 			<Grid.Styles>
 				<Style Selector="ScrollViewer#SecondaryMessageScrollViewer">
 					<Setter Property="MaxHeight"
-							Value="162" />
+							Value="160" />
 
 					<Setter Property="Margin"
 							Value="0 16 0 0" />
 
 					<Style Selector="^.ExtendedHeight">
 						<Setter Property="MaxHeight"
-								Value="270" />
+								Value="272" />
 
 						<Setter Property="Margin"
 								Value="0" />
@@ -227,9 +227,19 @@
 
 				<!--OK/Yes-->
 				<Button x:Name="PrimaryButton"
-						IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.Auto}}"
 						IsCancel="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.OK}}"
 						Command="{Binding PrimaryButtonCommand}">
+					<Button.IsDefault>
+						<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+							<Binding Path="DefaultButton"
+									 Converter="{StaticResource IntToTrueConverter}"
+									 ConverterParameter="{x:Static msgbox:MessageBoxDefaultButton.OK}" />
+							<Binding Path="DefaultButton"
+									 Converter="{StaticResource IntToTrueConverter}"
+									 ConverterParameter="{x:Static msgbox:MessageBoxDefaultButton.Yes}" />
+						</MultiBinding>
+					</Button.IsDefault>
+
 					<Classes.OKButton>
 						<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
 							<Binding Path="Buttons"

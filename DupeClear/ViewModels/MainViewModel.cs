@@ -1812,7 +1812,7 @@ public partial class MainViewModel : ViewModelBase
                     SecondaryMessageWrapped = false,
                     Icon = !string.IsNullOrEmpty(secondaryMessage) ? MessageBoxIcon.Warning : MessageBoxIcon.Question,
                     Buttons = MessageBoxButton.YesNo,
-                    DefaultButton = MessageBoxDefaultButton.No,
+                    DefaultButton = !string.IsNullOrEmpty(secondaryMessage) ? MessageBoxDefaultButton.No : MessageBoxDefaultButton.Yes,
                 });
 
                 if (msgBox.DialogResult != true)

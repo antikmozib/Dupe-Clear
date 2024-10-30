@@ -48,8 +48,8 @@ public partial class MainViewModel : ViewModelBase
 
     private readonly string _userDataFile = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "Dupe Clear",
-        "User.json");
+        Constants.UserDataDirectoryName,
+        Constants.UserDataFileName);
 
     private readonly IFileService? _fileService;
 

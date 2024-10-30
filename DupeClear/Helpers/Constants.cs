@@ -25,4 +25,14 @@ public static class Constants
     public const string SearchResultsFileExtension = ".dcxml";
 
     public const string UpdaterAppId = "dupeclear";
+
+    /// <summary>
+    /// The name of the directory in %APPDATA% where user preferences are stored.
+    /// </summary>
+    public const string UserDataDirectoryName = "Dupe Clear";
+
+    /// <summary>
+    /// The name of the file which stores the user preferences.
+    /// </summary>
+    public const string UserDataFileName = "user.json";
 }

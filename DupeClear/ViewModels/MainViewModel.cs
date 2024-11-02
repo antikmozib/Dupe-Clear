@@ -1,8 +1,5 @@
 ﻿// Copyright (C) 2024 Antik Mozib. All rights reserved.
 
-using AntikMozib.AppUpdater;
-using AntikMozib.AppUpdater.Helpers;
-using AntikMozib.AppUpdater.Models;
 using Avalonia;
 using Avalonia.Media.Imaging;
 using Avalonia.Styling;
@@ -15,6 +12,9 @@ using DupeClear.Models.Finder;
 using DupeClear.Models.MessageBox;
 using DupeClear.Models.Serializable;
 using DupeClear.Native;
+using Mozib.AppUpdater;
+using Mozib.AppUpdater.Helpers;
+using Mozib.AppUpdater.Models;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -54,7 +54,7 @@ public partial class MainViewModel : ViewModelBase
     private readonly IFileService? _fileService;
 
     private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider(
-        Constants.UpdaterAppId,
+        Constants.UpdateApiAppId,
         AppPlatform.Windows,
         Constants.UpdateApiAddress);
 

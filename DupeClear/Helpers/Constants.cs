@@ -14,17 +14,17 @@ public static class Constants
 
     public const string DefaultExcludedExtensions = "*.cfg;*.conf;*.dll;*.drv;*.exe;*.sh;*.so;*.sys";
 
-    public const string UpdateApiAddress = @"https://mozib.io/downloads/update.php";
-
-    public const string AppHomepage = @"https://mozib.io/dupeclear";
-
     public const int DefaultPreviewPaneWidth = 256;
 
     public const Theme DefaultTheme = Theme.Auto;
 
     public const string SearchResultsFileExtension = ".dcxml";
 
-    public const string UpdaterAppId = "dupeclear";
+    public const string AppHomepage = @"https://mozib.io/dupeclear";
+
+    public const string UpdateApiAddress = @"https://api.mozib.io/app-update/";
+
+    public const string UpdateApiAppId = "dupeclear";
 
     /// <summary>
     /// The name of the directory in %APPDATA% where user preferences are stored.

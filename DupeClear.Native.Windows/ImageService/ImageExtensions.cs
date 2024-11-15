@@ -11,13 +11,13 @@ internal static class ImageExtensions
     {
         if (bitmap != null)
         {
-            // Convert to Avalonia.Media.Imaging.Bitmap
-
             var tempBitmap = new System.Drawing.Bitmap(bitmap);
             var bitmapData = tempBitmap.LockBits(
                 new System.Drawing.Rectangle(0, 0, tempBitmap.Width, tempBitmap.Height),
                 System.Drawing.Imaging.ImageLockMode.ReadWrite,
                 System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            
+            // Skia does not currently support reading the DPI of an image so it will always be 96dpi on Skia.
 
             var avaloniaBitmap = new Avalonia.Media.Imaging.Bitmap(
                 Avalonia.Platform.PixelFormat.Bgra8888,

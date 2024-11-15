@@ -2844,7 +2844,7 @@ public partial class MainViewModel : ViewModelBase
     private IEnumerable<string> BuildExtensionList(string extensions)
     {
         var result = new List<string>();
-        var exts = extensions.Split(';').Select(x => x.Trim());
+        var exts = extensions.Replace(" ", "").Split(';').Select(x => x);
         foreach (var ext in exts)
         {
             if (ext.Length < 3)

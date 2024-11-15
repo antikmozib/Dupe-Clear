@@ -15,5 +15,5 @@ internal enum PreviewOption
 
     ThumbnailOnly = 0x08,
 
-    InCacheOnly = 0x10,
+    InCacheOnly = 0x10
 }

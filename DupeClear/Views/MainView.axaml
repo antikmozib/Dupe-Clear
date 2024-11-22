@@ -910,22 +910,22 @@
 												</TextBlock>
 											</MenuItem.Icon>
 
-											<!--Keep Latest-->
-											<MenuItem Header="Keep _Latest"
-													  Command="{Binding KeepLatestCreatedCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestCreated}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-
 											<!--Keep Earliest-->
-											<MenuItem Header="Keep _Earliest"
+											<MenuItem Header="Keep _Oldest"
 													  Command="{Binding KeepEarliestCreatedCommand}">
 												<MenuItem.Icon>
 													<TextBlock Classes="icon"
 															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.EarliestCreated}}"
+															   Text="{StaticResource CircleCheck}" />
+												</MenuItem.Icon>
+											</MenuItem>
+
+											<!--Keep Latest-->
+											<MenuItem Header="Keep _Newest"
+													  Command="{Binding KeepLatestCreatedCommand}">
+												<MenuItem.Icon>
+													<TextBlock Classes="icon"
+															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestCreated}}"
 															   Text="{StaticResource CircleCheck}" />
 												</MenuItem.Icon>
 											</MenuItem>
@@ -949,22 +949,22 @@
 												</TextBlock>
 											</MenuItem.Icon>
 
-											<!--Keep Latest-->
-											<MenuItem Header="Keep _Latest"
-													  Command="{Binding KeepLatestModifiedCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestModified}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-
 											<!--Keep Earliest-->
-											<MenuItem Header="Keep _Earliest"
+											<MenuItem Header="Keep _Oldest"
 													  Command="{Binding KeepEarliestModifiedCommand}">
 												<MenuItem.Icon>
 													<TextBlock Classes="icon"
 															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.EarliestModified}}"
+															   Text="{StaticResource CircleCheck}" />
+												</MenuItem.Icon>
+											</MenuItem>
+
+											<!--Keep Latest-->
+											<MenuItem Header="Keep _Newest"
+													  Command="{Binding KeepLatestModifiedCommand}">
+												<MenuItem.Icon>
+													<TextBlock Classes="icon"
+															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestModified}}"
 															   Text="{StaticResource CircleCheck}" />
 												</MenuItem.Icon>
 											</MenuItem>
@@ -1250,27 +1250,27 @@
 										<MenuItem Header="M_ark Selection">
 											<!--By Date Created-->
 											<MenuItem Header="By Date _Created">
-												<!--Keep Latest-->
-												<MenuItem Header="Keep _Latest"
-														  Command="{Binding KeepLatestCreatedCommand}"
+												<!--Keep Earliest-->
+												<MenuItem Header="Keep _Oldest"
+														  Command="{Binding KeepEarliestCreatedCommand}"
 														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
-												<!--Keep Earliest-->
-												<MenuItem Header="Keep _Earliest"
-														  Command="{Binding KeepEarliestCreatedCommand}"
+												<!--Keep Latest-->
+												<MenuItem Header="Keep _Newest"
+														  Command="{Binding KeepLatestCreatedCommand}"
 														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 											</MenuItem>
 
 											<!--By Date Modified-->
 											<MenuItem Header="By Date _Modified">
-												<!--Keep Latest-->
-												<MenuItem Header="Keep _Latest"
-														  Command="{Binding KeepLatestModifiedCommand}"
+												<!--Keep Earliest-->
+												<MenuItem Header="Keep _Oldest"
+														  Command="{Binding KeepEarliestModifiedCommand}"
 														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 
-												<!--Keep Earliest-->
-												<MenuItem Header="Keep _Earliest"
-														  Command="{Binding KeepEarliestModifiedCommand}"
+												<!--Keep Latest-->
+												<MenuItem Header="Keep _Newest"
+														  Command="{Binding KeepLatestModifiedCommand}"
 														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
 											</MenuItem>
 

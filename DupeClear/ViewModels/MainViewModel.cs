@@ -2216,6 +2216,7 @@ public partial class MainViewModel : ViewModelBase
                 await Dispatcher.UIThread.InvokeAsync(() => filesToRemove.Distinct().ForEach(f => DuplicateFiles.Remove(f)));
 
                 UnmarkOrphanedFiles();
+                UpdateGroupIds();
             });
 
             SetBusy(false);
@@ -2375,6 +2376,8 @@ public partial class MainViewModel : ViewModelBase
                     DuplicateFiles.Remove(file);
                 }
             });
+
+            UpdateGroupIds();
         });
 
         SetBusy(false);

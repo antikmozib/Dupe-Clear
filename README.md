@@ -21,4 +21,6 @@ Prebuilt binaries are not provided, and the application must be built from the s
 
 ## Building
 
+Requirements: [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+
 Clone the repository, `cd` into the root directory and execute `dotnet build DupeClear.Desktop`.

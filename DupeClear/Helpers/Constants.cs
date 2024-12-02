@@ -24,6 +24,8 @@ public static class Constants
 
     public const string UpdateApiAddress = @"https://api.mozib.io/app-update/";
 
+    public const string UpdateApiAppId = "dupeclear";
+
     /// <summary>
     /// The name of the directory in %APPDATA% where user preferences are stored.
     /// </summary>

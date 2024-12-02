@@ -54,7 +54,7 @@ public partial class MainViewModel : ViewModelBase
     private readonly IFileService? _fileService;
 
     private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider(
-        Assembly.GetExecutingAssembly(),
+        Constants.UpdateApiAppId,
         AppPlatform.Windows,
         Constants.UpdateApiAddress);
 
@@ -2523,7 +2523,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void ShowAbout(object? arg)
     {
-        var assm = Assembly.GetExecutingAssembly();
+        var assm = Assembly.GetEntryAssembly();
         if (assm != null)
         {
             var name = assm.GetCustomAttribute<AssemblyProductAttribute>()?.Product;
@@ -2939,7 +2939,7 @@ public partial class MainViewModel : ViewModelBase
                 return;
             }
 
-            var currentVer = Assembly.GetExecutingAssembly()?.GetName().Version;
+            var currentVer = Assembly.GetEntryAssembly()?.GetName().Version;
             if (currentVer != null)
             {
                 var updateable = updateInfo.IsNewerThan(currentVer);

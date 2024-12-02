@@ -105,7 +105,7 @@ public partial class MessageBoxViewModel : ViewModelBase
 
     public MessageBoxViewModel()
     {
-        var assm = Assembly.GetExecutingAssembly();
+        var assm = Assembly.GetEntryAssembly();
         if (assm != null)
         {
             var appTitle = assm.GetCustomAttribute<AssemblyProductAttribute>()?.Product;

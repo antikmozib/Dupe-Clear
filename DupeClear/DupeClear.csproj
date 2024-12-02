@@ -3,9 +3,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <AssemblyVersion>3.1.0.0</AssemblyVersion>
-    <Product>Dupe Clear</Product>
-    <Copyright>Copyright © 2024 Antik Mozib. All rights reserved.</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />

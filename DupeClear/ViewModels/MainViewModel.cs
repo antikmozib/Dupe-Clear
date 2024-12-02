@@ -55,6 +55,7 @@ public partial class MainViewModel : ViewModelBase
 
     private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider(
         Constants.UpdateApiAppId,
+        Assembly.GetEntryAssembly()?.GetName().Version?.ToString(),
         AppPlatform.Windows,
         Constants.UpdateApiAddress);
 

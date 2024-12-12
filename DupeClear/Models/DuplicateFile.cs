@@ -42,6 +42,20 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public bool? IsHidden { get; }
 
+    private bool _isLocked;
+    public bool IsLocked
+    {
+        get => _isLocked;
+        set
+        {
+            if (_isLocked != value)
+            {
+                _isLocked = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     private bool _isMarked;
     public bool IsMarked
     {
@@ -51,7 +65,6 @@ public class DuplicateFile : INotifyPropertyChanged
             if (_isMarked != value)
             {
                 _isMarked = value;
-
                 OnPropertyChanged();
             }
         }
@@ -109,6 +122,7 @@ public class DuplicateFile : INotifyPropertyChanged
               fullName,
               null,
               null,
+              false,
               null,
               null,
               null,
@@ -120,6 +134,7 @@ public class DuplicateFile : INotifyPropertyChanged
               serializable.FullName,
               serializable.Created,
               serializable.IsHidden,
+              serializable.IsLocked,
               serializable.IsSystemFile,
               serializable.Length,
               serializable.Modified,
@@ -130,6 +145,7 @@ public class DuplicateFile : INotifyPropertyChanged
         string? fullName,
         DateTime? created,
         bool? isHidden,
+        bool isLocked,
         bool? isSystemFile,
         long? length,
         DateTime? modified,
@@ -144,6 +160,7 @@ public class DuplicateFile : INotifyPropertyChanged
             _fileService = fileService;
 
             FullName = fullName;
+            _isLocked = isLocked;
             if (File.Exists(fullName))
             {
                 var fi = new FileInfo(fullName);
@@ -166,9 +183,10 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public void Refresh()
     {
-        if (IsDeleted && IsMarked)
+        if (IsDeleted)
         {
             IsMarked = false;
+            IsLocked = false;
         }
 
         OnPropertyChanged(nameof(IsDeleted));

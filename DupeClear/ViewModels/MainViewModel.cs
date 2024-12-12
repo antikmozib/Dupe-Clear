@@ -363,6 +363,8 @@ public partial class MainViewModel : ViewModelBase
                     OpenContainingFolderCommand.NotifyCanExecuteChanged();
                     DelistCommand.NotifyCanExecuteChanged();
                     DelistGroupCommand.NotifyCanExecuteChanged();
+                    LockGroupCommand.NotifyCanExecuteChanged();
+                    UnlockGroupCommand.NotifyCanExecuteChanged();
                     MarkAllFromThisDirectoryCommand.NotifyCanExecuteChanged();
                     UnmarkAllFromThisDirectoryCommand.NotifyCanExecuteChanged();
                     ApplyMarkingToSelectedSearchResultsCommand.NotifyCanExecuteChanged();
@@ -1525,10 +1527,10 @@ public partial class MainViewModel : ViewModelBase
         ShowFindWithinSearchResultsPane = false;
     }
 
-    [RelayCommand(CanExecute = nameof(CanMark))]
+    [RelayCommand(CanExecute = nameof(CanAutoMark))]
     private async Task KeepEarliestModifiedAsync(object? arg, CancellationToken ct)
     {
-        if (!CanMark(arg))
+        if (!CanAutoMark(arg))
         {
             return;
         }
@@ -1548,10 +1550,10 @@ public partial class MainViewModel : ViewModelBase
         SetBusy(false);
     }
 
-    [RelayCommand(CanExecute = nameof(CanMark))]
+    [RelayCommand(CanExecute = nameof(CanAutoMark))]
     private async Task KeepLatestModifiedAsync(object? arg, CancellationToken ct)
     {
-        if (!CanMark(arg))
+        if (!CanAutoMark(arg))
         {
             return;
         }
@@ -1571,10 +1573,10 @@ public partial class MainViewModel : ViewModelBase
         SetBusy(false);
     }
 
-    [RelayCommand(CanExecute = nameof(CanMark))]
+    [RelayCommand(CanExecute = nameof(CanAutoMark))]
     private async Task KeepEarliestCreatedAsync(object? arg, CancellationToken ct)
     {
-        if (!CanMark(arg))
+        if (!CanAutoMark(arg))
         {
             return;
         }
@@ -1594,10 +1596,10 @@ public partial class MainViewModel : ViewModelBase
         SetBusy(false);
     }
 
-    [RelayCommand(CanExecute = nameof(CanMark))]
+    [RelayCommand(CanExecute = nameof(CanAutoMark))]
     private async Task KeepLatestCreatedAsync(object? arg, CancellationToken ct)
     {
-        if (!CanMark(arg))
+        if (!CanAutoMark(arg))
         {
             return;
         }
@@ -1617,10 +1619,10 @@ public partial class MainViewModel : ViewModelBase
         SetBusy(false);
     }
 
-    [RelayCommand(CanExecute = nameof(CanMark))]
+    [RelayCommand(CanExecute = nameof(CanAutoMark))]
     private async Task KeepLargestLengthAsync(object? arg, CancellationToken ct)
     {
-        if (!CanMark(arg))
+        if (!CanAutoMark(arg))
         {
             return;
         }
@@ -1640,10 +1642,10 @@ public partial class MainViewModel : ViewModelBase
         SetBusy(false);
     }
 
-    [RelayCommand(CanExecute = nameof(CanMark))]
+    [RelayCommand(CanExecute = nameof(CanAutoMark))]
     private async Task KeepSmallestLengthAsync(object? arg, CancellationToken ct)
     {
-        if (!CanMark(arg))
+        if (!CanAutoMark(arg))
         {
             return;
         }
@@ -1663,10 +1665,10 @@ public partial class MainViewModel : ViewModelBase
         SetBusy(false);
     }
 
-    [RelayCommand(CanExecute = nameof(CanMark))]
+    [RelayCommand(CanExecute = nameof(CanAutoMark))]
     private async Task KeepMoreLettersAsync(object? arg, CancellationToken ct)
     {
-        if (!CanMark(arg))
+        if (!CanAutoMark(arg))
         {
             return;
         }
@@ -1686,10 +1688,10 @@ public partial class MainViewModel : ViewModelBase
         SetBusy(false);
     }
 
-    [RelayCommand(CanExecute = nameof(CanMark))]
+    [RelayCommand(CanExecute = nameof(CanAutoMark))]
     private async Task KeepLessLettersAsync(object? arg, CancellationToken ct)
     {
-        if (!CanMark(arg))
+        if (!CanAutoMark(arg))
         {
             return;
         }
@@ -1709,7 +1711,7 @@ public partial class MainViewModel : ViewModelBase
         SetBusy(false);
     }
 
-    private bool CanMark(object? arg)
+    private bool CanAutoMark(object? arg)
     {
         // Can mark if there is at least one undeleted file.
 
@@ -1717,13 +1719,17 @@ public partial class MainViewModel : ViewModelBase
         {
             if (arg is IList items)
             {
+                // Context menu
+
                 var selectedItems = items.Cast<DuplicateFile>();
 
-                return selectedItems.Any(x => !x.IsDeleted);
+                return selectedItems.Any(x => !x.IsDeleted && !x.IsLocked);
             }
             else if (arg == null)
             {
-                return DuplicateFiles.Any(x => !x.IsDeleted);
+                // Toolbar
+
+                return DuplicateFiles.Any(x => !x.IsDeleted && !x.IsLocked);
             }
         }
 
@@ -1738,7 +1744,7 @@ public partial class MainViewModel : ViewModelBase
             return;
         }
 
-        foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && !x.IsMarked))
+        foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && !x.IsLocked && !x.IsMarked))
         {
             item.IsMarked = true;
         }
@@ -1746,7 +1752,7 @@ public partial class MainViewModel : ViewModelBase
 
     private bool CanMarkAll(object? arg)
     {
-        return !IsBusy && DuplicateFiles.Any(x => !x.IsDeleted && !x.IsMarked);
+        return !IsBusy && DuplicateFiles.Any(x => !x.IsDeleted && !x.IsLocked && !x.IsMarked);
     }
 
     [RelayCommand(CanExecute = nameof(CanUnmarkAll))]
@@ -1757,7 +1763,7 @@ public partial class MainViewModel : ViewModelBase
             return;
         }
 
-        foreach (var item in DuplicateFiles.Where(x => x.IsMarked))
+        foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && !x.IsLocked && x.IsMarked))
         {
             item.IsMarked = false;
         }
@@ -1765,7 +1771,7 @@ public partial class MainViewModel : ViewModelBase
 
     private bool CanUnmarkAll(object? arg)
     {
-        return !IsBusy && DuplicateFiles.Any(x => x.IsMarked);
+        return !IsBusy && DuplicateFiles.Any(x => !x.IsDeleted && !x.IsLocked && x.IsMarked);
     }
 
     [RelayCommand(CanExecute = nameof(CanDeleteMarkedFiles))]
@@ -1866,6 +1872,7 @@ public partial class MainViewModel : ViewModelBase
                 PrimaryStatus = "Refreshing...";
 
                 Parallel.ForEach(DuplicateFiles, f => f.Refresh());
+                UnlockDeletedGroups();
             });
 
             SetBusy(false);
@@ -1932,6 +1939,7 @@ public partial class MainViewModel : ViewModelBase
                                 Group = file.Group,
                                 IsDeleted = file.IsDeleted,
                                 IsHidden = file.IsHidden,
+                                IsLocked = file.IsLocked,
                                 IsMarked = file.IsMarked,
                                 IsSystemFile = file.IsSystemFile,
                                 Length = file.Length,
@@ -2161,6 +2169,11 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanDelistDirectory))]
     private async Task DelistDirectoryAsync(object? arg)
     {
+        if (!CanDelistDirectory(arg))
+        {
+            return;
+        }
+
         if (arg is IList items)
         {
             var selectedFiles = items.Cast<DuplicateFile>();
@@ -2229,6 +2242,108 @@ public partial class MainViewModel : ViewModelBase
         return !IsBusy && arg != null;
     }
 
+    [RelayCommand(CanExecute = nameof(CanLockGroup))]
+    private async Task LockGroupAsync(object? arg)
+    {
+        if (!CanLockGroup(arg))
+        {
+            return;
+        }
+
+        if (arg is IList items)
+        {
+            SetBusy("Locking...");
+            await Task.Run(() =>
+            {
+                var selectedGroups = items.Cast<DuplicateFile>().Select(x => x.Group).Distinct();
+                var lockableGroups = DuplicateFiles
+                    .GroupBy(x => x.Group)
+                    .Where(x => selectedGroups.Contains(x.Key))
+                    .Where(x => !x.Any(y => y.IsDeleted));
+                foreach (var item in lockableGroups)
+                {
+                    item.ForEach(f =>
+                    {
+                        if (!f.IsLocked)
+                        {
+                            f.IsLocked = true;
+                        }
+                    });
+                }
+            });
+
+            SetBusy(false);
+        }
+    }
+
+    private bool CanLockGroup(object? arg)
+    {
+        if (!IsBusy && arg is IList items)
+        {
+            var selectedGroups = items.Cast<DuplicateFile>().Select(x => x.Group).Distinct();
+            var lockableGroups = DuplicateFiles
+                .GroupBy(x => x.Group)
+                .Where(x => selectedGroups.Contains(x.Key))
+                .Where(x => !x.Any(y => y.IsDeleted))
+                .Where(x => x.Any(y => !y.IsLocked));
+
+            return lockableGroups.Any();
+        }
+
+        return false;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanUnlockGroup))]
+    private async Task UnlockGroupAsync(object? arg)
+    {
+        if (!CanUnlockGroup(arg))
+        {
+            return;
+        }
+
+        if (arg is IList items)
+        {
+            SetBusy("Unlocking...");
+            await Task.Run(() =>
+            {
+                var selectedGroups = items.Cast<DuplicateFile>().Select(x => x.Group).Distinct();
+                var unlockableGroups = DuplicateFiles
+                    .GroupBy(x => x.Group)
+                    .Where(x => selectedGroups.Contains(x.Key))
+                    .Where(x => !x.Any(y => y.IsDeleted));
+                foreach (var item in unlockableGroups)
+                {
+                    item.ForEach(f =>
+                    {
+                        if (f.IsLocked)
+                        {
+                            f.IsLocked = false;
+                        }
+                    });
+                }
+            });
+
+            SetBusy(false);
+        }
+    }
+
+    private bool CanUnlockGroup(object? arg)
+    {
+        if (!IsBusy && arg is IList items)
+        {
+            var selectedGroups = items.Cast<DuplicateFile>().Select(x => x.Group).Distinct();
+            var unlockableGroups = DuplicateFiles
+                .GroupBy(x => x.Group)
+                .Where(x => selectedGroups.Contains(x.Key))
+                .Where(x => !x.Any(y => y.IsDeleted))
+                .Where(x => x.Any(y => y.IsLocked));
+
+            return unlockableGroups.Any();
+        }
+
+        return false;
+    }
+
     [RelayCommand(CanExecute = nameof(CanMarkAllFromThisDirectory))]
     private void MarkAllFromThisDirectory(object? arg)
     {
@@ -2240,7 +2355,7 @@ public partial class MainViewModel : ViewModelBase
         if (arg is IList items)
         {
             var dirsToMark = items.Cast<DuplicateFile>().Select(x => x.DirectoryName).Distinct();
-            foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && dirsToMark.Contains(x.DirectoryName)))
+            foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && !x.IsLocked && dirsToMark.Contains(x.DirectoryName)))
             {
                 item.IsMarked = true;
             }
@@ -2263,7 +2378,7 @@ public partial class MainViewModel : ViewModelBase
         if (arg is IList items)
         {
             var dirsToUnmark = items.Cast<DuplicateFile>().Select(x => x.DirectoryName).Distinct();
-            foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && dirsToUnmark.Contains(x.DirectoryName)))
+            foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && !x.IsLocked && dirsToUnmark.Contains(x.DirectoryName)))
             {
                 item.IsMarked = false;
             }
@@ -2294,7 +2409,7 @@ public partial class MainViewModel : ViewModelBase
             if (selectedItems.Contains(actionedItem))
             {
                 selectedItems
-                    .Where(x => x != actionedItem && !x.IsDeleted && x.IsMarked != actionedItem.IsMarked)
+                    .Where(x => x != actionedItem && !x.IsDeleted && !x.IsLocked && x.IsMarked != actionedItem.IsMarked)
                     .ForEach(x => x.IsMarked = actionedItem.IsMarked);
             }
         }
@@ -2311,10 +2426,27 @@ public partial class MainViewModel : ViewModelBase
         if (arg is IEnumerable<object> values)
         {
             var actionedItem = (DuplicateFile)values.ElementAt(0);
-            actionedItem.IsMarked = !actionedItem.IsMarked;
-            ApplyMarkingToSelectedSearchResultsCommand.Execute(arg);
+            if (!actionedItem.IsDeleted && !actionedItem.IsLocked)
+            {
+                actionedItem.IsMarked = !actionedItem.IsMarked;
+                ApplyMarkingToSelectedSearchResultsCommand.Execute(arg);
+            }
         }
     }
+
+    /*private bool CanInvertMarkingOfSelectedSearchResult(object? arg)
+    {
+        if (!IsBusy)
+        {
+            if (arg is IEnumerable<object> values)
+            {
+                var actionedItem = (DuplicateFile)values.ElementAt(0);
+                return !actionedItem.IsLocked;
+            }
+        }
+
+        return false;
+    }*/
 
     [RelayCommand(CanExecute = nameof(CanRefresh))]
     private async Task RefreshAsync(object? arg)
@@ -2326,7 +2458,12 @@ public partial class MainViewModel : ViewModelBase
 
         SetBusy("Refreshing...");
 
-        await Task.Run(() => Parallel.ForEach(DuplicateFiles, f => f.Refresh()));
+        await Task.Run(() =>
+        {
+            Parallel.ForEach(DuplicateFiles, f => f.Refresh());
+            UnmarkOrphanedFiles();
+            UnlockDeletedGroups();
+        });
 
         SetBusy(false);
     }
@@ -2641,6 +2778,8 @@ public partial class MainViewModel : ViewModelBase
             {
                 SetBusy(false);
             }
+
+            await RefreshAsync(null);
         }
     }
 
@@ -2787,13 +2926,13 @@ public partial class MainViewModel : ViewModelBase
         await Task.Run(() =>
         {
             Parallel.ForEach(
-                files.GroupBy(f => f.Group),
+                files.GroupBy(f => f.Group).Where(x => !x.Any(y => y.IsLocked)),
                 new ParallelOptions() { CancellationToken = ct },
                 g =>
                 {
                     // The first undeleted and all deleted files must be unmarked.
 
-                    g.Where(f => f.IsDeleted).ForEach(f => f.IsMarked = false);
+                    //g.Where(f => f.IsDeleted).ForEach(f => f.IsMarked = false);
 
                     var markableFiles = g.Where(f => !f.IsDeleted);
                     var orderedMarkableFiles = descending ? markableFiles.OrderByDescending(compiledOrderBy) : markableFiles.OrderBy(compiledOrderBy);
@@ -2843,6 +2982,25 @@ public partial class MainViewModel : ViewModelBase
             {
                 file.IsMarked = false;
             });
+    }
+
+    /// <summary>
+    /// Unlock locked files from groups which have one or more deleted files.
+    /// </summary>
+    private void UnlockDeletedGroups()
+    {
+        var groupsWithDeletedFiles = DuplicateFiles
+            .GroupBy(x => x.Group)
+            .Where(x => x.Any(y => y.IsDeleted))
+            .Where(x => x.Any(y => y.IsLocked))
+            .Select(x => x.Key);
+        Parallel.ForEach(DuplicateFiles, f =>
+        {
+            if (groupsWithDeletedFiles.Contains(f.Group) && f.IsLocked)
+            {
+                f.IsLocked = false;
+            }
+        });
     }
 
     private IEnumerable<string> BuildExtensionList(string extensions)

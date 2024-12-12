@@ -1313,6 +1313,18 @@
 
 										<Separator />
 
+										<MenuItem Header="_Lock Group"
+												  IsVisible="{Binding SelectedDuplicateFile.IsLocked, Converter={StaticResource BoolToInvertedBoolConverter}}"
+												  Command="{Binding LockGroupCommand}"
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+										<MenuItem Header="U_nlock Group"
+												  IsVisible="{Binding SelectedDuplicateFile.IsLocked}"
+												  Command="{Binding UnlockGroupCommand}"
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+										<Separator />
+
 										<!--Refresh-->
 										<MenuItem Header="R_efresh"
 												  HotKey="F5"
@@ -1336,6 +1348,7 @@
 									</ContextMenu>
 								</DataGrid.ContextMenu>
 
+								<!--Check Box-->
 								<DataGrid.Columns>
 									<DataGridTemplateColumn CanUserResize="False"
 															CellStyleClasses="CenterAlignedCell">
@@ -1343,10 +1356,20 @@
 											<DataTemplate>
 												<CheckBox x:Name="SearchResultCheckBox"
 														  Focusable="False"
-														  IsEnabled="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToInvertedBoolConverter}}"
 														  IsChecked="{Binding IsMarked, Mode=TwoWay}"
 														  Command="{Binding DataContext.ApplyMarkingToSelectedSearchResultsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 														  Click="SearchResultCheckBox_Click">
+													<CheckBox.IsEnabled>
+														<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+															<Binding Path="IsDeleted"
+																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
+															<Binding Path="IsLocked"
+																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
+															<Binding Path="DataContext.IsBusy"
+																	 RelativeSource="{RelativeSource AncestorType=UserControl}"
+																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
+														</MultiBinding>
+													</CheckBox.IsEnabled>
 													<CheckBox.CommandParameter>
 														<MultiBinding Converter="{StaticResource MultiCommandParameterConverter}">
 															<Binding />
@@ -1355,6 +1378,18 @@
 														</MultiBinding>
 													</CheckBox.CommandParameter>
 												</CheckBox>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellTemplate>
+									</DataGridTemplateColumn>
+
+									<!--Locked-->
+									<DataGridTemplateColumn CanUserResize="False"
+															CellStyleClasses="CenterAlignedCell">
+										<DataGridTemplateColumn.CellTemplate>
+											<DataTemplate>
+												<TextBlock Classes="icon"
+														   IsVisible="{Binding IsLocked}"
+														   Text="{StaticResource Lock}" />
 											</DataTemplate>
 										</DataGridTemplateColumn.CellTemplate>
 									</DataGridTemplateColumn>
@@ -1425,7 +1460,7 @@
 										  Height="1"
 										  VerticalAlignment="Stretch"
 										  ShowsPreview="True"
-										  IsVisible="{Binding ShowFind}" />
+										  IsVisible="{Binding ShowFindWithinSearchResultsPane}" />
 
 							<!--Find-->
 							<Border Grid.Row="2"

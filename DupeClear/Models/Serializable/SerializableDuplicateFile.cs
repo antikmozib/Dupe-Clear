@@ -16,6 +16,8 @@ public class SerializableDuplicateFile
 
     public bool? IsHidden { get; set; }
 
+    public bool IsLocked { get; set; }
+
     public bool IsMarked { get; set; }
 
     public bool? IsSystemFile { get; set; }

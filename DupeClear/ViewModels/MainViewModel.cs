@@ -328,6 +328,8 @@ public partial class MainViewModel : ViewModelBase
 
     public ObservableCollection<string?> SavedExcludedExtensions { get; } = [];
 
+    public bool AreAllFilesLocked => DuplicateFiles.Any(x => !x.IsLocked);
+
     private bool _isBusy;
     public bool IsBusy
     {
@@ -931,6 +933,8 @@ public partial class MainViewModel : ViewModelBase
             DeleteMarkedFilesCommand.NotifyCanExecuteChanged();
             RefreshCommand.NotifyCanExecuteChanged();
         });
+
+        OnPropertyChanged(nameof(AreAllFilesLocked));
     }
 
     private void DuplicateFile_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -959,6 +963,11 @@ public partial class MainViewModel : ViewModelBase
                         OpenCommand.NotifyCanExecuteChanged();
                     });
                 }
+
+                break;
+
+            case nameof(DuplicateFile.IsLocked):
+                OnPropertyChanged(nameof(AreAllFilesLocked));
 
                 break;
 
@@ -1713,24 +1722,15 @@ public partial class MainViewModel : ViewModelBase
 
     private bool CanAutoMark(object? arg)
     {
-        // Can mark if there is at least one undeleted and unlocked file.
+        // Can mark if there is at least one undeleted file and all files are either locked or unlocked (not a mixture).
 
         if (!IsBusy)
         {
-            if (arg is IList items)
-            {
-                // Context menu
+            IEnumerable<DuplicateFile> itemsToCheck = arg is IList items ? items.Cast<DuplicateFile>() : DuplicateFiles;
 
-                var selectedItems = items.Cast<DuplicateFile>();
+            return itemsToCheck.Any(x => !x.IsDeleted);
 
-                return selectedItems.Any(x => !x.IsDeleted && !x.IsLocked);
-            }
-            else if (arg == null)
-            {
-                // Toolbar
-
-                return DuplicateFiles.Any(x => !x.IsDeleted && !x.IsLocked);
-            }
+            //return itemsToCheck.Any(x => !x.IsDeleted && !x.IsLocked) || itemsToCheck.All(x => !x.IsDeleted && x.IsLocked);
         }
 
         return false;
@@ -1744,15 +1744,21 @@ public partial class MainViewModel : ViewModelBase
             return;
         }
 
-        foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && !x.IsLocked && !x.IsMarked))
-        {
-            item.IsMarked = true;
-        }
+        // If all files are locked, mark all files.
+        // If there is one or more unlocked files, mark only the unlocked files.
+
+        var itemsToMark = DuplicateFiles.All(x => x.IsLocked) ? DuplicateFiles : DuplicateFiles.Where(x => !x.IsLocked);
+        itemsToMark.Where(x => !x.IsDeleted && !x.IsMarked).ForEach(x => x.IsMarked = true);
     }
 
     private bool CanMarkAll(object? arg)
     {
-        return !IsBusy && DuplicateFiles.Any(x => !x.IsDeleted && !x.IsLocked && !x.IsMarked);
+        // If all DuplicateFiles are locked, can MarkAll if any one is unmarked.
+        // If there are any unlocked items in DuplicateFiles, can MarkAll if any one of the unlocked items is unmarked.
+
+        return !IsBusy
+            && ((DuplicateFiles.All(x => x.IsLocked) && DuplicateFiles.Any(x => !x.IsDeleted && !x.IsMarked))
+                || (DuplicateFiles.Any(x => !x.IsDeleted && !x.IsLocked && !x.IsMarked)));
     }
 
     [RelayCommand(CanExecute = nameof(CanUnmarkAll))]
@@ -1763,15 +1769,21 @@ public partial class MainViewModel : ViewModelBase
             return;
         }
 
-        foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && !x.IsLocked && x.IsMarked))
-        {
-            item.IsMarked = false;
-        }
+        // If all files are locked, unmark all files.
+        // If there is one or more unlocked files, unmark only the unlocked files.
+
+        var itemsToUnmark = DuplicateFiles.All(x => x.IsLocked) ? DuplicateFiles : DuplicateFiles.Where(x => !x.IsLocked);
+        itemsToUnmark.Where(x => !x.IsDeleted && x.IsMarked).ForEach(x => x.IsMarked = false);
     }
 
     private bool CanUnmarkAll(object? arg)
     {
-        return !IsBusy && DuplicateFiles.Any(x => !x.IsDeleted && !x.IsLocked && x.IsMarked);
+        // If all DuplicateFiles are locked, can UnmarkAll if any one is marked.
+        // If there are any unlocked items in DuplicateFiles, can UnmarkAll if any one of the unlocked items is marked.
+
+        return !IsBusy
+            && ((DuplicateFiles.All(x => x.IsLocked) && DuplicateFiles.Any(x => !x.IsDeleted && x.IsMarked))
+                || (DuplicateFiles.Any(x => !x.IsDeleted && !x.IsLocked && x.IsMarked)));
     }
 
     [RelayCommand(CanExecute = nameof(CanDeleteMarkedFiles))]
@@ -2344,50 +2356,64 @@ public partial class MainViewModel : ViewModelBase
         return false;
     }
 
-    [RelayCommand(CanExecute = nameof(CanMarkAllFromThisDirectory))]
+    [RelayCommand(CanExecute = nameof(CanMarkOrUnmarkAllFromThisDirectory))]
     private void MarkAllFromThisDirectory(object? arg)
     {
-        if (!CanMarkAllFromThisDirectory(arg))
+        if (!CanMarkOrUnmarkAllFromThisDirectory(arg))
         {
             return;
         }
 
         if (arg is IList items)
         {
+            // Change the marking of locked files if all items in DuplicateFiles are locked. Otherwise, ignore locked
+            // files.
+
             var dirsToMark = items.Cast<DuplicateFile>().Select(x => x.DirectoryName).Distinct();
-            foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && !x.IsLocked && dirsToMark.Contains(x.DirectoryName)))
+            var canMarkLockedFiles = DuplicateFiles.All(x => x.IsLocked);
+            foreach (var item in DuplicateFiles.Where(x =>
+                !x.IsDeleted
+                && (canMarkLockedFiles || (!canMarkLockedFiles && !x.IsLocked))
+                && dirsToMark.Contains(x.DirectoryName)))
             {
                 item.IsMarked = true;
             }
         }
     }
 
-    private bool CanMarkAllFromThisDirectory(object? arg)
-    {
-        return !IsBusy && SelectedDuplicateFile != null;
-    }
-
-    [RelayCommand(CanExecute = nameof(CanUnmarkAllFromThisDirectory))]
+    [RelayCommand(CanExecute = nameof(CanMarkOrUnmarkAllFromThisDirectory))]
     private void UnmarkAllFromThisDirectory(object? arg)
     {
-        if (!CanUnmarkAllFromThisDirectory(arg))
+        if (!CanMarkOrUnmarkAllFromThisDirectory(arg))
         {
             return;
         }
 
         if (arg is IList items)
         {
+            // Change the marking of locked files if all items in DuplicateFiles are locked. Otherwise, ignore locked
+            // files.
+
             var dirsToUnmark = items.Cast<DuplicateFile>().Select(x => x.DirectoryName).Distinct();
-            foreach (var item in DuplicateFiles.Where(x => !x.IsDeleted && !x.IsLocked && dirsToUnmark.Contains(x.DirectoryName)))
+            var canUnmarkLockedFiles = DuplicateFiles.All(x => x.IsLocked);
+            foreach (var item in DuplicateFiles.Where(x =>
+                !x.IsDeleted
+                && (canUnmarkLockedFiles || (!canUnmarkLockedFiles && !x.IsLocked))
+                && dirsToUnmark.Contains(x.DirectoryName)))
             {
                 item.IsMarked = false;
             }
         }
     }
 
-    private bool CanUnmarkAllFromThisDirectory(object? arg)
+    private bool CanMarkOrUnmarkAllFromThisDirectory(object? arg)
     {
-        return !IsBusy && SelectedDuplicateFile != null;
+        if (!IsBusy && SelectedDuplicateFile != null)
+        {
+            return DuplicateFiles.All(x => x.IsLocked) || !SelectedDuplicateFile.IsLocked;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -2884,45 +2910,45 @@ public partial class MainViewModel : ViewModelBase
 
     private async Task MarkFilesKeepEarliestModifiedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
-        await MarkFilesAsync(files, f => f.Modified, ct: ct);
+        await AutoMarkAsync(files, f => f.Modified, ct: ct);
     }
 
     private async Task MarkFilesKeepLatestModifiedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
-        await MarkFilesAsync(files, f => f.Modified, true, ct);
+        await AutoMarkAsync(files, f => f.Modified, true, ct);
     }
 
     private async Task MarkFilesKeepEarliestCreatedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
-        await MarkFilesAsync(files, f => f.Created, ct: ct);
+        await AutoMarkAsync(files, f => f.Created, ct: ct);
     }
 
     private async Task MarkFilesKeepLatestCreatedAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
-        await MarkFilesAsync(files, f => f.Created, true, ct);
+        await AutoMarkAsync(files, f => f.Created, true, ct);
     }
 
     private async Task MarkFilesKeepLargestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
-        await MarkFilesAsync(files, f => f.Length, true, ct);
+        await AutoMarkAsync(files, f => f.Length, true, ct);
     }
 
     private async Task MarkFilesKeepSmallestLengthAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
-        await MarkFilesAsync(files, f => f.Length, ct: ct);
+        await AutoMarkAsync(files, f => f.Length, ct: ct);
     }
 
     private async Task MarkFilesKeepMoreLettersAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
-        await MarkFilesAsync(files, f => f.NameWithoutExtension.Count(char.IsLetter), true, ct);
+        await AutoMarkAsync(files, f => f.NameWithoutExtension.Count(char.IsLetter), true, ct);
     }
 
     private async Task MarkFilesKeepLessLettersAsync(IEnumerable<DuplicateFile> files, CancellationToken ct = default)
     {
-        await MarkFilesAsync(files, f => f.NameWithoutExtension.Count(char.IsLetter), ct: ct);
+        await AutoMarkAsync(files, f => f.NameWithoutExtension.Count(char.IsLetter), ct: ct);
     }
 
-    private async Task MarkFilesAsync<T>(
+    private async Task AutoMarkAsync<T>(
         IEnumerable<DuplicateFile> files,
         Expression<Func<DuplicateFile, T>> orderBy,
         bool descending = false,
@@ -2931,14 +2957,15 @@ public partial class MainViewModel : ViewModelBase
         var compiledOrderBy = orderBy.Compile();
         await Task.Run(() =>
         {
+            // Can mark locked files if all specified files are locked. Otherwise, locked files are ignored.
+
+            bool canMarkLockedFiles = files.All(x => x.IsLocked);
             Parallel.ForEach(
-                files.GroupBy(f => f.Group).Where(x => !x.Any(y => y.IsLocked)),
+                files.GroupBy(f => f.Group).Where(x => canMarkLockedFiles || (!canMarkLockedFiles && !x.Any(y => y.IsLocked))),
                 new ParallelOptions() { CancellationToken = ct },
                 g =>
                 {
                     // The first undeleted and all deleted files must be unmarked.
-
-                    //g.Where(f => f.IsDeleted).ForEach(f => f.IsMarked = false);
 
                     var markableFiles = g.Where(f => !f.IsDeleted);
                     var orderedMarkableFiles = descending ? markableFiles.OrderByDescending(compiledOrderBy) : markableFiles.OrderBy(compiledOrderBy);

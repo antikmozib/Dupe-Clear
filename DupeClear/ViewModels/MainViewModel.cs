@@ -2785,6 +2785,9 @@ public partial class MainViewModel : ViewModelBase
 
     public void AddDirectoryForInclusion(IEnumerable<string> directories)
     {
+        // This doesn't affect the directories list that's passed to this method.
+        directories = directories.Select(x => x.TrimEnd(Path.DirectorySeparatorChar));
+
         foreach (var item in directories.Where(x => !IncludedDirectories.Any(y => string.Compare(y.FullName, x, true) == 0)))
         {
             var dir = new SearchDirectory(item, _fileService) { IncludeSubdirectories = IncludeSubdirectories, IsMarked = true };
@@ -2803,6 +2806,9 @@ public partial class MainViewModel : ViewModelBase
 
     public void AddDirectoryForExclusion(IEnumerable<string> directories)
     {
+        // This doesn't affect the directories list that's passed to this method.
+        directories = directories.Select(x => x.TrimEnd(Path.DirectorySeparatorChar));
+
         foreach (var item in directories.Where(x => !ExcludedDirectories.Any(y => string.Compare(y.FullName, x, true) == 0)))
         {
             var dir = new SearchDirectory(item, _fileService) { IncludeSubdirectories = ExcludeSubdirectories, IsMarked = true };

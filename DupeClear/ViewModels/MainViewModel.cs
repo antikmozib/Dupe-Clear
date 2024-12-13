@@ -1713,7 +1713,7 @@ public partial class MainViewModel : ViewModelBase
 
     private bool CanAutoMark(object? arg)
     {
-        // Can mark if there is at least one undeleted file.
+        // Can mark if there is at least one undeleted and unlocked file.
 
         if (!IsBusy)
         {

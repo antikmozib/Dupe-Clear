@@ -38,7 +38,19 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public string? Hash { get; set; }
 
-    public bool IsDeleted => File.Exists(FullName) == false;
+    private bool _isDeleted;
+    public bool IsDeleted
+    {
+        get => _isDeleted;
+        private set
+        {
+            if (_isDeleted != value)
+            {
+                _isDeleted = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     public bool? IsHidden { get; }
 
@@ -172,6 +184,7 @@ public class DuplicateFile : INotifyPropertyChanged
             }
             else
             {
+                _isDeleted = true;
                 Created = created;
                 IsHidden = isHidden;
                 IsSystemFile = isSystemFile;
@@ -183,13 +196,12 @@ public class DuplicateFile : INotifyPropertyChanged
 
     public void Refresh()
     {
+        IsDeleted = !File.Exists(FullName);
         if (IsDeleted)
         {
             IsMarked = false;
             IsLocked = false;
         }
-
-        OnPropertyChanged(nameof(IsDeleted));
     }
 
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)

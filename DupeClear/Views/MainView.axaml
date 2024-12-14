@@ -1313,15 +1313,27 @@
 
 										<Separator />
 
+										<!--Lock Group-->
 										<MenuItem Header="_Lock Group"
 												  IsVisible="{Binding SelectedDuplicateFile.IsLocked, Converter={StaticResource BoolToInvertedBoolConverter}}"
 												  Command="{Binding LockGroupCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
+											<MenuItem.Icon>
+												<TextBlock Classes="icon"
+														   Text="{StaticResource Lock}" />
+											</MenuItem.Icon>
+										</MenuItem>
 
+										<!--Unlock Group-->
 										<MenuItem Header="U_nlock Group"
 												  IsVisible="{Binding SelectedDuplicateFile.IsLocked}"
 												  Command="{Binding UnlockGroupCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
+											<MenuItem.Icon>
+												<TextBlock Classes="icon"
+														   Text="{StaticResource Unlock}" />
+											</MenuItem.Icon>
+										</MenuItem>
 
 										<Separator />
 

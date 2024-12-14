@@ -41,5 +41,6 @@
 	<x:String x:Key="ArrowsRotate">&#xf021;</x:String>
 	<x:String x:Key="Download">&#xf019;</x:String>
 	<x:String x:Key="CircleStop">&#xf28d;</x:String>
-	<x:String x:Key="Lock">&#xf023;</x:String>	
+	<x:String x:Key="Lock">&#xf023;</x:String>
+	<x:String x:Key="Unlock">&#xf09c;</x:String>
 </ResourceDictionary>

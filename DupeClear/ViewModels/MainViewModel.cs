@@ -1722,15 +1722,36 @@ public partial class MainViewModel : ViewModelBase
 
     private bool CanAutoMark(object? arg)
     {
-        // Can auto mark if at least one group in itemsToCheck has two or more undeleted files.
-        // Lock status isn't considered here because if itemsToCheck contains both locked and unlocked groups, the
-        // mark on files from the locked groups are not changed.
+        // Can auto mark if at least one group in itemsToCheck has two or more undeleted files, and
+        // - if operating on selected files, all selected files are either locked or unlocked (not a mix of both), or
+        // - if operating on all files, all files are either locked or unlocked (not a mix of both).
 
         if (!IsBusy)
         {
-            IEnumerable<DuplicateFile> itemsToCheck = arg is IList items ? items.Cast<DuplicateFile>() : DuplicateFiles;
+            var considerLockedFiles = true;
+            IEnumerable<DuplicateFile> itemsToCheck;
+            if (arg is IList items)
+            {
+                itemsToCheck = items.Cast<DuplicateFile>();
+            }
+            else
+            {
+                itemsToCheck = DuplicateFiles;
+            }
 
-            return itemsToCheck.GroupBy(x => x.Group).Any(g => g.Count(f => !f.IsDeleted) > 1);
+            if (itemsToCheck.Any(x => x.IsLocked) && itemsToCheck.Any(x => !x.IsDeleted && !x.IsLocked))
+            {
+                considerLockedFiles = false;
+            }
+
+            if (!considerLockedFiles)
+            {
+                return itemsToCheck.GroupBy(x => x.Group).Where(g => !g.Any(f => f.IsLocked)).Any(g => g.Count(f => !f.IsDeleted) > 1);
+            }
+            else
+            {
+                return itemsToCheck.GroupBy(x => x.Group).Any(g => g.Count(f => !f.IsDeleted) > 1);
+            }
         }
 
         return false;

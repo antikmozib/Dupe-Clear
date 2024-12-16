@@ -1379,9 +1379,10 @@
 															<Binding Path="IsDeleted"
 																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
 															<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-																<Binding Path="DataContext.AreAllFilesLocked"
-																		 RelativeSource="{RelativeSource AncestorType=UserControl}" />
 																<Binding Path="IsLocked"
+																		 Converter="{StaticResource BoolToInvertedBoolConverter}" />
+																<Binding Path="DataContext.AreAllFilesLocked"
+																		 RelativeSource="{RelativeSource AncestorType=UserControl}"
 																		 Converter="{StaticResource BoolToInvertedBoolConverter}" />
 															</MultiBinding>
 														</MultiBinding>

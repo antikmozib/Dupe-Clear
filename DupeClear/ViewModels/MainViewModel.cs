@@ -52,12 +52,19 @@ public partial class MainViewModel : ViewModelBase
         Constants.UserDataFileName);
 
     private readonly IFileService? _fileService;
-
+#if DEBUG
     private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider(
+        Constants.UpdateApiAddress,
         Constants.UpdateApiAppId,
         Assembly.GetEntryAssembly()?.GetName().Version?.ToString(),
-        AppPlatform.Windows,
-        Constants.UpdateApiAddress);
+        false);
+#else
+    private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider(
+        Constants.UpdateApiAddress,
+        Constants.UpdateApiAppId,
+        Assembly.GetEntryAssembly()?.GetName().Version?.ToString(),
+        IntPtr.Size == 8);
+#endif
 
     private FinderOption _finderOptions;
 

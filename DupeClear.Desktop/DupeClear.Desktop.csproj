@@ -1,25 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
     One for Windows with net7.0-windows TFM, one for MacOS with net7.0-macos and one with net7.0 TFM for Linux.-->
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AvaloniaIncludeApplicationIconAsWindowIcon>false</AvaloniaIncludeApplicationIconAsWindowIcon>
-    <ApplicationIcon>DupeClear.ico</ApplicationIcon>
-	<AssemblyVersion>3.1.0.0</AssemblyVersion>
-	<Copyright>Copyright © 2024 Antik Mozib. All rights reserved.</Copyright>
-	<Product>Dupe Clear</Product>
-  </PropertyGroup>
-  <ItemGroup>
-    <Content Include="DupeClear.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="11.2.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DupeClear\DupeClear.csproj" />
-  </ItemGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AvaloniaIncludeApplicationIconAsWindowIcon>false</AvaloniaIncludeApplicationIconAsWindowIcon>
+		<ApplicationIcon>DupeClear.ico</ApplicationIcon>
+		<AssemblyVersion>3.1.0.0</AssemblyVersion>
+		<Copyright>Copyright © 2024 Antik Mozib. All rights reserved.</Copyright>
+		<Product>Dupe Clear</Product>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="DupeClear.ico" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia.Desktop" Version="11.2.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DupeClear\DupeClear.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\LICENSE" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
 </Project>

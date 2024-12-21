@@ -52,19 +52,8 @@ public partial class MainViewModel : ViewModelBase
         Constants.UserDataFileName);
 
     private readonly IFileService? _fileService;
-#if DEBUG
-    private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider(
-        Constants.UpdateApiAddress,
-        Constants.UpdateApiAppId,
-        Assembly.GetEntryAssembly()?.GetName().Version?.ToString(),
-        false);
-#else
-    private readonly UpdateServiceProvider _updateService = new UpdateServiceProvider(
-        Constants.UpdateApiAddress,
-        Constants.UpdateApiAppId,
-        Assembly.GetEntryAssembly()?.GetName().Version?.ToString(),
-        IntPtr.Size == 8);
-#endif
+
+    private readonly UpdateServiceProvider _updateService;
 
     private FinderOption _finderOptions;
 
@@ -723,6 +712,16 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(IFileService? fileService)
     {
         _fileService = fileService;
+        _updateService = new UpdateServiceProvider(
+            Constants.UpdateApiAddress,
+            Constants.UpdateApiAppId,
+#if DEBUG
+            false,
+#else
+            IntPtr.Size == 8,
+#endif
+            Assembly.GetEntryAssembly()?.GetName().Version?.ToString(),
+            appInstallMethod: IsAppPortable() ? InstallMethod.Portable : InstallMethod.Installed);
 
         DuplicateFiles.CollectionChanged += DuplicateFiles_CollectionChanged;
         IncludedDirectories.CollectionChanged += IncludedDirectories_CollectionChanged;
@@ -3192,7 +3191,7 @@ public partial class MainViewModel : ViewModelBase
                     var msgBox = await MessageBox.Invoke(msgBoxVM);
                     if (msgBox.DialogResult == true)
                     {
-                        if (IsBusy)
+                        if (IsBusy || IsAppPortable())
                         {
                             _fileService?.LaunchFile(updateInfo.FileUrl);
                         }

@@ -114,6 +114,15 @@ namespace DupeClear.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File locked - its marking won&apos;t be changed automatically unless search results (when auto-marking all files) or selection (when auto-marking selected files) doesn&apos;t contain any unlocked files.
+        /// </summary>
+        public static string LockIconToolTip {
+            get {
+                return ResourceManager.GetString("LockIconToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Match files based on their MD5 checksums
         ///
         ///&quot;Match Same Size&quot; must be selected before this option can be selected.

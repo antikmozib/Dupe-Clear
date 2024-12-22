@@ -1406,7 +1406,11 @@
 											<DataTemplate>
 												<TextBlock Classes="icon"
 														   IsVisible="{Binding IsLocked}"
-														   Text="{StaticResource Lock}" />
+														   Text="{StaticResource Lock}">
+													<ToolTip.Tip>
+														<TextBlock Text="{x:Static res:Resources.LockIconToolTip}" />
+													</ToolTip.Tip>
+												</TextBlock>
 											</DataTemplate>
 										</DataGridTemplateColumn.CellTemplate>
 									</DataGridTemplateColumn>

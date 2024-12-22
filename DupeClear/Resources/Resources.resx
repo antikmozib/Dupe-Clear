@@ -145,4 +145,7 @@ One of the fields from "From" and "To" can also be left empty to search for file
 
 One of the fields from "From" and "To" can also be left empty to search for files whose modification dates fall before/after the specified date</value>
   </data>
+  <data name="LockIconToolTip" xml:space="preserve">
+    <value>File locked - its marking won't be changed automatically unless search results (when auto-marking all files) or selection (when auto-marking selected files) doesn't contain any unlocked files</value>
+  </data>
 </root>

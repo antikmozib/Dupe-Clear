@@ -1368,6 +1368,7 @@
 											<DataTemplate>
 												<CheckBox x:Name="SearchResultCheckBox"
 														  Focusable="False"
+														  IsVisible="{Binding IsDeleted, Converter={StaticResource BoolToInvertedBoolConverter}}"
 														  IsChecked="{Binding IsMarked, Mode=TwoWay}"
 														  Command="{Binding DataContext.ApplyMarkingToSelectedSearchResultsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 														  Click="SearchResultCheckBox_Click">

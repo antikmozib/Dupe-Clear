@@ -712,16 +712,20 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(IFileService? fileService)
     {
         _fileService = fileService;
+#if DEBUG
         _updateService = new UpdateServiceProvider(
+            Assembly.GetEntryAssembly()!.Location,
             Constants.UpdateApiAddress,
             Constants.UpdateApiAppId,
-#if DEBUG
             false,
+            InstallMethod.Installed);
 #else
-            IntPtr.Size == 8,
+        _updateService = new UpdateServiceProvider(
+            Assembly.GetEntryAssembly()!.Location,
+            Constants.UpdateApiAddress,
+            Constants.UpdateApiAppId,
+            IntPtr.Size == 8);
 #endif
-            Assembly.GetEntryAssembly()?.GetName().Version?.ToString(),
-            appInstallMethod: IsAppPortable() ? InstallMethod.Portable : InstallMethod.Installed);
 
         DuplicateFiles.CollectionChanged += DuplicateFiles_CollectionChanged;
         IncludedDirectories.CollectionChanged += IncludedDirectories_CollectionChanged;
@@ -3191,7 +3195,7 @@ public partial class MainViewModel : ViewModelBase
                     var msgBox = await MessageBox.Invoke(msgBoxVM);
                     if (msgBox.DialogResult == true)
                     {
-                        if (IsBusy || IsAppPortable())
+                        if (IsBusy || _updateService.IsAppPortable)
                         {
                             _fileService?.LaunchFile(updateInfo.FileUrl);
                         }

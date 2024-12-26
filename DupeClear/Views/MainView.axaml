@@ -1,1760 +1,1760 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:system="clr-namespace:System;assembly=mscorlib"
-			 xmlns:i="using:Avalonia.Xaml.Interactivity"
-			 xmlns:ic="using:Avalonia.Xaml.Interactions.Core"
-			 xmlns:ie="using:Avalonia.Xaml.Interactions.Events"
-			 xmlns:vm="clr-namespace:DupeClear.ViewModels"
-			 xmlns:conv="clr-namespace:DupeClear.Converters;assembly=DupeClear"
-			 xmlns:models="clr-namespace:DupeClear.Models;assembly=DupeClear"
-			 xmlns:res="clr-namespace:DupeClear.Resources;assembly=DupeClear"
-			 mc:Ignorable="d"
-			 d:DesignWidth="900"
-			 d:DesignHeight="600"
-			 x:Class="DupeClear.Views.MainView"
-			 x:DataType="vm:MainViewModel"
-			 x:Name="MainUserControl"
-			 Loaded="UserControl_Loaded"
-			 DataContextChanged="UserControl_DataContextChanged">
-	<Design.DataContext>
-		<vm:MainViewModel />
-	</Design.DataContext>
-
-	<UserControl.Resources>
-		<conv:AllTrueToTrueConverter x:Key="AllTrueToTrueConverter" />
-		<conv:BoolToInvertedBoolConverter x:Key="BoolToInvertedBoolConverter" />
-		<conv:BytesToKilobytesConverter x:Key="BytesToKilobytesConverter" />
-		<conv:DeletedToGreyForegroundConverter x:Key="DeletedToGreyForegroundConverter" />
-		<conv:TrueToStrikethroughConverter x:Key="TrueToStrikethroughConverter" />
-		<conv:EmptyStringToTrueConverter x:Key="EmptyStringToFalseConverter"
-										 Inverted="True" />
-		<conv:DuplicateFileGroupToRowBGConverter x:Key="DuplicateFileGroupToRowBGConverter" />
-		<conv:IntToGridLengthConverter x:Key="IntToGridLengthConverter" />
-		<conv:IntToTrueConverter x:Key="IntToTrueConverter" />
-		<conv:LengthToStringConverter x:Key="LengthToStringConverter" />
-		<conv:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
-		<conv:NullToTrueConverter x:Key="NullToTrueConverter" />
-		<conv:NullToTrueConverter x:Key="NullToFalseConverter"
-								  Inverted="True" />
-		<conv:OneTrueToTrueConverter x:Key="OneTrueToTrueConverter" />
-
-		<system:Int32 x:Key="IntOne">1</system:Int32>
-	</UserControl.Resources>
-
-	<UserControl.Styles>
-		<Style Selector="Button,DropDownButton">
-			<Setter Property="HorizontalContentAlignment"
-					Value="Center" />
-		</Style>
-
-		<Style Selector="TextBlock.icon">
-			<Setter Property="FontFamily"
-					Value="{StaticResource FontAwesomeSolid}" />
-
-			<Setter Property="VerticalAlignment"
-					Value="Center" />
-
-			<Style Selector="^.regular">
-				<Setter Property="FontFamily"
-						Value="{StaticResource FontAwesomeRegular}" />
-			</Style>
-		</Style>
-
-		<Style Selector="MenuItem:disabled TextBlock.icon">
-			<Setter Property="Foreground"
-					Value="{DynamicResource AppMenuItemIconDisabledBrush}" />
-		</Style>
-
-		<Style Selector="Image.listbox-file-icon,TextBlock.listbox-file-icon">
-			<Setter Property="Margin"
-					Value="0 0 4 0" />
-		</Style>
-
-		<Style Selector="Image.listbox-file-icon">
-			<Setter Property="Width"
-					Value="16" />
-			<Setter Property="Height"
-					Value="16" />
-			<Setter Property="VerticalAlignment"
-					Value="Center" />
-		</Style>
-
-		<Style Selector="TextBlock.listbox-file-icon">
-			<Setter Property="FontSize"
-					Value="16" />
-		</Style>
-	</UserControl.Styles>
-
-	<UserControl.KeyBindings>
-		<KeyBinding Gesture="Ctrl+F5"
-					Command="{Binding SearchCommand}" />
-	</UserControl.KeyBindings>
-
-	<Grid x:Name="MainGrid">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="auto" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="auto" />
-		</Grid.RowDefinitions>
-
-		<!--Title Bar-->
-		<Grid x:Name="WindowsTitleBar"
-			  Margin="8">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="auto" />
-				<ColumnDefinition Width="4" />
-				<ColumnDefinition Width="auto" />
-				<ColumnDefinition Width="16" />
-				<ColumnDefinition Width="auto" />
-			</Grid.ColumnDefinitions>
-
-			<!--Icon-->
-			<Image x:Name="AppIconImage"
-				   Width="24"
-				   Height="24"
-				   RenderOptions.BitmapInterpolationMode="HighQuality"
-				   Source="avares://DupeClear/Assets/Icons/DupeClear.ico" />
-
-			<!--Title-->
-			<TextBlock x:Name="AppTitleTextBlock"
-					   Grid.Column="2"
-					   VerticalAlignment="Center"
-					   Foreground="{DynamicResource AppTitleBarForegroundBrush}"
-					   Text="Dupe Clear" />
-
-			<!--Main Menu-->
-			<Menu Grid.Column="4"
-				  VerticalAlignment="Center">
-				<!--File-->
-				<MenuItem Header="_File"
-						  CornerRadius="8">
-					<!--Theme-->
-					<MenuItem Header="_Theme">
-						<!--Auto-->
-						<MenuItem Header="_Auto"
-								  Command="{Binding ChangeThemeCommand}"
-								  CommandParameter="{x:Static models:Theme.Auto}">
-							<MenuItem.Icon>
-								<TextBlock Classes="icon"
-										   IsVisible="{Binding Theme, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:Theme.Auto}}"
-										   Text="{StaticResource CircleCheck}" />
-							</MenuItem.Icon>
-						</MenuItem>
-
-						<!--Light-->
-						<MenuItem Header="_Light"
-								  Command="{Binding ChangeThemeCommand}"
-								  CommandParameter="{x:Static models:Theme.Light}">
-							<MenuItem.Icon>
-								<TextBlock Classes="icon"
-										   IsVisible="{Binding Theme, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:Theme.Light}}"
-										   Text="{StaticResource CircleCheck}" />
-							</MenuItem.Icon>
-						</MenuItem>
-
-						<!--Dark-->
-						<MenuItem Header="_Dark"
-								  Command="{Binding ChangeThemeCommand}"
-								  CommandParameter="{x:Static models:Theme.Dark}">
-							<MenuItem.Icon>
-								<TextBlock Classes="icon"
-										   IsVisible="{Binding Theme, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:Theme.Dark}}"
-										   Text="{StaticResource CircleCheck}" />
-							</MenuItem.Icon>
-						</MenuItem>
-					</MenuItem>
-
-					<Separator />
-
-					<!--Exit-->
-					<MenuItem Header="E_xit"
-							  Command="{Binding CloseCommand}">
-						<MenuItem.Icon>
-							<TextBlock Classes="icon"
-									   Text="{StaticResource XMark}" />
-						</MenuItem.Icon>
-					</MenuItem>
-				</MenuItem>
-
-				<!--Help-->
-				<MenuItem Header="_Help"
-						  CornerRadius="8">
-					<!--Check For Updates-->
-					<MenuItem Header="_Check For Updates"
-							  Command="{Binding CheckForUpdatesCommand}">
-						<MenuItem.Icon>
-							<TextBlock Classes="icon"
-									   Text="{StaticResource Download}" />
-						</MenuItem.Icon>
-					</MenuItem>
-
-					<Separator />
-
-					<!--About-->
-					<MenuItem Header="_About"
-							  Command="{Binding ShowAboutCommand}" />
-				</MenuItem>
-			</Menu>
-		</Grid>
-
-		<TabControl x:Name="MainTabControl"
-					Grid.Row="1"
-					Margin="8"
-					Padding="8">
-			<!--Locations-->
-			<TabItem Header="Locations">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="8" />
-						<ColumnDefinition Width="auto" />
-					</Grid.ColumnDefinitions>
-
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="*" />
-							<RowDefinition Height="16" />
-							<RowDefinition Height="auto" />
-						</Grid.RowDefinitions>
-
-						<!--Search Location ListBox-->
-						<ListBox x:Name="IncludedDirectoriesListBox"
-								 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-								 DragDrop.AllowDrop="True"
-								 SelectionMode="Multiple"
-								 SelectedItem="{Binding SelectedIncludedDirectory, Mode=TwoWay}"
-								 SelectedItems="{Binding SelectedIncludedDirectories}"
-								 ItemsSource="{Binding IncludedDirectories}"
-								 DoubleTapped="IncludedDirectoriesListBox_DoubleTapped">
-							<ListBox.KeyBindings>
-								<KeyBinding Gesture="Space"
-											Command="{Binding InvertMakingOfSelectedIncludedDirectoryCommand}" />
-
-								<KeyBinding Gesture="Delete"
-											Command="{Binding RemoveIncludedDirectoryCommand}" />
-							</ListBox.KeyBindings>
-
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<Grid>
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="4" />
-											<ColumnDefinition Width="auto" />
-											<ColumnDefinition Width="auto" />
-											<ColumnDefinition Width="auto" />
-											<ColumnDefinition Width="auto" />
-											<ColumnDefinition Width="*" />
-											<ColumnDefinition Width="auto" />
-											<ColumnDefinition Width="4" />
-										</Grid.ColumnDefinitions>
-
-										<CheckBox x:Name="IncludedDirectoryCheckBox"
-												  Grid.Column="1"
-												  Focusable="False"
-												  IsEnabled="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToInvertedBoolConverter}}"
-												  IsChecked="{Binding IsMarked, Mode=TwoWay}"
-												  Command="{Binding DataContext.ApplyMarkingToSelectedIncludedDirectoriesCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-												  CommandParameter="{Binding}"
-												  Click="IncludedDirectoryCheckBox_Click" />
-
-										<Image Grid.Column="2"
-											   Classes="listbox-file-icon"
-											   IsVisible="{Binding FolderIcon, Converter={StaticResource NullToFalseConverter}}"
-											   Source="{Binding FolderIcon}" />
-
-										<TextBlock Grid.Column="2"
-												   Classes="icon listbox-file-icon"
-												   IsVisible="{Binding FolderIcon, Converter={StaticResource NullToTrueConverter}}"
-												   Text="{StaticResource Folder}" />
-
-										<TextBlock Grid.Column="3"
-												   VerticalAlignment="Center"
-												   Text="{Binding FullName}" />
-
-										<TextBlock Grid.Column="4"
-												   Classes="icon"
-												   Margin="2 0"
-												   ToolTip.Tip="Folder excluded from search"
-												   IsVisible="{Binding IsExcluded}"
-												   Text="{StaticResource TriangleExclamation}" />
-
-										<StackPanel Grid.Column="6"
-													Orientation="Horizontal">
-											<!--Up-->
-											<Button IsVisible="{Binding IsPointerOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
-													Command="{Binding DataContext.MoveDirectoryUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-													CommandParameter="{Binding}">
-												<Button.Content>
-													<TextBlock Classes="icon"
-															   Text="{StaticResource ArrowUp}" />
-												</Button.Content>
-											</Button>
-
-											<!--Down-->
-											<Button IsVisible="{Binding IsPointerOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
-													Command="{Binding DataContext.MoveDirectoryDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-													CommandParameter="{Binding}">
-												<Button.Content>
-													<TextBlock Classes="icon"
-															   Text="{StaticResource ArrowDown}" />
-												</Button.Content>
-											</Button>
-										</StackPanel>
-									</Grid>
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
-
-						<Border Grid.Row="2"
-								Padding="8"
-								CornerRadius="4"
-								BorderThickness="1"
-								BorderBrush="{DynamicResource AppBorderBrush}">
-							<Grid>
-								<Grid.RowDefinitions>
-									<RowDefinition Height="auto" />
-									<RowDefinition Height="8" />
-									<RowDefinition Height="auto" />
-								</Grid.RowDefinitions>
-
-								<!--Search Location CheckBoxes-->
-								<WrapPanel>
-									<!--Match Same Filename-->
-									<CheckBox x:Name="MatchSameFileNameCheckBox"
-											  Margin="0 0 12 0"
-											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-											  IsChecked="{Binding MatchSameFileName, Mode=TwoWay}"
-											  Content="Match Same Fi_lename" />
-
-									<!--Match Same Contents-->
-									<StackPanel Margin="0 0 12 0"
-												Orientation="Horizontal"
-												Spacing="4">
-										<CheckBox ToolTip.Tip="{x:Static res:Resources.MatchSameContentsToolTip}"
-												  IsChecked="{Binding MatchSameContents, Mode=TwoWay}"
-												  Content="Match Same _Contents">
-											<CheckBox.IsEnabled>
-												<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-													<Binding Path="IsBusy"
-															 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-													<Binding Path="IsChecked"
-															 ElementName="MatchSameSizeCheckBox" />
-												</MultiBinding>
-											</CheckBox.IsEnabled>
-										</CheckBox>
-
-										<TextBlock Classes="icon"
-												   ToolTip.Tip="{x:Static res:Resources.MatchSameContentsToolTip}"
-												   Text="{StaticResource CircleInfo}" />
-									</StackPanel>
-
-									<!--Match Same Type-->
-									<CheckBox Margin="0 0 12 0"
-											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-											  IsChecked="{Binding MatchSameType, Mode=TwoWay}"
-											  Content="Match Same T_ype" />
-
-									<!--Match Same Size-->
-									<CheckBox Margin="0 0 12 0"
-											  x:Name="MatchSameSizeCheckBox"
-											  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-											  IsChecked="{Binding MatchSameSize, Mode=TwoWay}"
-											  Content="Match Same Si_ze" />
-
-									<!--Match Across Folders-->
-									<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-											  IsChecked="{Binding MatchAcrossDirectories, Mode=TwoWay}"
-											  Content="Match Across F_olders" />
-								</WrapPanel>
-
-								<!--Additional Options-->
-								<Expander Grid.Row="2"
-										  Header="Additional Options"
-										  HorizontalAlignment="Stretch"
-										  BorderBrush="{DynamicResource AppBorderBrush}"
-										  BorderThickness="1"
-										  IsExpanded="{Binding AdditionalOptionsExpanded, Mode=TwoWay}">
-									<Grid Grid.IsSharedSizeScope="True">
-										<StackPanel Spacing="8">
-											<!--Filename Pattern-->
-											<Grid>
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="auto"
-																	  SharedSizeGroup="LabelGroup" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="*" />
-													<ColumnDefinition Width="4" />
-													<ColumnDefinition Width="auto" />
-												</Grid.ColumnDefinitions>
-
-												<Label VerticalAlignment="Center"
-													   Target="FilenamePatternBox"
-													   Content="Filename _Pattern:" />
-
-												<AutoCompleteBox x:Name="FilenamePatternBox"
-																 Grid.Column="2"
-																 ToolTip.Tip="{x:Static res:Resources.FileNamePatternToolTip}"
-																 ItemsSource="{Binding SavedFileNamePatterns}"
-																 Text="{Binding FileNamePattern, Mode=TwoWay}">
-													<AutoCompleteBox.IsEnabled>
-														<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-															<Binding Path="IsBusy"
-																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-															<Binding Path="IsChecked"
-																	 ElementName="MatchSameFileNameCheckBox" />
-														</MultiBinding>
-													</AutoCompleteBox.IsEnabled>
-												</AutoCompleteBox>
-
-												<TextBlock Grid.Column="4"
-														   Classes="icon"
-														   ToolTip.Tip="{x:Static res:Resources.FileNamePatternToolTip}"
-														   Text="{StaticResource CircleInfo}" />
-											</Grid>
-
-											<!--Extensions-->
-											<Grid>
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="auto"
-																	  SharedSizeGroup="LabelGroup" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="*" />
-													<ColumnDefinition Width="4" />
-													<ColumnDefinition Width="auto" />
-												</Grid.ColumnDefinitions>
-
-												<Label VerticalAlignment="Center"
-													   Target="IncludedExtensionsBox"
-													   Content="_Extensions:" />
-
-												<AutoCompleteBox x:Name="IncludedExtensionsBox"
-																 Grid.Column="2"
-																 ToolTip.Tip="{x:Static res:Resources.IncludedExtensionsToolTip}"
-																 IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-																 ItemsSource="{Binding SavedIncludedExtensions}"
-																 Text="{Binding IncludedExtensions, Mode=TwoWay}" />
-
-												<TextBlock Grid.Column="4"
-														   Classes="icon"
-														   ToolTip.Tip="{x:Static res:Resources.IncludedExtensionsToolTip}"
-														   Text="{StaticResource CircleInfo}" />
-											</Grid>
-
-											<!--Minimum Size-->
-											<Grid>
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="auto"
-																	  SharedSizeGroup="LabelGroup" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="*" />
-												</Grid.ColumnDefinitions>
-
-												<Label VerticalAlignment="Center"
-													   Target="MinSizeBox"
-													   Content="Mi_nimum Size:" />
-
-												<NumericUpDown x:Name="MinSizeBox"
-															   Grid.Column="2"
-															   MinWidth="128"
-															   TextAlignment="Right"
-															   FormatString="N0"
-															   Maximum="9223372036854775807"
-															   Minimum="0"
-															   IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-															   Value="{Binding MinimumFileLength, Mode=TwoWay, Converter={StaticResource BytesToKilobytesConverter}}" />
-
-												<TextBlock Grid.Column="4"
-														   VerticalAlignment="Center"
-														   Text="KB" />
-											</Grid>
-
-											<!--Date Created-->
-											<Grid>
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="auto"
-																	  SharedSizeGroup="LabelGroup" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="16" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="*" />
-												</Grid.ColumnDefinitions>
-
-												<CheckBox x:Name="DateCreatedCheckBox"
-														  VerticalAlignment="Center"
-														  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-														  IsChecked="{Binding MatchDateCreated, Mode=TwoWay}"
-														  Content="Da_te Created:" />
-
-												<!--From-->
-												<Label Grid.Column="2"
-													   VerticalAlignment="Center"
-													   Content="From" />
-
-												<CalendarDatePicker x:Name="DateCreatedFromDatePicker"
-																	Grid.Column="4"
-																	SelectedDate="{Binding DateCreatedFrom, Mode=TwoWay}">
-													<CalendarDatePicker.IsEnabled>
-														<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-															<Binding Path="IsChecked"
-																	 ElementName="DateCreatedCheckBox" />
-															<Binding Path="IsBusy"
-																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-														</MultiBinding>
-													</CalendarDatePicker.IsEnabled>
-												</CalendarDatePicker>
-
-												<!--To-->
-												<Label Grid.Column="6"
-													   VerticalAlignment="Center"
-													   Content="To" />
-
-												<CalendarDatePicker Grid.Column="8"
-																	SelectedDate="{Binding DateCreatedTo, Mode=TwoWay}">
-													<CalendarDatePicker.IsEnabled>
-														<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-															<Binding Path="IsChecked"
-																	 ElementName="DateCreatedCheckBox" />
-															<Binding Path="IsBusy"
-																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-														</MultiBinding>
-													</CalendarDatePicker.IsEnabled>
-												</CalendarDatePicker>
-
-												<TextBlock Grid.Column="10"
-														   Classes="icon"
-														   ToolTip.Tip="{x:Static res:Resources.DateCreatedToolTip}"
-														   Text="{StaticResource CircleInfo}" />
-											</Grid>
-
-											<!--Date Modified-->
-											<Grid>
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="auto"
-																	  SharedSizeGroup="LabelGroup" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="16" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="8" />
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="*" />
-												</Grid.ColumnDefinitions>
-
-												<CheckBox x:Name="DateModifiedCheckBox"
-														  VerticalAlignment="Center"
-														  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-														  IsChecked="{Binding MatchDateModified, Mode=TwoWay}"
-														  Content="Date _Modified:" />
-
-												<!--From-->
-												<Label Grid.Column="2"
-													   VerticalAlignment="Center"
-													   Content="From" />
-
-												<CalendarDatePicker Grid.Column="4"
-																	SelectedDate="{Binding DateModifiedFrom, Mode=TwoWay}">
-													<CalendarDatePicker.IsEnabled>
-														<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-															<Binding Path="IsChecked"
-																	 ElementName="DateModifiedCheckBox" />
-															<Binding Path="IsBusy"
-																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-														</MultiBinding>
-													</CalendarDatePicker.IsEnabled>
-												</CalendarDatePicker>
-
-												<!--To-->
-												<Label Grid.Row="2"
-													   Grid.Column="6"
-													   VerticalAlignment="Center"
-													   Content="To" />
-
-												<CalendarDatePicker Grid.Column="8"
-																	SelectedDate="{Binding DateModifiedTo, Mode=TwoWay}">
-													<CalendarDatePicker.IsEnabled>
-														<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-															<Binding Path="IsChecked"
-																	 ElementName="DateModifiedCheckBox" />
-															<Binding Path="IsBusy"
-																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-														</MultiBinding>
-													</CalendarDatePicker.IsEnabled>
-												</CalendarDatePicker>
-
-												<TextBlock Grid.Column="10"
-														   Classes="icon"
-														   ToolTip.Tip="{x:Static res:Resources.DateModifiedToolTip}"
-														   Text="{StaticResource CircleInfo}" />
-											</Grid>
-										</StackPanel>
-									</Grid>
-								</Expander>
-							</Grid>
-						</Border>
-					</Grid>
-
-					<!--Search Location Buttons-->
-					<StackPanel Grid.RowSpan="3"
-								Grid.Column="2"
-								Spacing="4">
-						<StackPanel.Styles>
-							<Style Selector="Button">
-								<Setter Property="Width"
-										Value="160" />
-							</Style>
-						</StackPanel.Styles>
-
-						<!--Add Folder-->
-						<Button Content="_Add Folder"
-								Command="{Binding AddDirectoryForInclusionCommand}" />
-
-						<!--Remove Folder-->
-						<Button Content="_Remove Folder"
-								Command="{Binding RemoveIncludedDirectoryCommand}" />
-
-						<!--Include Subfolders-->
-						<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-								  IsChecked="{Binding IncludeSubdirectories, Mode=TwoWay}"
-								  Content="_Include Subfolders" />
-
-						<Border Height="32" />
-
-						<!--START-->
-						<Button Background="{DynamicResource AppStartButtonBackgroundBrush}"
-								Foreground="{DynamicResource AppStartButtonForegroundBrush}"
-								FontWeight="Bold"
-								Content="_START"
-								Command="{Binding SearchCommand}" />
-					</StackPanel>
-				</Grid>
-			</TabItem>
-
-			<!--Exclusions-->
-			<TabItem Header="Exclusions">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="8" />
-						<ColumnDefinition Width="auto" />
-					</Grid.ColumnDefinitions>
-
-					<Grid.RowDefinitions>
-						<RowDefinition Height="*" />
-						<RowDefinition Height="16" />
-						<RowDefinition Height="auto" />
-					</Grid.RowDefinitions>
-
-					<!--Exclusion ListBox-->
-					<ListBox x:Name="ExcludedDirectoriesListBox"
-							 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-							 DragDrop.AllowDrop="True"
-							 SelectionMode="Multiple"
-							 SelectedItem="{Binding SelectedExcludedDirectory, Mode=TwoWay}"
-							 SelectedItems="{Binding SelectedExcludedDirectories}"
-							 ItemsSource="{Binding ExcludedDirectories}"
-							 DoubleTapped="ExcludedDirectoriesListBox_DoubleTapped">
-						<ListBox.KeyBindings>
-							<KeyBinding Gesture="Space"
-										Command="{Binding InvertMakingOfSelectedExcludedDirectoryCommand}" />
-
-							<KeyBinding Gesture="Delete"
-										Command="{Binding RemoveExcludedDirectoryCommand}" />
-						</ListBox.KeyBindings>
-
-						<ListBox.ItemTemplate>
-							<DataTemplate>
-								<Grid>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="4" />
-										<ColumnDefinition Width="auto" />
-										<ColumnDefinition Width="auto" />
-										<ColumnDefinition Width="*" />
-									</Grid.ColumnDefinitions>
-
-									<CheckBox x:Name="ExcludedDirectoryCheckBox"
-											  Grid.Column="1"
-											  Focusable="False"
-											  IsEnabled="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToInvertedBoolConverter}}"
-											  IsChecked="{Binding IsMarked, Mode=TwoWay}"
-											  Command="{Binding DataContext.ApplyMarkingToSelectedExcludedDirectoriesCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-											  CommandParameter="{Binding}"
-											  Click="ExcludedDirectoryCheckBox_Click" />
-
-									<Image Grid.Column="2"
-										   Classes="listbox-file-icon"
-										   VerticalAlignment="Center"
-										   IsVisible="{Binding FolderIcon, Converter={StaticResource NullToFalseConverter}}"
-										   Source="{Binding FolderIcon}" />
-
-									<TextBlock Grid.Column="2"
-											   Classes="icon listbox-file-icon"
-											   IsVisible="{Binding FolderIcon, Converter={StaticResource NullToTrueConverter}}"
-											   Text="{StaticResource Folder}" />
-
-									<TextBlock Grid.Column="3"
-											   VerticalAlignment="Center"
-											   Text="{Binding FullName}" />
-								</Grid>
-							</DataTemplate>
-						</ListBox.ItemTemplate>
-					</ListBox>
-
-					<Border Grid.Row="2"
-							Padding="8"
-							CornerRadius="4"
-							BorderThickness="1"
-							BorderBrush="{DynamicResource AppBorderBrush}">
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="auto" />
-								<RowDefinition Height="8" />
-								<RowDefinition Height="auto" />
-							</Grid.RowDefinitions>
-
-							<!--Exclusion CheckBoxes-->
-							<WrapPanel>
-								<WrapPanel.Styles>
-									<Style Selector="CheckBox">
-										<Setter Property="Margin"
-												Value="0 0 8 0" />
-									</Style>
-								</WrapPanel.Styles>
-
-								<!--Exclude System Files-->
-								<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-										  IsChecked="{Binding ExcludeSystemFiles, Mode=TwoWay}"
-										  Content="_Exclude System Files (Recommended)" />
-
-								<!--Exclude Hidden Files-->
-								<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-										  IsChecked="{Binding ExcludeHiddenFiles, Mode=TwoWay}"
-										  Content="E_xclude Hidden Files" />
-							</WrapPanel>
-
-							<!--Exclude Extensions-->
-							<Grid Grid.Row="2">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="auto" />
-									<ColumnDefinition Width="4" />
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="4" />
-									<ColumnDefinition Width="auto" />
-								</Grid.ColumnDefinitions>
-
-								<Label VerticalAlignment="Center"
-									   Target="ExcludeExtensionsBox"
-									   Content="Ex_clude Extensions:" />
-
-								<AutoCompleteBox x:Name="ExcludeExtensionsBox"
-												 Grid.Column="2"
-												 ToolTip.Tip="{x:Static res:Resources.ExcludedExtensionsToolTip}"
-												 IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-												 ItemsSource="{Binding SavedExcludedExtensions}"
-												 Text="{Binding ExcludedExtensions, Mode=TwoWay}" />
-
-								<TextBlock Grid.Column="4"
-										   Classes="icon"
-										   ToolTip.Tip="{x:Static res:Resources.ExcludedExtensionsToolTip}"
-										   Text="{StaticResource CircleInfo}" />
-							</Grid>
-						</Grid>
-					</Border>
-
-					<!--Exclusion Buttons-->
-					<StackPanel Grid.RowSpan="3"
-								Grid.Column="2"
-								Spacing="4">
-						<StackPanel.Styles>
-							<Style Selector="Button">
-								<Setter Property="Width"
-										Value="160" />
-							</Style>
-						</StackPanel.Styles>
-
-						<!--Add Folder-->
-						<Button Content="_Add Folder"
-								Command="{Binding AddDirectoryForExclusionCommand}" />
-
-						<!--Remove Folder-->
-						<Button Content="_Remove Folder"
-								Command="{Binding RemoveExcludedDirectoryCommand}" />
-
-						<!--Include Subfolders-->
-						<CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
-								  IsChecked="{Binding ExcludeSubdirectories, Mode=TwoWay}"
-								  Content="_Include Subfolders" />
-					</StackPanel>
-				</Grid>
-			</TabItem>
-
-			<!--Search Results-->
-			<TabItem Header="Search Results">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="8" />
-						<RowDefinition Height="*" />
-					</Grid.RowDefinitions>
-
-					<!--ToolBar-->
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="auto" />
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="auto" />
-						</Grid.ColumnDefinitions>
-
-						<Grid.Styles>
-							<Style Selector="Button,DropDownButton,ToggleButton">
-								<Setter Property="Height"
-										Value="32" />
-								<Setter Property="VerticalContentAlignment"
-										Value="Center" />
-							</Style>
-
-							<Style Selector="Rectangle">
-								<Setter Property="Margin"
-										Value="4 0" />
-								<Setter Property="Width"
-										Value="1" />
-								<Setter Property="Fill"
-										Value="{DynamicResource AppBorderBrush}" />
-							</Style>
-						</Grid.Styles>
-
-						<StackPanel Orientation="Horizontal"
-									Spacing="4">
-							<StackPanel.Styles>
-								<Style Selector="Button,DropDownButton,ToggleButton">
-									<Setter Property="Height"
-											Value="32" />
-									<Setter Property="VerticalContentAlignment"
-											Value="Center" />
-								</Style>
-
-								<Style Selector="Rectangle">
-									<Setter Property="Margin"
-											Value="4 0" />
-									<Setter Property="Width"
-											Value="1" />
-									<Setter Property="Fill"
-											Value="{DynamicResource AppBorderBrush}" />
-								</Style>
-							</StackPanel.Styles>
-
-							<!--Import-->
-							<Button ToolTip.Tip="Import"
-									Command="{Binding ImportCommand}">
-								<Button.Content>
-									<TextBlock Classes="icon regular"
-											   Text="{StaticResource FolderOpen}" />
-								</Button.Content>
-							</Button>
-
-							<!--Export-->
-							<Button ToolTip.Tip="Export"
-									Command="{Binding ExportCommand}">
-								<Button.Content>
-									<TextBlock Classes="icon"
-											   Text="{StaticResource FloppyDisk}" />
-								</Button.Content>
-							</Button>
-
-							<Rectangle />
-
-							<!--Mark-->
-							<DropDownButton>
-								<DropDownButton.Content>
-									<StackPanel Orientation="Horizontal"
-												Spacing="4">
-										<TextBlock Classes="icon"
-												   Text="{StaticResource ListCheck}" />
-
-										<Label Content="_Mark" />
-									</StackPanel>
-								</DropDownButton.Content>
-
-								<DropDownButton.Flyout>
-									<MenuFlyout Placement="BottomEdgeAlignedLeft">
-										<!--By Date Created-->
-										<MenuItem Header="By Date _Created">
-											<MenuItem.Icon>
-												<TextBlock Classes="icon"
-														   Text="{StaticResource CircleCheck}">
-													<TextBlock.IsVisible>
-														<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-															<Binding Path="SelectedMarkingCriteria"
-																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.LatestCreated}" />
-															<Binding Path="SelectedMarkingCriteria"
-																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.EarliestCreated}" />
-														</MultiBinding>
-													</TextBlock.IsVisible>
-												</TextBlock>
-											</MenuItem.Icon>
-
-											<!--Keep Earliest-->
-											<MenuItem Header="Keep _Oldest"
-													  Command="{Binding KeepEarliestCreatedCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.EarliestCreated}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-
-											<!--Keep Latest-->
-											<MenuItem Header="Keep _Newest"
-													  Command="{Binding KeepLatestCreatedCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestCreated}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-										</MenuItem>
-
-										<!--By Date Modified-->
-										<MenuItem Header="By Date _Modified">
-											<MenuItem.Icon>
-												<TextBlock Classes="icon"
-														   Text="{StaticResource CircleCheck}">
-													<TextBlock.IsVisible>
-														<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-															<Binding Path="SelectedMarkingCriteria"
-																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.LatestModified}" />
-															<Binding Path="SelectedMarkingCriteria"
-																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.EarliestModified}" />
-														</MultiBinding>
-													</TextBlock.IsVisible>
-												</TextBlock>
-											</MenuItem.Icon>
-
-											<!--Keep Earliest-->
-											<MenuItem Header="Keep _Oldest"
-													  Command="{Binding KeepEarliestModifiedCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.EarliestModified}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-
-											<!--Keep Latest-->
-											<MenuItem Header="Keep _Newest"
-													  Command="{Binding KeepLatestModifiedCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestModified}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-										</MenuItem>
-
-										<!--By Letters-->
-										<MenuItem Header="By _Name">
-											<MenuItem.Icon>
-												<TextBlock Classes="icon"
-														   Text="{StaticResource CircleCheck}">
-													<TextBlock.IsVisible>
-														<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-															<Binding Path="SelectedMarkingCriteria"
-																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.MoreLetters}" />
-															<Binding Path="SelectedMarkingCriteria"
-																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.LessLetters}" />
-														</MultiBinding>
-													</TextBlock.IsVisible>
-												</TextBlock>
-											</MenuItem.Icon>
-
-											<!--Keep More Letters-->
-											<MenuItem Header="Keep _More Letters"
-													  Command="{Binding KeepMoreLettersCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.MoreLetters}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-
-											<!--Keep Less Letters-->
-											<MenuItem Header="Keep _Less Letters"
-													  Command="{Binding KeepLessLettersCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LessLetters}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-										</MenuItem>
-
-										<!--By Size-->
-										<MenuItem Header="By _Size">
-											<MenuItem.Icon>
-												<TextBlock Classes="icon"
-														   Text="{StaticResource CircleCheck}">
-													<TextBlock.IsVisible>
-														<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-															<Binding Path="SelectedMarkingCriteria"
-																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.LargestLength}" />
-															<Binding Path="SelectedMarkingCriteria"
-																	 Converter="{StaticResource IntToTrueConverter}"
-																	 ConverterParameter="{x:Static models:MarkingCriteria.SmallestLength}" />
-														</MultiBinding>
-													</TextBlock.IsVisible>
-												</TextBlock>
-											</MenuItem.Icon>
-
-											<!--Keep Largest-->
-											<MenuItem Header="Keep _Largest"
-													  Command="{Binding KeepLargestLengthCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LargestLength}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-
-											<!--Keep Smallest-->
-											<MenuItem Header="Keep _Smallest"
-													  Command="{Binding KeepSmallestLengthCommand}">
-												<MenuItem.Icon>
-													<TextBlock Classes="icon"
-															   IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.SmallestLength}}"
-															   Text="{StaticResource CircleCheck}" />
-												</MenuItem.Icon>
-											</MenuItem>
-										</MenuItem>
-
-										<Separator />
-
-										<!--Mark All-->
-										<MenuItem Header="Mark _All"
-												  Command="{Binding MarkAllCommand}" />
-
-										<!--Unmark All-->
-										<MenuItem Header="_Unmark All"
-												  Command="{Binding UnmarkAllCommand}" />
-									</MenuFlyout>
-								</DropDownButton.Flyout>
-							</DropDownButton>
-
-							<!--Delete-->
-							<Button Background="{DynamicResource AppDeleteButtonBackgroundBrush}"
-									Foreground="{DynamicResource AppDeleteButtonForegroundBrush}"
-									Command="{Binding DeleteMarkedFilesCommand}">
-								<Button.Content>
-									<StackPanel Orientation="Horizontal"
-												Spacing="4">
-										<TextBlock Classes="icon regular"
-												   Text="{StaticResource TrashCan}" />
-										<Label Content="_Delete Marked Files" />
-									</StackPanel>
-								</Button.Content>
-							</Button>
-						</StackPanel>
-
-						<StackPanel Grid.Column="2"
-									Orientation="Horizontal"
-									Spacing="4">
-							<!--Find Toggle-->
-							<ToggleButton ToolTip.Tip="Find"
-										  IsChecked="{Binding ShowFindWithinSearchResultsPane, Mode=TwoWay}">
-								<ToggleButton.Content>
-									<TextBlock Classes="icon"
-											   Text="{StaticResource MagnifyingGlass}" />
-								</ToggleButton.Content>
-							</ToggleButton>
-
-							<Rectangle />
-
-							<!--Preview Switch-->
-							<StackPanel Orientation="Horizontal">
-								<Label VerticalAlignment="Center"
-									   Target="PreviewToggleSwitch"
-									   Content="_Preview" />
-
-								<ToggleSwitch x:Name="PreviewToggleSwitch"
-											  Margin="0"
-											  Padding="0"
-											  Width="40"
-											  VerticalAlignment="Stretch"
-											  VerticalContentAlignment="Center"
-											  OnContent=""
-											  OffContent=""
-											  IsChecked="{Binding ShowPreview, Mode=TwoWay}" />
-							</StackPanel>
-						</StackPanel>
-					</Grid>
-
-					<Grid Grid.Row="2">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="auto" />
-							<ColumnDefinition Width="{Binding PreviewPaneWidth, Mode=TwoWay, Converter={StaticResource IntToGridLengthConverter}}" />
-						</Grid.ColumnDefinitions>
-
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="*" />
-								<RowDefinition Height="auto" />
-								<RowDefinition Height="{Binding FindWithinSearchResultsPaneHeight, Mode=TwoWay, Converter={StaticResource IntToGridLengthConverter}}" />
-							</Grid.RowDefinitions>
-
-							<!--Results Grid-->
-							<DataGrid x:Name="ResultsGrid"
-									  CanUserResizeColumns="True"
-									  CanUserSortColumns="False"
-									  SelectionMode="Extended"
-									  SelectedItem="{Binding SelectedDuplicateFile, Mode=TwoWay}"
-									  ItemsSource="{Binding DuplicateFiles}"
-									  SelectionChanged="ResultsGrid_SelectionChanged">
-								<DataGrid.Resources>
-									<ControlTheme x:Key="AlternateRowTheme"
-												  TargetType="DataGridRow"
-												  BasedOn="{StaticResource {x:Type DataGridRow}}"
-												  x:DataType="models:DuplicateFile">
-										<Setter Property="Background"
-												Value="{Binding Path=Group, Mode=OneWay, Converter={StaticResource DuplicateFileGroupToRowBGConverter}}" />
-									</ControlTheme>
-								</DataGrid.Resources>
-
-								<DataGrid.Styles>
-									<Style Selector="DataGridCell.RightAlignedCell">
-										<Setter Property="HorizontalAlignment"
-												Value="Right" />
-									</Style>
-
-									<Style Selector="DataGridCell.CenterAlignedCell">
-										<Setter Property="HorizontalAlignment"
-												Value="Center" />
-									</Style>
-
-									<Style Selector="DataGridCell TextBlock">
-										<Setter Property="TextTrimming"
-												Value="CharacterEllipsis" />
-
-										<Setter Property="TextDecorations"
-												Value="{Binding IsDeleted, Mode=OneWay, Converter={StaticResource TrueToStrikethroughConverter}}" />
-
-										<Setter Property="Foreground"
-												Value="{Binding IsDeleted, Mode=OneWay, Converter={StaticResource DeletedToGreyForegroundConverter}}" />
-									</Style>
-
-									<Style Selector="DataGridCell:disabled TextBlock">
-										<Setter Property="Foreground"
-												Value="{DynamicResource AppSearchResultsDisabledForegroundBrush}" />
-									</Style>
-
-									<Style Selector="DataGridRow">
-										<Setter Property="Theme"
-												Value="{StaticResource AlternateRowTheme}" />
-									</Style>
-								</DataGrid.Styles>
-
-								<DataGrid.KeyBindings>
-									<KeyBinding Gesture="Space"
-												Command="{Binding InvertMarkingOfSelectedSearchResultCommand}">
-										<KeyBinding.CommandParameter>
-											<MultiBinding Converter="{StaticResource MultiCommandParameterConverter}">
-												<Binding Path="SelectedItem"
-														 ElementName="ResultsGrid" />
-												<Binding Path="SelectedItems"
-														 ElementName="ResultsGrid" />
-											</MultiBinding>
-										</KeyBinding.CommandParameter>
-									</KeyBinding>
-
-									<KeyBinding Gesture="Enter"
-												Command="{Binding OpenCommand}"
-												CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-									<KeyBinding Gesture="Delete"
-												Command="{Binding DelistCommand}"
-												CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-								</DataGrid.KeyBindings>
-
-								<i:Interaction.Behaviors>
-									<ic:EventTriggerBehavior EventName="DoubleTapped"
-															 SourceObject="#ResultsGrid">
-										<ic:InvokeCommandAction Command="{Binding OpenCommand}"
-																CommandParameter="{Binding Path=SelectedItem, ElementName=ResultsGrid}" />
-									</ic:EventTriggerBehavior>
-								</i:Interaction.Behaviors>
-
-								<!--Context Menu-->
-								<DataGrid.ContextMenu>
-									<ContextMenu>
-										<!--Open-->
-										<MenuItem Header="_Open"
-												  Command="{Binding OpenCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
-											<MenuItem.Icon>
-												<TextBlock Classes="icon"
-														   Text="{StaticResource File}" />
-											</MenuItem.Icon>
-										</MenuItem>
-
-										<!--Open Containing Folder-->
-										<MenuItem Header="Open _Containing Folder"
-												  Command="{Binding OpenContainingFolderCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
-											<MenuItem.Icon>
-												<TextBlock Classes="icon regular"
-														   Text="{StaticResource FolderOpen}" />
-											</MenuItem.Icon>
-										</MenuItem>
-
-										<Separator />
-
-										<!--Delist-->
-										<MenuItem Header="_Delist"
-												  Command="{Binding DelistCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-										<!--Delist Group-->
-										<MenuItem Header="Delist _Group"
-												  Command="{Binding DelistGroupCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-										<!--Delist Folder-->
-										<MenuItem Header="Delist _Folder"
-												  Command="{Binding DelistDirectoryCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-										<Separator />
-
-										<!--Mark-->
-										<MenuItem Header="M_ark Selection">
-											<!--By Date Created-->
-											<MenuItem Header="By Date _Created">
-												<!--Keep Earliest-->
-												<MenuItem Header="Keep _Oldest"
-														  Command="{Binding KeepEarliestCreatedCommand}"
-														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-												<!--Keep Latest-->
-												<MenuItem Header="Keep _Newest"
-														  Command="{Binding KeepLatestCreatedCommand}"
-														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-											</MenuItem>
-
-											<!--By Date Modified-->
-											<MenuItem Header="By Date _Modified">
-												<!--Keep Earliest-->
-												<MenuItem Header="Keep _Oldest"
-														  Command="{Binding KeepEarliestModifiedCommand}"
-														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-												<!--Keep Latest-->
-												<MenuItem Header="Keep _Newest"
-														  Command="{Binding KeepLatestModifiedCommand}"
-														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-											</MenuItem>
-
-											<!--By Letters-->
-											<MenuItem Header="By _Name">
-												<!--Keep Largest-->
-												<MenuItem Header="Keep _More Letters"
-														  Command="{Binding KeepMoreLettersCommand}"
-														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-												<!--Keep Smallest-->
-												<MenuItem Header="Keep _Less Letters"
-														  Command="{Binding KeepLessLettersCommand}"
-														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-											</MenuItem>
-
-											<!--By Size-->
-											<MenuItem Header="By _Size">
-												<!--Keep Largest-->
-												<MenuItem Header="Keep _Largest"
-														  Command="{Binding KeepLargestLengthCommand}"
-														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-												<!--Keep Smallest-->
-												<MenuItem Header="Keep _Smallest"
-														  Command="{Binding KeepSmallestLengthCommand}"
-														  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-											</MenuItem>
-										</MenuItem>
-
-										<!--Mark All From This Folder-->
-										<MenuItem Header="_Mark All From Folder"
-												  Command="{Binding MarkAllFromThisDirectoryCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-										<!--Unmark All From This Folder-->
-										<MenuItem Header="_Unmark All From Folder"
-												  Command="{Binding UnmarkAllFromThisDirectoryCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
-
-										<Separator />
-
-										<!--Lock Group-->
-										<MenuItem Header="_Lock Group"
-												  IsVisible="{Binding SelectedDuplicateFile.IsLocked, Converter={StaticResource BoolToInvertedBoolConverter}}"
-												  Command="{Binding LockGroupCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
-											<MenuItem.Icon>
-												<TextBlock Classes="icon"
-														   Text="{StaticResource Lock}" />
-											</MenuItem.Icon>
-										</MenuItem>
-
-										<!--Unlock Group-->
-										<MenuItem Header="U_nlock Group"
-												  IsVisible="{Binding SelectedDuplicateFile.IsLocked}"
-												  Command="{Binding UnlockGroupCommand}"
-												  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
-											<MenuItem.Icon>
-												<TextBlock Classes="icon"
-														   Text="{StaticResource Unlock}" />
-											</MenuItem.Icon>
-										</MenuItem>
-
-										<Separator />
-
-										<!--Refresh-->
-										<MenuItem Header="R_efresh"
-												  HotKey="F5"
-												  Command="{Binding RefreshCommand}">
-											<MenuItem.Icon>
-												<TextBlock Classes="icon"
-														   Text="{StaticResource ArrowsRotate}" />
-											</MenuItem.Icon>
-										</MenuItem>
-
-										<!--Clean List-->
-										<MenuItem Header="C_lean List"
-												  Command="{Binding CleanCommand}" />
-
-										<Separator />
-
-										<!--Select All-->
-										<MenuItem x:Name="SelectAllMenuItem"
-												  Header="Select _All"
-												  Click="SelectAllMenuItem_Click" />
-									</ContextMenu>
-								</DataGrid.ContextMenu>
-
-								<!--Check Box-->
-								<DataGrid.Columns>
-									<DataGridTemplateColumn CanUserResize="False"
-															CellStyleClasses="CenterAlignedCell">
-										<DataGridTemplateColumn.CellTemplate>
-											<DataTemplate>
-												<CheckBox x:Name="SearchResultCheckBox"
-														  Focusable="False"
-														  IsVisible="{Binding IsDeleted, Converter={StaticResource BoolToInvertedBoolConverter}}"
-														  IsChecked="{Binding IsMarked, Mode=TwoWay}"
-														  Command="{Binding DataContext.ApplyMarkingToSelectedSearchResultsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-														  Click="SearchResultCheckBox_Click">
-													<CheckBox.IsEnabled>
-														<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-															<Binding Path="DataContext.IsBusy"
-																	 RelativeSource="{RelativeSource AncestorType=UserControl}"
-																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-															<Binding Path="IsDeleted"
-																	 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-															<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-																<Binding Path="IsLocked"
-																		 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-																<Binding Path="DataContext.AreAllFilesLocked"
-																		 RelativeSource="{RelativeSource AncestorType=UserControl}"
-																		 Converter="{StaticResource BoolToInvertedBoolConverter}" />
-															</MultiBinding>
-														</MultiBinding>
-													</CheckBox.IsEnabled>
-													<CheckBox.CommandParameter>
-														<MultiBinding Converter="{StaticResource MultiCommandParameterConverter}">
-															<Binding />
-															<Binding Path="SelectedItems"
-																	 RelativeSource="{RelativeSource AncestorType=DataGrid}" />
-														</MultiBinding>
-													</CheckBox.CommandParameter>
-												</CheckBox>
-											</DataTemplate>
-										</DataGridTemplateColumn.CellTemplate>
-									</DataGridTemplateColumn>
-
-									<!--Locked-->
-									<DataGridTemplateColumn CanUserResize="False"
-															CellStyleClasses="CenterAlignedCell">
-										<DataGridTemplateColumn.CellTemplate>
-											<DataTemplate>
-												<TextBlock Classes="icon"
-														   IsVisible="{Binding IsLocked}"
-														   Text="{StaticResource Lock}">
-													<ToolTip.Tip>
-														<TextBlock Text="{x:Static res:Resources.LockIconToolTip}" />
-													</ToolTip.Tip>
-												</TextBlock>
-											</DataTemplate>
-										</DataGridTemplateColumn.CellTemplate>
-									</DataGridTemplateColumn>
-
-									<!--Name-->
-									<DataGridTemplateColumn Header="File"
-															Width="296">
-										<DataGridTemplateColumn.CellTemplate>
-											<DataTemplate>
-												<Grid Margin="12 0">
-													<Grid.ColumnDefinitions>
-														<ColumnDefinition Width="auto" />
-														<ColumnDefinition Width="*" />
-													</Grid.ColumnDefinitions>
-
-													<Image Classes="listbox-file-icon"
-														   IsVisible="{Binding FileIcon, Converter={StaticResource NullToFalseConverter}}"
-														   Source="{Binding FileIcon}" />
-
-													<TextBlock Classes="icon listbox-file-icon"
-															   IsVisible="{Binding FileIcon, Converter={StaticResource NullToTrueConverter}}"
-															   Text="{StaticResource File}" />
-
-													<TextBlock Grid.Column="1"
-															   VerticalAlignment="Center"
-															   Text="{Binding Name}" />
-												</Grid>
-											</DataTemplate>
-										</DataGridTemplateColumn.CellTemplate>
-									</DataGridTemplateColumn>
-
-									<!--Type-->
-									<DataGridTextColumn Header="Type"
-														Width="160"
-														Binding="{Binding Type}" />
-
-									<!--Size-->
-									<DataGridTextColumn Header="Size"
-														CellStyleClasses="RightAlignedCell"
-														Width="96"
-														Binding="{Binding Length, Mode=OneWay, Converter={StaticResource LengthToStringConverter}}" />
-
-									<!--Modified-->
-									<DataGridTextColumn Header="Modified"
-														Width="208"
-														Binding="{Binding Modified}" />
-
-									<!--Created-->
-									<DataGridTextColumn Header="Created"
-														Width="208"
-														Binding="{Binding Created}" />
-
-									<!--Location-->
-									<DataGridTextColumn Header="Location"
-														Width="400"
-														Binding="{Binding DirectoryName}" />
-
-									<!--Group-->
-									<DataGridTextColumn Header="Group"
-														CellStyleClasses="RightAlignedCell"
-														Width="80"
-														IsReadOnly="True"
-														Binding="{Binding Group}" />
-								</DataGrid.Columns>
-							</DataGrid>
-
-							<GridSplitter Grid.Row="1"
-										  Height="1"
-										  VerticalAlignment="Stretch"
-										  ShowsPreview="True"
-										  IsVisible="{Binding ShowFindWithinSearchResultsPane}" />
-
-							<!--Find-->
-							<Border Grid.Row="2"
-									BorderThickness="1"
-									BorderBrush="{DynamicResource AppFindPaneTitleBarBackgroundBrush}"
-									IsVisible="{Binding ShowFindWithinSearchResultsPane}">
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="auto"/>
-										<RowDefinition Height="auto"/>
-										<RowDefinition Height="*"/>
-									</Grid.RowDefinitions>
-
-									<Border Padding="8"
-											Background="{DynamicResource AppFindPaneTitleBarBackgroundBrush}" >
-										<Grid>
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="*" />
-												<ColumnDefinition Width="auto" />
-											</Grid.ColumnDefinitions>
-
-											<TextBlock Text="Find" />
-
-											<Button Grid.Column="1"
-													Margin="0"
-													Padding="0"
-													HorizontalContentAlignment="Center"
-													VerticalContentAlignment="Center"
-													Background="Transparent"
-													ToolTip.Tip="Hide"
-													Command="{Binding HideFindWithinSearchResultsPaneCommand}">
-												<Button.Content>
-													<TextBlock Classes="icon"
-															   Text="{StaticResource XMark}" />
-												</Button.Content>
-											</Button>
-										</Grid>
-									</Border>
-
-									<Grid Grid.Row="1"
-										  Margin="8">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="*" />
-											<ColumnDefinition Width="4" />
-											<ColumnDefinition Width="auto" />
-										</Grid.ColumnDefinitions>
-
-										<!--Look For-->
-										<TextBox x:Name="LookForTextBox"
-												 VerticalAlignment="Stretch"
-												 VerticalContentAlignment="Center"
-												 Watermark="Look for..."
-												 Text="{Binding FindWithinSearchResultsLookFor, Mode=TwoWay}">
-											<TextBox.KeyBindings>
-												<KeyBinding Gesture="Enter"
-															Command="{Binding FindWithinSearchResultsCommand}" />
-											</TextBox.KeyBindings>
-										</TextBox>
-
-										<StackPanel Grid.Column="2"
-													Orientation="Horizontal"
-													Spacing="4">
-											<StackPanel.Styles>
-												<Style Selector="Button,ToggleButton">
-													<Setter Property="MinWidth"
-															Value="30" />
-													<Setter Property="Height"
-															Value="27" />
-													<Setter Property="HorizontalContentAlignment"
-															Value="Center" />
-													<Setter Property="VerticalContentAlignment"
-															Value="Center" />
-												</Style>
-											</StackPanel.Styles>
-
-											<!--Use Regex-->
-											<ToggleButton ToolTip.Tip="Use Regular Expressions"
-														  Content=".*" />
-
-											<!--Find-->
-											<Button ToolTip.Tip="Find"
-													Command="{Binding FindWithinSearchResultsCommand}" >
-												<Button.Content>
-													<TextBlock Classes="icon"
-															   Text="{StaticResource MagnifyingGlass}" />
-												</Button.Content>
-											</Button>
-
-											<!--Clear-->
-											<Button Content="Clear"
-													Command="{Binding ClearFindWithinSearchResultsItemsCommand}" />
-										</StackPanel>
-									</Grid>
-
-									<!--Look For Results Grid-->
-									<DataGrid x:Name="FindWithSearchResultsDataGrid"
-											  Grid.Row="2"
-											  Margin="8 0"
-											  IsReadOnly="True"
-											  SelectedItem="{Binding SelectedFindWithinSearchResultsItem, Mode=TwoWay}"
-											  ItemsSource="{Binding FindWithinSearchResultsItems}">
-										<DataGrid.Columns>
-											<!--File-->
-											<DataGridTextColumn Header="File"
-																Width="256"
-																Binding="{Binding Name}" />
-
-											<!--Location-->
-											<DataGridTextColumn Header="Location"
-																Width="512"
-																Binding="{Binding FullName}" />
-
-											<!--Group-->
-											<DataGridTextColumn Header="Group"
-																Width="96"
-																Binding="{Binding Group}" />
-										</DataGrid.Columns>
-									</DataGrid>
-								</Grid>
-							</Border>
-						</Grid>
-
-						<GridSplitter Grid.Column="1"
-									  Width="1"
-									  HorizontalAlignment="Stretch"
-									  ShowsPreview="True"
-									  IsVisible="{Binding ShowPreview}" />
-
-						<!--Preview Pane-->
-						<Border Grid.Column="2"
-								BorderThickness="1"
-								BorderBrush="{DynamicResource AppBorderBrush}"
-								IsVisible="{Binding ShowPreview}">
-							<Grid>
-								<Image Source="{Binding PreviewImage}" />
-
-								<TextBlock TextAlignment="Center"
-										   VerticalAlignment="Center"
-										   Text="Preview"
-										   IsVisible="{Binding PreviewImage, Converter={StaticResource NullToTrueConverter}}"
-										   Foreground="{DynamicResource AppPreviewPaneWatermarkBrush}" />
-							</Grid>
-						</Border>
-					</Grid>
-				</Grid>
-			</TabItem>
-		</TabControl>
-
-		<!--Status Bar-->
-		<Border Grid.Row="2"
-				BorderBrush="{DynamicResource AppBorderBrush}"
-				BorderThickness="0 1 0 0">
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="8" />
-					<ColumnDefinition Width="auto" />
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="auto" />
-					<ColumnDefinition MinWidth="64"
-									  Width="auto" />
-					<ColumnDefinition Width="auto" />
-					<ColumnDefinition MinWidth="64"
-									  Width="auto" />
-					<ColumnDefinition Width="auto" />
-					<ColumnDefinition MinWidth="64"
-									  Width="auto" />
-					<ColumnDefinition Width="auto" />
-					<ColumnDefinition Width="auto" />
-					<ColumnDefinition Width="8" />
-				</Grid.ColumnDefinitions>
-
-				<Grid.RowDefinitions>
-					<RowDefinition Height="4" />
-					<RowDefinition Height="auto" />
-					<RowDefinition Height="8" />
-				</Grid.RowDefinitions>
-
-				<Grid.Styles>
-					<Style Selector="Rectangle">
-						<Setter Property="Margin"
-								Value="8 0" />
-					</Style>
-
-					<Style Selector="TextBlock">
-						<Setter Property="VerticalAlignment"
-								Value="Center" />
-
-						<Setter Property="TextTrimming"
-								Value="CharacterEllipsis" />
-					</Style>
-
-					<Style Selector="Rectangle">
-						<Setter Property="Width"
-								Value="1" />
-
-						<Setter Property="VerticalAlignment"
-								Value="Stretch" />
-
-						<Setter Property="Fill"
-								Value="{DynamicResource AppBorderBrush}" />
-					</Style>
-
-					<Style Selector="ProgressBar[Value=0]">
-						<Setter Property="IsIndeterminate"
-								Value="True" />
-					</Style>
-				</Grid.Styles>
-
-				<!--Stop Button-->
-				<Button Grid.Row="1"
-						Grid.Column="1"
-						Margin="0 0 4 0"
-						Padding="0"
-						BorderThickness="0"
-						ToolTip.Tip="Cancel"
-						Background="{DynamicResource AppCancelOperationButtonBackgroundBrush}"
-						Foreground="{DynamicResource AppCancelOperationButtonForegroundBrush}"
-						IsVisible="{Binding OperationCanBeCanceled}"
-						Command="{Binding CancelOperationCommand}">
-					<Button.Content>
-						<TextBlock Classes="icon regular"
-								   Text="{StaticResource CircleStop}" />
-					</Button.Content>
-				</Button>
-
-				<!--Primary Status-->
-				<TextBlock x:Name="PrimaryStatusTextBlock"
-						   Grid.Row="1"
-						   Grid.Column="2"
-						   Text="{Binding PrimaryStatus}" />
-
-				<Rectangle Grid.RowSpan="3"
-						   Grid.Column="3" />
-
-				<!--Secondary Status-->
-				<TextBlock Grid.Row="1"
-						   Grid.Column="4"
-						   IsVisible="{Binding SecondaryStatus, Converter={StaticResource EmptyStringToFalseConverter}}"
-						   Text="{Binding SecondaryStatus}" />
-
-				<Rectangle Grid.RowSpan="3"
-						   Grid.Column="5" />
-
-				<!--Tertiary Status-->
-				<TextBlock Grid.Row="1"
-						   Grid.Column="6"
-						   IsVisible="{Binding TertiaryStatus, Converter={StaticResource EmptyStringToFalseConverter}}"
-						   Text="{Binding TertiaryStatus}" />
-
-				<Rectangle Grid.RowSpan="3"
-						   Grid.Column="7" />
-
-				<!--Quaternary Status-->
-				<TextBlock x:Name="QuaternaryStatusTextBlock"
-						   Grid.Row="1"
-						   Grid.Column="8"
-						   IsVisible="{Binding QuaternaryStatus, Converter={StaticResource EmptyStringToFalseConverter}}"
-						   Text="{Binding QuaternaryStatus}" />
-
-				<Rectangle Grid.RowSpan="3"
-						   Grid.Column="9"
-						   IsVisible="{Binding Path=IsVisible, ElementName=StatusBarProgressBar}" />
-
-				<!--ProgressBar-->
-				<ProgressBar x:Name="StatusBarProgressBar"
-							 Grid.Row="1"
-							 Grid.Column="10"
-							 Width="112"
-							 MinWidth="112"
-							 IsVisible="{Binding IsBusy}"
-							 Value="{Binding Progress}" />
-			</Grid>
-		</Border>
-	</Grid>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ic="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:ie="using:Avalonia.Xaml.Interactions.Events"
+             xmlns:vm="clr-namespace:DupeClear.ViewModels"
+             xmlns:conv="clr-namespace:DupeClear.Converters;assembly=DupeClear"
+             xmlns:models="clr-namespace:DupeClear.Models;assembly=DupeClear"
+             xmlns:res="clr-namespace:DupeClear.Resources;assembly=DupeClear"
+             mc:Ignorable="d"
+             d:DesignWidth="900"
+             d:DesignHeight="600"
+             x:Class="DupeClear.Views.MainView"
+             x:DataType="vm:MainViewModel"
+             x:Name="MainUserControl"
+             Loaded="UserControl_Loaded"
+             DataContextChanged="UserControl_DataContextChanged">
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <UserControl.Resources>
+        <conv:AllTrueToTrueConverter x:Key="AllTrueToTrueConverter" />
+        <conv:BoolToInvertedBoolConverter x:Key="BoolToInvertedBoolConverter" />
+        <conv:BytesToKilobytesConverter x:Key="BytesToKilobytesConverter" />
+        <conv:DeletedToGreyForegroundConverter x:Key="DeletedToGreyForegroundConverter" />
+        <conv:TrueToStrikethroughConverter x:Key="TrueToStrikethroughConverter" />
+        <conv:EmptyStringToTrueConverter x:Key="EmptyStringToFalseConverter"
+                                         Inverted="True" />
+        <conv:DuplicateFileGroupToRowBGConverter x:Key="DuplicateFileGroupToRowBGConverter" />
+        <conv:IntToGridLengthConverter x:Key="IntToGridLengthConverter" />
+        <conv:IntToTrueConverter x:Key="IntToTrueConverter" />
+        <conv:LengthToStringConverter x:Key="LengthToStringConverter" />
+        <conv:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
+        <conv:NullToTrueConverter x:Key="NullToTrueConverter" />
+        <conv:NullToTrueConverter x:Key="NullToFalseConverter"
+                                  Inverted="True" />
+        <conv:OneTrueToTrueConverter x:Key="OneTrueToTrueConverter" />
+
+        <system:Int32 x:Key="IntOne">1</system:Int32>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="Button,DropDownButton">
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+        </Style>
+
+        <Style Selector="TextBlock.icon">
+            <Setter Property="FontFamily"
+                    Value="{StaticResource FontAwesomeSolid}" />
+
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+
+            <Style Selector="^.regular">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource FontAwesomeRegular}" />
+            </Style>
+        </Style>
+
+        <Style Selector="MenuItem:disabled TextBlock.icon">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource AppMenuItemIconDisabledBrush}" />
+        </Style>
+
+        <Style Selector="Image.listbox-file-icon,TextBlock.listbox-file-icon">
+            <Setter Property="Margin"
+                    Value="0 0 4 0" />
+        </Style>
+
+        <Style Selector="Image.listbox-file-icon">
+            <Setter Property="Width"
+                    Value="16" />
+            <Setter Property="Height"
+                    Value="16" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+        </Style>
+
+        <Style Selector="TextBlock.listbox-file-icon">
+            <Setter Property="FontSize"
+                    Value="16" />
+        </Style>
+    </UserControl.Styles>
+
+    <UserControl.KeyBindings>
+        <KeyBinding Gesture="Ctrl+F5"
+                    Command="{Binding SearchCommand}" />
+    </UserControl.KeyBindings>
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <!--Title Bar-->
+        <Grid x:Name="WindowsTitleBar"
+              Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--Icon-->
+            <Image x:Name="AppIconImage"
+                   Width="24"
+                   Height="24"
+                   RenderOptions.BitmapInterpolationMode="HighQuality"
+                   Source="avares://DupeClear/Assets/Icons/DupeClear.ico" />
+
+            <!--Title-->
+            <TextBlock x:Name="AppTitleTextBlock"
+                       Grid.Column="2"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource AppTitleBarForegroundBrush}"
+                       Text="Dupe Clear" />
+
+            <!--Main Menu-->
+            <Menu Grid.Column="4"
+                  VerticalAlignment="Center">
+                <!--File-->
+                <MenuItem Header="_File"
+                          CornerRadius="8">
+                    <!--Theme-->
+                    <MenuItem Header="_Theme">
+                        <!--Auto-->
+                        <MenuItem Header="_Auto"
+                                  Command="{Binding ChangeThemeCommand}"
+                                  CommandParameter="{x:Static models:Theme.Auto}">
+                            <MenuItem.Icon>
+                                <TextBlock Classes="icon"
+                                           IsVisible="{Binding Theme, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:Theme.Auto}}"
+                                           Text="{StaticResource CircleCheck}" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <!--Light-->
+                        <MenuItem Header="_Light"
+                                  Command="{Binding ChangeThemeCommand}"
+                                  CommandParameter="{x:Static models:Theme.Light}">
+                            <MenuItem.Icon>
+                                <TextBlock Classes="icon"
+                                           IsVisible="{Binding Theme, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:Theme.Light}}"
+                                           Text="{StaticResource CircleCheck}" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <!--Dark-->
+                        <MenuItem Header="_Dark"
+                                  Command="{Binding ChangeThemeCommand}"
+                                  CommandParameter="{x:Static models:Theme.Dark}">
+                            <MenuItem.Icon>
+                                <TextBlock Classes="icon"
+                                           IsVisible="{Binding Theme, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:Theme.Dark}}"
+                                           Text="{StaticResource CircleCheck}" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <!--Exit-->
+                    <MenuItem Header="E_xit"
+                              Command="{Binding CloseCommand}">
+                        <MenuItem.Icon>
+                            <TextBlock Classes="icon"
+                                       Text="{StaticResource XMark}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+
+                <!--Help-->
+                <MenuItem Header="_Help"
+                          CornerRadius="8">
+                    <!--Check For Updates-->
+                    <MenuItem Header="_Check For Updates"
+                              Command="{Binding CheckForUpdatesCommand}">
+                        <MenuItem.Icon>
+                            <TextBlock Classes="icon"
+                                       Text="{StaticResource Download}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <!--About-->
+                    <MenuItem Header="_About"
+                              Command="{Binding ShowAboutCommand}" />
+                </MenuItem>
+            </Menu>
+        </Grid>
+
+        <TabControl x:Name="MainTabControl"
+                    Grid.Row="1"
+                    Margin="8"
+                    Padding="8">
+            <!--Locations-->
+            <TabItem Header="Locations">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="16" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+
+                        <!--Search Location ListBox-->
+                        <ListBox x:Name="IncludedDirectoriesListBox"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                 DragDrop.AllowDrop="True"
+                                 SelectionMode="Multiple"
+                                 SelectedItem="{Binding SelectedIncludedDirectory, Mode=TwoWay}"
+                                 SelectedItems="{Binding SelectedIncludedDirectories}"
+                                 ItemsSource="{Binding IncludedDirectories}"
+                                 DoubleTapped="IncludedDirectoriesListBox_DoubleTapped">
+                            <ListBox.KeyBindings>
+                                <KeyBinding Gesture="Space"
+                                            Command="{Binding InvertMakingOfSelectedIncludedDirectoryCommand}" />
+
+                                <KeyBinding Gesture="Delete"
+                                            Command="{Binding RemoveIncludedDirectoryCommand}" />
+                            </ListBox.KeyBindings>
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="4" />
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="4" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <CheckBox x:Name="IncludedDirectoryCheckBox"
+                                                  Grid.Column="1"
+                                                  Focusable="False"
+                                                  IsEnabled="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                                  IsChecked="{Binding IsMarked, Mode=TwoWay}"
+                                                  Command="{Binding DataContext.ApplyMarkingToSelectedIncludedDirectoriesCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                  CommandParameter="{Binding}"
+                                                  Click="IncludedDirectoryCheckBox_Click" />
+
+                                        <Image Grid.Column="2"
+                                               Classes="listbox-file-icon"
+                                               IsVisible="{Binding FolderIcon, Converter={StaticResource NullToFalseConverter}}"
+                                               Source="{Binding FolderIcon}" />
+
+                                        <TextBlock Grid.Column="2"
+                                                   Classes="icon listbox-file-icon"
+                                                   IsVisible="{Binding FolderIcon, Converter={StaticResource NullToTrueConverter}}"
+                                                   Text="{StaticResource Folder}" />
+
+                                        <TextBlock Grid.Column="3"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding FullName}" />
+
+                                        <TextBlock Grid.Column="4"
+                                                   Classes="icon"
+                                                   Margin="2 0"
+                                                   ToolTip.Tip="Folder excluded from search"
+                                                   IsVisible="{Binding IsExcluded}"
+                                                   Text="{StaticResource TriangleExclamation}" />
+
+                                        <StackPanel Grid.Column="6"
+                                                    Orientation="Horizontal">
+                                            <!--Up-->
+                                            <Button IsVisible="{Binding IsPointerOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                    Command="{Binding DataContext.MoveDirectoryUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}">
+                                                <Button.Content>
+                                                    <TextBlock Classes="icon"
+                                                               Text="{StaticResource ArrowUp}" />
+                                                </Button.Content>
+                                            </Button>
+
+                                            <!--Down-->
+                                            <Button IsVisible="{Binding IsPointerOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                    Command="{Binding DataContext.MoveDirectoryDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}">
+                                                <Button.Content>
+                                                    <TextBlock Classes="icon"
+                                                               Text="{StaticResource ArrowDown}" />
+                                                </Button.Content>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <Border Grid.Row="2"
+                                Padding="8"
+                                CornerRadius="4"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource AppBorderBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="8" />
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+
+                                <!--Search Location CheckBoxes-->
+                                <WrapPanel>
+                                    <!--Match Same Filename-->
+                                    <CheckBox x:Name="MatchSameFileNameCheckBox"
+                                              Margin="0 0 12 0"
+                                              IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                              IsChecked="{Binding MatchSameFileName, Mode=TwoWay}"
+                                              Content="Match Same Fi_lename" />
+
+                                    <!--Match Same Contents-->
+                                    <StackPanel Margin="0 0 12 0"
+                                                Orientation="Horizontal"
+                                                Spacing="4">
+                                        <CheckBox ToolTip.Tip="{x:Static res:Resources.MatchSameContentsToolTip}"
+                                                  IsChecked="{Binding MatchSameContents, Mode=TwoWay}"
+                                                  Content="Match Same _Contents">
+                                            <CheckBox.IsEnabled>
+                                                <MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+                                                    <Binding Path="IsBusy"
+                                                             Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                    <Binding Path="IsChecked"
+                                                             ElementName="MatchSameSizeCheckBox" />
+                                                </MultiBinding>
+                                            </CheckBox.IsEnabled>
+                                        </CheckBox>
+
+                                        <TextBlock Classes="icon"
+                                                   ToolTip.Tip="{x:Static res:Resources.MatchSameContentsToolTip}"
+                                                   Text="{StaticResource CircleInfo}" />
+                                    </StackPanel>
+
+                                    <!--Match Same Type-->
+                                    <CheckBox Margin="0 0 12 0"
+                                              IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                              IsChecked="{Binding MatchSameType, Mode=TwoWay}"
+                                              Content="Match Same T_ype" />
+
+                                    <!--Match Same Size-->
+                                    <CheckBox Margin="0 0 12 0"
+                                              x:Name="MatchSameSizeCheckBox"
+                                              IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                              IsChecked="{Binding MatchSameSize, Mode=TwoWay}"
+                                              Content="Match Same Si_ze" />
+
+                                    <!--Match Across Folders-->
+                                    <CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                              IsChecked="{Binding MatchAcrossDirectories, Mode=TwoWay}"
+                                              Content="Match Across F_olders" />
+                                </WrapPanel>
+
+                                <!--Additional Options-->
+                                <Expander Grid.Row="2"
+                                          Header="Additional Options"
+                                          HorizontalAlignment="Stretch"
+                                          BorderBrush="{DynamicResource AppBorderBrush}"
+                                          BorderThickness="1"
+                                          IsExpanded="{Binding AdditionalOptionsExpanded, Mode=TwoWay}">
+                                    <Grid Grid.IsSharedSizeScope="True">
+                                        <StackPanel Spacing="8">
+                                            <!--Filename Pattern-->
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"
+                                                                      SharedSizeGroup="LabelGroup" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="4" />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label VerticalAlignment="Center"
+                                                       Target="FilenamePatternBox"
+                                                       Content="Filename _Pattern:" />
+
+                                                <AutoCompleteBox x:Name="FilenamePatternBox"
+                                                                 Grid.Column="2"
+                                                                 ToolTip.Tip="{x:Static res:Resources.FileNamePatternToolTip}"
+                                                                 ItemsSource="{Binding SavedFileNamePatterns}"
+                                                                 Text="{Binding FileNamePattern, Mode=TwoWay}">
+                                                    <AutoCompleteBox.IsEnabled>
+                                                        <MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+                                                            <Binding Path="IsBusy"
+                                                                     Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                            <Binding Path="IsChecked"
+                                                                     ElementName="MatchSameFileNameCheckBox" />
+                                                        </MultiBinding>
+                                                    </AutoCompleteBox.IsEnabled>
+                                                </AutoCompleteBox>
+
+                                                <TextBlock Grid.Column="4"
+                                                           Classes="icon"
+                                                           ToolTip.Tip="{x:Static res:Resources.FileNamePatternToolTip}"
+                                                           Text="{StaticResource CircleInfo}" />
+                                            </Grid>
+
+                                            <!--Extensions-->
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"
+                                                                      SharedSizeGroup="LabelGroup" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="4" />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label VerticalAlignment="Center"
+                                                       Target="IncludedExtensionsBox"
+                                                       Content="_Extensions:" />
+
+                                                <AutoCompleteBox x:Name="IncludedExtensionsBox"
+                                                                 Grid.Column="2"
+                                                                 ToolTip.Tip="{x:Static res:Resources.IncludedExtensionsToolTip}"
+                                                                 IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                                                 ItemsSource="{Binding SavedIncludedExtensions}"
+                                                                 Text="{Binding IncludedExtensions, Mode=TwoWay}" />
+
+                                                <TextBlock Grid.Column="4"
+                                                           Classes="icon"
+                                                           ToolTip.Tip="{x:Static res:Resources.IncludedExtensionsToolTip}"
+                                                           Text="{StaticResource CircleInfo}" />
+                                            </Grid>
+
+                                            <!--Minimum Size-->
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"
+                                                                      SharedSizeGroup="LabelGroup" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label VerticalAlignment="Center"
+                                                       Target="MinSizeBox"
+                                                       Content="Mi_nimum Size:" />
+
+                                                <NumericUpDown x:Name="MinSizeBox"
+                                                               Grid.Column="2"
+                                                               MinWidth="128"
+                                                               TextAlignment="Right"
+                                                               FormatString="N0"
+                                                               Maximum="9223372036854775807"
+                                                               Minimum="0"
+                                                               IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                                               Value="{Binding MinimumFileLength, Mode=TwoWay, Converter={StaticResource BytesToKilobytesConverter}}" />
+
+                                                <TextBlock Grid.Column="4"
+                                                           VerticalAlignment="Center"
+                                                           Text="KB" />
+                                            </Grid>
+
+                                            <!--Date Created-->
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"
+                                                                      SharedSizeGroup="LabelGroup" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="16" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <CheckBox x:Name="DateCreatedCheckBox"
+                                                          VerticalAlignment="Center"
+                                                          IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                                          IsChecked="{Binding MatchDateCreated, Mode=TwoWay}"
+                                                          Content="Da_te Created:" />
+
+                                                <!--From-->
+                                                <Label Grid.Column="2"
+                                                       VerticalAlignment="Center"
+                                                       Content="From" />
+
+                                                <CalendarDatePicker x:Name="DateCreatedFromDatePicker"
+                                                                    Grid.Column="4"
+                                                                    SelectedDate="{Binding DateCreatedFrom, Mode=TwoWay}">
+                                                    <CalendarDatePicker.IsEnabled>
+                                                        <MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+                                                            <Binding Path="IsChecked"
+                                                                     ElementName="DateCreatedCheckBox" />
+                                                            <Binding Path="IsBusy"
+                                                                     Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                        </MultiBinding>
+                                                    </CalendarDatePicker.IsEnabled>
+                                                </CalendarDatePicker>
+
+                                                <!--To-->
+                                                <Label Grid.Column="6"
+                                                       VerticalAlignment="Center"
+                                                       Content="To" />
+
+                                                <CalendarDatePicker Grid.Column="8"
+                                                                    SelectedDate="{Binding DateCreatedTo, Mode=TwoWay}">
+                                                    <CalendarDatePicker.IsEnabled>
+                                                        <MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+                                                            <Binding Path="IsChecked"
+                                                                     ElementName="DateCreatedCheckBox" />
+                                                            <Binding Path="IsBusy"
+                                                                     Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                        </MultiBinding>
+                                                    </CalendarDatePicker.IsEnabled>
+                                                </CalendarDatePicker>
+
+                                                <TextBlock Grid.Column="10"
+                                                           Classes="icon"
+                                                           ToolTip.Tip="{x:Static res:Resources.DateCreatedToolTip}"
+                                                           Text="{StaticResource CircleInfo}" />
+                                            </Grid>
+
+                                            <!--Date Modified-->
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"
+                                                                      SharedSizeGroup="LabelGroup" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="16" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <CheckBox x:Name="DateModifiedCheckBox"
+                                                          VerticalAlignment="Center"
+                                                          IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                                          IsChecked="{Binding MatchDateModified, Mode=TwoWay}"
+                                                          Content="Date _Modified:" />
+
+                                                <!--From-->
+                                                <Label Grid.Column="2"
+                                                       VerticalAlignment="Center"
+                                                       Content="From" />
+
+                                                <CalendarDatePicker Grid.Column="4"
+                                                                    SelectedDate="{Binding DateModifiedFrom, Mode=TwoWay}">
+                                                    <CalendarDatePicker.IsEnabled>
+                                                        <MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+                                                            <Binding Path="IsChecked"
+                                                                     ElementName="DateModifiedCheckBox" />
+                                                            <Binding Path="IsBusy"
+                                                                     Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                        </MultiBinding>
+                                                    </CalendarDatePicker.IsEnabled>
+                                                </CalendarDatePicker>
+
+                                                <!--To-->
+                                                <Label Grid.Row="2"
+                                                       Grid.Column="6"
+                                                       VerticalAlignment="Center"
+                                                       Content="To" />
+
+                                                <CalendarDatePicker Grid.Column="8"
+                                                                    SelectedDate="{Binding DateModifiedTo, Mode=TwoWay}">
+                                                    <CalendarDatePicker.IsEnabled>
+                                                        <MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+                                                            <Binding Path="IsChecked"
+                                                                     ElementName="DateModifiedCheckBox" />
+                                                            <Binding Path="IsBusy"
+                                                                     Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                        </MultiBinding>
+                                                    </CalendarDatePicker.IsEnabled>
+                                                </CalendarDatePicker>
+
+                                                <TextBlock Grid.Column="10"
+                                                           Classes="icon"
+                                                           ToolTip.Tip="{x:Static res:Resources.DateModifiedToolTip}"
+                                                           Text="{StaticResource CircleInfo}" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </Expander>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <!--Search Location Buttons-->
+                    <StackPanel Grid.RowSpan="3"
+                                Grid.Column="2"
+                                Spacing="4">
+                        <StackPanel.Styles>
+                            <Style Selector="Button">
+                                <Setter Property="Width"
+                                        Value="160" />
+                            </Style>
+                        </StackPanel.Styles>
+
+                        <!--Add Folder-->
+                        <Button Content="_Add Folder"
+                                Command="{Binding AddDirectoryForInclusionCommand}" />
+
+                        <!--Remove Folder-->
+                        <Button Content="_Remove Folder"
+                                Command="{Binding RemoveIncludedDirectoryCommand}" />
+
+                        <!--Include Subfolders-->
+                        <CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                  IsChecked="{Binding IncludeSubdirectories, Mode=TwoWay}"
+                                  Content="_Include Subfolders" />
+
+                        <Border Height="32" />
+
+                        <!--START-->
+                        <Button Background="{DynamicResource AppStartButtonBackgroundBrush}"
+                                Foreground="{DynamicResource AppStartButtonForegroundBrush}"
+                                FontWeight="Bold"
+                                Content="_START"
+                                Command="{Binding SearchCommand}" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!--Exclusions-->
+            <TabItem Header="Exclusions">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="16" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--Exclusion ListBox-->
+                    <ListBox x:Name="ExcludedDirectoriesListBox"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             DragDrop.AllowDrop="True"
+                             SelectionMode="Multiple"
+                             SelectedItem="{Binding SelectedExcludedDirectory, Mode=TwoWay}"
+                             SelectedItems="{Binding SelectedExcludedDirectories}"
+                             ItemsSource="{Binding ExcludedDirectories}"
+                             DoubleTapped="ExcludedDirectoriesListBox_DoubleTapped">
+                        <ListBox.KeyBindings>
+                            <KeyBinding Gesture="Space"
+                                        Command="{Binding InvertMakingOfSelectedExcludedDirectoryCommand}" />
+
+                            <KeyBinding Gesture="Delete"
+                                        Command="{Binding RemoveExcludedDirectoryCommand}" />
+                        </ListBox.KeyBindings>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox x:Name="ExcludedDirectoryCheckBox"
+                                              Grid.Column="1"
+                                              Focusable="False"
+                                              IsEnabled="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                              IsChecked="{Binding IsMarked, Mode=TwoWay}"
+                                              Command="{Binding DataContext.ApplyMarkingToSelectedExcludedDirectoriesCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                              CommandParameter="{Binding}"
+                                              Click="ExcludedDirectoryCheckBox_Click" />
+
+                                    <Image Grid.Column="2"
+                                           Classes="listbox-file-icon"
+                                           VerticalAlignment="Center"
+                                           IsVisible="{Binding FolderIcon, Converter={StaticResource NullToFalseConverter}}"
+                                           Source="{Binding FolderIcon}" />
+
+                                    <TextBlock Grid.Column="2"
+                                               Classes="icon listbox-file-icon"
+                                               IsVisible="{Binding FolderIcon, Converter={StaticResource NullToTrueConverter}}"
+                                               Text="{StaticResource Folder}" />
+
+                                    <TextBlock Grid.Column="3"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding FullName}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Border Grid.Row="2"
+                            Padding="8"
+                            CornerRadius="4"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource AppBorderBrush}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="8" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--Exclusion CheckBoxes-->
+                            <WrapPanel>
+                                <WrapPanel.Styles>
+                                    <Style Selector="CheckBox">
+                                        <Setter Property="Margin"
+                                                Value="0 0 8 0" />
+                                    </Style>
+                                </WrapPanel.Styles>
+
+                                <!--Exclude System Files-->
+                                <CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                          IsChecked="{Binding ExcludeSystemFiles, Mode=TwoWay}"
+                                          Content="_Exclude System Files (Recommended)" />
+
+                                <!--Exclude Hidden Files-->
+                                <CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                          IsChecked="{Binding ExcludeHiddenFiles, Mode=TwoWay}"
+                                          Content="E_xclude Hidden Files" />
+                            </WrapPanel>
+
+                            <!--Exclude Extensions-->
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="4" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="4" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label VerticalAlignment="Center"
+                                       Target="ExcludeExtensionsBox"
+                                       Content="Ex_clude Extensions:" />
+
+                                <AutoCompleteBox x:Name="ExcludeExtensionsBox"
+                                                 Grid.Column="2"
+                                                 ToolTip.Tip="{x:Static res:Resources.ExcludedExtensionsToolTip}"
+                                                 IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                                 ItemsSource="{Binding SavedExcludedExtensions}"
+                                                 Text="{Binding ExcludedExtensions, Mode=TwoWay}" />
+
+                                <TextBlock Grid.Column="4"
+                                           Classes="icon"
+                                           ToolTip.Tip="{x:Static res:Resources.ExcludedExtensionsToolTip}"
+                                           Text="{StaticResource CircleInfo}" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <!--Exclusion Buttons-->
+                    <StackPanel Grid.RowSpan="3"
+                                Grid.Column="2"
+                                Spacing="4">
+                        <StackPanel.Styles>
+                            <Style Selector="Button">
+                                <Setter Property="Width"
+                                        Value="160" />
+                            </Style>
+                        </StackPanel.Styles>
+
+                        <!--Add Folder-->
+                        <Button Content="_Add Folder"
+                                Command="{Binding AddDirectoryForExclusionCommand}" />
+
+                        <!--Remove Folder-->
+                        <Button Content="_Remove Folder"
+                                Command="{Binding RemoveExcludedDirectoryCommand}" />
+
+                        <!--Include Subfolders-->
+                        <CheckBox IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                  IsChecked="{Binding ExcludeSubdirectories, Mode=TwoWay}"
+                                  Content="_Include Subfolders" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!--Search Results-->
+            <TabItem Header="Search Results">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="8" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--ToolBar-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.Styles>
+                            <Style Selector="Button,DropDownButton,ToggleButton">
+                                <Setter Property="Height"
+                                        Value="32" />
+                                <Setter Property="VerticalContentAlignment"
+                                        Value="Center" />
+                            </Style>
+
+                            <Style Selector="Rectangle">
+                                <Setter Property="Margin"
+                                        Value="4 0" />
+                                <Setter Property="Width"
+                                        Value="1" />
+                                <Setter Property="Fill"
+                                        Value="{DynamicResource AppBorderBrush}" />
+                            </Style>
+                        </Grid.Styles>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="4">
+                            <StackPanel.Styles>
+                                <Style Selector="Button,DropDownButton,ToggleButton">
+                                    <Setter Property="Height"
+                                            Value="32" />
+                                    <Setter Property="VerticalContentAlignment"
+                                            Value="Center" />
+                                </Style>
+
+                                <Style Selector="Rectangle">
+                                    <Setter Property="Margin"
+                                            Value="4 0" />
+                                    <Setter Property="Width"
+                                            Value="1" />
+                                    <Setter Property="Fill"
+                                            Value="{DynamicResource AppBorderBrush}" />
+                                </Style>
+                            </StackPanel.Styles>
+
+                            <!--Import-->
+                            <Button ToolTip.Tip="Import"
+                                    Command="{Binding ImportCommand}">
+                                <Button.Content>
+                                    <TextBlock Classes="icon regular"
+                                               Text="{StaticResource FolderOpen}" />
+                                </Button.Content>
+                            </Button>
+
+                            <!--Export-->
+                            <Button ToolTip.Tip="Export"
+                                    Command="{Binding ExportCommand}">
+                                <Button.Content>
+                                    <TextBlock Classes="icon"
+                                               Text="{StaticResource FloppyDisk}" />
+                                </Button.Content>
+                            </Button>
+
+                            <Rectangle />
+
+                            <!--Mark-->
+                            <DropDownButton>
+                                <DropDownButton.Content>
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="4">
+                                        <TextBlock Classes="icon"
+                                                   Text="{StaticResource ListCheck}" />
+
+                                        <Label Content="_Mark" />
+                                    </StackPanel>
+                                </DropDownButton.Content>
+
+                                <DropDownButton.Flyout>
+                                    <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                        <!--By Date Created-->
+                                        <MenuItem Header="By Date _Created">
+                                            <MenuItem.Icon>
+                                                <TextBlock Classes="icon"
+                                                           Text="{StaticResource CircleCheck}">
+                                                    <TextBlock.IsVisible>
+                                                        <MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+                                                            <Binding Path="SelectedMarkingCriteria"
+                                                                     Converter="{StaticResource IntToTrueConverter}"
+                                                                     ConverterParameter="{x:Static models:MarkingCriteria.LatestCreated}" />
+                                                            <Binding Path="SelectedMarkingCriteria"
+                                                                     Converter="{StaticResource IntToTrueConverter}"
+                                                                     ConverterParameter="{x:Static models:MarkingCriteria.EarliestCreated}" />
+                                                        </MultiBinding>
+                                                    </TextBlock.IsVisible>
+                                                </TextBlock>
+                                            </MenuItem.Icon>
+
+                                            <!--Keep Earliest-->
+                                            <MenuItem Header="Keep _Oldest"
+                                                      Command="{Binding KeepEarliestCreatedCommand}">
+                                                <MenuItem.Icon>
+                                                    <TextBlock Classes="icon"
+                                                               IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.EarliestCreated}}"
+                                                               Text="{StaticResource CircleCheck}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <!--Keep Latest-->
+                                            <MenuItem Header="Keep _Newest"
+                                                      Command="{Binding KeepLatestCreatedCommand}">
+                                                <MenuItem.Icon>
+                                                    <TextBlock Classes="icon"
+                                                               IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestCreated}}"
+                                                               Text="{StaticResource CircleCheck}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </MenuItem>
+
+                                        <!--By Date Modified-->
+                                        <MenuItem Header="By Date _Modified">
+                                            <MenuItem.Icon>
+                                                <TextBlock Classes="icon"
+                                                           Text="{StaticResource CircleCheck}">
+                                                    <TextBlock.IsVisible>
+                                                        <MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+                                                            <Binding Path="SelectedMarkingCriteria"
+                                                                     Converter="{StaticResource IntToTrueConverter}"
+                                                                     ConverterParameter="{x:Static models:MarkingCriteria.LatestModified}" />
+                                                            <Binding Path="SelectedMarkingCriteria"
+                                                                     Converter="{StaticResource IntToTrueConverter}"
+                                                                     ConverterParameter="{x:Static models:MarkingCriteria.EarliestModified}" />
+                                                        </MultiBinding>
+                                                    </TextBlock.IsVisible>
+                                                </TextBlock>
+                                            </MenuItem.Icon>
+
+                                            <!--Keep Earliest-->
+                                            <MenuItem Header="Keep _Oldest"
+                                                      Command="{Binding KeepEarliestModifiedCommand}">
+                                                <MenuItem.Icon>
+                                                    <TextBlock Classes="icon"
+                                                               IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.EarliestModified}}"
+                                                               Text="{StaticResource CircleCheck}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <!--Keep Latest-->
+                                            <MenuItem Header="Keep _Newest"
+                                                      Command="{Binding KeepLatestModifiedCommand}">
+                                                <MenuItem.Icon>
+                                                    <TextBlock Classes="icon"
+                                                               IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LatestModified}}"
+                                                               Text="{StaticResource CircleCheck}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </MenuItem>
+
+                                        <!--By Letters-->
+                                        <MenuItem Header="By _Name">
+                                            <MenuItem.Icon>
+                                                <TextBlock Classes="icon"
+                                                           Text="{StaticResource CircleCheck}">
+                                                    <TextBlock.IsVisible>
+                                                        <MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+                                                            <Binding Path="SelectedMarkingCriteria"
+                                                                     Converter="{StaticResource IntToTrueConverter}"
+                                                                     ConverterParameter="{x:Static models:MarkingCriteria.MoreLetters}" />
+                                                            <Binding Path="SelectedMarkingCriteria"
+                                                                     Converter="{StaticResource IntToTrueConverter}"
+                                                                     ConverterParameter="{x:Static models:MarkingCriteria.LessLetters}" />
+                                                        </MultiBinding>
+                                                    </TextBlock.IsVisible>
+                                                </TextBlock>
+                                            </MenuItem.Icon>
+
+                                            <!--Keep More Letters-->
+                                            <MenuItem Header="Keep _More Letters"
+                                                      Command="{Binding KeepMoreLettersCommand}">
+                                                <MenuItem.Icon>
+                                                    <TextBlock Classes="icon"
+                                                               IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.MoreLetters}}"
+                                                               Text="{StaticResource CircleCheck}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <!--Keep Less Letters-->
+                                            <MenuItem Header="Keep _Less Letters"
+                                                      Command="{Binding KeepLessLettersCommand}">
+                                                <MenuItem.Icon>
+                                                    <TextBlock Classes="icon"
+                                                               IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LessLetters}}"
+                                                               Text="{StaticResource CircleCheck}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </MenuItem>
+
+                                        <!--By Size-->
+                                        <MenuItem Header="By _Size">
+                                            <MenuItem.Icon>
+                                                <TextBlock Classes="icon"
+                                                           Text="{StaticResource CircleCheck}">
+                                                    <TextBlock.IsVisible>
+                                                        <MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+                                                            <Binding Path="SelectedMarkingCriteria"
+                                                                     Converter="{StaticResource IntToTrueConverter}"
+                                                                     ConverterParameter="{x:Static models:MarkingCriteria.LargestLength}" />
+                                                            <Binding Path="SelectedMarkingCriteria"
+                                                                     Converter="{StaticResource IntToTrueConverter}"
+                                                                     ConverterParameter="{x:Static models:MarkingCriteria.SmallestLength}" />
+                                                        </MultiBinding>
+                                                    </TextBlock.IsVisible>
+                                                </TextBlock>
+                                            </MenuItem.Icon>
+
+                                            <!--Keep Largest-->
+                                            <MenuItem Header="Keep _Largest"
+                                                      Command="{Binding KeepLargestLengthCommand}">
+                                                <MenuItem.Icon>
+                                                    <TextBlock Classes="icon"
+                                                               IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.LargestLength}}"
+                                                               Text="{StaticResource CircleCheck}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <!--Keep Smallest-->
+                                            <MenuItem Header="Keep _Smallest"
+                                                      Command="{Binding KeepSmallestLengthCommand}">
+                                                <MenuItem.Icon>
+                                                    <TextBlock Classes="icon"
+                                                               IsVisible="{Binding SelectedMarkingCriteria, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static models:MarkingCriteria.SmallestLength}}"
+                                                               Text="{StaticResource CircleCheck}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </MenuItem>
+
+                                        <Separator />
+
+                                        <!--Mark All-->
+                                        <MenuItem Header="Mark _All"
+                                                  Command="{Binding MarkAllCommand}" />
+
+                                        <!--Unmark All-->
+                                        <MenuItem Header="_Unmark All"
+                                                  Command="{Binding UnmarkAllCommand}" />
+                                    </MenuFlyout>
+                                </DropDownButton.Flyout>
+                            </DropDownButton>
+
+                            <!--Delete-->
+                            <Button Background="{DynamicResource AppDeleteButtonBackgroundBrush}"
+                                    Foreground="{DynamicResource AppDeleteButtonForegroundBrush}"
+                                    Command="{Binding DeleteMarkedFilesCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="4">
+                                        <TextBlock Classes="icon regular"
+                                                   Text="{StaticResource TrashCan}" />
+                                        <Label Content="_Delete Marked Files" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2"
+                                    Orientation="Horizontal"
+                                    Spacing="4">
+                            <!--Find Toggle-->
+                            <ToggleButton ToolTip.Tip="Find"
+                                          IsChecked="{Binding ShowFindWithinSearchResultsPane, Mode=TwoWay}">
+                                <ToggleButton.Content>
+                                    <TextBlock Classes="icon"
+                                               Text="{StaticResource MagnifyingGlass}" />
+                                </ToggleButton.Content>
+                            </ToggleButton>
+
+                            <Rectangle />
+
+                            <!--Preview Switch-->
+                            <StackPanel Orientation="Horizontal">
+                                <Label VerticalAlignment="Center"
+                                       Target="PreviewToggleSwitch"
+                                       Content="_Preview" />
+
+                                <ToggleSwitch x:Name="PreviewToggleSwitch"
+                                              Margin="0"
+                                              Padding="0"
+                                              Width="40"
+                                              VerticalAlignment="Stretch"
+                                              VerticalContentAlignment="Center"
+                                              OnContent=""
+                                              OffContent=""
+                                              IsChecked="{Binding ShowPreview, Mode=TwoWay}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="{Binding PreviewPaneWidth, Mode=TwoWay, Converter={StaticResource IntToGridLengthConverter}}" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="{Binding FindWithinSearchResultsPaneHeight, Mode=TwoWay, Converter={StaticResource IntToGridLengthConverter}}" />
+                            </Grid.RowDefinitions>
+
+                            <!--Results Grid-->
+                            <DataGrid x:Name="ResultsGrid"
+                                      CanUserResizeColumns="True"
+                                      CanUserSortColumns="False"
+                                      SelectionMode="Extended"
+                                      SelectedItem="{Binding SelectedDuplicateFile, Mode=TwoWay}"
+                                      ItemsSource="{Binding DuplicateFiles}"
+                                      SelectionChanged="ResultsGrid_SelectionChanged">
+                                <DataGrid.Resources>
+                                    <ControlTheme x:Key="AlternateRowTheme"
+                                                  TargetType="DataGridRow"
+                                                  BasedOn="{StaticResource {x:Type DataGridRow}}"
+                                                  x:DataType="models:DuplicateFile">
+                                        <Setter Property="Background"
+                                                Value="{Binding Path=Group, Mode=OneWay, Converter={StaticResource DuplicateFileGroupToRowBGConverter}}" />
+                                    </ControlTheme>
+                                </DataGrid.Resources>
+
+                                <DataGrid.Styles>
+                                    <Style Selector="DataGridCell.RightAlignedCell">
+                                        <Setter Property="HorizontalAlignment"
+                                                Value="Right" />
+                                    </Style>
+
+                                    <Style Selector="DataGridCell.CenterAlignedCell">
+                                        <Setter Property="HorizontalAlignment"
+                                                Value="Center" />
+                                    </Style>
+
+                                    <Style Selector="DataGridCell TextBlock">
+                                        <Setter Property="TextTrimming"
+                                                Value="CharacterEllipsis" />
+
+                                        <Setter Property="TextDecorations"
+                                                Value="{Binding IsDeleted, Mode=OneWay, Converter={StaticResource TrueToStrikethroughConverter}}" />
+
+                                        <Setter Property="Foreground"
+                                                Value="{Binding IsDeleted, Mode=OneWay, Converter={StaticResource DeletedToGreyForegroundConverter}}" />
+                                    </Style>
+
+                                    <Style Selector="DataGridCell:disabled TextBlock">
+                                        <Setter Property="Foreground"
+                                                Value="{DynamicResource AppSearchResultsDisabledForegroundBrush}" />
+                                    </Style>
+
+                                    <Style Selector="DataGridRow">
+                                        <Setter Property="Theme"
+                                                Value="{StaticResource AlternateRowTheme}" />
+                                    </Style>
+                                </DataGrid.Styles>
+
+                                <DataGrid.KeyBindings>
+                                    <KeyBinding Gesture="Space"
+                                                Command="{Binding InvertMarkingOfSelectedSearchResultCommand}">
+                                        <KeyBinding.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}">
+                                                <Binding Path="SelectedItem"
+                                                         ElementName="ResultsGrid" />
+                                                <Binding Path="SelectedItems"
+                                                         ElementName="ResultsGrid" />
+                                            </MultiBinding>
+                                        </KeyBinding.CommandParameter>
+                                    </KeyBinding>
+
+                                    <KeyBinding Gesture="Enter"
+                                                Command="{Binding OpenCommand}"
+                                                CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                    <KeyBinding Gesture="Delete"
+                                                Command="{Binding DelistCommand}"
+                                                CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+                                </DataGrid.KeyBindings>
+
+                                <i:Interaction.Behaviors>
+                                    <ic:EventTriggerBehavior EventName="DoubleTapped"
+                                                             SourceObject="#ResultsGrid">
+                                        <ic:InvokeCommandAction Command="{Binding OpenCommand}"
+                                                                CommandParameter="{Binding Path=SelectedItem, ElementName=ResultsGrid}" />
+                                    </ic:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+
+                                <!--Context Menu-->
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <!--Open-->
+                                        <MenuItem Header="_Open"
+                                                  Command="{Binding OpenCommand}"
+                                                  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
+                                            <MenuItem.Icon>
+                                                <TextBlock Classes="icon"
+                                                           Text="{StaticResource File}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <!--Open Containing Folder-->
+                                        <MenuItem Header="Open _Containing Folder"
+                                                  Command="{Binding OpenContainingFolderCommand}"
+                                                  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
+                                            <MenuItem.Icon>
+                                                <TextBlock Classes="icon regular"
+                                                           Text="{StaticResource FolderOpen}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <Separator />
+
+                                        <!--Delist-->
+                                        <MenuItem Header="_Delist"
+                                                  Command="{Binding DelistCommand}"
+                                                  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                        <!--Delist Group-->
+                                        <MenuItem Header="Delist _Group"
+                                                  Command="{Binding DelistGroupCommand}"
+                                                  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                        <!--Delist Folder-->
+                                        <MenuItem Header="Delist _Folder"
+                                                  Command="{Binding DelistDirectoryCommand}"
+                                                  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                        <Separator />
+
+                                        <!--Mark-->
+                                        <MenuItem Header="M_ark Selection">
+                                            <!--By Date Created-->
+                                            <MenuItem Header="By Date _Created">
+                                                <!--Keep Earliest-->
+                                                <MenuItem Header="Keep _Oldest"
+                                                          Command="{Binding KeepEarliestCreatedCommand}"
+                                                          CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                                <!--Keep Latest-->
+                                                <MenuItem Header="Keep _Newest"
+                                                          Command="{Binding KeepLatestCreatedCommand}"
+                                                          CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+                                            </MenuItem>
+
+                                            <!--By Date Modified-->
+                                            <MenuItem Header="By Date _Modified">
+                                                <!--Keep Earliest-->
+                                                <MenuItem Header="Keep _Oldest"
+                                                          Command="{Binding KeepEarliestModifiedCommand}"
+                                                          CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                                <!--Keep Latest-->
+                                                <MenuItem Header="Keep _Newest"
+                                                          Command="{Binding KeepLatestModifiedCommand}"
+                                                          CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+                                            </MenuItem>
+
+                                            <!--By Letters-->
+                                            <MenuItem Header="By _Name">
+                                                <!--Keep Largest-->
+                                                <MenuItem Header="Keep _More Letters"
+                                                          Command="{Binding KeepMoreLettersCommand}"
+                                                          CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                                <!--Keep Smallest-->
+                                                <MenuItem Header="Keep _Less Letters"
+                                                          Command="{Binding KeepLessLettersCommand}"
+                                                          CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+                                            </MenuItem>
+
+                                            <!--By Size-->
+                                            <MenuItem Header="By _Size">
+                                                <!--Keep Largest-->
+                                                <MenuItem Header="Keep _Largest"
+                                                          Command="{Binding KeepLargestLengthCommand}"
+                                                          CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                                <!--Keep Smallest-->
+                                                <MenuItem Header="Keep _Smallest"
+                                                          Command="{Binding KeepSmallestLengthCommand}"
+                                                          CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+                                            </MenuItem>
+                                        </MenuItem>
+
+                                        <!--Mark All From This Folder-->
+                                        <MenuItem Header="_Mark All From Folder"
+                                                  Command="{Binding MarkAllFromThisDirectoryCommand}"
+                                                  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                        <!--Unmark All From This Folder-->
+                                        <MenuItem Header="_Unmark All From Folder"
+                                                  Command="{Binding UnmarkAllFromThisDirectoryCommand}"
+                                                  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}" />
+
+                                        <Separator />
+
+                                        <!--Lock Group-->
+                                        <MenuItem Header="_Lock Group"
+                                                  IsVisible="{Binding SelectedDuplicateFile.IsLocked, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                                  Command="{Binding LockGroupCommand}"
+                                                  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
+                                            <MenuItem.Icon>
+                                                <TextBlock Classes="icon"
+                                                           Text="{StaticResource Lock}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <!--Unlock Group-->
+                                        <MenuItem Header="U_nlock Group"
+                                                  IsVisible="{Binding SelectedDuplicateFile.IsLocked}"
+                                                  Command="{Binding UnlockGroupCommand}"
+                                                  CommandParameter="{Binding Path=SelectedItems, ElementName=ResultsGrid}">
+                                            <MenuItem.Icon>
+                                                <TextBlock Classes="icon"
+                                                           Text="{StaticResource Unlock}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <Separator />
+
+                                        <!--Refresh-->
+                                        <MenuItem Header="R_efresh"
+                                                  HotKey="F5"
+                                                  Command="{Binding RefreshCommand}">
+                                            <MenuItem.Icon>
+                                                <TextBlock Classes="icon"
+                                                           Text="{StaticResource ArrowsRotate}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <!--Clean List-->
+                                        <MenuItem Header="C_lean List"
+                                                  Command="{Binding CleanCommand}" />
+
+                                        <Separator />
+
+                                        <!--Select All-->
+                                        <MenuItem x:Name="SelectAllMenuItem"
+                                                  Header="Select _All"
+                                                  Click="SelectAllMenuItem_Click" />
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+
+                                <!--Check Box-->
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn CanUserResize="False"
+                                                            CellStyleClasses="CenterAlignedCell">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox x:Name="SearchResultCheckBox"
+                                                          Focusable="False"
+                                                          IsVisible="{Binding IsDeleted, Converter={StaticResource BoolToInvertedBoolConverter}}"
+                                                          IsChecked="{Binding IsMarked, Mode=TwoWay}"
+                                                          Command="{Binding DataContext.ApplyMarkingToSelectedSearchResultsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                          Click="SearchResultCheckBox_Click">
+                                                    <CheckBox.IsEnabled>
+                                                        <MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+                                                            <Binding Path="DataContext.IsBusy"
+                                                                     RelativeSource="{RelativeSource AncestorType=UserControl}"
+                                                                     Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                            <Binding Path="IsDeleted"
+                                                                     Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                            <MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+                                                                <Binding Path="IsLocked"
+                                                                         Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                                <Binding Path="DataContext.AreAllFilesLocked"
+                                                                         RelativeSource="{RelativeSource AncestorType=UserControl}"
+                                                                         Converter="{StaticResource BoolToInvertedBoolConverter}" />
+                                                            </MultiBinding>
+                                                        </MultiBinding>
+                                                    </CheckBox.IsEnabled>
+                                                    <CheckBox.CommandParameter>
+                                                        <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}">
+                                                            <Binding />
+                                                            <Binding Path="SelectedItems"
+                                                                     RelativeSource="{RelativeSource AncestorType=DataGrid}" />
+                                                        </MultiBinding>
+                                                    </CheckBox.CommandParameter>
+                                                </CheckBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <!--Locked-->
+                                    <DataGridTemplateColumn CanUserResize="False"
+                                                            CellStyleClasses="CenterAlignedCell">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Classes="icon"
+                                                           IsVisible="{Binding IsLocked}"
+                                                           Text="{StaticResource Lock}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{x:Static res:Resources.LockIconToolTip}" />
+                                                    </ToolTip.Tip>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <!--Name-->
+                                    <DataGridTemplateColumn Header="File"
+                                                            Width="296">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="12 0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Image Classes="listbox-file-icon"
+                                                           IsVisible="{Binding FileIcon, Converter={StaticResource NullToFalseConverter}}"
+                                                           Source="{Binding FileIcon}" />
+
+                                                    <TextBlock Classes="icon listbox-file-icon"
+                                                               IsVisible="{Binding FileIcon, Converter={StaticResource NullToTrueConverter}}"
+                                                               Text="{StaticResource File}" />
+
+                                                    <TextBlock Grid.Column="1"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding Name}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <!--Type-->
+                                    <DataGridTextColumn Header="Type"
+                                                        Width="160"
+                                                        Binding="{Binding Type}" />
+
+                                    <!--Size-->
+                                    <DataGridTextColumn Header="Size"
+                                                        CellStyleClasses="RightAlignedCell"
+                                                        Width="96"
+                                                        Binding="{Binding Length, Mode=OneWay, Converter={StaticResource LengthToStringConverter}}" />
+
+                                    <!--Modified-->
+                                    <DataGridTextColumn Header="Modified"
+                                                        Width="208"
+                                                        Binding="{Binding Modified}" />
+
+                                    <!--Created-->
+                                    <DataGridTextColumn Header="Created"
+                                                        Width="208"
+                                                        Binding="{Binding Created}" />
+
+                                    <!--Location-->
+                                    <DataGridTextColumn Header="Location"
+                                                        Width="400"
+                                                        Binding="{Binding DirectoryName}" />
+
+                                    <!--Group-->
+                                    <DataGridTextColumn Header="Group"
+                                                        CellStyleClasses="RightAlignedCell"
+                                                        Width="80"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Group}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <GridSplitter Grid.Row="1"
+                                          Height="1"
+                                          VerticalAlignment="Stretch"
+                                          ShowsPreview="True"
+                                          IsVisible="{Binding ShowFindWithinSearchResultsPane}" />
+
+                            <!--Find-->
+                            <Border Grid.Row="2"
+                                    BorderThickness="1"
+                                    BorderBrush="{DynamicResource AppFindPaneTitleBarBackgroundBrush}"
+                                    IsVisible="{Binding ShowFindWithinSearchResultsPane}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Border Padding="8"
+                                            Background="{DynamicResource AppFindPaneTitleBarBackgroundBrush}" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Text="Find" />
+
+                                            <Button Grid.Column="1"
+                                                    Margin="0"
+                                                    Padding="0"
+                                                    HorizontalContentAlignment="Center"
+                                                    VerticalContentAlignment="Center"
+                                                    Background="Transparent"
+                                                    ToolTip.Tip="Hide"
+                                                    Command="{Binding HideFindWithinSearchResultsPaneCommand}">
+                                                <Button.Content>
+                                                    <TextBlock Classes="icon"
+                                                               Text="{StaticResource XMark}" />
+                                                </Button.Content>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+
+                                    <Grid Grid.Row="1"
+                                          Margin="8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="4" />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--Look For-->
+                                        <TextBox x:Name="LookForTextBox"
+                                                 VerticalAlignment="Stretch"
+                                                 VerticalContentAlignment="Center"
+                                                 Watermark="Look for..."
+                                                 Text="{Binding FindWithinSearchResultsLookFor, Mode=TwoWay}">
+                                            <TextBox.KeyBindings>
+                                                <KeyBinding Gesture="Enter"
+                                                            Command="{Binding FindWithinSearchResultsCommand}" />
+                                            </TextBox.KeyBindings>
+                                        </TextBox>
+
+                                        <StackPanel Grid.Column="2"
+                                                    Orientation="Horizontal"
+                                                    Spacing="4">
+                                            <StackPanel.Styles>
+                                                <Style Selector="Button,ToggleButton">
+                                                    <Setter Property="MinWidth"
+                                                            Value="30" />
+                                                    <Setter Property="Height"
+                                                            Value="27" />
+                                                    <Setter Property="HorizontalContentAlignment"
+                                                            Value="Center" />
+                                                    <Setter Property="VerticalContentAlignment"
+                                                            Value="Center" />
+                                                </Style>
+                                            </StackPanel.Styles>
+
+                                            <!--Use Regex-->
+                                            <ToggleButton ToolTip.Tip="Use Regular Expressions"
+                                                          Content=".*" />
+
+                                            <!--Find-->
+                                            <Button ToolTip.Tip="Find"
+                                                    Command="{Binding FindWithinSearchResultsCommand}" >
+                                                <Button.Content>
+                                                    <TextBlock Classes="icon"
+                                                               Text="{StaticResource MagnifyingGlass}" />
+                                                </Button.Content>
+                                            </Button>
+
+                                            <!--Clear-->
+                                            <Button Content="Clear"
+                                                    Command="{Binding ClearFindWithinSearchResultsItemsCommand}" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!--Look For Results Grid-->
+                                    <DataGrid x:Name="FindWithSearchResultsDataGrid"
+                                              Grid.Row="2"
+                                              Margin="8 0"
+                                              IsReadOnly="True"
+                                              SelectedItem="{Binding SelectedFindWithinSearchResultsItem, Mode=TwoWay}"
+                                              ItemsSource="{Binding FindWithinSearchResultsItems}">
+                                        <DataGrid.Columns>
+                                            <!--File-->
+                                            <DataGridTextColumn Header="File"
+                                                                Width="256"
+                                                                Binding="{Binding Name}" />
+
+                                            <!--Location-->
+                                            <DataGridTextColumn Header="Location"
+                                                                Width="512"
+                                                                Binding="{Binding FullName}" />
+
+                                            <!--Group-->
+                                            <DataGridTextColumn Header="Group"
+                                                                Width="96"
+                                                                Binding="{Binding Group}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <GridSplitter Grid.Column="1"
+                                      Width="1"
+                                      HorizontalAlignment="Stretch"
+                                      ShowsPreview="True"
+                                      IsVisible="{Binding ShowPreview}" />
+
+                        <!--Preview Pane-->
+                        <Border Grid.Column="2"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource AppBorderBrush}"
+                                IsVisible="{Binding ShowPreview}">
+                            <Grid>
+                                <Image Source="{Binding PreviewImage}" />
+
+                                <TextBlock TextAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Text="Preview"
+                                           IsVisible="{Binding PreviewImage, Converter={StaticResource NullToTrueConverter}}"
+                                           Foreground="{DynamicResource AppPreviewPaneWatermarkBrush}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!--Status Bar-->
+        <Border Grid.Row="2"
+                BorderBrush="{DynamicResource AppBorderBrush}"
+                BorderThickness="0 1 0 0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition MinWidth="64"
+                                      Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition MinWidth="64"
+                                      Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition MinWidth="64"
+                                      Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="8" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="8" />
+                </Grid.RowDefinitions>
+
+                <Grid.Styles>
+                    <Style Selector="Rectangle">
+                        <Setter Property="Margin"
+                                Value="8 0" />
+                    </Style>
+
+                    <Style Selector="TextBlock">
+                        <Setter Property="VerticalAlignment"
+                                Value="Center" />
+
+                        <Setter Property="TextTrimming"
+                                Value="CharacterEllipsis" />
+                    </Style>
+
+                    <Style Selector="Rectangle">
+                        <Setter Property="Width"
+                                Value="1" />
+
+                        <Setter Property="VerticalAlignment"
+                                Value="Stretch" />
+
+                        <Setter Property="Fill"
+                                Value="{DynamicResource AppBorderBrush}" />
+                    </Style>
+
+                    <Style Selector="ProgressBar[Value=0]">
+                        <Setter Property="IsIndeterminate"
+                                Value="True" />
+                    </Style>
+                </Grid.Styles>
+
+                <!--Stop Button-->
+                <Button Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="0 0 4 0"
+                        Padding="0"
+                        BorderThickness="0"
+                        ToolTip.Tip="Cancel"
+                        Background="{DynamicResource AppCancelOperationButtonBackgroundBrush}"
+                        Foreground="{DynamicResource AppCancelOperationButtonForegroundBrush}"
+                        IsVisible="{Binding OperationCanBeCanceled}"
+                        Command="{Binding CancelOperationCommand}">
+                    <Button.Content>
+                        <TextBlock Classes="icon regular"
+                                   Text="{StaticResource CircleStop}" />
+                    </Button.Content>
+                </Button>
+
+                <!--Primary Status-->
+                <TextBlock x:Name="PrimaryStatusTextBlock"
+                           Grid.Row="1"
+                           Grid.Column="2"
+                           Text="{Binding PrimaryStatus}" />
+
+                <Rectangle Grid.RowSpan="3"
+                           Grid.Column="3" />
+
+                <!--Secondary Status-->
+                <TextBlock Grid.Row="1"
+                           Grid.Column="4"
+                           IsVisible="{Binding SecondaryStatus, Converter={StaticResource EmptyStringToFalseConverter}}"
+                           Text="{Binding SecondaryStatus}" />
+
+                <Rectangle Grid.RowSpan="3"
+                           Grid.Column="5" />
+
+                <!--Tertiary Status-->
+                <TextBlock Grid.Row="1"
+                           Grid.Column="6"
+                           IsVisible="{Binding TertiaryStatus, Converter={StaticResource EmptyStringToFalseConverter}}"
+                           Text="{Binding TertiaryStatus}" />
+
+                <Rectangle Grid.RowSpan="3"
+                           Grid.Column="7" />
+
+                <!--Quaternary Status-->
+                <TextBlock x:Name="QuaternaryStatusTextBlock"
+                           Grid.Row="1"
+                           Grid.Column="8"
+                           IsVisible="{Binding QuaternaryStatus, Converter={StaticResource EmptyStringToFalseConverter}}"
+                           Text="{Binding QuaternaryStatus}" />
+
+                <Rectangle Grid.RowSpan="3"
+                           Grid.Column="9"
+                           IsVisible="{Binding Path=IsVisible, ElementName=StatusBarProgressBar}" />
+
+                <!--ProgressBar-->
+                <ProgressBar x:Name="StatusBarProgressBar"
+                             Grid.Row="1"
+                             Grid.Column="10"
+                             Width="112"
+                             MinWidth="112"
+                             IsVisible="{Binding IsBusy}"
+                             Value="{Binding Progress}" />
+            </Grid>
+        </Border>
+    </Grid>
 </UserControl>

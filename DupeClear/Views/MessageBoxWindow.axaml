@@ -1,301 +1,301 @@
 <Window xmlns="https://github.com/avaloniaui"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:system="clr-namespace:System;assembly=mscorlib"
-		xmlns:vm="clr-namespace:DupeClear.ViewModels;assembly=DupeClear"
-		xmlns:conv="clr-namespace:DupeClear.Converters;assembly=DupeClear"
-		xmlns:msgbox="clr-namespace:DupeClear.Models.MessageBox;assembly=DupeClear"
-		mc:Ignorable="d"
-		x:Class="DupeClear.MessageBoxWindow"
-		x:DataType="vm:MessageBoxViewModel"
-		Icon="/Assets/Icons/DupeClear.ico"
-		Title="{Binding Title}"
-		MaxWidth="640"
-		SizeToContent="WidthAndHeight"
-		CanResize="False"
-		ShowInTaskbar="False"
-		WindowStartupLocation="CenterOwner"
-		Loaded="Window_Loaded"
-		DataContextChanged="Window_DataContextChanged">
-	<Design.DataContext>
-		<vm:DesignMessageBoxViewModel />
-	</Design.DataContext>
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:vm="clr-namespace:DupeClear.ViewModels;assembly=DupeClear"
+        xmlns:conv="clr-namespace:DupeClear.Converters;assembly=DupeClear"
+        xmlns:msgbox="clr-namespace:DupeClear.Models.MessageBox;assembly=DupeClear"
+        mc:Ignorable="d"
+        x:Class="DupeClear.MessageBoxWindow"
+        x:DataType="vm:MessageBoxViewModel"
+        Icon="/Assets/Icons/DupeClear.ico"
+        Title="{Binding Title}"
+        MaxWidth="640"
+        SizeToContent="WidthAndHeight"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        Loaded="Window_Loaded"
+        DataContextChanged="Window_DataContextChanged">
+    <Design.DataContext>
+        <vm:DesignMessageBoxViewModel />
+    </Design.DataContext>
 
-	<Window.Resources>
-		<conv:AllTrueToTrueConverter x:Key="AllTrueToTrueConverter" />
-		<conv:OneTrueToTrueConverter x:Key="OneTrueToTrueConverter" />
-		<conv:BoolToInvertedBoolConverter x:Key="BoolToInvertedBoolConverter" />
-		<conv:IntToTrueConverter x:Key="IntToTrueConverter" />
-		<conv:IntToTrueConverter x:Key="IntToFalseConverter"
-								 Inverted="True" />
-		<conv:MessageBoxIconToValueConverter x:Key="MessageBoxIconToValueConverter" />
-		<conv:NullToTrueConverter x:Key="NullToTrueConverter" />
-		<conv:NullToTrueConverter x:Key="NullToFalseConverter"
-								  Inverted="True" />
-		<conv:TrueToScrollBarAutoVisibilityConverter x:Key="FalseToScrollBarAutoVisibilityConverter"
-													 Inverted="True" />
-		<conv:TrueToTextWrappingWrapConverter x:Key="TrueToTextWrappingWrapConverter" />
-		<system:Boolean x:Key="BoolFalse">False</system:Boolean>
-		<system:Boolean x:Key="BoolTrue">True</system:Boolean>
-	</Window.Resources>
+    <Window.Resources>
+        <conv:AllTrueToTrueConverter x:Key="AllTrueToTrueConverter" />
+        <conv:OneTrueToTrueConverter x:Key="OneTrueToTrueConverter" />
+        <conv:BoolToInvertedBoolConverter x:Key="BoolToInvertedBoolConverter" />
+        <conv:IntToTrueConverter x:Key="IntToTrueConverter" />
+        <conv:IntToTrueConverter x:Key="IntToFalseConverter"
+                                 Inverted="True" />
+        <conv:MessageBoxIconToValueConverter x:Key="MessageBoxIconToValueConverter" />
+        <conv:NullToTrueConverter x:Key="NullToTrueConverter" />
+        <conv:NullToTrueConverter x:Key="NullToFalseConverter"
+                                  Inverted="True" />
+        <conv:TrueToScrollBarAutoVisibilityConverter x:Key="FalseToScrollBarAutoVisibilityConverter"
+                                                     Inverted="True" />
+        <conv:TrueToTextWrappingWrapConverter x:Key="TrueToTextWrappingWrapConverter" />
+        <system:Boolean x:Key="BoolFalse">False</system:Boolean>
+        <system:Boolean x:Key="BoolTrue">True</system:Boolean>
+    </Window.Resources>
 
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*" />
-			<RowDefinition Height="auto" />
-		</Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
 
-		<Grid Margin="24">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="auto" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-			<Grid.Styles>
-				<Style Selector="ScrollViewer#SecondaryMessageScrollViewer">
-					<Setter Property="MaxHeight"
-							Value="160" />
+            <Grid.Styles>
+                <Style Selector="ScrollViewer#SecondaryMessageScrollViewer">
+                    <Setter Property="MaxHeight"
+                            Value="160" />
 
-					<Setter Property="Margin"
-							Value="0 16 0 0" />
+                    <Setter Property="Margin"
+                            Value="0 16 0 0" />
 
-					<Style Selector="^.ExtendedHeight">
-						<Setter Property="MaxHeight"
-								Value="272" />
+                    <Style Selector="^.ExtendedHeight">
+                        <Setter Property="MaxHeight"
+                                Value="272" />
 
-						<Setter Property="Margin"
-								Value="0" />
-					</Style>
+                        <Setter Property="Margin"
+                                Value="0" />
+                    </Style>
 
-					<Style Selector="^ TextBlock#SecondaryMessageTextBlock[TextWrapping=Wrap]">
-						<Setter Property="Padding"
-								Value="0 0 24 0" />
-					</Style>
+                    <Style Selector="^ TextBlock#SecondaryMessageTextBlock[TextWrapping=Wrap]">
+                        <Setter Property="Padding"
+                                Value="0 0 24 0" />
+                    </Style>
 
-					<Style Selector="^ TextBlock#SecondaryMessageTextBlock[TextWrapping=NoWrap]">
-						<Setter Property="Padding"
-								Value="0 0 24 24" />
-					</Style>
-				</Style>
-			</Grid.Styles>
+                    <Style Selector="^ TextBlock#SecondaryMessageTextBlock[TextWrapping=NoWrap]">
+                        <Setter Property="Padding"
+                                Value="0 0 24 24" />
+                    </Style>
+                </Style>
+            </Grid.Styles>
 
-			<!--App icon-->
-			<Image Grid.RowSpan="6"
-				   Margin="0 0 8 0"
-				   VerticalAlignment="Top"
-				   Width="48"
-				   Height="48"
-				   RenderOptions.BitmapInterpolationMode="HighQuality"
-				   IsVisible="{Binding Icon, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxIcon.AppIcon}}"
-				   Source="/Assets/Icons/DupeClear.ico" />
+            <!--App icon-->
+            <Image Grid.RowSpan="6"
+                   Margin="0 0 8 0"
+                   VerticalAlignment="Top"
+                   Width="48"
+                   Height="48"
+                   RenderOptions.BitmapInterpolationMode="HighQuality"
+                   IsVisible="{Binding Icon, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxIcon.AppIcon}}"
+                   Source="/Assets/Icons/DupeClear.ico" />
 
-			<!--Icon-->
-			<TextBlock Grid.RowSpan="6"
-					   Margin="0 0 8 0"
-					   VerticalAlignment="Top"
-					   FontSize="32"
-					   FontFamily="{StaticResource FontAwesomeSolid}"
-					   Text="{Binding Icon, Converter={StaticResource MessageBoxIconToValueConverter}}">
-				<TextBlock.IsVisible>
-					<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-						<Binding Path="Icon"
-								 Converter="{StaticResource IntToFalseConverter}"
-								 ConverterParameter="{x:Static msgbox:MessageBoxIcon.AppIcon}, Mode=OneWay}" />
-						<Binding Path="Icon"
-								 Converter="{StaticResource IntToFalseConverter}"
-								 ConverterParameter="{x:Static msgbox:MessageBoxIcon.None}, Mode=OneWay}" />
-					</MultiBinding>
-				</TextBlock.IsVisible>
-			</TextBlock>
+            <!--Icon-->
+            <TextBlock Grid.RowSpan="6"
+                       Margin="0 0 8 0"
+                       VerticalAlignment="Top"
+                       FontSize="32"
+                       FontFamily="{StaticResource FontAwesomeSolid}"
+                       Text="{Binding Icon, Converter={StaticResource MessageBoxIconToValueConverter}}">
+                <TextBlock.IsVisible>
+                    <MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+                        <Binding Path="Icon"
+                                 Converter="{StaticResource IntToFalseConverter}"
+                                 ConverterParameter="{x:Static msgbox:MessageBoxIcon.AppIcon}, Mode=OneWay}" />
+                        <Binding Path="Icon"
+                                 Converter="{StaticResource IntToFalseConverter}"
+                                 ConverterParameter="{x:Static msgbox:MessageBoxIcon.None}, Mode=OneWay}" />
+                    </MultiBinding>
+                </TextBlock.IsVisible>
+            </TextBlock>
 
-			<!--Header-->
-			<TextBlock Grid.Column="1"
-					   Margin="0 0 0 16"
-					   FontSize="16"
-					   TextWrapping="Wrap"
-					   IsVisible="{Binding Header, Converter={StaticResource NullToFalseConverter}}"
-					   Text="{Binding Header}" />
+            <!--Header-->
+            <TextBlock Grid.Column="1"
+                       Margin="0 0 0 16"
+                       FontSize="16"
+                       TextWrapping="Wrap"
+                       IsVisible="{Binding Header, Converter={StaticResource NullToFalseConverter}}"
+                       Text="{Binding Header}" />
 
-			<!--Message-->
-			<TextBlock Grid.Row="1"
-					   Grid.Column="1"
-					   TextWrapping="Wrap"
-					   IsVisible="{Binding Message, Converter={StaticResource NullToFalseConverter}}"
-					   Text="{Binding Message}" />
+            <!--Message-->
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       TextWrapping="Wrap"
+                       IsVisible="{Binding Message, Converter={StaticResource NullToFalseConverter}}"
+                       Text="{Binding Message}" />
 
-			<!--Secondary message-->
-			<ScrollViewer x:Name="SecondaryMessageScrollViewer"
-						  Grid.Row="2"
-						  Grid.Column="1"
-						  HorizontalScrollBarVisibility="{Binding SecondaryMessageWrapped, Converter={StaticResource FalseToScrollBarAutoVisibilityConverter}}"
-						  VerticalScrollBarVisibility="Auto"
-						  IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}">
-				<Classes.ExtendedHeight>
-					<MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
-						<Binding Path="Header"
-								 Converter="{StaticResource NullToTrueConverter}" />
-						<Binding Path="Message"
-								 Converter="{StaticResource NullToTrueConverter}" />
-					</MultiBinding>
-				</Classes.ExtendedHeight>
+            <!--Secondary message-->
+            <ScrollViewer x:Name="SecondaryMessageScrollViewer"
+                          Grid.Row="2"
+                          Grid.Column="1"
+                          HorizontalScrollBarVisibility="{Binding SecondaryMessageWrapped, Converter={StaticResource FalseToScrollBarAutoVisibilityConverter}}"
+                          VerticalScrollBarVisibility="Auto"
+                          IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}">
+                <Classes.ExtendedHeight>
+                    <MultiBinding Converter="{StaticResource AllTrueToTrueConverter}">
+                        <Binding Path="Header"
+                                 Converter="{StaticResource NullToTrueConverter}" />
+                        <Binding Path="Message"
+                                 Converter="{StaticResource NullToTrueConverter}" />
+                    </MultiBinding>
+                </Classes.ExtendedHeight>
 
-				<ScrollViewer.ContextMenu>
-					<ContextMenu>
-						<MenuItem Header="_Copy to Clipboard"
-								  HotKey="Ctrl+C"
-								  Command="{Binding CopyToClipboardCommand}">
-							<MenuItem.Icon>
-								<TextBlock VerticalAlignment="Center"
-										   FontFamily="{StaticResource FontAwesomeSolid}"
-										   Text="&#xf0c5;" />
-							</MenuItem.Icon>
-						</MenuItem>
-					</ContextMenu>
-				</ScrollViewer.ContextMenu>
+                <ScrollViewer.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="_Copy to Clipboard"
+                                  HotKey="Ctrl+C"
+                                  Command="{Binding CopyToClipboardCommand}">
+                            <MenuItem.Icon>
+                                <TextBlock VerticalAlignment="Center"
+                                           FontFamily="{StaticResource FontAwesomeSolid}"
+                                           Text="&#xf0c5;" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </ScrollViewer.ContextMenu>
 
-				<TextBlock x:Name="SecondaryMessageTextBlock"
-						   TextWrapping="{Binding SecondaryMessageWrapped, Converter={StaticResource TrueToTextWrappingWrapConverter}}"
-						   IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}"
-						   Text="{Binding SecondaryMessage}" />
-			</ScrollViewer>
+                <TextBlock x:Name="SecondaryMessageTextBlock"
+                           TextWrapping="{Binding SecondaryMessageWrapped, Converter={StaticResource TrueToTextWrappingWrapConverter}}"
+                           IsVisible="{Binding SecondaryMessage, Converter={StaticResource NullToFalseConverter}}"
+                           Text="{Binding SecondaryMessage}" />
+            </ScrollViewer>
 
-			<!--Hyperlink-->
-			<HyperlinkButton Grid.Row="3"
-							 Grid.Column="1"
-							 Margin="0"
-							 Padding="0"
-							 BorderThickness="0"
-							 IsVisible="{Binding HyperlinkButtonContent, Converter={StaticResource NullToFalseConverter}}"
-							 Content="{Binding HyperlinkButtonContent}"
-							 Command="{Binding HyperlinkButtonCommand}" />
+            <!--Hyperlink-->
+            <HyperlinkButton Grid.Row="3"
+                             Grid.Column="1"
+                             Margin="0"
+                             Padding="0"
+                             BorderThickness="0"
+                             IsVisible="{Binding HyperlinkButtonContent, Converter={StaticResource NullToFalseConverter}}"
+                             Content="{Binding HyperlinkButtonContent}"
+                             Command="{Binding HyperlinkButtonCommand}" />
 
-			<!--CheckBox-->
-			<CheckBox Grid.Row="4"
-					  Grid.Column="1"
-					  Margin="0 16 0 0"
-					  IsVisible="{Binding CheckBoxContent, Converter={StaticResource NullToFalseConverter}}"
-					  IsChecked="{Binding CheckBoxChecked, Mode=TwoWay}"
-					  Content="{Binding CheckBoxContent}" />
-		</Grid>
+            <!--CheckBox-->
+            <CheckBox Grid.Row="4"
+                      Grid.Column="1"
+                      Margin="0 16 0 0"
+                      IsVisible="{Binding CheckBoxContent, Converter={StaticResource NullToFalseConverter}}"
+                      IsChecked="{Binding CheckBoxChecked, Mode=TwoWay}"
+                      Content="{Binding CheckBoxContent}" />
+        </Grid>
 
-		<!--Buttons-->
-		<Border Grid.Row="2"
-				Background="{DynamicResource MessageBoxButtonRowBackgroundBrush}">
-			<StackPanel Margin="10"
-						Orientation="Horizontal"
-						Spacing="6"
-						HorizontalAlignment="Right">
-				<StackPanel.Styles>
-					<Style Selector="Button">
-						<Setter Property="HorizontalContentAlignment"
-								Value="Center" />
-						<Setter Property="MaxWidth"
-								Value="176" />
-						<Setter Property="MinWidth"
-								Value="80" />
-					</Style>
+        <!--Buttons-->
+        <Border Grid.Row="2"
+                Background="{DynamicResource MessageBoxButtonRowBackgroundBrush}">
+            <StackPanel Margin="10"
+                        Orientation="Horizontal"
+                        Spacing="6"
+                        HorizontalAlignment="Right">
+                <StackPanel.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="MaxWidth"
+                                Value="176" />
+                        <Setter Property="MinWidth"
+                                Value="80" />
+                    </Style>
 
-					<Style Selector="Button[IsDefault=True]">
-						<Setter Property="Background"
-								Value="{DynamicResource AppMessageBoxDefaultButtonBackgroundBrush}" />
+                    <Style Selector="Button[IsDefault=True]">
+                        <Setter Property="Background"
+                                Value="{DynamicResource AppMessageBoxDefaultButtonBackgroundBrush}" />
 
-						<Setter Property="Foreground"
-								Value="{DynamicResource AppMessageBoxDefaultButtonForegroundBrush}" />
-					</Style>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource AppMessageBoxDefaultButtonForegroundBrush}" />
+                    </Style>
 
-					<Style Selector="Button#PrimaryButton">
-						<Setter Property="Content"
-								Value="{Binding YesButtonContent}" />
-						<Style Selector="^.OKButton">
-							<Setter Property="Content"
-									Value="{Binding OKButtonContent}" />
-						</Style>
-					</Style>
-				</StackPanel.Styles>
+                    <Style Selector="Button#PrimaryButton">
+                        <Setter Property="Content"
+                                Value="{Binding YesButtonContent}" />
+                        <Style Selector="^.OKButton">
+                            <Setter Property="Content"
+                                    Value="{Binding OKButtonContent}" />
+                        </Style>
+                    </Style>
+                </StackPanel.Styles>
 
-				<Border Width="80" />
+                <Border Width="80" />
 
-				<!--OK/Yes-->
-				<Button x:Name="PrimaryButton"
-						IsCancel="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.OK}}"
-						Command="{Binding PrimaryButtonCommand}">
-					<Button.IsDefault>
-						<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-							<Binding Path="DefaultButton"
-									 Converter="{StaticResource IntToTrueConverter}"
-									 ConverterParameter="{x:Static msgbox:MessageBoxDefaultButton.OK}" />
-							<Binding Path="DefaultButton"
-									 Converter="{StaticResource IntToTrueConverter}"
-									 ConverterParameter="{x:Static msgbox:MessageBoxDefaultButton.Yes}" />
-						</MultiBinding>
-					</Button.IsDefault>
+                <!--OK/Yes-->
+                <Button x:Name="PrimaryButton"
+                        IsCancel="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.OK}}"
+                        Command="{Binding PrimaryButtonCommand}">
+                    <Button.IsDefault>
+                        <MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+                            <Binding Path="DefaultButton"
+                                     Converter="{StaticResource IntToTrueConverter}"
+                                     ConverterParameter="{x:Static msgbox:MessageBoxDefaultButton.OK}" />
+                            <Binding Path="DefaultButton"
+                                     Converter="{StaticResource IntToTrueConverter}"
+                                     ConverterParameter="{x:Static msgbox:MessageBoxDefaultButton.Yes}" />
+                        </MultiBinding>
+                    </Button.IsDefault>
 
-					<Classes.OKButton>
-						<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-							<Binding Path="Buttons"
-									 Converter="{StaticResource IntToTrueConverter}"
-									 ConverterParameter="{x:Static msgbox:MessageBoxButton.OK}" />
-							<Binding Path="Buttons"
-									 Converter="{StaticResource IntToTrueConverter}"
-									 ConverterParameter="{x:Static msgbox:MessageBoxButton.OKCancel}" />
-						</MultiBinding>
-					</Classes.OKButton>
-				</Button>
+                    <Classes.OKButton>
+                        <MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+                            <Binding Path="Buttons"
+                                     Converter="{StaticResource IntToTrueConverter}"
+                                     ConverterParameter="{x:Static msgbox:MessageBoxButton.OK}" />
+                            <Binding Path="Buttons"
+                                     Converter="{StaticResource IntToTrueConverter}"
+                                     ConverterParameter="{x:Static msgbox:MessageBoxButton.OKCancel}" />
+                        </MultiBinding>
+                    </Classes.OKButton>
+                </Button>
 
-				<!--No-->
-				<Button Content="{Binding NoButtonContent}"
-						IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.No}}"
-						IsCancel="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.YesNo}}"
-						Command="{Binding NoButtonCommand}">
-					<Button.IsVisible>
-						<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-							<Binding Path="Buttons"
-									 Converter="{StaticResource IntToTrueConverter}"
-									 ConverterParameter="{x:Static msgbox:MessageBoxButton.YesNo}" />
-							<Binding Path="Buttons"
-									 Converter="{StaticResource IntToTrueConverter}"
-									 ConverterParameter="{x:Static msgbox:MessageBoxButton.YesNoCancel}" />
-						</MultiBinding>
-					</Button.IsVisible>
-				</Button>
+                <!--No-->
+                <Button Content="{Binding NoButtonContent}"
+                        IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.No}}"
+                        IsCancel="{Binding Buttons, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxButton.YesNo}}"
+                        Command="{Binding NoButtonCommand}">
+                    <Button.IsVisible>
+                        <MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+                            <Binding Path="Buttons"
+                                     Converter="{StaticResource IntToTrueConverter}"
+                                     ConverterParameter="{x:Static msgbox:MessageBoxButton.YesNo}" />
+                            <Binding Path="Buttons"
+                                     Converter="{StaticResource IntToTrueConverter}"
+                                     ConverterParameter="{x:Static msgbox:MessageBoxButton.YesNoCancel}" />
+                        </MultiBinding>
+                    </Button.IsVisible>
+                </Button>
 
-				<!--Cancel-->
-				<Button Content="{Binding CancelButtonContent}"
-						IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.Cancel}}"
-						IsCancel="True"
-						Command="{Binding CancelButtonCommand}" >
-					<Button.IsVisible>
-						<MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
-							<Binding Path="Buttons"
-									 Converter="{StaticResource IntToTrueConverter}"
-									 ConverterParameter="{x:Static msgbox:MessageBoxButton.OKCancel}" />
-							<Binding Path="Buttons"
-									 Converter="{StaticResource IntToTrueConverter}"
-									 ConverterParameter="{x:Static msgbox:MessageBoxButton.YesNoCancel}" />
-						</MultiBinding>
-					</Button.IsVisible>
-				</Button>
+                <!--Cancel-->
+                <Button Content="{Binding CancelButtonContent}"
+                        IsDefault="{Binding DefaultButton, Converter={StaticResource IntToTrueConverter}, ConverterParameter={x:Static msgbox:MessageBoxDefaultButton.Cancel}}"
+                        IsCancel="True"
+                        Command="{Binding CancelButtonCommand}" >
+                    <Button.IsVisible>
+                        <MultiBinding Converter="{StaticResource OneTrueToTrueConverter}">
+                            <Binding Path="Buttons"
+                                     Converter="{StaticResource IntToTrueConverter}"
+                                     ConverterParameter="{x:Static msgbox:MessageBoxButton.OKCancel}" />
+                            <Binding Path="Buttons"
+                                     Converter="{StaticResource IntToTrueConverter}"
+                                     ConverterParameter="{x:Static msgbox:MessageBoxButton.YesNoCancel}" />
+                        </MultiBinding>
+                    </Button.IsVisible>
+                </Button>
 
-				<!--Custom button 1-->
-				<Button Content="{Binding CustomButton1Content}"
-						IsVisible="{Binding CustomButton1Content, Converter={StaticResource NullToFalseConverter}}"
-						Command="{Binding CustomButton1Command}" />
+                <!--Custom button 1-->
+                <Button Content="{Binding CustomButton1Content}"
+                        IsVisible="{Binding CustomButton1Content, Converter={StaticResource NullToFalseConverter}}"
+                        Command="{Binding CustomButton1Command}" />
 
-				<!--Custom button 2-->
-				<Button Content="{Binding CustomButton2Content}"
-						IsVisible="{Binding CustomButton2Content, Converter={StaticResource NullToFalseConverter}}"
-						Command="{Binding CustomButton2Command}" />
-			</StackPanel>
-		</Border>
-	</Grid>
+                <!--Custom button 2-->
+                <Button Content="{Binding CustomButton2Content}"
+                        IsVisible="{Binding CustomButton2Content, Converter={StaticResource NullToFalseConverter}}"
+                        Command="{Binding CustomButton2Command}" />
+            </StackPanel>
+        </Border>
+    </Grid>
 </Window>

@@ -1,154 +1,154 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary>
-			<!--Title Bar-->
-			<!--<SolidColorBrush x:Key="AppTitleBarDefaultForegroundBrush"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <!--Title Bar-->
+            <!--<SolidColorBrush x:Key="AppTitleBarDefaultForegroundBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
-			<SolidColorBrush x:Key="AppTitleBarDefaultForegroundBrush"
-							 Color="{DynamicResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="AppTitleBarDefaultForegroundBrush"
+                             Color="{DynamicResource SystemBaseMediumColor}" />
 
-			<!--Border-->
-			<SolidColorBrush x:Key="AppDefaultBorderBrush"
-							 Color="{DynamicResource SystemChromeMediumColor}" />
-			<!--<SolidColorBrush x:Key="AppDefaultBorderBrush"
+            <!--Border-->
+            <SolidColorBrush x:Key="AppDefaultBorderBrush"
+                             Color="{DynamicResource SystemChromeMediumColor}" />
+            <!--<SolidColorBrush x:Key="AppDefaultBorderBrush"
 							 Color="{DynamicResource ThemeBorderMidColor}" />-->
 
-			<!--Start Button-->
-			<SolidColorBrush x:Key="AppStartButtonDefaultBackgroundBrush"
-							 Color="#18cd5e" />
-			<SolidColorBrush x:Key="AppStartButtonDefaultForegroundBrush"
-							 Color="#08441f" />
+            <!--Start Button-->
+            <SolidColorBrush x:Key="AppStartButtonDefaultBackgroundBrush"
+                             Color="#18cd5e" />
+            <SolidColorBrush x:Key="AppStartButtonDefaultForegroundBrush"
+                             Color="#08441f" />
 
-			<!--Cancel Operation Button-->
-			<SolidColorBrush x:Key="AppCancelOperationButtonDefaultBackgroundBrush"
-							 Color="Transparent"  />
-			<SolidColorBrush x:Key="AppCancelOperationButtonDefaultForegroundBrush"
-							 Color="#dc143c" />
+            <!--Cancel Operation Button-->
+            <SolidColorBrush x:Key="AppCancelOperationButtonDefaultBackgroundBrush"
+                             Color="Transparent"  />
+            <SolidColorBrush x:Key="AppCancelOperationButtonDefaultForegroundBrush"
+                             Color="#dc143c" />
 
-			<!--Search Results Grid-->
-			<SolidColorBrush x:Key="AppSearchResultsDefaultForegroundBrush"
-							 Color="{DynamicResource SystemBaseHighColor}" />
-			<!--<SolidColorBrush x:Key="AppSearchResultsDefaultForegroundBrush"
+            <!--Search Results Grid-->
+            <SolidColorBrush x:Key="AppSearchResultsDefaultForegroundBrush"
+                             Color="{DynamicResource SystemBaseHighColor}" />
+            <!--<SolidColorBrush x:Key="AppSearchResultsDefaultForegroundBrush"
 							 Color="{DynamicResource ThemeForegroundColor}" />-->
-			<SolidColorBrush x:Key="AppSearchResultsDeletedDefaultForegroundBrush"
-							 Color="{DynamicResource SystemBaseMediumColor}" />
-			<!--<SolidColorBrush x:Key="AppSearchResultsDeletedDefaultForegroundBrush"
+            <SolidColorBrush x:Key="AppSearchResultsDeletedDefaultForegroundBrush"
+                             Color="{DynamicResource SystemBaseMediumColor}" />
+            <!--<SolidColorBrush x:Key="AppSearchResultsDeletedDefaultForegroundBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
-			<SolidColorBrush x:Key="AppSearchResultsDisabledDefaultForegroundBrush"
-							 Color="{DynamicResource SystemChromeDisabledLowColor}" />
-			<!--<SolidColorBrush x:Key="AppSearchResultsDisabledDefaultForegroundBrush"
-							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
-
-			<!--Delete Button-->
-			<SolidColorBrush x:Key="AppDeleteButtonDefaultBackgroundBrush"
-							 Color="#ff8080" />
-			<SolidColorBrush x:Key="AppDeleteButtonDefaultForegroundBrush"
-							 Color="#660000" />
-			
-			<!--Find Pane-->
-			<SolidColorBrush x:Key="AppFindPaneTitleBarDefaultBackgroundBrush"
-							 Color="{DynamicResource SystemChromeLowColor}" />
-
-			<!--Preview Pane-->
-			<SolidColorBrush x:Key="AppPreviewPaneDefaultWatermarkBrush"
-							 Color="{DynamicResource SystemBaseMediumLowColor}" />
-			<!--<SolidColorBrush x:Key="AppPreviewPaneDefaultWatermarkBrush"
+            <SolidColorBrush x:Key="AppSearchResultsDisabledDefaultForegroundBrush"
+                             Color="{DynamicResource SystemChromeDisabledLowColor}" />
+            <!--<SolidColorBrush x:Key="AppSearchResultsDisabledDefaultForegroundBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
 
-			<!--Message Box-->
-			<SolidColorBrush x:Key="AppMessageBoxDefaultButtonDefaultBackgroundBrush"
-							 Color="#4dafff" />
-			<SolidColorBrush x:Key="AppMessageBoxDefaultButtonDefaultForegroundBrush"
-							 Color="#002a4d" />
-			<SolidColorBrush x:Key="MessageBoxButtonRowDefaultBackgroundBrush"
-							 Color="{DynamicResource SystemChromeLowColor}" />
+            <!--Delete Button-->
+            <SolidColorBrush x:Key="AppDeleteButtonDefaultBackgroundBrush"
+                             Color="#ff8080" />
+            <SolidColorBrush x:Key="AppDeleteButtonDefaultForegroundBrush"
+                             Color="#660000" />
 
-			<!--MenuItem-->
-			<SolidColorBrush x:Key="AppMenuItemIconDisabledDefaultBrush"
-							 Color="{DynamicResource SystemBaseMediumLowColor}" />
-			<!--<SolidColorBrush x:Key="AppMenuItemIconDisabledDefaultBrush"
+            <!--Find Pane-->
+            <SolidColorBrush x:Key="AppFindPaneTitleBarDefaultBackgroundBrush"
+                             Color="{DynamicResource SystemChromeLowColor}" />
+
+            <!--Preview Pane-->
+            <SolidColorBrush x:Key="AppPreviewPaneDefaultWatermarkBrush"
+                             Color="{DynamicResource SystemBaseMediumLowColor}" />
+            <!--<SolidColorBrush x:Key="AppPreviewPaneDefaultWatermarkBrush"
 							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
-		</ResourceDictionary>
 
-		<ResourceDictionary>
-			<ResourceDictionary.ThemeDictionaries>
-				<ResourceDictionary x:Key="Default">
-					<!--Title Bar-->
-					<StaticResource x:Key="AppTitleBarForegroundBrush"
-									ResourceKey="AppTitleBarDefaultForegroundBrush" />
+            <!--Message Box-->
+            <SolidColorBrush x:Key="AppMessageBoxDefaultButtonDefaultBackgroundBrush"
+                             Color="#4dafff" />
+            <SolidColorBrush x:Key="AppMessageBoxDefaultButtonDefaultForegroundBrush"
+                             Color="#002a4d" />
+            <SolidColorBrush x:Key="MessageBoxButtonRowDefaultBackgroundBrush"
+                             Color="{DynamicResource SystemChromeLowColor}" />
 
-					<!--Border-->
-					<StaticResource x:Key="AppBorderBrush"
-									ResourceKey="AppDefaultBorderBrush" />
+            <!--MenuItem-->
+            <SolidColorBrush x:Key="AppMenuItemIconDisabledDefaultBrush"
+                             Color="{DynamicResource SystemBaseMediumLowColor}" />
+            <!--<SolidColorBrush x:Key="AppMenuItemIconDisabledDefaultBrush"
+							 Color="{DynamicResource ThemeForegroundLowColor}" />-->
+        </ResourceDictionary>
 
-					<!--Start Button-->
-					<StaticResource x:Key="AppStartButtonBackgroundBrush"
-									ResourceKey="AppStartButtonDefaultBackgroundBrush" />
-					<StaticResource x:Key="AppStartButtonForegroundBrush"
-									ResourceKey="AppStartButtonDefaultForegroundBrush" />
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <!--Title Bar-->
+                    <StaticResource x:Key="AppTitleBarForegroundBrush"
+                                    ResourceKey="AppTitleBarDefaultForegroundBrush" />
 
-					<!--Cancel Operation Button-->
-					<StaticResource x:Key="AppCancelOperationButtonBackgroundBrush"
-									ResourceKey="AppCancelOperationButtonDefaultBackgroundBrush"  />
-					<StaticResource x:Key="AppCancelOperationButtonForegroundBrush"
-									ResourceKey="AppCancelOperationButtonDefaultForegroundBrush" />
+                    <!--Border-->
+                    <StaticResource x:Key="AppBorderBrush"
+                                    ResourceKey="AppDefaultBorderBrush" />
 
-					<!--Search Results Grid-->
-					<StaticResource x:Key="AppSearchResultsForegroundBrush"
-									ResourceKey="AppSearchResultsDefaultForegroundBrush" />
-					<StaticResource x:Key="AppSearchResultsDeletedForegroundBrush"
-									ResourceKey="AppSearchResultsDeletedDefaultForegroundBrush" />
-					<StaticResource x:Key="AppSearchResultsDisabledForegroundBrush"
-									ResourceKey="AppSearchResultsDisabledDefaultForegroundBrush" />
+                    <!--Start Button-->
+                    <StaticResource x:Key="AppStartButtonBackgroundBrush"
+                                    ResourceKey="AppStartButtonDefaultBackgroundBrush" />
+                    <StaticResource x:Key="AppStartButtonForegroundBrush"
+                                    ResourceKey="AppStartButtonDefaultForegroundBrush" />
 
-					<!--Delete Button-->
-					<StaticResource x:Key="AppDeleteButtonBackgroundBrush"
-									ResourceKey="AppDeleteButtonDefaultBackgroundBrush"  />
-					<StaticResource x:Key="AppDeleteButtonForegroundBrush"
-									ResourceKey="AppDeleteButtonDefaultForegroundBrush" />
+                    <!--Cancel Operation Button-->
+                    <StaticResource x:Key="AppCancelOperationButtonBackgroundBrush"
+                                    ResourceKey="AppCancelOperationButtonDefaultBackgroundBrush"  />
+                    <StaticResource x:Key="AppCancelOperationButtonForegroundBrush"
+                                    ResourceKey="AppCancelOperationButtonDefaultForegroundBrush" />
 
-					<!--Find Pane-->
-					<StaticResource x:Key="AppFindPaneTitleBarBackgroundBrush"
-									ResourceKey="AppFindPaneTitleBarDefaultBackgroundBrush" />
+                    <!--Search Results Grid-->
+                    <StaticResource x:Key="AppSearchResultsForegroundBrush"
+                                    ResourceKey="AppSearchResultsDefaultForegroundBrush" />
+                    <StaticResource x:Key="AppSearchResultsDeletedForegroundBrush"
+                                    ResourceKey="AppSearchResultsDeletedDefaultForegroundBrush" />
+                    <StaticResource x:Key="AppSearchResultsDisabledForegroundBrush"
+                                    ResourceKey="AppSearchResultsDisabledDefaultForegroundBrush" />
 
-					<!--Preview Pane-->
-					<StaticResource x:Key="AppPreviewPaneWatermarkBrush"
-									ResourceKey="AppPreviewPaneDefaultWatermarkBrush" />
+                    <!--Delete Button-->
+                    <StaticResource x:Key="AppDeleteButtonBackgroundBrush"
+                                    ResourceKey="AppDeleteButtonDefaultBackgroundBrush"  />
+                    <StaticResource x:Key="AppDeleteButtonForegroundBrush"
+                                    ResourceKey="AppDeleteButtonDefaultForegroundBrush" />
 
-					<!--Message Box-->
-					<StaticResource x:Key="AppMessageBoxDefaultButtonBackgroundBrush"
-									ResourceKey="AppMessageBoxDefaultButtonDefaultBackgroundBrush" />
-					<StaticResource x:Key="AppMessageBoxDefaultButtonForegroundBrush"
-									ResourceKey="AppMessageBoxDefaultButtonDefaultForegroundBrush" />
-					<StaticResource x:Key="MessageBoxButtonRowBackgroundBrush"
-									ResourceKey="MessageBoxButtonRowDefaultBackgroundBrush" />
+                    <!--Find Pane-->
+                    <StaticResource x:Key="AppFindPaneTitleBarBackgroundBrush"
+                                    ResourceKey="AppFindPaneTitleBarDefaultBackgroundBrush" />
 
-					<!--MenuItem-->
-					<StaticResource x:Key="AppMenuItemIconDisabledBrush"
-									ResourceKey="AppMenuItemIconDisabledDefaultBrush" />
-				</ResourceDictionary>
+                    <!--Preview Pane-->
+                    <StaticResource x:Key="AppPreviewPaneWatermarkBrush"
+                                    ResourceKey="AppPreviewPaneDefaultWatermarkBrush" />
 
-				<ResourceDictionary x:Key="Dark">
-					<!--Start Button-->
-					<SolidColorBrush x:Key="AppStartButtonBackgroundBrush"
-									 Color="#10893E" />
-					<SolidColorBrush x:Key="AppStartButtonForegroundBrush"
-									 Color="#d1fae1" />
+                    <!--Message Box-->
+                    <StaticResource x:Key="AppMessageBoxDefaultButtonBackgroundBrush"
+                                    ResourceKey="AppMessageBoxDefaultButtonDefaultBackgroundBrush" />
+                    <StaticResource x:Key="AppMessageBoxDefaultButtonForegroundBrush"
+                                    ResourceKey="AppMessageBoxDefaultButtonDefaultForegroundBrush" />
+                    <StaticResource x:Key="MessageBoxButtonRowBackgroundBrush"
+                                    ResourceKey="MessageBoxButtonRowDefaultBackgroundBrush" />
 
-					<!--Delete Button-->
-					<SolidColorBrush x:Key="AppDeleteButtonBackgroundBrush"
-									 Color="#B22222"  />
-					<SolidColorBrush x:Key="AppDeleteButtonForegroundBrush"
-									 Color="#fbeaea" />
+                    <!--MenuItem-->
+                    <StaticResource x:Key="AppMenuItemIconDisabledBrush"
+                                    ResourceKey="AppMenuItemIconDisabledDefaultBrush" />
+                </ResourceDictionary>
 
-					<!--Message Box-->
-					<SolidColorBrush x:Key="AppMessageBoxDefaultButtonBackgroundBrush"
-									 Color="#0078d7" />
-					<SolidColorBrush x:Key="AppMessageBoxDefaultButtonForegroundBrush"
-									 Color="#e6f4ff" />
-				</ResourceDictionary>
-			</ResourceDictionary.ThemeDictionaries>
-		</ResourceDictionary>
-	</ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <!--Start Button-->
+                    <SolidColorBrush x:Key="AppStartButtonBackgroundBrush"
+                                     Color="#10893E" />
+                    <SolidColorBrush x:Key="AppStartButtonForegroundBrush"
+                                     Color="#d1fae1" />
+
+                    <!--Delete Button-->
+                    <SolidColorBrush x:Key="AppDeleteButtonBackgroundBrush"
+                                     Color="#B22222"  />
+                    <SolidColorBrush x:Key="AppDeleteButtonForegroundBrush"
+                                     Color="#fbeaea" />
+
+                    <!--Message Box-->
+                    <SolidColorBrush x:Key="AppMessageBoxDefaultButtonBackgroundBrush"
+                                     Color="#0078d7" />
+                    <SolidColorBrush x:Key="AppMessageBoxDefaultButtonForegroundBrush"
+                                     Color="#e6f4ff" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -20,7 +20,7 @@ insert_final_newline = false
 # Organize usings
 dotnet_separate_import_directive_groups = false
 dotnet_sort_system_directives_first = false
-file_header_template = Copyright (C) 2024 Antik Mozib. All rights reserved.
+file_header_template = Copyright (C) 2017-2025 Antik Mozib. All rights reserved.
 
 # this. and Me. preferences
 dotnet_style_qualification_for_event = false

@@ -10,7 +10,7 @@
 		<AvaloniaIncludeApplicationIconAsWindowIcon>false</AvaloniaIncludeApplicationIconAsWindowIcon>
 		<ApplicationIcon>DupeClear.ico</ApplicationIcon>
 		<AssemblyVersion>3.1.0.0</AssemblyVersion>
-		<Copyright>Copyright © 2024 Antik Mozib. All rights reserved.</Copyright>
+		<Copyright>Copyright © 2017-2025 Antik Mozib. All rights reserved.</Copyright>
 		<Product>Dupe Clear</Product>
 	</PropertyGroup>
 	<ItemGroup>

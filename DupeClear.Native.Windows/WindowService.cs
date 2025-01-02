@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2024 Antik Mozib. All rights reserved.
+﻿// Copyright (C) 2017-2025 Antik Mozib. All rights reserved.
 
 using static DupeClear.Native.Windows.Libraries.User32;
 

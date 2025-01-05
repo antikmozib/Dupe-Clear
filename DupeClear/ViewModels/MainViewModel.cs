@@ -3166,9 +3166,6 @@ public partial class MainViewModel : ViewModelBase
             if (currentVer != null)
             {
                 var updateable = updateInfo.IsNewerThan(currentVer);
-#if DEBUG
-                updateable = true;
-#endif
                 if (updateable)
                 {
                     var msgBoxVM = new MessageBoxViewModel()

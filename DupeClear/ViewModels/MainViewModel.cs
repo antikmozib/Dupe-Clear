@@ -2739,9 +2739,6 @@ public partial class MainViewModel : ViewModelBase
                 CustomButton1Action = new Action(() =>
                 {
                     string licenseFile = "LICENSE";
-#if DEBUG
-                    licenseFile = "../../../../LICENSE";
-#endif
                     if (File.Exists(licenseFile))
                     {
                         MessageBox?.Invoke(new MessageBoxViewModel()

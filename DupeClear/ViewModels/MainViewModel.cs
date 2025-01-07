@@ -12,6 +12,7 @@ using DupeClear.Models.Finder;
 using DupeClear.Models.MessageBox;
 using DupeClear.Models.Serializable;
 using DupeClear.Native;
+using EnumsNET;
 using Mozib.AppUpdater;
 using Mozib.AppUpdater.Helpers;
 using Mozib.AppUpdater.Models;
@@ -1476,6 +1477,11 @@ public partial class MainViewModel : ViewModelBase
                 {
                     message.Append($"\nErrors: {result.Errors.Count:N0}");
                 }
+            }
+
+            if (result.DuplicateCount > 0)
+            {
+                message.Append($"\n\nCurrent marking criteria: {((MarkingCriteria)SelectedMarkingCriteria).AsString(EnumFormat.Description)}");
             }
 
             MessageBox?.Invoke(new MessageBoxViewModel()

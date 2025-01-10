@@ -88,8 +88,9 @@ public class FileService : IFileService
                 + $"{Environment.NewLine}DeletionDate={deletionDate}"
                 + Environment.NewLine;
 
-            File.Move(fileName, Path.Combine(trashFilesDir, trashFileName));
+            // The trashinfo file must be written before the actual file is moved into the Trash.
             File.WriteAllText(Path.Combine(trashInfoDir, $"{trashFileName}.trashinfo"), trashInfoContents);
+            File.Move(fileName, Path.Combine(trashFilesDir, trashFileName));
         }
 
         return true;

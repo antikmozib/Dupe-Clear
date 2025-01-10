@@ -58,4 +58,12 @@ public class UserData
     public int Theme { get; set; } = (int)Constants.DefaultTheme;
 
     public bool AutoUpdateCheck { get; set; } = true;
+
+    public DateTime? DateModifiedFrom { get; set; } = null;
+
+    public DateTime? DateModifiedTo { get; set; } = null;
+
+    public DateTime? DateCreateFrom { get; set; } = null;
+
+    public DateTime? DateCreateTo { get; set; } = null;
 }

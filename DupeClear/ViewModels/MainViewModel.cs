@@ -791,6 +791,10 @@ public partial class MainViewModel : ViewModelBase
         ExcludedExtensions = userData.ExcludedExtensions;
         ShowPreview = userData.ShowPreview;
         AutoUpdateCheck = userData.AutoUpdateCheck;
+        DateModifiedFrom = userData.DateModifiedFrom;
+        DateModifiedTo = userData.DateModifiedTo;
+        DateCreatedFrom = userData.DateCreateFrom;
+        DateCreatedTo = userData.DateCreateTo;
 
         if (userData.MatchSameFileName)
         {
@@ -3318,6 +3322,10 @@ public partial class MainViewModel : ViewModelBase
             _userData.PreviewPaneWidth = _oldPreviewPaneWidth;
             _userData.Theme = (int)Theme;
             _userData.AutoUpdateCheck = AutoUpdateCheck;
+            _userData.DateCreateFrom = DateCreatedFrom;
+            _userData.DateCreateTo = DateCreatedTo;
+            _userData.DateModifiedFrom = DateModifiedFrom;
+            _userData.DateModifiedTo = DateModifiedTo;
 
             var jsonString = JsonSerializer.Serialize(_userData, new JsonSerializerOptions() { WriteIndented = true });
             var userDataDir = Path.GetDirectoryName(_userDataFile);

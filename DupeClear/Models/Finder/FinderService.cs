@@ -125,7 +125,7 @@ public class FinderService
         }
         else
         {
-            stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None, 1048576);
+            stream = new FileStream(path, FileMode.Open, FileAccess.Read);
         }
 
         stream.Position = 0;

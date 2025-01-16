@@ -1485,7 +1485,7 @@ public partial class MainViewModel : ViewModelBase
 
             if (result.DuplicateCount > 0)
             {
-                message.Append($"\n\nCurrent marking criteria: {((MarkingCriteria)SelectedMarkingCriteria).AsString(EnumFormat.Description)}");
+                message.Append($"\n\nMarking criteria applied: {((MarkingCriteria)SelectedMarkingCriteria).AsString(EnumFormat.Description)}");
             }
 
             MessageBox?.Invoke(new MessageBoxViewModel()

@@ -2754,7 +2754,7 @@ public partial class MainViewModel : ViewModelBase
                     }
                     else
                     {
-                        _fileService?.LaunchUrl(@"https://www.gnu.org/licenses/gpl-3.0.en.html#license-text");
+                        _fileService?.LaunchUrl(Constants.GplAddress);
                     }
                 }),
                 HyperlinkButtonContent = Constants.AppHomepage,

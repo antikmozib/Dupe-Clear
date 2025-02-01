@@ -1,6 +1,6 @@
 pkg/
 pack/
-package/
+Package/
 *.svg
 
 ## Ignore Visual Studio temporary files, build results, and

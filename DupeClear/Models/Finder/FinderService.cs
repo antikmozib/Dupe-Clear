@@ -325,6 +325,7 @@ public class FinderService
                 }
             }
 
+            var removeFromTarget = new List<DuplicateFile> { file1 };
             foreach (var file2 in targetFiles.Where(x => !x.Group.HasValue && x != file1))
             {
                 if (ct.IsCancellationRequested)
@@ -422,6 +423,7 @@ public class FinderService
 
                 file2.Group = group;
                 result.Files.Add(file2);
+                removeFromTarget.Add(file2);
                 if (!file1.Group.HasValue)
                 {
                     file1.Group = group;
@@ -449,6 +451,8 @@ public class FinderService
 
                 group++;
             }
+
+            removeFromTarget.ForEach(x => targetFiles.Remove(x));
         }
 
         return result;

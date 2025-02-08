@@ -326,11 +326,16 @@ public class FinderService
             }
 
             var removeFromTarget = new List<DuplicateFile> { file1 };
-            foreach (var file2 in targetFiles.Where(x => !x.Group.HasValue && x != file1))
+            foreach (var file2 in targetFiles)
             {
                 if (ct.IsCancellationRequested)
                 {
                     break;
+                }
+
+                if (file2 == file1)
+                {
+                    continue;
                 }
 
                 // Type

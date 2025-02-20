@@ -39,7 +39,6 @@ public static class Extensions
         if (length == null)
         {
             return null;
-
         }
         else
         {

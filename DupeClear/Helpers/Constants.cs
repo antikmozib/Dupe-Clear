@@ -34,7 +34,7 @@ public static class Constants
     /// <summary>
     /// The name of the file which stores the user preferences.
     /// </summary>
-    public const string UserDataFileName = "user.json";
+    public const string UserPreferencesFileName = "user.json";
 
     public const string GplAddress = @"https://www.gnu.org/licenses/gpl-3.0.en.html#license-text";
 }

@@ -48,9 +48,8 @@ public partial class MainViewModel : ViewModelBase
     private readonly UserData _userData;
 
     private readonly string _userDataFile = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        Constants.UserDataDirectoryName,
-        Constants.UserDataFileName);
+        GetAppUserDataDirectory(),
+        Constants.UserPreferencesFileName);
 
     private readonly IFileService? _fileService;
 
@@ -1969,7 +1968,7 @@ public partial class MainViewModel : ViewModelBase
         {
             var fileName = await AsyncFileSaver.Invoke(
                 "Export",
-                $"Dupe Clear Search Results {DateTime.Now.ToString("yyMMdd-HHmmss")}{Constants.SearchResultsFileExtension}");
+                $"Dupe Clear Search Result {DateTime.Now.ToString("yyMMdd-HHmmss")}{Constants.SearchResultsFileExtension}");
 
             if (!string.IsNullOrEmpty(fileName))
             {

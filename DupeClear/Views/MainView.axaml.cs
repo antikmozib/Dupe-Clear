@@ -269,7 +269,7 @@ public partial class MainView : UserControl
                 SuggestedFileName = fileName,
                 FileTypeChoices = new List<FilePickerFileType>()
                     {
-                        new FilePickerFileType("Dupe Clear Search Results")
+                        new FilePickerFileType("Dupe Clear Search Result")
                         {
                             Patterns = new[] { $"*{Constants.SearchResultsFileExtension}" }
                         }

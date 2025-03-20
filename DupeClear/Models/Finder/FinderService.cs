@@ -315,20 +315,6 @@ public class FinderService
                 file1.PatternMatch = Regex.Match(file1.NameWithoutExtension, fileNamePattern, RegexOptions.IgnoreCase);
             }
 
-            if (options.HasOption(FinderOption.SameContents) && string.IsNullOrWhiteSpace(file1.Hash))
-            {
-                try
-                {
-                    file1.Hash = GetFileHash(file1.FullName);
-                }
-                catch (Exception ex)
-                {
-                    result.Errors.TryAdd(file1.FullName, ex.Message);
-
-                    continue;
-                }
-            }
-
             var removeFromTarget = new List<DuplicateFile> { file1 };
             foreach (var file2 in targetFiles)
             {
@@ -408,6 +394,19 @@ public class FinderService
                 // Contents
                 if (options.HasOption(FinderOption.SameContents))
                 {
+                    if (string.IsNullOrWhiteSpace(file1.Hash))
+                    {
+                        try
+                        {
+                            file1.Hash = GetFileHash(file1.FullName);
+                        }
+                        catch (Exception ex)
+                        {
+                            result.Errors.TryAdd(file1.FullName, ex.Message);
+                            break;
+                        }
+                    }
+
                     if (string.IsNullOrWhiteSpace(file2.Hash))
                     {
                         try
@@ -417,7 +416,6 @@ public class FinderService
                         catch (Exception ex)
                         {
                             result.Errors.TryAdd(file2.FullName, ex.Message);
-
                             continue;
                         }
                     }

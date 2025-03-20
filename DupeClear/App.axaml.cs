@@ -4,18 +4,34 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using DupeClear.Helpers;
 using DupeClear.Native;
 using DupeClear.ViewModels;
 using DupeClear.Views;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using static DupeClear.Helpers.Common;
 
 namespace DupeClear;
 
 public partial class App : Application
 {
+    public App()
+    {
+#if DEBUG
+        var debugLoggerConfig = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.File(Path.Combine(GetAppUserDataDirectory(), "logs", "log.txt"))
+            .CreateLogger();
+
+        Log.Logger = debugLoggerConfig;
+#endif
+    }
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);

@@ -2,8 +2,10 @@
 
 using DupeClear.Helpers;
 using DupeClear.Native;
+using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -284,6 +286,8 @@ public class FinderService
                 break;
             }
 
+            var stopwatch = Stopwatch.StartNew();
+
             progressReporter?.Report(new FinderProgress()
             {
                 ProgressCount = progressCount,
@@ -458,6 +462,12 @@ public class FinderService
             }
 
             removeFromTarget.ForEach(x => targetFiles.Remove(x));
+
+            stopwatch.Stop();
+            if (stopwatch.ElapsedMilliseconds > 1000)
+            {
+                Log.Debug($"Matching \"{file1.FullName}\" took {stopwatch.ElapsedMilliseconds}ms");
+            }
         }
 
         return result;

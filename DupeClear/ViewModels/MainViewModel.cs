@@ -714,17 +714,19 @@ public partial class MainViewModel : ViewModelBase
         _fileService = fileService;
 #if DEBUG
         _updateService = new UpdateServiceProvider(
-            Assembly.GetEntryAssembly()!.Location,
             Constants.UpdateApiAddress,
             Constants.UpdateApiAppId,
-            false,
-            InstallMethod.Installed);
+            FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly()!.Location).FileVersion,
+            AppArchitecture.X86_64,
+            InstallMethod.Installer,
+            AppChannel.Release);
 #else
         _updateService = new UpdateServiceProvider(
             Assembly.GetEntryAssembly()!.Location,
             Constants.UpdateApiAddress,
             Constants.UpdateApiAppId,
-            IntPtr.Size == 8);
+            IntPtr.Size == 8 ? AppArchitecture.X86_64 : AppArchitecture.X86_32,
+            AppChannel.Release);
 #endif
 
         DuplicateFiles.CollectionChanged += DuplicateFiles_CollectionChanged;

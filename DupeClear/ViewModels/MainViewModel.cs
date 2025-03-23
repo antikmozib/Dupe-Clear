@@ -2732,7 +2732,7 @@ public partial class MainViewModel : ViewModelBase
         if (assm != null)
         {
             var name = assm.GetCustomAttribute<AssemblyProductAttribute>()?.Product;
-            var version = assm.GetName().Version;
+            var version = assm.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
             var copyright = assm.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
             MessageBox?.Invoke(new MessageBoxViewModel()
             {

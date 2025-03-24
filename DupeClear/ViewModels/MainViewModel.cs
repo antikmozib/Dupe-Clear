@@ -718,15 +718,13 @@ public partial class MainViewModel : ViewModelBase
             Constants.UpdateApiAppId,
             FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly()!.Location).FileVersion,
             AppArchitecture.X86_64,
-            InstallMethod.Installer,
-            AppChannel.Release);
+            InstallMethod.Installer);
 #else
         _updateService = new UpdateServiceProvider(
             Assembly.GetEntryAssembly()!.Location,
             Constants.UpdateApiAddress,
             Constants.UpdateApiAppId,
-            IntPtr.Size == 8 ? AppArchitecture.X86_64 : AppArchitecture.X86_32,
-            AppChannel.Release);
+            IntPtr.Size == 8 ? AppArchitecture.X86_64 : AppArchitecture.X86_32);
 #endif
 
         DuplicateFiles.CollectionChanged += DuplicateFiles_CollectionChanged;
@@ -3169,7 +3167,7 @@ public partial class MainViewModel : ViewModelBase
                 return;
             }
 
-            var currentVer = Assembly.GetEntryAssembly()?.GetName().Version;
+            var currentVer = Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
             if (currentVer != null)
             {
                 var updateable = updateInfo.IsNewerThan(currentVer);

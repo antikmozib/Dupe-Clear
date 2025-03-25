@@ -716,7 +716,7 @@ public partial class MainViewModel : ViewModelBase
         _updateService = new UpdateServiceProvider(
             Constants.UpdateApiAddress,
             Constants.UpdateApiAppId,
-            FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly()!.Location).FileVersion,
+            FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly()!.Location).ProductVersion,
             AppArchitecture.X86_64,
             InstallMethod.Installer);
 #else
@@ -3220,6 +3220,10 @@ public partial class MainViewModel : ViewModelBase
                                 {
                                     _fileService?.LaunchFile(updateFile.FullName);
                                     CloseCommand.Execute(null);
+                                }
+                                else
+                                {
+                                    _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl);
                                 }
                             }
                             catch (OperationCanceledException)

@@ -306,9 +306,9 @@ public partial class MainView : UserControl
 
             var file = await tl.StorageProvider.OpenFilePickerAsync(opts);
 
-            if (file != null)
+            if (file != null && file.Count > 0)
             {
-                return file.FirstOrDefault()?.Path.LocalPath;
+                return file[0].Path.LocalPath;
             }
         }
 
@@ -331,7 +331,10 @@ public partial class MainView : UserControl
             }
 
             window.DataContext = viewModel;
-            await window.ShowDialog((Window)tl);
+            if (tl is Window tlWindow)
+            {
+                await window.ShowDialog(tlWindow);
+            }
 
             return viewModel.Result;
         });

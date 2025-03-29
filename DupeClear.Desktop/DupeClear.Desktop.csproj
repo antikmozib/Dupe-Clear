@@ -26,6 +26,6 @@
 		<ProjectReference Include="..\DupeClear\DupeClear.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Include="..\LICENSE" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="..\LICENSE" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
 	</ItemGroup>
 </Project>

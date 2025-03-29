@@ -1344,13 +1344,13 @@ public partial class MainViewModel : ViewModelBase
 
         var etaReporterTask = Task.Run(async () =>
         {
-            var sw = Stopwatch.StartNew();
+            var etaStopwatch = Stopwatch.StartNew();
             while (IsBusy)
             {
                 var delay = Task.Delay(EtaReporterDelay);
-                if (dfProgress.ProgressLength > 0 && (dfProgress.TotalLength - dfProgress.ProgressLength > 0))
+                if (dfProgress.ProgressLength > 0 && dfProgress.ProgressLength < dfProgress.TotalLength)
                 {
-                    var msRemaining = sw.ElapsedMilliseconds / (double)dfProgress.ProgressLength * (dfProgress.TotalLength - dfProgress.ProgressLength);
+                    var msRemaining = etaStopwatch.ElapsedMilliseconds / (double)dfProgress.ProgressLength * (dfProgress.TotalLength - dfProgress.ProgressLength);
                     QuaternaryStatus = $"ETA: {msRemaining.ConvertMillisecondsToString()}";
                 }
 

@@ -2732,10 +2732,11 @@ public partial class MainViewModel : ViewModelBase
             var name = assm.GetCustomAttribute<AssemblyProductAttribute>()?.Product;
             var version = assm.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
             var copyright = assm.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
+            var arch = IntPtr.Size == 8 ? "64-bit" : "32-bit";
             MessageBox?.Invoke(new MessageBoxViewModel()
             {
                 Title = "About",
-                Message = $"{name} v{version}\n\n{copyright}",
+                Message = $"{name} v{version} ({arch})\n\n{copyright}",
                 Icon = MessageBoxIcon.AppIcon,
                 CustomButton1Content = "_License",
                 CustomButton1Action = new Action(() =>

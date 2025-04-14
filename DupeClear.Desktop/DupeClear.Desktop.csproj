@@ -21,7 +21,7 @@
     <Content Include="DupeClear.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.7" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DupeClear\DupeClear.csproj" />

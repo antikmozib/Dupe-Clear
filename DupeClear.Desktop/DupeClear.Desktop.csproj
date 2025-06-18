@@ -9,7 +9,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaIncludeApplicationIconAsWindowIcon>false</AvaloniaIncludeApplicationIconAsWindowIcon>
     <ApplicationIcon>DupeClear.ico</ApplicationIcon>
-    <Version>3.2.0-alpha</Version>
+    <Version>3.2.0-preview</Version>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <Copyright>Copyright © 2017-2025 Antik Mozib. All rights reserved.</Copyright>
     <Product>Dupe Clear</Product>

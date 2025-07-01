@@ -2731,7 +2731,7 @@ public partial class MainViewModel : ViewModelBase
             var name = assm.GetCustomAttribute<AssemblyProductAttribute>()?.Product;
             var version = assm.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
             var copyright = assm.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
-            var arch = IntPtr.Size == 8 ? "64-bit" : "32-bit";
+            var arch = IntPtr.Size == 8 ? "x64" : "x86";
             MessageBox?.Invoke(new MessageBoxViewModel()
             {
                 Title = "About",

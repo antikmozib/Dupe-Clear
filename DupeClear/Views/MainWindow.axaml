@@ -13,4 +13,11 @@
         Width="1200"
         Height="800"
         WindowStartupLocation="CenterScreen"
-        ExtendClientAreaToDecorationsHint="True" />
+        ExtendClientAreaToDecorationsHint="True">
+	<Window.Styles>
+		<!--Hide the titlebar text-->
+		<Style Selector="WindowDrawnDecorations /template/ Panel#PART_TitleTextPanel > TextBlock">
+			<Setter Property="IsVisible" Value="False" />
+		</Style>
+	</Window.Styles>
+</Window>

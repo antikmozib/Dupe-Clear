@@ -11,6 +11,7 @@
              xmlns:models="clr-namespace:DupeClear.Models;assembly=DupeClear"
              xmlns:res="clr-namespace:DupeClear.Resources;assembly=DupeClear"
              mc:Ignorable="d"
+			 x:CompileBindings="False"
              d:DesignWidth="900"
              d:DesignHeight="600"
              x:Class="DupeClear.Views.MainView"

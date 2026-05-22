@@ -66,11 +66,11 @@ public partial class MessageBoxWindow : Window
         }
 
         var clipboard = GetTopLevel(this)?.Clipboard;
-        var dataObject = new DataObject();
-        dataObject.Set(DataFormats.Text, text);
+        var dataObject = new DataTransfer();
+        dataObject.Add(DataTransferItem.CreateText(text));
         if (clipboard != null)
         {
-            await clipboard.SetDataObjectAsync(dataObject);
+            await clipboard.SetDataAsync(dataObject);
         }
     }
 }

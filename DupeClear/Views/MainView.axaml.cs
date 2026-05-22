@@ -132,7 +132,7 @@ public partial class MainView : UserControl
 
     private void IncludedDirectoriesListBox_Drop(object? sender, DragEventArgs e)
     {
-        var files = e.Data.GetFiles();
+        var files = e.DataTransfer.TryGetFiles();
         if (files != null)
         {
             _viewModel?.AddDirectoryForInclusion(files.Select(x => x.Path.LocalPath).Where(x => Directory.Exists(x)));
@@ -141,7 +141,7 @@ public partial class MainView : UserControl
 
     private void IncludedDirectoriesListBox_DragOver(object? sender, DragEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Files) && e.Data.GetFiles()!.Any(x => Directory.Exists(x.Path.LocalPath)))
+        if (e.DataTransfer.Contains(DataFormat.File) && e.DataTransfer.TryGetFiles().Any(x => Directory.Exists(x.Path.LocalPath)))
         {
             e.DragEffects = DragDropEffects.Copy;
         }
@@ -158,7 +158,7 @@ public partial class MainView : UserControl
 
     private void ExcludedDirectoriesListBox_Drop(object? sender, DragEventArgs e)
     {
-        var files = e.Data.GetFiles();
+        var files = e.DataTransfer.TryGetFiles();
         if (files != null)
         {
             _viewModel?.AddDirectoryForExclusion(files.Select(x => x.Path.LocalPath).Where(x => Directory.Exists(x)));
@@ -167,7 +167,7 @@ public partial class MainView : UserControl
 
     private void ExcludedDirectoriesListBox_DragOver(object? sender, DragEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Files) && e.Data.GetFiles()!.Any(x => Directory.Exists(x.Path.LocalPath)))
+        if (e.DataTransfer.Contains(DataFormat.File) && e.DataTransfer.TryGetFiles().Any(x => Directory.Exists(x.Path.LocalPath)))
         {
             e.DragEffects = DragDropEffects.Copy;
         }

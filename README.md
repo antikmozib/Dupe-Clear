@@ -21,9 +21,9 @@ Prebuilt binaries are not provided, and the application must be built from the s
 
 ## Building
 
-__Requirements:__ [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+__Requirements:__ [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 
-Clone the repository, `cd` into the root directory and execute `dotnet build DupeClear.Desktop`. The application executable can be found in `DupeClear.Desktop/bin/Debug/net8.0-windows`.
+Clone the repository, `cd` into the root directory and execute `dotnet build DupeClear.Desktop`. The application executable can be found in `DupeClear.Desktop/bin/Debug/net10.0-windows`.
 
 ## Contributions
 

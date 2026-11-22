@@ -3144,128 +3144,132 @@ public partial class MainViewModel : ViewModelBase
 
     private async Task CheckForUpdatesAsync(bool silent = false, CancellationToken ct = default)
     {
-        if (MessageBox != null)
+        if (MessageBox == null)
         {
-            UpdateInfo updateInfo = default;
-            try
+            return;
+        }
+
+        UpdateInfo updateInfo = default;
+        try
+        {
+            updateInfo = await _updateService.GetUpdateInfoAsync();
+        }
+        catch (Exception ex)
+        {
+            if (!silent)
             {
-                updateInfo = await _updateService.GetUpdateInfoAsync();
-            }
-            catch (Exception ex)
-            {
-                if (!silent)
+                await MessageBox.Invoke(new MessageBoxViewModel()
                 {
-                    await MessageBox.Invoke(new MessageBoxViewModel()
-                    {
-                        Title = "Update",
-                        Message = $"An error occurred while attempting to check for updates.",
-                        SecondaryMessage = ex.GetInnermostException()?.Message,
-                        Icon = MessageBoxIcon.Error
-                    });
-                }
-
-                return;
+                    Title = "Update",
+                    Message = $"An error occurred while attempting to check for updates.",
+                    SecondaryMessage = ex.GetInnermostException()?.Message,
+                    Icon = MessageBoxIcon.Error
+                });
             }
 
-            var currentVer = Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
-            if (currentVer != null)
+            return;
+        }
+
+        var currentVer = Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+        if (currentVer == null)
+        {
+            return;
+        }
+
+        var updateable = updateInfo.IsNewerThan(currentVer);
+        if (updateable)
+        {
+            var msgBoxVM = new MessageBoxViewModel()
             {
-                var updateable = updateInfo.IsNewerThan(currentVer);
-                if (updateable)
+                Title = "Update",
+                Message = $"An update has been released.\n\nNew version: {updateInfo.Version}\nCurrent version: {currentVer}\n",
+                Icon = MessageBoxIcon.Information,
+                Buttons = MessageBoxButton.OKCancel,
+                OKButtonContent = "_Download",
+                HyperlinkButtonContent = "Learn More",
+                HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl))
+            };
+
+            if (silent)
+            {
+                msgBoxVM.CustomButton1Content = "Don't _Ask";
+                msgBoxVM.CustomButton1Action = new Action(() =>
                 {
-                    var msgBoxVM = new MessageBoxViewModel()
-                    {
-                        Title = "Update",
-                        Message = $"An update has been released.\n\nNew version: {updateInfo.Version}\nCurrent version: {currentVer}\n",
-                        Icon = MessageBoxIcon.Information,
-                        Buttons = MessageBoxButton.OKCancel,
-                        OKButtonContent = "_Download",
-                        HyperlinkButtonContent = "Learn More",
-                        HyperlinkButtonAction = new Action(() => _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl))
-                    };
+                    AutoUpdateCheck = false;
+                    msgBoxVM.Close();
+                });
+            }
 
-                    if (silent)
-                    {
-                        msgBoxVM.CustomButton1Content = "Don't _Ask";
-                        msgBoxVM.CustomButton1Action = new Action(() =>
-                        {
-                            AutoUpdateCheck = false;
-                            msgBoxVM.Close();
-                        });
-                    }
-
-                    var msgBox = await MessageBox.Invoke(msgBoxVM);
-                    if (msgBox.DialogResult == true)
-                    {
-                        if (IsBusy || _updateService.IsAppPortable)
-                        {
-                            _fileService?.LaunchFile(updateInfo.FileUrl);
-                        }
-                        else
-                        {
-                            SetBusy(CheckForUpdatesCommand);
-                            try
-                            {
-                                var updateFile = await _updateService.DownloadUpdateAsync(
-                                    updateInfo,
-                                    Path.GetTempPath(),
-                                    new Progress<int>(p =>
-                                    {
-                                        PrimaryStatus = $"Downloading update... {p}%";
-                                        Progress = p;
-                                    }),
-                                    ct);
-
-                                if (updateFile != null)
-                                {
-                                    _fileService?.LaunchFile(updateFile.FullName);
-                                    CloseCommand.Execute(null);
-                                }
-                                else
-                                {
-                                    _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl);
-                                }
-                            }
-                            catch (OperationCanceledException)
-                            {
-
-                            }
-                            catch (Exception ex)
-                            {
-                                await MessageBox.Invoke(new MessageBoxViewModel()
-                                {
-                                    Title = "Update",
-                                    Message = $"An error occurred while attempting download the update.",
-                                    SecondaryMessage = ex.Message,
-                                    Icon = MessageBoxIcon.Error
-                                });
-                            }
-                            finally
-                            {
-                                SetBusy(false);
-                            }
-                        }
-                    }
+            var msgBox = await MessageBox.Invoke(msgBoxVM);
+            if (msgBox.DialogResult == true)
+            {
+                if (IsBusy || _updateService.IsAppPortable)
+                {
+                    _fileService?.LaunchFile(updateInfo.FileUrl);
                 }
                 else
                 {
-                    if (!silent)
+                    SetBusy(CheckForUpdatesCommand);
+                    try
                     {
-                        var msgBoxVM = new MessageBoxViewModel()
-                        {
-                            Title = "Update",
-                            Message = "No new updates have been released.",
-                            Icon = MessageBoxIcon.Information,
-                            CheckBoxContent = "_Automatically check for updates",
-                            CheckBoxChecked = AutoUpdateCheck
-                        };
+                        var updateFile = await _updateService.DownloadUpdateAsync(
+                            updateInfo,
+                            Path.GetTempPath(),
+                            new Progress<int>(p =>
+                            {
+                                PrimaryStatus = $"Downloading update... {p}%";
+                                Progress = p;
+                            }),
+                            ct);
 
-                        var msgBox = await MessageBox.Invoke(msgBoxVM);
-                        if (msgBox.DialogResult == true)
+                        if (updateFile != null)
                         {
-                            AutoUpdateCheck = msgBox.CheckBoxChecked;
+                            _fileService?.LaunchFile(updateFile.FullName);
+                            CloseCommand.Execute(null);
+                        }
+                        else
+                        {
+                            _fileService?.LaunchUrl(updateInfo.UpdateInfoUrl);
                         }
                     }
+                    catch (OperationCanceledException)
+                    {
+
+                    }
+                    catch (Exception ex)
+                    {
+                        await MessageBox.Invoke(new MessageBoxViewModel()
+                        {
+                            Title = "Update",
+                            Message = $"An error occurred while attempting download the update.",
+                            SecondaryMessage = ex.Message,
+                            Icon = MessageBoxIcon.Error
+                        });
+                    }
+                    finally
+                    {
+                        SetBusy(false);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (!silent)
+            {
+                var msgBoxVM = new MessageBoxViewModel()
+                {
+                    Title = "Update",
+                    Message = "No new updates have been released.",
+                    Icon = MessageBoxIcon.Information,
+                    CheckBoxContent = "_Automatically check for updates",
+                    CheckBoxChecked = AutoUpdateCheck
+                };
+
+                var msgBox = await MessageBox.Invoke(msgBoxVM);
+                if (msgBox.DialogResult == true)
+                {
+                    AutoUpdateCheck = msgBox.CheckBoxChecked;
                 }
             }
         }

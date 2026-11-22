@@ -3,7 +3,7 @@
     <OutputType>WinExe</OutputType>
     <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
     One for Windows with net7.0-windows TFM, one for MacOS with net7.0-macos and one with net7.0 TFM for Linux.-->
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -11,7 +11,7 @@
     <ApplicationIcon>DupeClear.ico</ApplicationIcon>
     <Version>3.2.0-preview</Version>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
-    <Copyright>Copyright © 2017-2025 Antik Mozib. All rights reserved.</Copyright>
+    <Copyright>© 2026 Antik Mozib. All rights reserved.</Copyright>
     <Product>Dupe Clear</Product>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
@@ -21,7 +21,7 @@
     <Content Include="DupeClear.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="12.0.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DupeClear\DupeClear.csproj" />
